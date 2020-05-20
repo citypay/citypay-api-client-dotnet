@@ -32,10 +32,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new OperationalApi(config);
             var clientid = clientid_example;  // string | The client id to return merchants for, specifying \"default\" will use the value in your api key.
@@ -110,10 +108,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new OperationalApi(config);
             var inlineObject1 = new InlineObject1(); // InlineObject1 | 

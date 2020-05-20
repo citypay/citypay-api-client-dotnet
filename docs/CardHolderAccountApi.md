@@ -39,10 +39,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -119,10 +117,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -199,10 +195,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -281,10 +275,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -361,10 +353,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var inlineObject4 = new InlineObject4(); // InlineObject4 | 
@@ -439,10 +429,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -517,10 +505,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -595,10 +581,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -673,10 +657,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new CardHolderAccountApi(config);
             var inlineObject8 = new InlineObject8(); // InlineObject8 | 

@@ -34,10 +34,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new PaymentProcessingApi(config);
             var inlineObject6 = new InlineObject6(); // InlineObject6 | 
@@ -112,10 +110,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new PaymentProcessingApi(config);
             var inlineObject2 = new InlineObject2(); // InlineObject2 | 
@@ -190,10 +186,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new PaymentProcessingApi(config);
             var inlineObject7 = new InlineObject7(); // InlineObject7 | 
@@ -268,10 +262,8 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
-            // Configure API key authorization: cp-api-key
-            config.AddApiKey("cp-api-key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("cp-api-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
 
             var apiInstance = new PaymentProcessingApi(config);
             var inlineObject5 = new InlineObject5(); // InlineObject5 | 

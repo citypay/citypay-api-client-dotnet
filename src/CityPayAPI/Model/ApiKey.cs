@@ -16,11 +16,35 @@ namespace CityPayAPI.Model
         public string ClientId { get; }
         public string LicenceKey { get; }
 
+        /// <summary>
+        /// Generates a new key with an automatically created nonce for the current date time
+        /// </summary>
+        /// <returns>A string representing the api key</returns>
+        public string GenerateKey()
+        {
+            var nonce = new byte[16];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(nonce);
+            }
+
+            return GenerateKey(nonce, DateTime.Now);
+        }
+
+        /// <summary>
+        /// Generates a new key with a provided nonce value for the current date time
+        /// </summary>
+        /// <returns>A string representing the api key</returns>
         public string GenerateKey(byte[] nonce)
         {
             return GenerateKey(nonce, DateTime.Now);
         }
         
+        /// <summary>
+        /// Generates a new key with a provided nonce and provided current date time.
+        /// Normally this is used for testing temporal keys rather than in production
+        /// </summary>
+        /// <returns>A string representing the api key</returns>
         public string GenerateKey(byte[] nonce, DateTime dt)
         {
             StringBuilder hexNonce = new StringBuilder();

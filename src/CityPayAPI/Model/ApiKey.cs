@@ -37,7 +37,7 @@ namespace CityPayAPI.Model
         /// <returns>A string representing the api key</returns>
         public string GenerateKey(byte[] nonce)
         {
-            return GenerateKey(nonce, DateTime.Now);
+            return GenerateKey(nonce, DateTime.UtcNow);
         }
         
         /// <summary>

@@ -34,18 +34,17 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthReferences" /> class.
         /// </summary>
-        /// <param name="auths">Authorisations which match the request..</param>
-        public AuthReferences(string auths = default(string))
+        /// <param name="auths">auths.</param>
+        public AuthReferences(List<AuthReference> auths = default(List<AuthReference>))
         {
             this.Auths = auths;
         }
         
         /// <summary>
-        /// Authorisations which match the request.
+        /// Gets or Sets Auths
         /// </summary>
-        /// <value>Authorisations which match the request.</value>
         [DataMember(Name="auths", EmitDefaultValue=false)]
-        public string Auths { get; set; }
+        public List<AuthReference> Auths { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -92,8 +91,9 @@ namespace CityPayAPI.Model
             return 
                 (
                     this.Auths == input.Auths ||
-                    (this.Auths != null &&
-                    this.Auths.Equals(input.Auths))
+                    this.Auths != null &&
+                    input.Auths != null &&
+                    this.Auths.SequenceEqual(input.Auths)
                 );
         }
 

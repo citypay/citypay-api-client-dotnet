@@ -144,6 +144,7 @@ Class | Method | HTTP request | Description
  - [Model.Acknowledgement](docs/Acknowledgement.md)
  - [Model.AirlineAdvice](docs/AirlineAdvice.md)
  - [Model.AirlineSegment](docs/AirlineSegment.md)
+ - [Model.AuthReference](docs/AuthReference.md)
  - [Model.AuthReferences](docs/AuthReferences.md)
  - [Model.AuthRequest](docs/AuthRequest.md)
  - [Model.AuthResponse](docs/AuthResponse.md)

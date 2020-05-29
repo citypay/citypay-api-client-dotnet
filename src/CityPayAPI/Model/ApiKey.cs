@@ -28,7 +28,7 @@ namespace CityPayAPI.Model
                 rng.GetBytes(nonce);
             }
 
-            return GenerateKey(nonce, DateTime.Now);
+            return GenerateKey(nonce, DateTime.UtcNow);
         }
 
         /// <summary>

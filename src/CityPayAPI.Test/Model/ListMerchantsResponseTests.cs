@@ -58,6 +58,14 @@ namespace CityPayAPI.Test
 
 
         /// <summary>
+        /// Test the property 'ClientName'
+        /// </summary>
+        [Fact]
+        public void ClientNameTest()
+        {
+            // TODO unit test for the property 'ClientName'
+        }
+        /// <summary>
         /// Test the property 'Clientid'
         /// </summary>
         [Fact]
@@ -72,14 +80,6 @@ namespace CityPayAPI.Test
         public void MerchantsTest()
         {
             // TODO unit test for the property 'Merchants'
-        }
-        /// <summary>
-        /// Test the property 'Name'
-        /// </summary>
-        [Fact]
-        public void NameTest()
-        {
-            // TODO unit test for the property 'Name'
         }
 
     }

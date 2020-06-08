@@ -89,6 +89,14 @@ namespace CityPayAPI.Test
         {
             // TODO unit test for the property 'Status'
         }
+        /// <summary>
+        /// Test the property 'StatusLabel'
+        /// </summary>
+        [Fact]
+        public void StatusLabelTest()
+        {
+            // TODO unit test for the property 'StatusLabel'
+        }
 
     }
 

@@ -36,12 +36,12 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="acsUrl">The url of the Access Control Server (ACS) to forward the user to. .</param>
         /// <param name="md">Merchant Data (MD) which should be sent to the ACS to establish and reference the authentication session. .</param>
-        /// <param name="paReq">The Payer Authentication Request packet which should be &#x60;POSTed&#x60; to the Url of the ACS to establish the authentication session. Data should be sent untouched. .</param>
-        public AuthenRequired(string acsUrl = default(string), string md = default(string), string paReq = default(string))
+        /// <param name="pareq">The Payer Authentication Request packet which should be &#x60;POSTed&#x60; to the Url of the ACS to establish the authentication session. Data should be sent untouched. .</param>
+        public AuthenRequired(string acsUrl = default(string), string md = default(string), string pareq = default(string))
         {
             this.AcsUrl = acsUrl;
             this.Md = md;
-            this.PaReq = paReq;
+            this.Pareq = pareq;
         }
         
         /// <summary>
@@ -62,8 +62,8 @@ namespace CityPayAPI.Model
         /// The Payer Authentication Request packet which should be &#x60;POSTed&#x60; to the Url of the ACS to establish the authentication session. Data should be sent untouched. 
         /// </summary>
         /// <value>The Payer Authentication Request packet which should be &#x60;POSTed&#x60; to the Url of the ACS to establish the authentication session. Data should be sent untouched. </value>
-        [DataMember(Name="pa_req", EmitDefaultValue=false)]
-        public string PaReq { get; set; }
+        [DataMember(Name="pareq", EmitDefaultValue=false)]
+        public string Pareq { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -75,7 +75,7 @@ namespace CityPayAPI.Model
             sb.Append("class AuthenRequired {\n");
             sb.Append("  AcsUrl: ").Append(AcsUrl).Append("\n");
             sb.Append("  Md: ").Append(Md).Append("\n");
-            sb.Append("  PaReq: ").Append(PaReq).Append("\n");
+            sb.Append("  Pareq: ").Append(Pareq).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -121,9 +121,9 @@ namespace CityPayAPI.Model
                     this.Md.Equals(input.Md))
                 ) && 
                 (
-                    this.PaReq == input.PaReq ||
-                    (this.PaReq != null &&
-                    this.PaReq.Equals(input.PaReq))
+                    this.Pareq == input.Pareq ||
+                    (this.Pareq != null &&
+                    this.Pareq.Equals(input.Pareq))
                 );
         }
 
@@ -140,8 +140,8 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.AcsUrl.GetHashCode();
                 if (this.Md != null)
                     hashCode = hashCode * 59 + this.Md.GetHashCode();
-                if (this.PaReq != null)
-                    hashCode = hashCode * 59 + this.PaReq.GetHashCode();
+                if (this.Pareq != null)
+                    hashCode = hashCode * 59 + this.Pareq.GetHashCode();
                 return hashCode;
             }
         }

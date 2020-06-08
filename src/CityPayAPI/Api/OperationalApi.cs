@@ -55,9 +55,9 @@ namespace CityPayAPI.Api
         /// A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement PingRequest (InlineObject1 inlineObject1);
+        Acknowledgement PingRequest (Ping ping);
 
         /// <summary>
         /// Ping Request
@@ -66,9 +66,9 @@ namespace CityPayAPI.Api
         /// A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> PingRequestWithHttpInfo (InlineObject1 inlineObject1);
+        ApiResponse<Acknowledgement> PingRequestWithHttpInfo (Ping ping);
         #endregion Synchronous Operations
     }
 
@@ -106,9 +106,9 @@ namespace CityPayAPI.Api
         /// A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync (InlineObject1 inlineObject1);
+        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync (Ping ping);
 
         /// <summary>
         /// Ping Request
@@ -117,9 +117,9 @@ namespace CityPayAPI.Api
         /// A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestAsyncWithHttpInfo (InlineObject1 inlineObject1);
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestAsyncWithHttpInfo (Ping ping);
         #endregion Asynchronous Operations
     }
 
@@ -369,11 +369,11 @@ namespace CityPayAPI.Api
         /// Ping Request A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement PingRequest (InlineObject1 inlineObject1)
+        public Acknowledgement PingRequest (Ping ping)
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = PingRequestWithHttpInfo(inlineObject1);
+             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = PingRequestWithHttpInfo(ping);
              return localVarResponse.Data;
         }
 
@@ -381,13 +381,13 @@ namespace CityPayAPI.Api
         /// Ping Request A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse< Acknowledgement > PingRequestWithHttpInfo (InlineObject1 inlineObject1)
+        public CityPayAPI.Client.ApiResponse< Acknowledgement > PingRequestWithHttpInfo (Ping ping)
         {
-            // verify the required parameter 'inlineObject1' is set
-            if (inlineObject1 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject1' when calling OperationalApi->PingRequest");
+            // verify the required parameter 'ping' is set
+            if (ping == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'ping' when calling OperationalApi->PingRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -408,7 +408,7 @@ namespace CityPayAPI.Api
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            localVarRequestOptions.Data = inlineObject1;
+            localVarRequestOptions.Data = ping;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -432,11 +432,11 @@ namespace CityPayAPI.Api
         /// Ping Request A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync (InlineObject1 inlineObject1)
+        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync (Ping ping)
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await PingRequestAsyncWithHttpInfo(inlineObject1);
+             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await PingRequestAsyncWithHttpInfo(ping);
              return localVarResponse.Data;
 
         }
@@ -445,13 +445,13 @@ namespace CityPayAPI.Api
         /// Ping Request A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code &#x60;044&#x60; to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject1"></param>
+        /// <param name="ping"></param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestAsyncWithHttpInfo (InlineObject1 inlineObject1)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestAsyncWithHttpInfo (Ping ping)
         {
-            // verify the required parameter 'inlineObject1' is set
-            if (inlineObject1 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject1' when calling OperationalApi->PingRequest");
+            // verify the required parameter 'ping' is set
+            if (ping == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'ping' when calling OperationalApi->PingRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -473,7 +473,7 @@ namespace CityPayAPI.Api
             foreach (var _accept in _accepts)
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
-            localVarRequestOptions.Data = inlineObject1;
+            localVarRequestOptions.Data = ping;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))

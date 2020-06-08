@@ -26,25 +26,26 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// InlineObject1
+    /// CResAuthRequest
     /// </summary>
     [DataContract]
-    public partial class InlineObject1 :  IEquatable<InlineObject1>, IValidatableObject
+    public partial class CResAuthRequest :  IEquatable<CResAuthRequest>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InlineObject1" /> class.
+        /// Initializes a new instance of the <see cref="CResAuthRequest" /> class.
         /// </summary>
-        /// <param name="ping">ping.</param>
-        public InlineObject1(Ping ping = default(Ping))
+        /// <param name="cres">The challenge response data forwarded by the ACS in 3D-Secure V2 processing. Data should be forwarded to CityPay unchanged for subsequent authorisation and processing. .</param>
+        public CResAuthRequest(string cres = default(string))
         {
-            this.Ping = ping;
+            this.Cres = cres;
         }
         
         /// <summary>
-        /// Gets or Sets Ping
+        /// The challenge response data forwarded by the ACS in 3D-Secure V2 processing. Data should be forwarded to CityPay unchanged for subsequent authorisation and processing. 
         /// </summary>
-        [DataMember(Name="Ping", EmitDefaultValue=false)]
-        public Ping Ping { get; set; }
+        /// <value>The challenge response data forwarded by the ACS in 3D-Secure V2 processing. Data should be forwarded to CityPay unchanged for subsequent authorisation and processing. </value>
+        [DataMember(Name="cres", EmitDefaultValue=false)]
+        public string Cres { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -53,8 +54,8 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class InlineObject1 {\n");
-            sb.Append("  Ping: ").Append(Ping).Append("\n");
+            sb.Append("class CResAuthRequest {\n");
+            sb.Append("  Cres: ").Append(Cres).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,24 +76,24 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as InlineObject1);
+            return this.Equals(input as CResAuthRequest);
         }
 
         /// <summary>
-        /// Returns true if InlineObject1 instances are equal
+        /// Returns true if CResAuthRequest instances are equal
         /// </summary>
-        /// <param name="input">Instance of InlineObject1 to be compared</param>
+        /// <param name="input">Instance of CResAuthRequest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(InlineObject1 input)
+        public bool Equals(CResAuthRequest input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Ping == input.Ping ||
-                    (this.Ping != null &&
-                    this.Ping.Equals(input.Ping))
+                    this.Cres == input.Cres ||
+                    (this.Cres != null &&
+                    this.Cres.Equals(input.Cres))
                 );
         }
 
@@ -105,8 +106,8 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Ping != null)
-                    hashCode = hashCode * 59 + this.Ping.GetHashCode();
+                if (this.Cres != null)
+                    hashCode = hashCode * 59 + this.Cres.GetHashCode();
                 return hashCode;
             }
         }

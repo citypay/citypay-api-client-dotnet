@@ -74,12 +74,12 @@ namespace CityPayAPI.Test
             // TODO unit test for the property 'Md'
         }
         /// <summary>
-        /// Test the property 'PaReq'
+        /// Test the property 'Pareq'
         /// </summary>
         [Fact]
-        public void PaReqTest()
+        public void PareqTest()
         {
-            // TODO unit test for the property 'PaReq'
+            // TODO unit test for the property 'Pareq'
         }
 
     }

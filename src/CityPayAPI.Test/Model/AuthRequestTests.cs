@@ -178,6 +178,14 @@ namespace CityPayAPI.Test
             // TODO unit test for the property 'Mcc6012'
         }
         /// <summary>
+        /// Test the property 'MerchantTermurl'
+        /// </summary>
+        [Fact]
+        public void MerchantTermurlTest()
+        {
+            // TODO unit test for the property 'MerchantTermurl'
+        }
+        /// <summary>
         /// Test the property 'Merchantid'
         /// </summary>
         [Fact]

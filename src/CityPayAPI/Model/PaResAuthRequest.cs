@@ -26,25 +26,41 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// InlineObject5
+    /// PaResAuthRequest
     /// </summary>
     [DataContract]
-    public partial class InlineObject5 :  IEquatable<InlineObject5>, IValidatableObject
+    public partial class PaResAuthRequest :  IEquatable<PaResAuthRequest>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InlineObject5" /> class.
+        /// Initializes a new instance of the <see cref="PaResAuthRequest" /> class.
         /// </summary>
-        /// <param name="voidRequest">voidRequest.</param>
-        public InlineObject5(VoidRequest voidRequest = default(VoidRequest))
+        [JsonConstructorAttribute]
+        protected PaResAuthRequest() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaResAuthRequest" /> class.
+        /// </summary>
+        /// <param name="md">The Merchant Data (MD) which is a unique ID to reference the authentication session. This value will be created by CityPay when required. When responding from the ACS, this value will be returned by the ACS.  (required).</param>
+        /// <param name="pares">The Payer Authentication Response packet which is returned by the ACS containing the  response of the authentication session including verification values. The response  is a base64 encoded packet and should be forwarded to CityPay untouched. .</param>
+        public PaResAuthRequest(string md = default(string), string pares = default(string))
         {
-            this.VoidRequest = voidRequest;
+            // to ensure "md" is required (not null)
+            this.Md = md ?? throw new ArgumentNullException("md is a required property for PaResAuthRequest and cannot be null");
+            this.Pares = pares;
         }
         
         /// <summary>
-        /// Gets or Sets VoidRequest
+        /// The Merchant Data (MD) which is a unique ID to reference the authentication session. This value will be created by CityPay when required. When responding from the ACS, this value will be returned by the ACS. 
         /// </summary>
-        [DataMember(Name="VoidRequest", EmitDefaultValue=false)]
-        public VoidRequest VoidRequest { get; set; }
+        /// <value>The Merchant Data (MD) which is a unique ID to reference the authentication session. This value will be created by CityPay when required. When responding from the ACS, this value will be returned by the ACS. </value>
+        [DataMember(Name="md", EmitDefaultValue=false)]
+        public string Md { get; set; }
+
+        /// <summary>
+        /// The Payer Authentication Response packet which is returned by the ACS containing the  response of the authentication session including verification values. The response  is a base64 encoded packet and should be forwarded to CityPay untouched. 
+        /// </summary>
+        /// <value>The Payer Authentication Response packet which is returned by the ACS containing the  response of the authentication session including verification values. The response  is a base64 encoded packet and should be forwarded to CityPay untouched. </value>
+        [DataMember(Name="pares", EmitDefaultValue=false)]
+        public string Pares { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -53,8 +69,9 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class InlineObject5 {\n");
-            sb.Append("  VoidRequest: ").Append(VoidRequest).Append("\n");
+            sb.Append("class PaResAuthRequest {\n");
+            sb.Append("  Md: ").Append(Md).Append("\n");
+            sb.Append("  Pares: ").Append(Pares).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,24 +92,29 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as InlineObject5);
+            return this.Equals(input as PaResAuthRequest);
         }
 
         /// <summary>
-        /// Returns true if InlineObject5 instances are equal
+        /// Returns true if PaResAuthRequest instances are equal
         /// </summary>
-        /// <param name="input">Instance of InlineObject5 to be compared</param>
+        /// <param name="input">Instance of PaResAuthRequest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(InlineObject5 input)
+        public bool Equals(PaResAuthRequest input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.VoidRequest == input.VoidRequest ||
-                    (this.VoidRequest != null &&
-                    this.VoidRequest.Equals(input.VoidRequest))
+                    this.Md == input.Md ||
+                    (this.Md != null &&
+                    this.Md.Equals(input.Md))
+                ) && 
+                (
+                    this.Pares == input.Pares ||
+                    (this.Pares != null &&
+                    this.Pares.Equals(input.Pares))
                 );
         }
 
@@ -105,8 +127,10 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.VoidRequest != null)
-                    hashCode = hashCode * 59 + this.VoidRequest.GetHashCode();
+                if (this.Md != null)
+                    hashCode = hashCode * 59 + this.Md.GetHashCode();
+                if (this.Pares != null)
+                    hashCode = hashCode * 59 + this.Pares.GetHashCode();
                 return hashCode;
             }
         }

@@ -58,9 +58,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>CardHolderAccount</returns>
-        CardHolderAccount AccountCardRegisterRequest (string accountid, InlineObject inlineObject);
+        CardHolderAccount AccountCardRegisterRequest (string accountid, RegisterCard registerCard);
 
         /// <summary>
         /// Card Registration
@@ -70,9 +70,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        ApiResponse<CardHolderAccount> AccountCardRegisterRequestWithHttpInfo (string accountid, InlineObject inlineObject);
+        ApiResponse<CardHolderAccount> AccountCardRegisterRequestWithHttpInfo (string accountid, RegisterCard registerCard);
         /// <summary>
         /// Card Status
         /// </summary>
@@ -106,9 +106,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>CardHolderAccount</returns>
-        CardHolderAccount AccountChangeContactRequest (string accountid, InlineObject3 inlineObject3);
+        CardHolderAccount AccountChangeContactRequest (string accountid, ContactDetails contactDetails);
 
         /// <summary>
         /// Contact Details Update
@@ -118,9 +118,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        ApiResponse<CardHolderAccount> AccountChangeContactRequestWithHttpInfo (string accountid, InlineObject3 inlineObject3);
+        ApiResponse<CardHolderAccount> AccountChangeContactRequestWithHttpInfo (string accountid, ContactDetails contactDetails);
         /// <summary>
         /// Account Create
         /// </summary>
@@ -128,9 +128,9 @@ namespace CityPayAPI.Api
         /// Creates a new card holder account and initialises the account ready for adding cards.
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>CardHolderAccount</returns>
-        CardHolderAccount AccountCreate (InlineObject4 inlineObject4);
+        CardHolderAccount AccountCreate (AccountCreate accountCreate);
 
         /// <summary>
         /// Account Create
@@ -139,9 +139,9 @@ namespace CityPayAPI.Api
         /// Creates a new card holder account and initialises the account ready for adding cards.
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        ApiResponse<CardHolderAccount> AccountCreateWithHttpInfo (InlineObject4 inlineObject4);
+        ApiResponse<CardHolderAccount> AccountCreateWithHttpInfo (AccountCreate accountCreate);
         /// <summary>
         /// Account Deletion
         /// </summary>
@@ -212,9 +212,9 @@ namespace CityPayAPI.Api
         /// A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>Decision</returns>
-        Decision ChargeRequest (InlineObject8 inlineObject8);
+        Decision ChargeRequest (ChargeRequest chargeRequest);
 
         /// <summary>
         /// Charge
@@ -223,9 +223,9 @@ namespace CityPayAPI.Api
         /// A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>ApiResponse of Decision</returns>
-        ApiResponse<Decision> ChargeRequestWithHttpInfo (InlineObject8 inlineObject8);
+        ApiResponse<Decision> ChargeRequestWithHttpInfo (ChargeRequest chargeRequest);
         #endregion Synchronous Operations
     }
 
@@ -266,9 +266,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync (string accountid, InlineObject inlineObject);
+        System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync (string accountid, RegisterCard registerCard);
 
         /// <summary>
         /// Card Registration
@@ -278,9 +278,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCardRegisterRequestAsyncWithHttpInfo (string accountid, InlineObject inlineObject);
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCardRegisterRequestAsyncWithHttpInfo (string accountid, RegisterCard registerCard);
         /// <summary>
         /// Card Status
         /// </summary>
@@ -314,9 +314,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync (string accountid, InlineObject3 inlineObject3);
+        System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync (string accountid, ContactDetails contactDetails);
 
         /// <summary>
         /// Contact Details Update
@@ -326,9 +326,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountChangeContactRequestAsyncWithHttpInfo (string accountid, InlineObject3 inlineObject3);
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountChangeContactRequestAsyncWithHttpInfo (string accountid, ContactDetails contactDetails);
         /// <summary>
         /// Account Create
         /// </summary>
@@ -336,9 +336,9 @@ namespace CityPayAPI.Api
         /// Creates a new card holder account and initialises the account ready for adding cards.
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync (InlineObject4 inlineObject4);
+        System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync (AccountCreate accountCreate);
 
         /// <summary>
         /// Account Create
@@ -347,9 +347,9 @@ namespace CityPayAPI.Api
         /// Creates a new card holder account and initialises the account ready for adding cards.
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCreateAsyncWithHttpInfo (InlineObject4 inlineObject4);
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCreateAsyncWithHttpInfo (AccountCreate accountCreate);
         /// <summary>
         /// Account Deletion
         /// </summary>
@@ -420,9 +420,9 @@ namespace CityPayAPI.Api
         /// A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>Task of Decision</returns>
-        System.Threading.Tasks.Task<Decision> ChargeRequestAsync (InlineObject8 inlineObject8);
+        System.Threading.Tasks.Task<Decision> ChargeRequestAsync (ChargeRequest chargeRequest);
 
         /// <summary>
         /// Charge
@@ -431,9 +431,9 @@ namespace CityPayAPI.Api
         /// A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Decision>> ChargeRequestAsyncWithHttpInfo (InlineObject8 inlineObject8);
+        System.Threading.Tasks.Task<ApiResponse<Decision>> ChargeRequestAsyncWithHttpInfo (ChargeRequest chargeRequest);
         #endregion Asynchronous Operations
     }
 
@@ -698,11 +698,11 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>CardHolderAccount</returns>
-        public CardHolderAccount AccountCardRegisterRequest (string accountid, InlineObject inlineObject)
+        public CardHolderAccount AccountCardRegisterRequest (string accountid, RegisterCard registerCard)
         {
-             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountCardRegisterRequestWithHttpInfo(accountid, inlineObject);
+             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountCardRegisterRequestWithHttpInfo(accountid, registerCard);
              return localVarResponse.Data;
         }
 
@@ -711,17 +711,17 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        public CityPayAPI.Client.ApiResponse< CardHolderAccount > AccountCardRegisterRequestWithHttpInfo (string accountid, InlineObject inlineObject)
+        public CityPayAPI.Client.ApiResponse< CardHolderAccount > AccountCardRegisterRequestWithHttpInfo (string accountid, RegisterCard registerCard)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardRegisterRequest");
 
-            // verify the required parameter 'inlineObject' is set
-            if (inlineObject == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject' when calling CardHolderAccountApi->AccountCardRegisterRequest");
+            // verify the required parameter 'registerCard' is set
+            if (registerCard == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'registerCard' when calling CardHolderAccountApi->AccountCardRegisterRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -743,7 +743,7 @@ namespace CityPayAPI.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
-            localVarRequestOptions.Data = inlineObject;
+            localVarRequestOptions.Data = registerCard;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -768,11 +768,11 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync (string accountid, InlineObject inlineObject)
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync (string accountid, RegisterCard registerCard)
         {
-             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCardRegisterRequestAsyncWithHttpInfo(accountid, inlineObject);
+             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCardRegisterRequestAsyncWithHttpInfo(accountid, registerCard);
              return localVarResponse.Data;
 
         }
@@ -782,17 +782,17 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject"></param>
+        /// <param name="registerCard"></param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCardRegisterRequestAsyncWithHttpInfo (string accountid, InlineObject inlineObject)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCardRegisterRequestAsyncWithHttpInfo (string accountid, RegisterCard registerCard)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardRegisterRequest");
 
-            // verify the required parameter 'inlineObject' is set
-            if (inlineObject == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject' when calling CardHolderAccountApi->AccountCardRegisterRequest");
+            // verify the required parameter 'registerCard' is set
+            if (registerCard == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'registerCard' when calling CardHolderAccountApi->AccountCardRegisterRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -815,7 +815,7 @@ namespace CityPayAPI.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
-            localVarRequestOptions.Data = inlineObject;
+            localVarRequestOptions.Data = registerCard;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -994,11 +994,11 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>CardHolderAccount</returns>
-        public CardHolderAccount AccountChangeContactRequest (string accountid, InlineObject3 inlineObject3)
+        public CardHolderAccount AccountChangeContactRequest (string accountid, ContactDetails contactDetails)
         {
-             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountChangeContactRequestWithHttpInfo(accountid, inlineObject3);
+             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountChangeContactRequestWithHttpInfo(accountid, contactDetails);
              return localVarResponse.Data;
         }
 
@@ -1007,17 +1007,17 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        public CityPayAPI.Client.ApiResponse< CardHolderAccount > AccountChangeContactRequestWithHttpInfo (string accountid, InlineObject3 inlineObject3)
+        public CityPayAPI.Client.ApiResponse< CardHolderAccount > AccountChangeContactRequestWithHttpInfo (string accountid, ContactDetails contactDetails)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountChangeContactRequest");
 
-            // verify the required parameter 'inlineObject3' is set
-            if (inlineObject3 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject3' when calling CardHolderAccountApi->AccountChangeContactRequest");
+            // verify the required parameter 'contactDetails' is set
+            if (contactDetails == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'contactDetails' when calling CardHolderAccountApi->AccountChangeContactRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1039,7 +1039,7 @@ namespace CityPayAPI.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
-            localVarRequestOptions.Data = inlineObject3;
+            localVarRequestOptions.Data = contactDetails;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1064,11 +1064,11 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync (string accountid, InlineObject3 inlineObject3)
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync (string accountid, ContactDetails contactDetails)
         {
-             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountChangeContactRequestAsyncWithHttpInfo(accountid, inlineObject3);
+             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountChangeContactRequestAsyncWithHttpInfo(accountid, contactDetails);
              return localVarResponse.Data;
 
         }
@@ -1078,17 +1078,17 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
-        /// <param name="inlineObject3"></param>
+        /// <param name="contactDetails"></param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountChangeContactRequestAsyncWithHttpInfo (string accountid, InlineObject3 inlineObject3)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountChangeContactRequestAsyncWithHttpInfo (string accountid, ContactDetails contactDetails)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountChangeContactRequest");
 
-            // verify the required parameter 'inlineObject3' is set
-            if (inlineObject3 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject3' when calling CardHolderAccountApi->AccountChangeContactRequest");
+            // verify the required parameter 'contactDetails' is set
+            if (contactDetails == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'contactDetails' when calling CardHolderAccountApi->AccountChangeContactRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1111,7 +1111,7 @@ namespace CityPayAPI.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
-            localVarRequestOptions.Data = inlineObject3;
+            localVarRequestOptions.Data = contactDetails;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1136,11 +1136,11 @@ namespace CityPayAPI.Api
         /// Account Create Creates a new card holder account and initialises the account ready for adding cards.
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>CardHolderAccount</returns>
-        public CardHolderAccount AccountCreate (InlineObject4 inlineObject4)
+        public CardHolderAccount AccountCreate (AccountCreate accountCreate)
         {
-             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountCreateWithHttpInfo(inlineObject4);
+             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountCreateWithHttpInfo(accountCreate);
              return localVarResponse.Data;
         }
 
@@ -1148,13 +1148,13 @@ namespace CityPayAPI.Api
         /// Account Create Creates a new card holder account and initialises the account ready for adding cards.
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        public CityPayAPI.Client.ApiResponse< CardHolderAccount > AccountCreateWithHttpInfo (InlineObject4 inlineObject4)
+        public CityPayAPI.Client.ApiResponse< CardHolderAccount > AccountCreateWithHttpInfo (AccountCreate accountCreate)
         {
-            // verify the required parameter 'inlineObject4' is set
-            if (inlineObject4 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject4' when calling CardHolderAccountApi->AccountCreate");
+            // verify the required parameter 'accountCreate' is set
+            if (accountCreate == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountCreate' when calling CardHolderAccountApi->AccountCreate");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1175,7 +1175,7 @@ namespace CityPayAPI.Api
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            localVarRequestOptions.Data = inlineObject4;
+            localVarRequestOptions.Data = accountCreate;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1199,11 +1199,11 @@ namespace CityPayAPI.Api
         /// Account Create Creates a new card holder account and initialises the account ready for adding cards.
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync (InlineObject4 inlineObject4)
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync (AccountCreate accountCreate)
         {
-             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCreateAsyncWithHttpInfo(inlineObject4);
+             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCreateAsyncWithHttpInfo(accountCreate);
              return localVarResponse.Data;
 
         }
@@ -1212,13 +1212,13 @@ namespace CityPayAPI.Api
         /// Account Create Creates a new card holder account and initialises the account ready for adding cards.
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject4"></param>
+        /// <param name="accountCreate"></param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCreateAsyncWithHttpInfo (InlineObject4 inlineObject4)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCreateAsyncWithHttpInfo (AccountCreate accountCreate)
         {
-            // verify the required parameter 'inlineObject4' is set
-            if (inlineObject4 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject4' when calling CardHolderAccountApi->AccountCreate");
+            // verify the required parameter 'accountCreate' is set
+            if (accountCreate == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountCreate' when calling CardHolderAccountApi->AccountCreate");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1240,7 +1240,7 @@ namespace CityPayAPI.Api
             foreach (var _accept in _accepts)
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
-            localVarRequestOptions.Data = inlineObject4;
+            localVarRequestOptions.Data = accountCreate;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1640,11 +1640,11 @@ namespace CityPayAPI.Api
         /// Charge A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>Decision</returns>
-        public Decision ChargeRequest (InlineObject8 inlineObject8)
+        public Decision ChargeRequest (ChargeRequest chargeRequest)
         {
-             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = ChargeRequestWithHttpInfo(inlineObject8);
+             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = ChargeRequestWithHttpInfo(chargeRequest);
              return localVarResponse.Data;
         }
 
@@ -1652,13 +1652,13 @@ namespace CityPayAPI.Api
         /// Charge A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>ApiResponse of Decision</returns>
-        public CityPayAPI.Client.ApiResponse< Decision > ChargeRequestWithHttpInfo (InlineObject8 inlineObject8)
+        public CityPayAPI.Client.ApiResponse< Decision > ChargeRequestWithHttpInfo (ChargeRequest chargeRequest)
         {
-            // verify the required parameter 'inlineObject8' is set
-            if (inlineObject8 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject8' when calling CardHolderAccountApi->ChargeRequest");
+            // verify the required parameter 'chargeRequest' is set
+            if (chargeRequest == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'chargeRequest' when calling CardHolderAccountApi->ChargeRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1679,7 +1679,7 @@ namespace CityPayAPI.Api
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            localVarRequestOptions.Data = inlineObject8;
+            localVarRequestOptions.Data = chargeRequest;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1703,11 +1703,11 @@ namespace CityPayAPI.Api
         /// Charge A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>Task of Decision</returns>
-        public async System.Threading.Tasks.Task<Decision> ChargeRequestAsync (InlineObject8 inlineObject8)
+        public async System.Threading.Tasks.Task<Decision> ChargeRequestAsync (ChargeRequest chargeRequest)
         {
-             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await ChargeRequestAsyncWithHttpInfo(inlineObject8);
+             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await ChargeRequestAsyncWithHttpInfo(chargeRequest);
              return localVarResponse.Data;
 
         }
@@ -1716,13 +1716,13 @@ namespace CityPayAPI.Api
         /// Charge A charge process obtains an authorisation using a tokenised value which represents a stored card  on a card holder account.  A card must previously be registered by calling &#x60;/account-register-card&#x60; with the card details  or retrieved using &#x60;/account-retrieve&#x60;  Tokens are generated whenever a previously registered list of cards are retrieved. Each token has, by design a  relatively short time to live of 30 minutes. This is both to safe guard the merchant and card holder from  replay attacks. Tokens are also restricted to your account, preventing malicious actors from stealing details for use elsewhere.    If a token is reused after it has expired it will be rejected and a new token will be required.   Tokenisation can be used for   - repeat authorisations on a previously stored card - easy authorisations just requiring CSC values to be entered - can be used for credential on file style payments - can require full 3-D Secure authentication to retain the liability shift - wallet style usage. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="inlineObject8"></param>
+        /// <param name="chargeRequest"></param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> ChargeRequestAsyncWithHttpInfo (InlineObject8 inlineObject8)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> ChargeRequestAsyncWithHttpInfo (ChargeRequest chargeRequest)
         {
-            // verify the required parameter 'inlineObject8' is set
-            if (inlineObject8 == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'inlineObject8' when calling CardHolderAccountApi->ChargeRequest");
+            // verify the required parameter 'chargeRequest' is set
+            if (chargeRequest == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'chargeRequest' when calling CardHolderAccountApi->ChargeRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1744,7 +1744,7 @@ namespace CityPayAPI.Api
             foreach (var _accept in _accepts)
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
-            localVarRequestOptions.Data = inlineObject8;
+            localVarRequestOptions.Data = chargeRequest;
 
             // authentication (cp-api-key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))

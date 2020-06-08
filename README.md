@@ -132,7 +132,9 @@ Class | Method | HTTP request | Description
 *OperationalApi* | [**ListMerchantsRequest**](docs/OperationalApi.md#listmerchantsrequest) | **GET** /merchants/{clientid} | List Merchants Request
 *OperationalApi* | [**PingRequest**](docs/OperationalApi.md#pingrequest) | **POST** /ping | Ping Request
 *PaymentProcessingApi* | [**AuthorisationRequest**](docs/PaymentProcessingApi.md#authorisationrequest) | **POST** /authorise | Authorisation
+*PaymentProcessingApi* | [**CResRequest**](docs/PaymentProcessingApi.md#cresrequest) | **POST** /cres | CRes
 *PaymentProcessingApi* | [**CaptureRequest**](docs/PaymentProcessingApi.md#capturerequest) | **POST** /capture | Capture
+*PaymentProcessingApi* | [**PaResRequest**](docs/PaymentProcessingApi.md#paresrequest) | **POST** /pares | PaRes
 *PaymentProcessingApi* | [**RetrievalRequest**](docs/PaymentProcessingApi.md#retrievalrequest) | **POST** /retrieve | Retrieval
 *PaymentProcessingApi* | [**VoidRequest**](docs/PaymentProcessingApi.md#voidrequest) | **POST** /void | Void
 
@@ -149,6 +151,7 @@ Class | Method | HTTP request | Description
  - [Model.AuthRequest](docs/AuthRequest.md)
  - [Model.AuthResponse](docs/AuthResponse.md)
  - [Model.AuthenRequired](docs/AuthenRequired.md)
+ - [Model.CResAuthRequest](docs/CResAuthRequest.md)
  - [Model.CaptureRequest](docs/CaptureRequest.md)
  - [Model.Card](docs/Card.md)
  - [Model.CardHolderAccount](docs/CardHolderAccount.md)
@@ -156,18 +159,10 @@ Class | Method | HTTP request | Description
  - [Model.ContactDetails](docs/ContactDetails.md)
  - [Model.Decision](docs/Decision.md)
  - [Model.ExternalMPI](docs/ExternalMPI.md)
- - [Model.InlineObject](docs/InlineObject.md)
- - [Model.InlineObject1](docs/InlineObject1.md)
- - [Model.InlineObject2](docs/InlineObject2.md)
- - [Model.InlineObject3](docs/InlineObject3.md)
- - [Model.InlineObject4](docs/InlineObject4.md)
- - [Model.InlineObject5](docs/InlineObject5.md)
- - [Model.InlineObject6](docs/InlineObject6.md)
- - [Model.InlineObject7](docs/InlineObject7.md)
- - [Model.InlineObject8](docs/InlineObject8.md)
  - [Model.ListMerchantsResponse](docs/ListMerchantsResponse.md)
  - [Model.MCC6012](docs/MCC6012.md)
  - [Model.Merchant](docs/Merchant.md)
+ - [Model.PaResAuthRequest](docs/PaResAuthRequest.md)
  - [Model.Ping](docs/Ping.md)
  - [Model.RegisterCard](docs/RegisterCard.md)
  - [Model.RequestChallenged](docs/RequestChallenged.md)

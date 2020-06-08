@@ -184,9 +184,3 @@ $RECYCLE.BIN/
 
 # Visual Studio 2014 CTP
 **/*.sln.ide
-/.openapi-generator-ignore
-**/*.md-e
-**/*-Debug.json
-**/UserPrefs.xml
-/.openapi-generator
-/git_push.sh

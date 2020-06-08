@@ -5,8 +5,16 @@ using System.Text;
 
 namespace CityPayAPI.Model
 {
+    /// <summary>
+    /// Models the ApiKey for connecting to the API
+    /// </summary>
     public class ApiKey
     {
+        /// <summary>
+        /// Creates a new ApiKey
+        /// </summary>
+        /// <param name="clientId">The client id provided</param>
+        /// <param name="licenceKey">The licence key provided</param>
         public ApiKey(string clientId, string licenceKey)
         {
             ClientId = clientId;

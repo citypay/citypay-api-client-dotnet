@@ -167,6 +167,7 @@ Class | Method | HTTP request | Description
  - [Model.RegisterCard](docs/RegisterCard.md)
  - [Model.RequestChallenged](docs/RequestChallenged.md)
  - [Model.RetrieveRequest](docs/RetrieveRequest.md)
+ - [Model.ThreeDSecure](docs/ThreeDSecure.md)
  - [Model.VoidRequest](docs/VoidRequest.md)
 
 

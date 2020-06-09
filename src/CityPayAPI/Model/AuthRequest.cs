@@ -54,13 +54,13 @@ namespace CityPayAPI.Model
         /// <param name="identifier">The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 32 to 127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different.  (required).</param>
         /// <param name="matchAvsa">A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.   Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.  &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.  &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the address did not match.  &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation. .</param>
         /// <param name="mcc6012">mcc6012.</param>
-        /// <param name="merchantTermurl">A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to. The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3D-Secure is required. .</param>
         /// <param name="merchantid">Identifies the merchant account to perform processing for. (required).</param>
         /// <param name="sdk">An optional reference value for the calling client such as a version number i.e..</param>
         /// <param name="shipTo">shipTo.</param>
+        /// <param name="threedsecure">threedsecure.</param>
         /// <param name="transInfo">Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id..</param>
         /// <param name="transType">The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field..</param>
-        public AuthRequest(AirlineAdvice airlineData = default(AirlineAdvice), int amount = default(int), string avsPostcodePolicy = default(string), ContactDetails billTo = default(ContactDetails), string cardnumber = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), int expmonth = default(int), int expyear = default(int), ExternalMPI externalMpi = default(ExternalMPI), string identifier = default(string), string matchAvsa = default(string), MCC6012 mcc6012 = default(MCC6012), string merchantTermurl = default(string), int merchantid = default(int), string sdk = default(string), ContactDetails shipTo = default(ContactDetails), string transInfo = default(string), string transType = default(string))
+        public AuthRequest(AirlineAdvice airlineData = default(AirlineAdvice), int amount = default(int), string avsPostcodePolicy = default(string), ContactDetails billTo = default(ContactDetails), string cardnumber = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), int expmonth = default(int), int expyear = default(int), ExternalMPI externalMpi = default(ExternalMPI), string identifier = default(string), string matchAvsa = default(string), MCC6012 mcc6012 = default(MCC6012), int merchantid = default(int), string sdk = default(string), ContactDetails shipTo = default(ContactDetails), ThreeDSecure threedsecure = default(ThreeDSecure), string transInfo = default(string), string transType = default(string))
         {
             this.Amount = amount;
             // to ensure "cardnumber" is required (not null)
@@ -80,9 +80,9 @@ namespace CityPayAPI.Model
             this.ExternalMpi = externalMpi;
             this.MatchAvsa = matchAvsa;
             this.Mcc6012 = mcc6012;
-            this.MerchantTermurl = merchantTermurl;
             this.Sdk = sdk;
             this.ShipTo = shipTo;
+            this.Threedsecure = threedsecure;
             this.TransInfo = transInfo;
             this.TransType = transType;
         }
@@ -189,13 +189,6 @@ namespace CityPayAPI.Model
         public MCC6012 Mcc6012 { get; set; }
 
         /// <summary>
-        /// A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to. The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3D-Secure is required. 
-        /// </summary>
-        /// <value>A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to. The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3D-Secure is required. </value>
-        [DataMember(Name="merchant_termurl", EmitDefaultValue=false)]
-        public string MerchantTermurl { get; set; }
-
-        /// <summary>
         /// Identifies the merchant account to perform processing for.
         /// </summary>
         /// <value>Identifies the merchant account to perform processing for.</value>
@@ -214,6 +207,12 @@ namespace CityPayAPI.Model
         /// </summary>
         [DataMember(Name="ship_to", EmitDefaultValue=false)]
         public ContactDetails ShipTo { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Threedsecure
+        /// </summary>
+        [DataMember(Name="threedsecure", EmitDefaultValue=false)]
+        public ThreeDSecure Threedsecure { get; set; }
 
         /// <summary>
         /// Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id.
@@ -252,10 +251,10 @@ namespace CityPayAPI.Model
             sb.Append("  Identifier: ").Append(Identifier).Append("\n");
             sb.Append("  MatchAvsa: ").Append(MatchAvsa).Append("\n");
             sb.Append("  Mcc6012: ").Append(Mcc6012).Append("\n");
-            sb.Append("  MerchantTermurl: ").Append(MerchantTermurl).Append("\n");
             sb.Append("  Merchantid: ").Append(Merchantid).Append("\n");
             sb.Append("  Sdk: ").Append(Sdk).Append("\n");
             sb.Append("  ShipTo: ").Append(ShipTo).Append("\n");
+            sb.Append("  Threedsecure: ").Append(Threedsecure).Append("\n");
             sb.Append("  TransInfo: ").Append(TransInfo).Append("\n");
             sb.Append("  TransType: ").Append(TransType).Append("\n");
             sb.Append("}\n");
@@ -365,11 +364,6 @@ namespace CityPayAPI.Model
                     this.Mcc6012.Equals(input.Mcc6012))
                 ) && 
                 (
-                    this.MerchantTermurl == input.MerchantTermurl ||
-                    (this.MerchantTermurl != null &&
-                    this.MerchantTermurl.Equals(input.MerchantTermurl))
-                ) && 
-                (
                     this.Merchantid == input.Merchantid ||
                     this.Merchantid.Equals(input.Merchantid)
                 ) && 
@@ -382,6 +376,11 @@ namespace CityPayAPI.Model
                     this.ShipTo == input.ShipTo ||
                     (this.ShipTo != null &&
                     this.ShipTo.Equals(input.ShipTo))
+                ) && 
+                (
+                    this.Threedsecure == input.Threedsecure ||
+                    (this.Threedsecure != null &&
+                    this.Threedsecure.Equals(input.Threedsecure))
                 ) && 
                 (
                     this.TransInfo == input.TransInfo ||
@@ -431,13 +430,13 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.MatchAvsa.GetHashCode();
                 if (this.Mcc6012 != null)
                     hashCode = hashCode * 59 + this.Mcc6012.GetHashCode();
-                if (this.MerchantTermurl != null)
-                    hashCode = hashCode * 59 + this.MerchantTermurl.GetHashCode();
                 hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
                 if (this.Sdk != null)
                     hashCode = hashCode * 59 + this.Sdk.GetHashCode();
                 if (this.ShipTo != null)
                     hashCode = hashCode * 59 + this.ShipTo.GetHashCode();
+                if (this.Threedsecure != null)
+                    hashCode = hashCode * 59 + this.Threedsecure.GetHashCode();
                 if (this.TransInfo != null)
                     hashCode = hashCode * 59 + this.TransInfo.GetHashCode();
                 if (this.TransType != null)

@@ -43,6 +43,7 @@ namespace CityPayAPI.Model
         /// <param name="amount">The amount to authorise in the lowest unit of currency with a variable length to a maximum of 12 digits. No decimal points are to be included and no divisional characters such as 1,024. The amount should be the total amount required for the transaction. For example with GBP £1,021.95 the amount value is 102195.  (required).</param>
         /// <param name="avsPostcodePolicy">A policy value which determines whether an AVS postcode policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.  &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS postcode numeric value does not match.  &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the postcode did not match.  &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send postcode details for authorisation. .</param>
         /// <param name="billTo">billTo.</param>
+        /// <param name="cardHolderName">The card holder name as appears on the card such as MR N E BODY. Required for some acquirers. .</param>
         /// <param name="cardnumber">The card number (PAN) with a variable length to a maximum of 21 digits in numerical form. Any non numeric characters will be stripped out of the card number, this includes whitespace or separators internal of the provided value.  The card number must be treated as sensitive data. We only provide an obfuscated value in logging and reporting.  The plaintext value is encrypted in our database using AES 256 GMC bit encryption for settlement or refund purposes.  When providing the card number to our gateway through the authorisation API you will be handling the card data on your application. This will require further PCI controls to be in place and this value must never be stored.  (required).</param>
         /// <param name="csc">The Card Security Code (CSC) (also known as CV2/CVV2) is normally found on the back of the card (American Express has it on the front). The value helps to identify posession of the card as it is not available within the chip or magnetic swipe.  When forwarding the CSC, please ensure the value is a string as some values start with 0 and this will be stripped out by any integer parsing.  The CSC number aids fraud prevention in Mail Order and Internet payments.   Business rules are available on your account to identify whether to accept or decline transactions based on mismatched results of the CSC.  The Payment Card Industry (PCI) requires that at no stage of a transaction should the CSC be stored. This applies to all entities handling card data. It should also not be used in any hashing process. CityPay do not store the value and have no method of retrieving the value once the transaction has been processed. For this reason, duplicate checking is unable to determine the CSC in its duplication check algorithm. .</param>
         /// <param name="cscPolicy">A policy value which determines whether a CSC policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.  &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the CSC value does not match.  &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the CSC did not match.  &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send the CSC details for authorisation. .</param>
@@ -60,7 +61,7 @@ namespace CityPayAPI.Model
         /// <param name="threedsecure">threedsecure.</param>
         /// <param name="transInfo">Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id..</param>
         /// <param name="transType">The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field..</param>
-        public AuthRequest(AirlineAdvice airlineData = default(AirlineAdvice), int amount = default(int), string avsPostcodePolicy = default(string), ContactDetails billTo = default(ContactDetails), string cardnumber = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), int expmonth = default(int), int expyear = default(int), ExternalMPI externalMpi = default(ExternalMPI), string identifier = default(string), string matchAvsa = default(string), MCC6012 mcc6012 = default(MCC6012), int merchantid = default(int), string sdk = default(string), ContactDetails shipTo = default(ContactDetails), ThreeDSecure threedsecure = default(ThreeDSecure), string transInfo = default(string), string transType = default(string))
+        public AuthRequest(AirlineAdvice airlineData = default(AirlineAdvice), int amount = default(int), string avsPostcodePolicy = default(string), ContactDetails billTo = default(ContactDetails), string cardHolderName = default(string), string cardnumber = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), int expmonth = default(int), int expyear = default(int), ExternalMPI externalMpi = default(ExternalMPI), string identifier = default(string), string matchAvsa = default(string), MCC6012 mcc6012 = default(MCC6012), int merchantid = default(int), string sdk = default(string), ContactDetails shipTo = default(ContactDetails), ThreeDSecure threedsecure = default(ThreeDSecure), string transInfo = default(string), string transType = default(string))
         {
             this.Amount = amount;
             // to ensure "cardnumber" is required (not null)
@@ -72,6 +73,7 @@ namespace CityPayAPI.Model
             this.AirlineData = airlineData;
             this.AvsPostcodePolicy = avsPostcodePolicy;
             this.BillTo = billTo;
+            this.CardHolderName = cardHolderName;
             this.Csc = csc;
             this.CscPolicy = cscPolicy;
             this.Currency = currency;
@@ -112,6 +114,13 @@ namespace CityPayAPI.Model
         /// </summary>
         [DataMember(Name="bill_to", EmitDefaultValue=false)]
         public ContactDetails BillTo { get; set; }
+
+        /// <summary>
+        /// The card holder name as appears on the card such as MR N E BODY. Required for some acquirers. 
+        /// </summary>
+        /// <value>The card holder name as appears on the card such as MR N E BODY. Required for some acquirers. </value>
+        [DataMember(Name="card_holder_name", EmitDefaultValue=false)]
+        public string CardHolderName { get; set; }
 
         /// <summary>
         /// The card number (PAN) with a variable length to a maximum of 21 digits in numerical form. Any non numeric characters will be stripped out of the card number, this includes whitespace or separators internal of the provided value.  The card number must be treated as sensitive data. We only provide an obfuscated value in logging and reporting.  The plaintext value is encrypted in our database using AES 256 GMC bit encryption for settlement or refund purposes.  When providing the card number to our gateway through the authorisation API you will be handling the card data on your application. This will require further PCI controls to be in place and this value must never be stored. 
@@ -240,6 +249,7 @@ namespace CityPayAPI.Model
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  AvsPostcodePolicy: ").Append(AvsPostcodePolicy).Append("\n");
             sb.Append("  BillTo: ").Append(BillTo).Append("\n");
+            sb.Append("  CardHolderName: ").Append(CardHolderName).Append("\n");
             sb.Append("  Cardnumber: ").Append(Cardnumber).Append("\n");
             sb.Append("  Csc: ").Append(Csc).Append("\n");
             sb.Append("  CscPolicy: ").Append(CscPolicy).Append("\n");
@@ -309,6 +319,11 @@ namespace CityPayAPI.Model
                     this.BillTo == input.BillTo ||
                     (this.BillTo != null &&
                     this.BillTo.Equals(input.BillTo))
+                ) && 
+                (
+                    this.CardHolderName == input.CardHolderName ||
+                    (this.CardHolderName != null &&
+                    this.CardHolderName.Equals(input.CardHolderName))
                 ) && 
                 (
                     this.Cardnumber == input.Cardnumber ||
@@ -410,6 +425,8 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.AvsPostcodePolicy.GetHashCode();
                 if (this.BillTo != null)
                     hashCode = hashCode * 59 + this.BillTo.GetHashCode();
+                if (this.CardHolderName != null)
+                    hashCode = hashCode * 59 + this.CardHolderName.GetHashCode();
                 if (this.Cardnumber != null)
                     hashCode = hashCode * 59 + this.Cardnumber.GetHashCode();
                 if (this.Csc != null)

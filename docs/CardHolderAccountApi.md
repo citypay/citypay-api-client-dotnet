@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AccountCardDeleteRequest**](CardHolderAccountApi.md#accountcarddeleterequest) | **DELETE** /account/{accountid}/card/{cardId} | Card Deletion
 [**AccountCardRegisterRequest**](CardHolderAccountApi.md#accountcardregisterrequest) | **POST** /account/{accountid}/register | Card Registration
-[**AccountCardStatusRequest**](CardHolderAccountApi.md#accountcardstatusrequest) | **POST** /account/{accountid}/card/{cardId}/status/{status} | Card Status
+[**AccountCardStatusRequest**](CardHolderAccountApi.md#accountcardstatusrequest) | **POST** /account/{accountid}/card/{cardId}/status | Card Status
 [**AccountChangeContactRequest**](CardHolderAccountApi.md#accountchangecontactrequest) | **POST** /account/{accountid}/contact | Contact Details Update
 [**AccountCreate**](CardHolderAccountApi.md#accountcreate) | **POST** /account/create | Account Create
 [**AccountDeleteRequest**](CardHolderAccountApi.md#accountdeleterequest) | **DELETE** /account/{accountid} | Account Deletion
@@ -86,10 +86,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Acknowledges the card has been requested for deletion. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | Acknowledges the card has been requested for deletion. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -164,16 +165,17 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | A successfully registered card provides a reload of the account including the new card. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | A successfully registered card provides a reload of the account including the new card. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="accountcardstatusrequest"></a>
 # **AccountCardStatusRequest**
-> Acknowledgement AccountCardStatusRequest (string accountid, string cardId, string status)
+> Acknowledgement AccountCardStatusRequest (string accountid, string cardId, CardStatus cardStatus)
 
 Card Status
 
@@ -201,12 +203,12 @@ namespace Example
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
             var cardId = cardId_example;  // string | The id of the card that is presented by a call to retrieve a card holder account.
-            var status = status_example;  // string | The status of the card to set, valid values are `ACTIVE` or `INACTIVE`.
+            var cardStatus = new CardStatus(); // CardStatus | 
 
             try
             {
                 // Card Status
-                Acknowledgement result = apiInstance.AccountCardStatusRequest(accountid, cardId, status);
+                Acknowledgement result = apiInstance.AccountCardStatusRequest(accountid, cardId, cardStatus);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -226,7 +228,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountid** | **string**| The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account. | 
  **cardId** | **string**| The id of the card that is presented by a call to retrieve a card holder account. | 
- **status** | **string**| The status of the card to set, valid values are &#x60;ACTIVE&#x60; or &#x60;INACTIVE&#x60;. | 
+ **cardStatus** | [**CardStatus**](CardStatus.md)|  | 
 
 ### Return type
 
@@ -238,16 +240,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Acknowledges the card status has changed, returning 01 for a valid change or 00 for non valid change. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | Acknowledges the card status has changed, returning 01 for a valid change or 00 for non valid change. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -322,10 +325,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | A revised account with the new details set. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | A revised account with the new details set. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -398,10 +402,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Provides an initialised account. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | Provides an initialised account. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -474,10 +479,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | An acknowledgment that the card holder account has been marked for deletion. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | An acknowledgment that the card holder account has been marked for deletion. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -550,16 +556,17 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | A card holder account that matches the account id provided in the request. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | A card holder account that matches the account id provided in the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="accountstatusrequest"></a>
 # **AccountStatusRequest**
-> Acknowledgement AccountStatusRequest (string accountid)
+> Acknowledgement AccountStatusRequest (string accountid, AccountStatus accountStatus)
 
 Account Status
 
@@ -586,11 +593,12 @@ namespace Example
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var accountStatus = new AccountStatus(); // AccountStatus | 
 
             try
             {
                 // Account Status
-                Acknowledgement result = apiInstance.AccountStatusRequest(accountid);
+                Acknowledgement result = apiInstance.AccountStatusRequest(accountid, accountStatus);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -609,6 +617,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountid** | **string**| The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account. | 
+ **accountStatus** | [**AccountStatus**](AccountStatus.md)|  | 
 
 ### Return type
 
@@ -620,16 +629,17 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | An acknowledgment that the card holder account status has been updated. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | An acknowledgment that the card holder account status has been updated. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -702,10 +712,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | A decision met by the result of the charge. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | A decision met by the result of the charge. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -26,62 +26,53 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// Merchant
+    /// Error
     /// </summary>
     [DataContract]
-    public partial class Merchant :  IEquatable<Merchant>, IValidatableObject
+    public partial class Error :  IEquatable<Error>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Merchant" /> class.
+        /// Initializes a new instance of the <see cref="Error" /> class.
         /// </summary>
-        /// <param name="currency">The currency of the merchant..</param>
-        /// <param name="merchantid">The merchant id which uniquely identifies the merchant account..</param>
-        /// <param name="name">The name of the merchant..</param>
-        /// <param name="status">The status of the account..</param>
-        /// <param name="statusLabel">The status label of the account..</param>
-        public Merchant(string currency = default(string), int merchantid = default(int), string name = default(string), string status = default(string), string statusLabel = default(string))
+        /// <param name="code">A response code providing a result of the process..</param>
+        /// <param name="context">A context id of the process used for referencing transactions through support..</param>
+        /// <param name="identifier">An identifier if presented in the original request..</param>
+        /// <param name="message">A response message providing a description of the result of the process..</param>
+        public Error(string code = default(string), string context = default(string), string identifier = default(string), string message = default(string))
         {
-            this.Currency = currency;
-            this.Merchantid = merchantid;
-            this.Name = name;
-            this.Status = status;
-            this.StatusLabel = statusLabel;
+            this.Code = code;
+            this.Context = context;
+            this.Identifier = identifier;
+            this.Message = message;
         }
         
         /// <summary>
-        /// The currency of the merchant.
+        /// A response code providing a result of the process.
         /// </summary>
-        /// <value>The currency of the merchant.</value>
-        [DataMember(Name="currency", EmitDefaultValue=false)]
-        public string Currency { get; set; }
+        /// <value>A response code providing a result of the process.</value>
+        [DataMember(Name="code", EmitDefaultValue=false)]
+        public string Code { get; set; }
 
         /// <summary>
-        /// The merchant id which uniquely identifies the merchant account.
+        /// A context id of the process used for referencing transactions through support.
         /// </summary>
-        /// <value>The merchant id which uniquely identifies the merchant account.</value>
-        [DataMember(Name="merchantid", EmitDefaultValue=false)]
-        public int Merchantid { get; set; }
+        /// <value>A context id of the process used for referencing transactions through support.</value>
+        [DataMember(Name="context", EmitDefaultValue=false)]
+        public string Context { get; set; }
 
         /// <summary>
-        /// The name of the merchant.
+        /// An identifier if presented in the original request.
         /// </summary>
-        /// <value>The name of the merchant.</value>
-        [DataMember(Name="name", EmitDefaultValue=false)]
-        public string Name { get; set; }
+        /// <value>An identifier if presented in the original request.</value>
+        [DataMember(Name="identifier", EmitDefaultValue=false)]
+        public string Identifier { get; set; }
 
         /// <summary>
-        /// The status of the account.
+        /// A response message providing a description of the result of the process.
         /// </summary>
-        /// <value>The status of the account.</value>
-        [DataMember(Name="status", EmitDefaultValue=false)]
-        public string Status { get; set; }
-
-        /// <summary>
-        /// The status label of the account.
-        /// </summary>
-        /// <value>The status label of the account.</value>
-        [DataMember(Name="status_label", EmitDefaultValue=false)]
-        public string StatusLabel { get; set; }
+        /// <value>A response message providing a description of the result of the process.</value>
+        [DataMember(Name="message", EmitDefaultValue=false)]
+        public string Message { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -90,12 +81,11 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Merchant {\n");
-            sb.Append("  Currency: ").Append(Currency).Append("\n");
-            sb.Append("  Merchantid: ").Append(Merchantid).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("  StatusLabel: ").Append(StatusLabel).Append("\n");
+            sb.Append("class Error {\n");
+            sb.Append("  Code: ").Append(Code).Append("\n");
+            sb.Append("  Context: ").Append(Context).Append("\n");
+            sb.Append("  Identifier: ").Append(Identifier).Append("\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -116,43 +106,39 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Merchant);
+            return this.Equals(input as Error);
         }
 
         /// <summary>
-        /// Returns true if Merchant instances are equal
+        /// Returns true if Error instances are equal
         /// </summary>
-        /// <param name="input">Instance of Merchant to be compared</param>
+        /// <param name="input">Instance of Error to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Merchant input)
+        public bool Equals(Error input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Currency == input.Currency ||
-                    (this.Currency != null &&
-                    this.Currency.Equals(input.Currency))
+                    this.Code == input.Code ||
+                    (this.Code != null &&
+                    this.Code.Equals(input.Code))
                 ) && 
                 (
-                    this.Merchantid == input.Merchantid ||
-                    this.Merchantid.Equals(input.Merchantid)
+                    this.Context == input.Context ||
+                    (this.Context != null &&
+                    this.Context.Equals(input.Context))
                 ) && 
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
+                    this.Identifier == input.Identifier ||
+                    (this.Identifier != null &&
+                    this.Identifier.Equals(input.Identifier))
                 ) && 
                 (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
-                ) && 
-                (
-                    this.StatusLabel == input.StatusLabel ||
-                    (this.StatusLabel != null &&
-                    this.StatusLabel.Equals(input.StatusLabel))
+                    this.Message == input.Message ||
+                    (this.Message != null &&
+                    this.Message.Equals(input.Message))
                 );
         }
 
@@ -165,15 +151,14 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Currency != null)
-                    hashCode = hashCode * 59 + this.Currency.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
-                if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
-                if (this.StatusLabel != null)
-                    hashCode = hashCode * 59 + this.StatusLabel.GetHashCode();
+                if (this.Code != null)
+                    hashCode = hashCode * 59 + this.Code.GetHashCode();
+                if (this.Context != null)
+                    hashCode = hashCode * 59 + this.Context.GetHashCode();
+                if (this.Identifier != null)
+                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
+                if (this.Message != null)
+                    hashCode = hashCode * 59 + this.Message.GetHashCode();
                 return hashCode;
             }
         }
@@ -185,6 +170,30 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // Code (string) maxLength
+            if(this.Code != null && this.Code.Length > 4)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, length must be less than 4.", new [] { "Code" });
+            }
+
+            // Code (string) minLength
+            if(this.Code != null && this.Code.Length < 3)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, length must be greater than 3.", new [] { "Code" });
+            }
+
+            // Identifier (string) maxLength
+            if(this.Identifier != null && this.Identifier.Length > 50)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
+            }
+
+            // Identifier (string) minLength
+            if(this.Identifier != null && this.Identifier.Length < 4)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
+            }
+
             yield break;
         }
     }

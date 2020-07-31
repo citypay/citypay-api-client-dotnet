@@ -26,40 +26,26 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// AccountCreate
+    /// AccountStatus
     /// </summary>
     [DataContract]
-    public partial class AccountCreate :  IEquatable<AccountCreate>, IValidatableObject
+    public partial class AccountStatus :  IEquatable<AccountStatus>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccountCreate" /> class.
+        /// Initializes a new instance of the <see cref="AccountStatus" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected AccountCreate() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountCreate" /> class.
-        /// </summary>
-        /// <param name="accountId">A card holder account id used for uniquely identifying the account. This value will be used for future referencing of the account oand to link your system to this API. This value is immutable and never changes.  (required).</param>
-        /// <param name="contact">contact.</param>
-        public AccountCreate(string accountId = default(string), ContactDetails contact = default(ContactDetails))
+        /// <param name="status">The status of the account to set, valid values are ACTIVE or DISABLED..</param>
+        public AccountStatus(string status = default(string))
         {
-            // to ensure "accountId" is required (not null)
-            this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for AccountCreate and cannot be null");
-            this.Contact = contact;
+            this.Status = status;
         }
         
         /// <summary>
-        /// A card holder account id used for uniquely identifying the account. This value will be used for future referencing of the account oand to link your system to this API. This value is immutable and never changes. 
+        /// The status of the account to set, valid values are ACTIVE or DISABLED.
         /// </summary>
-        /// <value>A card holder account id used for uniquely identifying the account. This value will be used for future referencing of the account oand to link your system to this API. This value is immutable and never changes. </value>
-        [DataMember(Name="account_id", EmitDefaultValue=false)]
-        public string AccountId { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Contact
-        /// </summary>
-        [DataMember(Name="contact", EmitDefaultValue=false)]
-        public ContactDetails Contact { get; set; }
+        /// <value>The status of the account to set, valid values are ACTIVE or DISABLED.</value>
+        [DataMember(Name="status", EmitDefaultValue=false)]
+        public string Status { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -68,9 +54,8 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class AccountCreate {\n");
-            sb.Append("  AccountId: ").Append(AccountId).Append("\n");
-            sb.Append("  Contact: ").Append(Contact).Append("\n");
+            sb.Append("class AccountStatus {\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -91,29 +76,24 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as AccountCreate);
+            return this.Equals(input as AccountStatus);
         }
 
         /// <summary>
-        /// Returns true if AccountCreate instances are equal
+        /// Returns true if AccountStatus instances are equal
         /// </summary>
-        /// <param name="input">Instance of AccountCreate to be compared</param>
+        /// <param name="input">Instance of AccountStatus to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(AccountCreate input)
+        public bool Equals(AccountStatus input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.AccountId == input.AccountId ||
-                    (this.AccountId != null &&
-                    this.AccountId.Equals(input.AccountId))
-                ) && 
-                (
-                    this.Contact == input.Contact ||
-                    (this.Contact != null &&
-                    this.Contact.Equals(input.Contact))
+                    this.Status == input.Status ||
+                    (this.Status != null &&
+                    this.Status.Equals(input.Status))
                 );
         }
 
@@ -126,10 +106,8 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.AccountId != null)
-                    hashCode = hashCode * 59 + this.AccountId.GetHashCode();
-                if (this.Contact != null)
-                    hashCode = hashCode * 59 + this.Contact.GetHashCode();
+                if (this.Status != null)
+                    hashCode = hashCode * 59 + this.Status.GetHashCode();
                 return hashCode;
             }
         }
@@ -141,18 +119,6 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // AccountId (string) maxLength
-            if(this.AccountId != null && this.AccountId.Length > 50)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be less than 50.", new [] { "AccountId" });
-            }
-
-            // AccountId (string) minLength
-            if(this.AccountId != null && this.AccountId.Length < 5)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be greater than 5.", new [] { "AccountId" });
-            }
-
             yield break;
         }
     }

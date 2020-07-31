@@ -26,40 +26,35 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// AccountCreate
+    /// CardStatus
     /// </summary>
     [DataContract]
-    public partial class AccountCreate :  IEquatable<AccountCreate>, IValidatableObject
+    public partial class CardStatus :  IEquatable<CardStatus>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccountCreate" /> class.
+        /// Initializes a new instance of the <see cref="CardStatus" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected AccountCreate() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountCreate" /> class.
-        /// </summary>
-        /// <param name="accountId">A card holder account id used for uniquely identifying the account. This value will be used for future referencing of the account oand to link your system to this API. This value is immutable and never changes.  (required).</param>
-        /// <param name="contact">contact.</param>
-        public AccountCreate(string accountId = default(string), ContactDetails contact = default(ContactDetails))
+        /// <param name="cardStatus">The status of the card to set, valid values are ACTIVE or INACTIVE..</param>
+        /// <param name="_default">Defines if the card is set as the default..</param>
+        public CardStatus(string cardStatus = default(string), bool _default = default(bool))
         {
-            // to ensure "accountId" is required (not null)
-            this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for AccountCreate and cannot be null");
-            this.Contact = contact;
+            this._CardStatus = cardStatus;
+            this.Default = _default;
         }
         
         /// <summary>
-        /// A card holder account id used for uniquely identifying the account. This value will be used for future referencing of the account oand to link your system to this API. This value is immutable and never changes. 
+        /// The status of the card to set, valid values are ACTIVE or INACTIVE.
         /// </summary>
-        /// <value>A card holder account id used for uniquely identifying the account. This value will be used for future referencing of the account oand to link your system to this API. This value is immutable and never changes. </value>
-        [DataMember(Name="account_id", EmitDefaultValue=false)]
-        public string AccountId { get; set; }
+        /// <value>The status of the card to set, valid values are ACTIVE or INACTIVE.</value>
+        [DataMember(Name="card_status", EmitDefaultValue=false)]
+        public string _CardStatus { get; set; }
 
         /// <summary>
-        /// Gets or Sets Contact
+        /// Defines if the card is set as the default.
         /// </summary>
-        [DataMember(Name="contact", EmitDefaultValue=false)]
-        public ContactDetails Contact { get; set; }
+        /// <value>Defines if the card is set as the default.</value>
+        [DataMember(Name="default", EmitDefaultValue=false)]
+        public bool Default { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -68,9 +63,9 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class AccountCreate {\n");
-            sb.Append("  AccountId: ").Append(AccountId).Append("\n");
-            sb.Append("  Contact: ").Append(Contact).Append("\n");
+            sb.Append("class CardStatus {\n");
+            sb.Append("  _CardStatus: ").Append(_CardStatus).Append("\n");
+            sb.Append("  Default: ").Append(Default).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -91,29 +86,28 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as AccountCreate);
+            return this.Equals(input as CardStatus);
         }
 
         /// <summary>
-        /// Returns true if AccountCreate instances are equal
+        /// Returns true if CardStatus instances are equal
         /// </summary>
-        /// <param name="input">Instance of AccountCreate to be compared</param>
+        /// <param name="input">Instance of CardStatus to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(AccountCreate input)
+        public bool Equals(CardStatus input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.AccountId == input.AccountId ||
-                    (this.AccountId != null &&
-                    this.AccountId.Equals(input.AccountId))
+                    this._CardStatus == input._CardStatus ||
+                    (this._CardStatus != null &&
+                    this._CardStatus.Equals(input._CardStatus))
                 ) && 
                 (
-                    this.Contact == input.Contact ||
-                    (this.Contact != null &&
-                    this.Contact.Equals(input.Contact))
+                    this.Default == input.Default ||
+                    this.Default.Equals(input.Default)
                 );
         }
 
@@ -126,10 +120,9 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.AccountId != null)
-                    hashCode = hashCode * 59 + this.AccountId.GetHashCode();
-                if (this.Contact != null)
-                    hashCode = hashCode * 59 + this.Contact.GetHashCode();
+                if (this._CardStatus != null)
+                    hashCode = hashCode * 59 + this._CardStatus.GetHashCode();
+                hashCode = hashCode * 59 + this.Default.GetHashCode();
                 return hashCode;
             }
         }
@@ -141,18 +134,6 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // AccountId (string) maxLength
-            if(this.AccountId != null && this.AccountId.Length > 50)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be less than 50.", new [] { "AccountId" });
-            }
-
-            // AccountId (string) minLength
-            if(this.AccountId != null && this.AccountId.Length < 5)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be greater than 5.", new [] { "AccountId" });
-            }
-
             yield break;
         }
     }

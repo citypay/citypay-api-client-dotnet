@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using RestSharp;
@@ -73,6 +74,17 @@ namespace CityPayAPI.Test
         [Fact]
         public void PingRequestTest()
         {
+            Configuration config = new Configuration();
+            config.BasePath = "http://127.0.0.1:8081/v6";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey(
+                Environment.GetEnvironmentVariable("CLIENT_ID"), 
+                Environment.GetEnvironmentVariable("LICENCE_KEY")
+                ).GenerateKey());
+            var sandbox  = new OperationalApi(config);
+            var result = sandbox.PingRequest(new Ping("example"));
+            Debug.WriteLine(result);
+
             // TODO uncomment below to test the method and replace null with proper value
             //Ping ping = null;
             //var response = instance.PingRequest(ping);

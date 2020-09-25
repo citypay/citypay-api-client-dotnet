@@ -3,8 +3,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Amount** | **int** | The amount of the transaction in decimal currency format. | [optional] 
-**AmountValue** | **string** | The amount of the transaction in integer/request format. | [optional] 
+**Amount** | **string** | The amount of the transaction in decimal currency format. | [optional] 
+**AmountValue** | **int** | The amount of the transaction in integer/request format. | [optional] 
 **Atrn** | **string** | A reference number provided by the acquiring services. | [optional] 
 **Authcode** | **string** | The authorisation code of the transaction returned by the acquirer or card issuer. | [optional] 
 **Batchno** | **string** | A batch number which the transaction has been end of day batched towards. | [optional] 

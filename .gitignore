@@ -184,3 +184,8 @@ $RECYCLE.BIN/
 
 # Visual Studio 2014 CTP
 **/*.sln.ide
+
+*.iml
+.vs/
+git_push.sh
+.openapi-generator

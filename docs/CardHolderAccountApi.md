@@ -90,7 +90,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | Acknowledges the card has been requested for deletion. |  -  |
+| **200** | Acknowledges the card has been requested for deletion. A response code of &#x60;001&#x60; is returned if the account is available for deletion or an error code is returned. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -250,7 +250,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | Acknowledges the card status has changed, returning 01 for a valid change or 00 for non valid change. |  -  |
+| **200** | Acknowledges the card status has changed, returning a response code of &#x60;001&#x60; for a valid change or &#x60;000&#x60; for a non valid change.  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -639,7 +639,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | An acknowledgment that the card holder account status has been updated. |  -  |
+| **200** | An acknowledgment that the card holder account status has been updated. A response code of &#x60;001&#x60; is returned if the request was accepted or no change required. A response code of &#x60;000&#x60; is returned if the request contains invalid data.  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

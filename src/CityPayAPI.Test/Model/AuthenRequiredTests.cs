@@ -31,18 +31,25 @@ namespace CityPayAPI.Test
     /// </remarks>
     public class AuthenRequiredTests : IDisposable
     {
-        // TODO uncomment below to declare an instance variable for AuthenRequired
-        //private AuthenRequired instance;
+
+        private AuthenRequired instance;
 
         public AuthenRequiredTests()
         {
-            // TODO uncomment below to create an instance of AuthenRequired
-            //instance = new AuthenRequired();
+
+        string json = @"
+        {
+           ""acs_url"": ""https://www.acs.com/tdsecure/opt_in_dispatcher.jsp?partner=debit&VAA=B"",
+            ""md"": ""0000000000000000000022"",
+            ""pareq"": ""eJxVUm1v2yAQ/itWv8dg/B5dmJyfw==""
+        }
+";
+
+        instance = (AuthenRequired) JsonConvert.DeserializeObject(json, typeof(AuthenRequired));
         }
 
         public void Dispose()
         {
-            // Cleanup when everything is done.
         }
 
         /// <summary>
@@ -51,8 +58,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void AuthenRequiredInstanceTest()
         {
-            // TODO uncomment below to test "IsInstanceOfType" AuthenRequired
-            //Assert.IsInstanceOfType<AuthenRequired> (instance, "variable 'instance' is a AuthenRequired");
+            Assert.IsType<AuthenRequired>(instance);
         }
 
 
@@ -62,23 +68,25 @@ namespace CityPayAPI.Test
         [Fact]
         public void AcsUrlTest()
         {
-            // TODO unit test for the property 'AcsUrl'
+            Assert.Equal( "https://www.acs.com/tdsecure/opt_in_dispatcher.jsp?partner=debit&VAA=B", instance.AcsUrl);
         }
         /// <summary>
         /// Test the property 'Md'
         /// </summary>
         [Fact]
+        
         public void MdTest()
         {
-            // TODO unit test for the property 'Md'
+            Assert.Equal("0000000000000000000022", instance.Md);
         }
+        
         /// <summary>
         /// Test the property 'Pareq'
         /// </summary>
         [Fact]
         public void PareqTest()
         {
-            // TODO unit test for the property 'Pareq'
+            Assert.Equal( "eJxVUm1v2yAQ/itWv8dg/B5dmJyfw==", instance.Pareq);
         }
 
     }

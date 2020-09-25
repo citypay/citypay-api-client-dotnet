@@ -32,17 +32,37 @@ namespace CityPayAPI.Test
     public class ListMerchantsResponseTests : IDisposable
     {
         // TODO uncomment below to declare an instance variable for ListMerchantsResponse
-        //private ListMerchantsResponse instance;
+        private ListMerchantsResponse instance;
 
         public ListMerchantsResponseTests()
         {
-            // TODO uncomment below to create an instance of ListMerchantsResponse
-            //instance = new ListMerchantsResponse();
+            string json = @"
+{
+            ""client_name"": ""CityPay Demo"",
+            ""clientid"": ""PC123456"",
+            ""merchants"": [
+            {
+                ""currency"": ""GBP"",
+                ""merchantid"": 12345678,
+                ""name"": ""CityPay One"",
+                ""status"": ""T"",
+                ""status_label"": ""Test""
+            },
+            {
+                ""currency"": ""GBP"",
+                ""merchantid"": 87654321,
+                ""name"": ""CityPay Two"",
+                ""status"": ""T"",
+                ""status_label"": ""Test""
+            }
+            ]
+    }
+";
+            instance = (ListMerchantsResponse) JsonConvert.DeserializeObject(json, typeof(ListMerchantsResponse));
         }
 
         public void Dispose()
         {
-            // Cleanup when everything is done.
         }
 
         /// <summary>
@@ -51,8 +71,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void ListMerchantsResponseInstanceTest()
         {
-            // TODO uncomment below to test "IsInstanceOfType" ListMerchantsResponse
-            //Assert.IsInstanceOfType<ListMerchantsResponse> (instance, "variable 'instance' is a ListMerchantsResponse");
+            Assert.IsType<ListMerchantsResponse>(instance);
         }
 
 
@@ -62,7 +81,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void ClientNameTest()
         {
-            // TODO unit test for the property 'ClientName'
+            Assert.Equal("CityPay Demo", instance.ClientName);
         }
         /// <summary>
         /// Test the property 'Clientid'
@@ -70,7 +89,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void ClientidTest()
         {
-            // TODO unit test for the property 'Clientid'
+            Assert.Equal("PC123456", instance.Clientid);
         }
         /// <summary>
         /// Test the property 'Merchants'
@@ -78,7 +97,21 @@ namespace CityPayAPI.Test
         [Fact]
         public void MerchantsTest()
         {
-            // TODO unit test for the property 'Merchants'
+            Assert.Equal(2, instance.Merchants.Count);
+
+            Assert.Equal("GBP", instance.Merchants[0].Currency); 
+            Assert.Equal(12345678, instance.Merchants[0].Merchantid);
+            Assert.Equal("CityPay One", instance.Merchants[0].Name);
+            Assert.Equal("T", instance.Merchants[0].Status);
+            Assert.Equal("Test", instance.Merchants[0].StatusLabel);
+
+            Assert.Equal("GBP", instance.Merchants[1].Currency); 
+            Assert.Equal(87654321, instance.Merchants[1].Merchantid);
+            Assert.Equal("CityPay Two", instance.Merchants[1].Name);
+            Assert.Equal("T", instance.Merchants[1].Status);
+            Assert.Equal("Test", instance.Merchants[1].StatusLabel);
+
+                
         }
 
     }

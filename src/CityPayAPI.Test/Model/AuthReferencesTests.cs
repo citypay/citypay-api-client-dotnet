@@ -9,7 +9,6 @@
 
 
 using Xunit;
-
 using System;
 using System.Linq;
 using System.IO;
@@ -31,18 +30,36 @@ namespace CityPayAPI.Test
     /// </remarks>
     public class AuthReferencesTests : IDisposable
     {
-        // TODO uncomment below to declare an instance variable for AuthReferences
-        //private AuthReferences instance;
+        private AuthReferences instance;
 
         public AuthReferencesTests()
         {
-            // TODO uncomment below to create an instance of AuthReferences
-            //instance = new AuthReferences();
+            string json = @"
+{  ""auths"": [
+            {
+                ""amount"": ""0.12"",
+                ""amount_value"": 12,
+                ""atrn"": null,
+                ""authcode"": ""A12345"",
+                ""batchno"": null,
+                ""currency"": ""GBP"",
+                ""datetime"": ""2020-07-21T15:55:04Z"",
+                ""identifier"": ""TestingAPI"",
+                ""maskedpan"": ""400000******0000"",
+                ""merchantid"": 12345678,
+                ""result"": ""Accepted"",
+                ""trans_status"": ""O"",
+                ""trans_type"": ""S"",
+                ""transno"": 88
+            }
+            ]
+        }
+";
+            instance = (AuthReferences) JsonConvert.DeserializeObject(json, typeof(AuthReferences));
         }
 
         public void Dispose()
         {
-            // Cleanup when everything is done.
         }
 
         /// <summary>
@@ -51,8 +68,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void AuthReferencesInstanceTest()
         {
-            // TODO uncomment below to test "IsInstanceOfType" AuthReferences
-            //Assert.IsInstanceOfType<AuthReferences> (instance, "variable 'instance' is a AuthReferences");
+            Assert.IsType<AuthReferences>(instance);
         }
 
 
@@ -62,9 +78,20 @@ namespace CityPayAPI.Test
         [Fact]
         public void AuthsTest()
         {
-            // TODO unit test for the property 'Auths'
+            Assert.Equal("0.12", instance.Auths[0].Amount);
+            Assert.Equal(12, instance.Auths[0].AmountValue);
+            Assert.Null(instance.Auths[0].Atrn);
+            Assert.Equal("A12345", instance.Auths[0].Authcode);
+            Assert.Null(instance.Auths[0].Batchno);
+            Assert.Equal("GBP", instance.Auths[0].Currency);
+            Assert.Equal("2020-07-21T15:55:04", instance.Auths[0].Datetime.ToString("yyyy-MM-ddTHH:mm:ss"));
+            Assert.Equal("TestingAPI", instance.Auths[0].Identifier);
+            Assert.Equal("400000******0000", instance.Auths[0].Maskedpan);
+            Assert.Equal(12345678, instance.Auths[0].Merchantid);
+            Assert.Equal("Accepted", instance.Auths[0].Result);
+            Assert.Equal("O", instance.Auths[0].TransStatus);
+            Assert.Equal("S", instance.Auths[0].TransType);
+            Assert.Equal(88, instance.Auths[0].Transno);
         }
-
     }
-
 }

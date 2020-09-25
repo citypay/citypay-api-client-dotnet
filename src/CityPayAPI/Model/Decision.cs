@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 
 namespace CityPayAPI.Model
@@ -61,6 +62,33 @@ namespace CityPayAPI.Model
         [DataMember(Name="RequestChallenged", EmitDefaultValue=false)]
         public RequestChallenged RequestChallenged { get; set; }
 
+        /// <summary>
+        /// Determines if the decision is a 3dsv2 challenge request
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRequestChallenged()
+        {
+            return this.RequestChallenged != null;
+        }
+
+        /// <summary>
+        /// Determines if the decision resulted in an authorisation
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAuthResponse()
+        {
+            return this.AuthResponse != null;
+        }
+
+        /// <summary>
+        /// Determines if the decision required authentication with 3DSv1
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAuthenRequired()
+        {
+            return this.AuthenRequired != null;
+        }
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

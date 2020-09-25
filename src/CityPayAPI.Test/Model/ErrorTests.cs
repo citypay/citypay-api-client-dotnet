@@ -31,18 +31,26 @@ namespace CityPayAPI.Test
     /// </remarks>
     public class ErrorTests : IDisposable
     {
-        // TODO uncomment below to declare an instance variable for Error
-        //private Error instance;
+
+        private Error instance;
 
         public ErrorTests()
         {
-            // TODO uncomment below to create an instance of Error
-            //instance = new Error();
+
+            string json = @"
+{
+            ""code"": ""000"",
+            ""context"": ""aspiu352908ns47n343598bads"",
+            ""identifier"": ""95b857a1-5955-4b86-963c-5a6dbfc4fb95"",
+            ""message"": ""Approved 044332""
+        }
+";
+            instance = (Error) JsonConvert.DeserializeObject(json, typeof(Error));
+            
         }
 
         public void Dispose()
         {
-            // Cleanup when everything is done.
         }
 
         /// <summary>
@@ -51,8 +59,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void ErrorInstanceTest()
         {
-            // TODO uncomment below to test "IsInstanceOfType" Error
-            //Assert.IsInstanceOfType<Error> (instance, "variable 'instance' is a Error");
+            Assert.IsType<Error>(instance);
         }
 
 
@@ -62,31 +69,34 @@ namespace CityPayAPI.Test
         [Fact]
         public void CodeTest()
         {
-            // TODO unit test for the property 'Code'
+            Assert.Equal("000", instance.Code);
         }
+        
         /// <summary>
         /// Test the property 'Context'
         /// </summary>
         [Fact]
         public void ContextTest()
         {
-            // TODO unit test for the property 'Context'
+            Assert.Equal("aspiu352908ns47n343598bads", instance.Context);
         }
+        
         /// <summary>
         /// Test the property 'Identifier'
         /// </summary>
         [Fact]
         public void IdentifierTest()
         {
-            // TODO unit test for the property 'Identifier'
+            Assert.Equal("95b857a1-5955-4b86-963c-5a6dbfc4fb95", instance.Identifier);
         }
+        
         /// <summary>
         /// Test the property 'Message'
         /// </summary>
         [Fact]
         public void MessageTest()
         {
-            // TODO unit test for the property 'Message'
+            Assert.Equal("Approved 044332", instance.Message);
         }
 
     }

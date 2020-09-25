@@ -31,54 +31,92 @@ namespace CityPayAPI.Test
     /// </remarks>
     public class DecisionTests : IDisposable
     {
-        // TODO uncomment below to declare an instance variable for Decision
-        //private Decision instance;
+
 
         public DecisionTests()
         {
-            // TODO uncomment below to create an instance of Decision
-            //instance = new Decision();
+            
         }
 
         public void Dispose()
         {
-            // Cleanup when everything is done.
         }
 
-        /// <summary>
-        /// Test an instance of Decision
-        /// </summary>
-        [Fact]
-        public void DecisionInstanceTest()
-        {
-            // TODO uncomment below to test "IsInstanceOfType" Decision
-            //Assert.IsInstanceOfType<Decision> (instance, "variable 'instance' is a Decision");
-        }
-
-
-        /// <summary>
-        /// Test the property 'Authentication'
-        /// </summary>
-        [Fact]
-        public void AuthenticationTest()
-        {
-            // TODO unit test for the property 'Authentication'
-        }
-        /// <summary>
-        /// Test the property 'Challenge'
-        /// </summary>
-        [Fact]
-        public void ChallengeTest()
-        {
-            // TODO unit test for the property 'Challenge'
-        }
+        
         /// <summary>
         /// Test the property 'Result'
         /// </summary>
         [Fact]
-        public void ResultTest()
+        public void AuthResultTest()
         {
-            // TODO unit test for the property 'Result'
+            string json = @"
+    { ""AuthResponse"": {
+            ""amount"": 5500,
+            ""atrn"": ""atrn1"",
+            ""atsd"": ""a"",
+            ""authcode"": ""12345"",
+            ""authen_result"": ""R"",
+            ""authorised"": true,
+            ""avs_result"": ""G"",
+            ""bin_commercial"": false,
+            ""bin_debit"": false,
+            ""bin_description"": ""bin_desc"",
+            ""cavv"": ""cavvvvvvvvvvvvv"",
+            ""context"": ""20200812075906AAAGV4"",
+            ""csc_result"": ""C"",
+            ""currency"": ""GBP"",
+            ""datetime"": ""2020-08-12T07:59:11Z"",
+            ""eci"": ""0"",
+            ""identifier"": ""ident1"",
+            ""live"": true,
+            ""maskedpan"": ""400000******0002"",
+            ""merchantid"": 12345,
+            ""result"": 1,
+            ""result_code"": ""000"",
+            ""result_message"": ""System: Accepted Transaction"",
+            ""scheme"": ""VISA_BUSINESS"",
+            ""sha256"": ""abcdefg"",
+            ""trans_status"": ""P"",
+            ""transno"": 74875
+        }
+    }
+
+";
+            Decision decision = (Decision) JsonConvert.DeserializeObject(json, typeof(Decision));
+            Assert.False(decision.IsRequestChallenged());
+            Assert.False(decision.IsRequestChallenged());
+            Assert.False(decision.IsRequestChallenged());
+
+            AuthResponse instance = decision.AuthResponse;
+            Assert.Equal(5500, instance.Amount);
+            Assert.Equal("atrn1", instance.Atrn);
+            Assert.Equal("a", instance.Atsd);
+            Assert.Equal("12345", instance.Authcode);
+            Assert.Equal("R", instance.AuthenResult);
+            Assert.True(instance.Authorised);
+            Assert.Equal("G", instance.AvsResult);
+            Assert.False(instance.BinCommercial);
+            Assert.False(instance.BinDebit);
+            Assert.Equal("bin_desc", instance.BinDescription);
+            Assert.Equal("cavvvvvvvvvvvvv", instance.Cavv);
+            Assert.Equal("20200812075906AAAGV4", instance.Context);
+            Assert.Equal("C", instance.CscResult);
+            Assert.Equal("GBP", instance.Currency);
+            Assert.Equal("2020-08-12T07:59:11", instance.Datetime.ToString("yyyy-MM-ddTHH:mm:ss"));
+            Assert.Equal("0", instance.Eci);
+            Assert.Equal("ident1", instance.Identifier);
+            Assert.True(instance.Live);
+            Assert.Equal("400000******0002", instance.Maskedpan);
+            Assert.Equal(12345, instance.Merchantid);
+            Assert.Equal(1, instance.Result);
+            Assert.Equal("000", instance.ResultCode);
+            Assert.Equal("System: Accepted Transaction", instance.ResultMessage);
+            Assert.Equal("VISA_BUSINESS", instance.Scheme);
+            Assert.Equal("abcdefg", instance.Sha256);
+            Assert.Equal("P", instance.TransStatus);
+            Assert.Equal(74875, instance.Transno);
+            
+            
         }
 
     }

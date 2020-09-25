@@ -31,18 +31,58 @@ namespace CityPayAPI.Test
     /// </remarks>
     public class CardHolderAccountTests : IDisposable
     {
-        // TODO uncomment below to declare an instance variable for CardHolderAccount
-        //private CardHolderAccount instance;
+
+        private CardHolderAccount instance;
 
         public CardHolderAccountTests()
         {
-            // TODO uncomment below to create an instance of CardHolderAccount
-            //instance = new CardHolderAccount();
+            string json = @"
+{
+            ""account_id"": ""abc123"",
+            ""cards"": [{
+                ""Bincommercial"": false,
+                ""Bincorporate"": false,
+                ""Bincountryissued"": ""GBR"",
+                ""Bincurrency"": ""GBP"",
+                ""Bindescription"": ""Visa Classic"",
+                ""Bineu"": false,
+                ""cardid"": ""2U1XV3PJSeUXFNzXidACn2TyCzAK"",
+                ""cardstatus"": ""ACTIVE"",
+                ""default"": true,
+                ""expmonth"": 7,
+                ""expyear"": 2022,
+                ""label"": ""TestVisa/0002"",
+                ""label2"": ""TestVisa/0002,Exp:7/2022"",
+                ""scheme"": ""TestVisa"",
+                ""token"": ""ctPCzxq4WxEwWbkG7whRPLRCG27vYFNzsEDNihYmDwqsBc5QEXnFRvq2j5oRyb56ErRVEQaBN7PFMEDtjQQXDQpfxKkp3AxbyeGo61RhKBjFTFegaP4LBZUxFZimsXW8Deae9VyhWSgS2o8AXzTJU9UP3bo8kRcpataxuH3fJj3JHDnyeZt""
+            }],
+            ""contact"": {
+                ""address1"": ""7 Esplanade"",
+                ""address2"": """",
+                ""address3"": """",
+                ""area"": ""St Helier"",
+                ""company"": ""CityPay Ltd"",
+                ""country"": ""JE"",
+                ""email"": ""support@citypay.com"",
+                ""firstname"": ""Joe"",
+                ""lastname"": ""Wicks"",
+                ""mobile_no"": ""077112123456"",
+                ""postcode"": ""JE2 3QA"",
+                ""telephone_no"": ""+4415341234567"",
+                ""title"": ""Mr""},
+            ""date_created"": ""2020-08-01T09:15:24Z"",
+            ""default_card_id"": ""2U1XV3PJSeUXFNzXidACn2TyCzAK"",
+            ""default_card_index"": 0,
+            ""status"": ""ACTIVE"",
+            ""unique_id"": ""Ew3BKeWNdL3qKQU7XK7Sbt2eAL5WFW4AfoASDSA""
+        }
+
+";
+            instance = (CardHolderAccount) JsonConvert.DeserializeObject(json, typeof(CardHolderAccount));
         }
 
         public void Dispose()
         {
-            // Cleanup when everything is done.
         }
 
         /// <summary>
@@ -51,8 +91,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void CardHolderAccountInstanceTest()
         {
-            // TODO uncomment below to test "IsInstanceOfType" CardHolderAccount
-            //Assert.IsInstanceOfType<CardHolderAccount> (instance, "variable 'instance' is a CardHolderAccount");
+            Assert.IsType<CardHolderAccount>(instance);
         }
 
 
@@ -60,51 +99,44 @@ namespace CityPayAPI.Test
         /// Test the property 'AccountId'
         /// </summary>
         [Fact]
-        public void AccountIdTest()
+        public void AccountTest()
         {
-            // TODO unit test for the property 'AccountId'
+            Assert.Equal("abc123", instance.AccountId);
+            Assert.False(instance.Cards[0].BinCommercial);
+            Assert.False(instance.Cards[0].BinCorporate);
+            Assert.Equal("GBR", instance.Cards[0].BinCountryIssued);
+            Assert.Equal("GBP", instance.Cards[0].BinCurrency);
+            Assert.Equal("Visa Classic", instance.Cards[0].BinDescription);
+            Assert.False(instance.Cards[0].BinEu);
+            Assert.Equal( "2U1XV3PJSeUXFNzXidACn2TyCzAK", instance.Cards[0].CardId);
+            Assert.Equal( "ACTIVE", instance.Cards[0].CardStatus);
+            Assert.True( instance.Cards[0].Default);
+            Assert.Equal( 7, instance.Cards[0].Expmonth);
+            Assert.Equal( 2022, instance.Cards[0].Expyear);
+            Assert.Equal( "TestVisa/0002", instance.Cards[0].Label);
+            Assert.Equal("TestVisa/0002,Exp:7/2022", instance.Cards[0].Label2);
+            Assert.Equal("TestVisa", instance.Cards[0].Scheme);
+            Assert.Equal( "ctPCzxq4WxEwWbkG7whRPLRCG27vYFNzsEDNihYmDwqsBc5QEXnFRvq2j5oRyb56ErRVEQaBN7PFMEDtjQQXDQpfxKkp3AxbyeGo61RhKBjFTFegaP4LBZUxFZimsXW8Deae9VyhWSgS2o8AXzTJU9UP3bo8kRcpataxuH3fJj3JHDnyeZt", instance.Cards[0].Token);
+            Assert.Equal( "7 Esplanade", instance.Contact.Address1);
+            Assert.Equal( "", instance.Contact.Address2);
+            Assert.Equal( "", instance.Contact.Address3);
+            Assert.Equal( "St Helier", instance.Contact.Area);
+            Assert.Equal( "CityPay Ltd", instance.Contact.Company);
+            Assert.Equal( "JE", instance.Contact.Country);
+            Assert.Equal( "support@citypay.com", instance.Contact.Email);
+            Assert.Equal( "Joe", instance.Contact.Firstname);
+            Assert.Equal( "Wicks", instance.Contact.Lastname);
+            Assert.Equal( "077112123456", instance.Contact.MobileNo);
+            Assert.Equal( "JE2 3QA", instance.Contact.Postcode);
+            Assert.Equal( "+4415341234567", instance.Contact.TelephoneNo);
+            Assert.Equal( "Mr", instance.Contact.Title);
+            Assert.Equal( "2020-08-01T09:15:24", instance.DateCreated.ToString("yyyy-MM-ddTHH:mm:ss"));
+            Assert.Equal( "2U1XV3PJSeUXFNzXidACn2TyCzAK", instance.DefaultCardId);
+            Assert.Equal( 0, instance.DefaultCardIndex);
+            Assert.Equal( "ACTIVE", instance.Status);
+            Assert.Equal( "Ew3BKeWNdL3qKQU7XK7Sbt2eAL5WFW4AfoASDSA", instance.UniqueId);
         }
-        /// <summary>
-        /// Test the property 'CacId'
-        /// </summary>
-        [Fact]
-        public void CacIdTest()
-        {
-            // TODO unit test for the property 'CacId'
-        }
-        /// <summary>
-        /// Test the property 'Cards'
-        /// </summary>
-        [Fact]
-        public void CardsTest()
-        {
-            // TODO unit test for the property 'Cards'
-        }
-        /// <summary>
-        /// Test the property 'Contact'
-        /// </summary>
-        [Fact]
-        public void ContactTest()
-        {
-            // TODO unit test for the property 'Contact'
-        }
-        /// <summary>
-        /// Test the property 'DateCreated'
-        /// </summary>
-        [Fact]
-        public void DateCreatedTest()
-        {
-            // TODO unit test for the property 'DateCreated'
-        }
-        /// <summary>
-        /// Test the property 'TransStatus'
-        /// </summary>
-        [Fact]
-        public void TransStatusTest()
-        {
-            // TODO unit test for the property 'TransStatus'
-        }
-
+        
     }
 
 }

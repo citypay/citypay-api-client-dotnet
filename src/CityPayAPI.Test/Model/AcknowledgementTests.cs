@@ -36,7 +36,12 @@ namespace CityPayAPI.Test
 
         public AcknowledgementTests()
         {
-            string json = "{ \"code\": \"000\",\"context\": \"6oUBgAfXy9M6UL\",\"identifier\": \"56603850082002AAAH3T\",\"message\": \"System: Accepted Transaction\"}";
+            string json = @"{
+    ""code"": ""000"",
+    ""context"": ""1B12WmDZB3EYSbb"",
+    ""identifier"": ""testIdentifier"",
+    ""message"": ""System: Accepted Transaction""
+}";
             instance = (Acknowledgement) JsonConvert.DeserializeObject(json, typeof(Acknowledgement));
         }
 
@@ -50,7 +55,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void AcknowledgementInstanceTest()
         {
-            // Assert.IsType(typeof(Acknowledgement) "variable 'instance' is a Acknowledgement");
+            Assert.IsType<Acknowledgement>(instance);
         }
 
 
@@ -68,7 +73,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void ContextTest()
         {
-            // TODO unit test for the property 'Context'
+            Assert.Equal("1B12WmDZB3EYSbb", instance.Context);
         }
         /// <summary>
         /// Test the property 'Identifier'
@@ -76,7 +81,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void IdentifierTest()
         {
-            // TODO unit test for the property 'Identifier'
+            Assert.Equal("testIdentifier", instance.Identifier);
         }
         /// <summary>
         /// Test the property 'Message'
@@ -84,7 +89,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void MessageTest()
         {
-            // TODO unit test for the property 'Message'
+            Assert.Equal("System: Accepted Transaction", instance.Message);
         }
 
     }

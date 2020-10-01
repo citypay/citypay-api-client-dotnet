@@ -44,9 +44,10 @@ namespace CityPayAPI.Model
         /// <param name="dateCreated">The date and time the account was created..</param>
         /// <param name="defaultCardId">The id of the default card..</param>
         /// <param name="defaultCardIndex">The index in the array of the default card..</param>
+        /// <param name="lastModified">The date and time the account was last modified..</param>
         /// <param name="status">Defines the status of the account for processing valid values are   - ACTIVE for active accounts that are able to process  - DISABLED for accounts that are currently disabled for processing. .</param>
         /// <param name="uniqueId">A unique id of the card holder account which uniquely identifies the stored account. This value is not searchable..</param>
-        public CardHolderAccount(string accountId = default(string), List<Card> cards = default(List<Card>), ContactDetails contact = default(ContactDetails), DateTime dateCreated = default(DateTime), string defaultCardId = default(string), int defaultCardIndex = default(int), string status = default(string), string uniqueId = default(string))
+        public CardHolderAccount(string accountId = default(string), List<Card> cards = default(List<Card>), ContactDetails contact = default(ContactDetails), DateTime dateCreated = default(DateTime), string defaultCardId = default(string), int defaultCardIndex = default(int), DateTime lastModified = default(DateTime), string status = default(string), string uniqueId = default(string))
         {
             // to ensure "accountId" is required (not null)
             this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for CardHolderAccount and cannot be null");
@@ -56,6 +57,7 @@ namespace CityPayAPI.Model
             this.DateCreated = dateCreated;
             this.DefaultCardId = defaultCardId;
             this.DefaultCardIndex = defaultCardIndex;
+            this.LastModified = lastModified;
             this.Status = status;
             this.UniqueId = uniqueId;
         }
@@ -101,6 +103,13 @@ namespace CityPayAPI.Model
         public int DefaultCardIndex { get; set; }
 
         /// <summary>
+        /// The date and time the account was last modified.
+        /// </summary>
+        /// <value>The date and time the account was last modified.</value>
+        [DataMember(Name="last_modified", EmitDefaultValue=false)]
+        public DateTime LastModified { get; set; }
+
+        /// <summary>
         /// Defines the status of the account for processing valid values are   - ACTIVE for active accounts that are able to process  - DISABLED for accounts that are currently disabled for processing. 
         /// </summary>
         /// <value>Defines the status of the account for processing valid values are   - ACTIVE for active accounts that are able to process  - DISABLED for accounts that are currently disabled for processing. </value>
@@ -128,6 +137,7 @@ namespace CityPayAPI.Model
             sb.Append("  DateCreated: ").Append(DateCreated).Append("\n");
             sb.Append("  DefaultCardId: ").Append(DefaultCardId).Append("\n");
             sb.Append("  DefaultCardIndex: ").Append(DefaultCardIndex).Append("\n");
+            sb.Append("  LastModified: ").Append(LastModified).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  UniqueId: ").Append(UniqueId).Append("\n");
             sb.Append("}\n");
@@ -195,6 +205,11 @@ namespace CityPayAPI.Model
                     this.DefaultCardIndex.Equals(input.DefaultCardIndex)
                 ) && 
                 (
+                    this.LastModified == input.LastModified ||
+                    (this.LastModified != null &&
+                    this.LastModified.Equals(input.LastModified))
+                ) && 
+                (
                     this.Status == input.Status ||
                     (this.Status != null &&
                     this.Status.Equals(input.Status))
@@ -226,6 +241,8 @@ namespace CityPayAPI.Model
                 if (this.DefaultCardId != null)
                     hashCode = hashCode * 59 + this.DefaultCardId.GetHashCode();
                 hashCode = hashCode * 59 + this.DefaultCardIndex.GetHashCode();
+                if (this.LastModified != null)
+                    hashCode = hashCode * 59 + this.LastModified.GetHashCode();
                 if (this.Status != null)
                     hashCode = hashCode * 59 + this.Status.GetHashCode();
                 if (this.UniqueId != null)

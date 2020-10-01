@@ -22,8 +22,8 @@ namespace CityPayAPI.Test
                 throw new ArgumentException("No CP_CLIENT_ID value set");
             if (_cpLicenceKey == null)
                 throw new ArgumentException("No CP_LICENCE_KEY value set");
-            if (_cpMerchantId == null)
-                throw new ArgumentException("No CP_MERCHANT_ID value set");
+            // if (_cpMerchantId == null)
+            //     throw new ArgumentException("No CP_MERCHANT_ID value set");
 
             _configuration = new Configuration();
             _configuration.BasePath = "https://sandbox.citypay.com/v6";

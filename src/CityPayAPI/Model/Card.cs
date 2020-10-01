@@ -43,6 +43,7 @@ namespace CityPayAPI.Model
         /// <param name="binEu">Defines whether the card is regulated within the EU..</param>
         /// <param name="cardId">The id of the card that is returned. Should be used for referencing the card when perform any changes..</param>
         /// <param name="cardStatus">The status of the card such, valid values are  - ACTIVE the card is active for processing  - INACTIVE the card is not active for processing  - EXPIRED for cards that have passed their expiry date. .</param>
+        /// <param name="dateCreated">The date time of when the card was created..</param>
         /// <param name="_default">Determines if the card is the default card for the account and should be regarded as the first option to be used for processing..</param>
         /// <param name="expmonth">The expiry month of the card..</param>
         /// <param name="expyear">The expiry year of the card..</param>
@@ -51,7 +52,7 @@ namespace CityPayAPI.Model
         /// <param name="last4digits">The last 4 digits of the card to aid in identification..</param>
         /// <param name="scheme">The scheme that issued the card..</param>
         /// <param name="token">A token that can be used to process against the card..</param>
-        public Card(bool binCommercial = default(bool), bool binCorporate = default(bool), string binCountryIssued = default(string), bool binCredit = default(bool), string binCurrency = default(string), bool binDebit = default(bool), string binDescription = default(string), bool binEu = default(bool), string cardId = default(string), string cardStatus = default(string), bool _default = default(bool), int expmonth = default(int), int expyear = default(int), string label = default(string), string label2 = default(string), string last4digits = default(string), string scheme = default(string), string token = default(string))
+        public Card(bool binCommercial = default(bool), bool binCorporate = default(bool), string binCountryIssued = default(string), bool binCredit = default(bool), string binCurrency = default(string), bool binDebit = default(bool), string binDescription = default(string), bool binEu = default(bool), string cardId = default(string), string cardStatus = default(string), DateTime dateCreated = default(DateTime), bool _default = default(bool), int expmonth = default(int), int expyear = default(int), string label = default(string), string label2 = default(string), string last4digits = default(string), string scheme = default(string), string token = default(string))
         {
             this.BinCommercial = binCommercial;
             this.BinCorporate = binCorporate;
@@ -63,6 +64,7 @@ namespace CityPayAPI.Model
             this.BinEu = binEu;
             this.CardId = cardId;
             this.CardStatus = cardStatus;
+            this.DateCreated = dateCreated;
             this.Default = _default;
             this.Expmonth = expmonth;
             this.Expyear = expyear;
@@ -144,6 +146,13 @@ namespace CityPayAPI.Model
         public string CardStatus { get; set; }
 
         /// <summary>
+        /// The date time of when the card was created.
+        /// </summary>
+        /// <value>The date time of when the card was created.</value>
+        [DataMember(Name="date_created", EmitDefaultValue=false)]
+        public DateTime DateCreated { get; set; }
+
+        /// <summary>
         /// Determines if the card is the default card for the account and should be regarded as the first option to be used for processing.
         /// </summary>
         /// <value>Determines if the card is the default card for the account and should be regarded as the first option to be used for processing.</value>
@@ -217,6 +226,7 @@ namespace CityPayAPI.Model
             sb.Append("  BinEu: ").Append(BinEu).Append("\n");
             sb.Append("  CardId: ").Append(CardId).Append("\n");
             sb.Append("  CardStatus: ").Append(CardStatus).Append("\n");
+            sb.Append("  DateCreated: ").Append(DateCreated).Append("\n");
             sb.Append("  Default: ").Append(Default).Append("\n");
             sb.Append("  Expmonth: ").Append(Expmonth).Append("\n");
             sb.Append("  Expyear: ").Append(Expyear).Append("\n");
@@ -305,6 +315,11 @@ namespace CityPayAPI.Model
                     this.CardStatus.Equals(input.CardStatus))
                 ) && 
                 (
+                    this.DateCreated == input.DateCreated ||
+                    (this.DateCreated != null &&
+                    this.DateCreated.Equals(input.DateCreated))
+                ) && 
+                (
                     this.Default == input.Default ||
                     this.Default.Equals(input.Default)
                 ) && 
@@ -367,6 +382,8 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.CardId.GetHashCode();
                 if (this.CardStatus != null)
                     hashCode = hashCode * 59 + this.CardStatus.GetHashCode();
+                if (this.DateCreated != null)
+                    hashCode = hashCode * 59 + this.DateCreated.GetHashCode();
                 hashCode = hashCode * 59 + this.Default.GetHashCode();
                 hashCode = hashCode * 59 + this.Expmonth.GetHashCode();
                 hashCode = hashCode * 59 + this.Expyear.GetHashCode();

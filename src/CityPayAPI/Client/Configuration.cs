@@ -350,7 +350,7 @@ namespace CityPayAPI.Client
             String report = "C# SDK (CityPayAPI) Debug Report:\n";
             report += "    OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + "\n";
             report += "    Version of the API: 6.0.9\n";
-            report += "    SDK Package Version: 1.0.2\n";
+            report += "    SDK Package Version: 1.0.3\n";
 
             return report;
         }

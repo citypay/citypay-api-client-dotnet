@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | A result and acknowledgement of the capture request. |  -  |
+| **200** | A result and acknowledgement of the capture request. The response will return a &#x60;000|001&#x60; response on a successful capture otherwise an error code response explaining the error. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -548,7 +548,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | A result and acknowledgement of the void request. |  -  |
+| **200** | A result and acknowledgement of the void request, returning an &#x60;080|003&#x60; response code on successful void/cancellation of the transaction. If an error occurs an error code will be returned explaining the failure.  |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

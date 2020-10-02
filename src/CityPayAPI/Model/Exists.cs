@@ -25,69 +25,50 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// Decision
+    /// Exists
     /// </summary>
     [DataContract]
-    public partial class Decision :  IEquatable<Decision>, IValidatableObject
+    public partial class Exists :  IEquatable<Exists>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Decision" /> class.
+        /// Initializes a new instance of the <see cref="Exists" /> class.
         /// </summary>
-        /// <param name="authenRequired">authenRequired.</param>
-        /// <param name="authResponse">authResponse.</param>
-        /// <param name="requestChallenged">requestChallenged.</param>
-        public Decision(AuthenRequired authenRequired = default(AuthenRequired), AuthResponse authResponse = default(AuthResponse), RequestChallenged requestChallenged = default(RequestChallenged))
+        [JsonConstructorAttribute]
+        protected Exists() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Exists" /> class.
+        /// </summary>
+        /// <param name="active">Boolean value whether the entity is active..</param>
+        /// <param name="exists">Boolean value whether the entity exists. (required).</param>
+        /// <param name="lastModified">The last modified date of the entity..</param>
+        public Exists(bool active = default(bool), bool exists = default(bool), DateTime lastModified = default(DateTime))
         {
-            this.AuthenRequired = authenRequired;
-            this.AuthResponse = authResponse;
-            this.RequestChallenged = requestChallenged;
+            this._Exists = exists;
+            this.Active = active;
+            this.LastModified = lastModified;
         }
         
         /// <summary>
-        /// Gets or Sets AuthenRequired
+        /// Boolean value whether the entity is active.
         /// </summary>
-        [DataMember(Name="AuthenRequired", EmitDefaultValue=false)]
-        public AuthenRequired AuthenRequired { get; set; }
+        /// <value>Boolean value whether the entity is active.</value>
+        [DataMember(Name="active", EmitDefaultValue=false)]
+        public bool Active { get; set; }
 
         /// <summary>
-        /// Gets or Sets AuthResponse
+        /// Boolean value whether the entity exists.
         /// </summary>
-        [DataMember(Name="AuthResponse", EmitDefaultValue=false)]
-        public AuthResponse AuthResponse { get; set; }
+        /// <value>Boolean value whether the entity exists.</value>
+        [DataMember(Name="exists", EmitDefaultValue=false)]
+        public bool _Exists { get; set; }
 
         /// <summary>
-        /// Gets or Sets RequestChallenged
+        /// The last modified date of the entity.
         /// </summary>
-        [DataMember(Name="RequestChallenged", EmitDefaultValue=false)]
-        public RequestChallenged RequestChallenged { get; set; }
+        /// <value>The last modified date of the entity.</value>
+        [DataMember(Name="last_modified", EmitDefaultValue=false)]
+        public DateTime LastModified { get; set; }
 
-        /// <summary>
-        /// Determines if the decision is a 3dsv2 challenge request
-        /// </summary>
-        /// <returns></returns>
-        public bool IsRequestChallenged()
-        {
-            return this.RequestChallenged != null;
-        }
-
-        /// <summary>
-        /// Determines if the decision resulted in an authorisation
-        /// </summary>
-        /// <returns></returns>
-        public bool IsAuthResponse()
-        {
-            return this.AuthResponse != null;
-        }
-
-        /// <summary>
-        /// Determines if the decision required authentication with 3DSv1
-        /// </summary>
-        /// <returns></returns>
-        public bool IsAuthenRequired()
-        {
-            return this.AuthenRequired != null;
-        }
-        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -95,10 +76,10 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Decision {\n");
-            sb.Append("  AuthenRequired: ").Append(AuthenRequired).Append("\n");
-            sb.Append("  AuthResponse: ").Append(AuthResponse).Append("\n");
-            sb.Append("  RequestChallenged: ").Append(RequestChallenged).Append("\n");
+            sb.Append("class Exists {\n");
+            sb.Append("  Active: ").Append(Active).Append("\n");
+            sb.Append("  _Exists: ").Append(_Exists).Append("\n");
+            sb.Append("  LastModified: ").Append(LastModified).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -119,34 +100,32 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Decision);
+            return this.Equals(input as Exists);
         }
 
         /// <summary>
-        /// Returns true if Decision instances are equal
+        /// Returns true if Exists instances are equal
         /// </summary>
-        /// <param name="input">Instance of Decision to be compared</param>
+        /// <param name="input">Instance of Exists to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Decision input)
+        public bool Equals(Exists input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.AuthenRequired == input.AuthenRequired ||
-                    (this.AuthenRequired != null &&
-                    this.AuthenRequired.Equals(input.AuthenRequired))
+                    this.Active == input.Active ||
+                    this.Active.Equals(input.Active)
                 ) && 
                 (
-                    this.AuthResponse == input.AuthResponse ||
-                    (this.AuthResponse != null &&
-                    this.AuthResponse.Equals(input.AuthResponse))
+                    this._Exists == input._Exists ||
+                    this._Exists.Equals(input._Exists)
                 ) && 
                 (
-                    this.RequestChallenged == input.RequestChallenged ||
-                    (this.RequestChallenged != null &&
-                    this.RequestChallenged.Equals(input.RequestChallenged))
+                    this.LastModified == input.LastModified ||
+                    (this.LastModified != null &&
+                    this.LastModified.Equals(input.LastModified))
                 );
         }
 
@@ -159,12 +138,10 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.AuthenRequired != null)
-                    hashCode = hashCode * 59 + this.AuthenRequired.GetHashCode();
-                if (this.AuthResponse != null)
-                    hashCode = hashCode * 59 + this.AuthResponse.GetHashCode();
-                if (this.RequestChallenged != null)
-                    hashCode = hashCode * 59 + this.RequestChallenged.GetHashCode();
+                hashCode = hashCode * 59 + this.Active.GetHashCode();
+                hashCode = hashCode * 59 + this._Exists.GetHashCode();
+                if (this.LastModified != null)
+                    hashCode = hashCode * 59 + this.LastModified.GetHashCode();
                 return hashCode;
             }
         }

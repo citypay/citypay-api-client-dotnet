@@ -47,10 +47,11 @@ namespace CityPayAPI.Model
         /// <param name="identifier">The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 0x32 to 0x127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different.  (required).</param>
         /// <param name="matchAvsa">A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.   Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.  &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.  &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the address did not match.  &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation. .</param>
         /// <param name="merchantid">Identifies the merchant account to perform processing for. (required).</param>
+        /// <param name="threedsecure">threedsecure.</param>
         /// <param name="token">A tokenised form of a card that belongs to a card holder&#39;s account and that has been previously registered. The token is time based and will only be active for a short duration. The value is therefore designed not to be stored remotely for future  use.  Tokens will start with ct and are resiliently tamper proof using HMacSHA-256. No sensitive card data is stored internally within the token.  Each card will contain a different token and the value may be different on any retrieval call.  The value can be presented for payment as a selection value to an end user in a web application.  (required).</param>
         /// <param name="transInfo">Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id..</param>
         /// <param name="transType">The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field..</param>
-        public ChargeRequest(int amount = default(int), string avsPostcodePolicy = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), string identifier = default(string), string matchAvsa = default(string), int merchantid = default(int), string token = default(string), string transInfo = default(string), string transType = default(string))
+        public ChargeRequest(int amount = default(int), string avsPostcodePolicy = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), string identifier = default(string), string matchAvsa = default(string), int merchantid = default(int), ThreeDSecure threedsecure = default(ThreeDSecure), string token = default(string), string transInfo = default(string), string transType = default(string))
         {
             this.Amount = amount;
             // to ensure "identifier" is required (not null)
@@ -64,6 +65,7 @@ namespace CityPayAPI.Model
             this.Currency = currency;
             this.DuplicatePolicy = duplicatePolicy;
             this.MatchAvsa = matchAvsa;
+            this.Threedsecure = threedsecure;
             this.TransInfo = transInfo;
             this.TransType = transType;
         }
@@ -132,6 +134,12 @@ namespace CityPayAPI.Model
         public int Merchantid { get; set; }
 
         /// <summary>
+        /// Gets or Sets Threedsecure
+        /// </summary>
+        [DataMember(Name="threedsecure", EmitDefaultValue=false)]
+        public ThreeDSecure Threedsecure { get; set; }
+
+        /// <summary>
         /// A tokenised form of a card that belongs to a card holder&#39;s account and that has been previously registered. The token is time based and will only be active for a short duration. The value is therefore designed not to be stored remotely for future  use.  Tokens will start with ct and are resiliently tamper proof using HMacSHA-256. No sensitive card data is stored internally within the token.  Each card will contain a different token and the value may be different on any retrieval call.  The value can be presented for payment as a selection value to an end user in a web application. 
         /// </summary>
         /// <value>A tokenised form of a card that belongs to a card holder&#39;s account and that has been previously registered. The token is time based and will only be active for a short duration. The value is therefore designed not to be stored remotely for future  use.  Tokens will start with ct and are resiliently tamper proof using HMacSHA-256. No sensitive card data is stored internally within the token.  Each card will contain a different token and the value may be different on any retrieval call.  The value can be presented for payment as a selection value to an end user in a web application. </value>
@@ -169,6 +177,7 @@ namespace CityPayAPI.Model
             sb.Append("  Identifier: ").Append(Identifier).Append("\n");
             sb.Append("  MatchAvsa: ").Append(MatchAvsa).Append("\n");
             sb.Append("  Merchantid: ").Append(Merchantid).Append("\n");
+            sb.Append("  Threedsecure: ").Append(Threedsecure).Append("\n");
             sb.Append("  Token: ").Append(Token).Append("\n");
             sb.Append("  TransInfo: ").Append(TransInfo).Append("\n");
             sb.Append("  TransType: ").Append(TransType).Append("\n");
@@ -250,6 +259,11 @@ namespace CityPayAPI.Model
                     this.Merchantid.Equals(input.Merchantid)
                 ) && 
                 (
+                    this.Threedsecure == input.Threedsecure ||
+                    (this.Threedsecure != null &&
+                    this.Threedsecure.Equals(input.Threedsecure))
+                ) && 
+                (
                     this.Token == input.Token ||
                     (this.Token != null &&
                     this.Token.Equals(input.Token))
@@ -291,6 +305,8 @@ namespace CityPayAPI.Model
                 if (this.MatchAvsa != null)
                     hashCode = hashCode * 59 + this.MatchAvsa.GetHashCode();
                 hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
+                if (this.Threedsecure != null)
+                    hashCode = hashCode * 59 + this.Threedsecure.GetHashCode();
                 if (this.Token != null)
                     hashCode = hashCode * 59 + this.Token.GetHashCode();
                 if (this.TransInfo != null)

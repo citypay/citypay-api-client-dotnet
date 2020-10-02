@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**AccountChangeContactRequest**](CardHolderAccountApi.md#accountchangecontactrequest) | **POST** /account/{accountid}/contact | Contact Details Update
 [**AccountCreate**](CardHolderAccountApi.md#accountcreate) | **POST** /account/create | Account Create
 [**AccountDeleteRequest**](CardHolderAccountApi.md#accountdeleterequest) | **DELETE** /account/{accountid} | Account Deletion
+[**AccountExistsRequest**](CardHolderAccountApi.md#accountexistsrequest) | **GET** /account-exists/{accountid} | Account Exists
 [**AccountRetrieveRequest**](CardHolderAccountApi.md#accountretrieverequest) | **GET** /account/{accountid} | Account Retrieval
 [**AccountStatusRequest**](CardHolderAccountApi.md#accountstatusrequest) | **POST** /account/{accountid}/status | Account Status
 [**ChargeRequest**](CardHolderAccountApi.md#chargerequest) | **POST** /charge | Charge
@@ -90,7 +91,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | Acknowledges the card has been requested for deletion. A response code of &#x60;001&#x60; is returned if the account is available for deletion or an error code is returned. |  -  |
+| **200** | Acknowledges the card has been requested for deletion. A response code of &#x60;001&#x60; is returned if the account is available for deletion otherwise an error code is returned. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -483,7 +484,84 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | An acknowledgment that the card holder account has been marked for deletion. |  -  |
+| **200** | An acknowledgment code of &#x60;001&#x60; that the card holder account has been marked for deletion. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="accountexistsrequest"></a>
+# **AccountExistsRequest**
+> Exists AccountExistsRequest (string accountid)
+
+Account Exists
+
+.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using CityPayAPI.Api;
+using CityPayAPI.Client;
+using CityPayAPI.Model;
+
+namespace Example
+{
+    public class AccountExistsRequestExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.citypay.com/v6";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+
+            var apiInstance = new CardHolderAccountApi(config);
+            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+
+            try
+            {
+                // Account Exists
+                Exists result = apiInstance.AccountExistsRequest(accountid);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling CardHolderAccountApi.AccountExistsRequest: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accountid** | **string**| The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account. | 
+
+### Return type
+
+[**Exists**](Exists.md)
+
+### Authorization
+
+[cp-api-key](../README.md#cp-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **200** | A response model determining whether the account exists, if exists is true, a last modified date of the account is also provided. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

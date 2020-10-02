@@ -158,7 +158,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | A result of the ping request. |  -  |
+| **200** | A result of the ping request, returning on 044 response code on successful receipt of the ping request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

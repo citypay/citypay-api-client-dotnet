@@ -33,14 +33,16 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ThreeDSecure" /> class.
         /// </summary>
-        /// <param name="acceptHeaders">The content of the HTTP accept header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. .</param>
+        /// <param name="acceptHeaders">Required for 3DSv1. Optional if the &#x60;cp_bx&#x60; value is provided otherwise required for 3Dv2 processing operating in browser authentication mode.  The &#x60;cp_bx&#x60; value will override any value supplied to this field.  The content of the HTTP accept header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. .</param>
+        /// <param name="cpBx">Required for 3DSv2.  Browser extension value produced by the citypay.js &#x60;bx&#x60; function. See https://sandbox.citypay.com/3dsv2/bx for  details. .</param>
         /// <param name="downgrade1">Where a merchant is configured for 3DSv2, setting this option will attempt to downgrade the transaction to  3DSv1. .</param>
-        /// <param name="merchantTermurl">A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to.  The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3DSv1 or 3DSv2 is required. .</param>
+        /// <param name="merchantTermurl">Required for 3DSv1 and 3Dv2 processing.  A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to.  The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3DSv1 or 3DSv2 is required. .</param>
         /// <param name="tdsPolicy">A policy value which determines whether ThreeDSecure is enforced or bypassed. Note that this will only work for e-commerce transactions and accounts that have 3DSecure enabled and fully registered with Visa, MasterCard or American Express. It is useful when transactions may be wanted to bypass processing rules.  Note that this may affect the liability shift of transactions and may occur a higher fee with the acquiring bank.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.  &#x60;1&#x60; for an enforced policy. Transactions will be enabled for 3DS processing  &#x60;2&#x60; to bypass. Transactions that are bypassed will switch off 3DS processing. .</param>
-        /// <param name="userAgent">The content of the HTTP user-agent header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. .</param>
-        public ThreeDSecure(string acceptHeaders = default(string), bool downgrade1 = default(bool), string merchantTermurl = default(string), string tdsPolicy = default(string), string userAgent = default(string))
+        /// <param name="userAgent">Required for 3DSv1. Optional if the &#x60;cp_bx&#x60; value is provided otherwise required 3Dv2 processing operating in browser authentication mode.  The &#x60;cp_bx&#x60; value will override any value supplied to this field.  The content of the HTTP user-agent header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. .</param>
+        public ThreeDSecure(string acceptHeaders = default(string), string cpBx = default(string), bool downgrade1 = default(bool), string merchantTermurl = default(string), string tdsPolicy = default(string), string userAgent = default(string))
         {
             this.AcceptHeaders = acceptHeaders;
+            this.CpBx = cpBx;
             this.Downgrade1 = downgrade1;
             this.MerchantTermurl = merchantTermurl;
             this.TdsPolicy = tdsPolicy;
@@ -48,11 +50,18 @@ namespace CityPayAPI.Model
         }
         
         /// <summary>
-        /// The content of the HTTP accept header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. 
+        /// Required for 3DSv1. Optional if the &#x60;cp_bx&#x60; value is provided otherwise required for 3Dv2 processing operating in browser authentication mode.  The &#x60;cp_bx&#x60; value will override any value supplied to this field.  The content of the HTTP accept header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. 
         /// </summary>
-        /// <value>The content of the HTTP accept header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. </value>
+        /// <value>Required for 3DSv1. Optional if the &#x60;cp_bx&#x60; value is provided otherwise required for 3Dv2 processing operating in browser authentication mode.  The &#x60;cp_bx&#x60; value will override any value supplied to this field.  The content of the HTTP accept header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. </value>
         [DataMember(Name="accept_headers", EmitDefaultValue=false)]
         public string AcceptHeaders { get; set; }
+
+        /// <summary>
+        /// Required for 3DSv2.  Browser extension value produced by the citypay.js &#x60;bx&#x60; function. See https://sandbox.citypay.com/3dsv2/bx for  details. 
+        /// </summary>
+        /// <value>Required for 3DSv2.  Browser extension value produced by the citypay.js &#x60;bx&#x60; function. See https://sandbox.citypay.com/3dsv2/bx for  details. </value>
+        [DataMember(Name="cp_bx", EmitDefaultValue=false)]
+        public string CpBx { get; set; }
 
         /// <summary>
         /// Where a merchant is configured for 3DSv2, setting this option will attempt to downgrade the transaction to  3DSv1. 
@@ -62,9 +71,9 @@ namespace CityPayAPI.Model
         public bool Downgrade1 { get; set; }
 
         /// <summary>
-        /// A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to.  The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3DSv1 or 3DSv2 is required. 
+        /// Required for 3DSv1 and 3Dv2 processing.  A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to.  The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3DSv1 or 3DSv2 is required. 
         /// </summary>
-        /// <value>A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to.  The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3DSv1 or 3DSv2 is required. </value>
+        /// <value>Required for 3DSv1 and 3Dv2 processing.  A controller URL for 3D-Secure processing that any response from an authentication request or challenge request should be sent to.  The controller should forward on the response from the URL back via this API for subsequent processing. Required if 3DSv1 or 3DSv2 is required. </value>
         [DataMember(Name="merchant_termurl", EmitDefaultValue=false)]
         public string MerchantTermurl { get; set; }
 
@@ -76,9 +85,9 @@ namespace CityPayAPI.Model
         public string TdsPolicy { get; set; }
 
         /// <summary>
-        /// The content of the HTTP user-agent header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. 
+        /// Required for 3DSv1. Optional if the &#x60;cp_bx&#x60; value is provided otherwise required 3Dv2 processing operating in browser authentication mode.  The &#x60;cp_bx&#x60; value will override any value supplied to this field.  The content of the HTTP user-agent header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. 
         /// </summary>
-        /// <value>The content of the HTTP user-agent header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. </value>
+        /// <value>Required for 3DSv1. Optional if the &#x60;cp_bx&#x60; value is provided otherwise required 3Dv2 processing operating in browser authentication mode.  The &#x60;cp_bx&#x60; value will override any value supplied to this field.  The content of the HTTP user-agent header as sent to the merchant from the cardholder&#39;s user agent. This value will be validated by the ACS when the card holder authenticates themselves to verify that no intermediary is performing this action. Required for 3DSv1. </value>
         [DataMember(Name="user_agent", EmitDefaultValue=false)]
         public string UserAgent { get; set; }
 
@@ -91,6 +100,7 @@ namespace CityPayAPI.Model
             var sb = new StringBuilder();
             sb.Append("class ThreeDSecure {\n");
             sb.Append("  AcceptHeaders: ").Append(AcceptHeaders).Append("\n");
+            sb.Append("  CpBx: ").Append(CpBx).Append("\n");
             sb.Append("  Downgrade1: ").Append(Downgrade1).Append("\n");
             sb.Append("  MerchantTermurl: ").Append(MerchantTermurl).Append("\n");
             sb.Append("  TdsPolicy: ").Append(TdsPolicy).Append("\n");
@@ -135,6 +145,11 @@ namespace CityPayAPI.Model
                     this.AcceptHeaders.Equals(input.AcceptHeaders))
                 ) && 
                 (
+                    this.CpBx == input.CpBx ||
+                    (this.CpBx != null &&
+                    this.CpBx.Equals(input.CpBx))
+                ) && 
+                (
                     this.Downgrade1 == input.Downgrade1 ||
                     this.Downgrade1.Equals(input.Downgrade1)
                 ) && 
@@ -166,6 +181,8 @@ namespace CityPayAPI.Model
                 int hashCode = 41;
                 if (this.AcceptHeaders != null)
                     hashCode = hashCode * 59 + this.AcceptHeaders.GetHashCode();
+                if (this.CpBx != null)
+                    hashCode = hashCode * 59 + this.CpBx.GetHashCode();
                 hashCode = hashCode * 59 + this.Downgrade1.GetHashCode();
                 if (this.MerchantTermurl != null)
                     hashCode = hashCode * 59 + this.MerchantTermurl.GetHashCode();

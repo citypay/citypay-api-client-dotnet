@@ -87,7 +87,7 @@ namespace CityPayAPI.Model
         {
             return this.AuthenRequired != null;
         }
-        
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

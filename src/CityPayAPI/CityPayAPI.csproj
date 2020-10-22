@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>CityPayAPI</AssemblyName>
     <PackageId>CityPayAPI</PackageId>
     <OutputType>Library</OutputType>
@@ -12,7 +12,7 @@
     <Description>CityPayAPI client for .Net</Description>
     <Copyright>No Copyright</Copyright>
     <RootNamespace>CityPayAPI</RootNamespace>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CityPayAPI.xml</DocumentationFile>
     <RepositoryUrl>https://github.com/citypay/citypay-api-client-dotnet.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

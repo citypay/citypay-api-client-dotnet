@@ -137,5 +137,34 @@ namespace CityPayAPI.Test
             var ack = api.AccountDeleteRequest(guid);
             Assert.Equal("001", ack.Code);
         }
+        
+        [Fact]
+        public void Authorise3DSv2Test()
+        {
+            var id = Guid.NewGuid().ToString();
+            var api = new PaymentProcessingApi(_configuration);
+            var decision = api.AuthorisationRequest(new AuthRequest(
+                amount: 1595,
+                cardnumber: "4000 0000 0000 0002",
+                expmonth: 12,
+                expyear: 2030,
+                csc: "123",
+                identifier: id,
+                merchantid: _cpMerchantId,
+                transType: "A", //Enforcing Ecom Transaction
+                threedsecure: new ThreeDSecure(
+                    cpBx:"eyJhIjoiRkFwSCIsImMiOjI0LCJpIjoid3dIOTExTlBKSkdBRVhVZCIsImoiOmZhbHNlLCJsIjoiZW4tVVMiLCJoIjoxNDQwLCJ3IjoyNTYwLCJ0IjowLCJ1IjoiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTFfMl8zKSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvODkuMC40Mzg5LjgyIFNhZmFyaS81MzcuMzYiLCJ2IjoiMS4wLjAifQ==",
+                    merchantTermurl:"https://citypay.com/acs/return"
+                    )
+            ));
+
+            Assert.False(decision.IsAuthResponse());
+            Assert.True(decision.IsRequestChallenged());
+            Assert.False(decision.IsAuthenRequired());
+            var response = decision.RequestChallenged;
+
+            Assert.NotEmpty(response.Creq);
+            Assert.NotEmpty(response.AcsUrl);
+        }
     }
 }

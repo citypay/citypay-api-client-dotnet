@@ -1,4 +1,4 @@
-/* 
+/*
  * CityPay Payment API
  *
  *  This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokinsed payments using Card Holder Accounts.  ## Compliance and Security <aside class=\"notice\">   Before we begin a reminder that your application will need to adhere to PCI-DSS standards to operate safely   and to meet requirements set out by Visa and MasterCard and the PCI Security Standards Council including: </aside>  * Data must be collected using TLS version 1.2 using [strong cryptography](#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive card holder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
@@ -9,16 +9,17 @@
 
 
 using System;
-using System.Linq;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 
@@ -27,8 +28,8 @@ namespace CityPayAPI.Model
     /// <summary>
     /// Card
     /// </summary>
-    [DataContract]
-    public partial class Card :  IEquatable<Card>, IValidatableObject
+    [DataContract(Name = "Card")]
+    public partial class Card : IEquatable<Card>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Card" /> class.
@@ -42,7 +43,7 @@ namespace CityPayAPI.Model
         /// <param name="binDescription">A description of the bin on the card to identify what type of product the card is..</param>
         /// <param name="binEu">Defines whether the card is regulated within the EU..</param>
         /// <param name="cardId">The id of the card that is returned. Should be used for referencing the card when perform any changes..</param>
-        /// <param name="cardStatus">The status of the card such, valid values are  - ACTIVE the card is active for processing  - INACTIVE the card is not active for processing  - EXPIRED for cards that have passed their expiry date. .</param>
+        /// <param name="cardStatus">The status of the card such, valid values are   - ACTIVE the card is active for processing   - INACTIVE the card is not active for processing   - EXPIRED for cards that have passed their expiry date. .</param>
         /// <param name="dateCreated">The date time of when the card was created..</param>
         /// <param name="_default">Determines if the card is the default card for the account and should be regarded as the first option to be used for processing..</param>
         /// <param name="expmonth">The expiry month of the card..</param>
@@ -74,138 +75,138 @@ namespace CityPayAPI.Model
             this.Scheme = scheme;
             this.Token = token;
         }
-        
+
         /// <summary>
         /// Defines whether the card is a commercial card.
         /// </summary>
         /// <value>Defines whether the card is a commercial card.</value>
-        [DataMember(Name="bin_commercial", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_commercial", EmitDefaultValue = true)]
         public bool BinCommercial { get; set; }
 
         /// <summary>
         /// Defines whether the card is a corporate business card.
         /// </summary>
         /// <value>Defines whether the card is a corporate business card.</value>
-        [DataMember(Name="bin_corporate", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_corporate", EmitDefaultValue = true)]
         public bool BinCorporate { get; set; }
 
         /// <summary>
         /// The determined country where the card was issued.
         /// </summary>
         /// <value>The determined country where the card was issued.</value>
-        [DataMember(Name="bin_country_issued", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_country_issued", EmitDefaultValue = false)]
         public string BinCountryIssued { get; set; }
 
         /// <summary>
         /// Defines whether the card is a credit card.
         /// </summary>
         /// <value>Defines whether the card is a credit card.</value>
-        [DataMember(Name="bin_credit", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_credit", EmitDefaultValue = true)]
         public bool BinCredit { get; set; }
 
         /// <summary>
         /// The default currency determined for the card.
         /// </summary>
         /// <value>The default currency determined for the card.</value>
-        [DataMember(Name="bin_currency", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_currency", EmitDefaultValue = false)]
         public string BinCurrency { get; set; }
 
         /// <summary>
         /// Defines whether the card is a debit card.
         /// </summary>
         /// <value>Defines whether the card is a debit card.</value>
-        [DataMember(Name="bin_debit", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_debit", EmitDefaultValue = true)]
         public bool BinDebit { get; set; }
 
         /// <summary>
         /// A description of the bin on the card to identify what type of product the card is.
         /// </summary>
         /// <value>A description of the bin on the card to identify what type of product the card is.</value>
-        [DataMember(Name="bin_description", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_description", EmitDefaultValue = false)]
         public string BinDescription { get; set; }
 
         /// <summary>
         /// Defines whether the card is regulated within the EU.
         /// </summary>
         /// <value>Defines whether the card is regulated within the EU.</value>
-        [DataMember(Name="bin_eu", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_eu", EmitDefaultValue = true)]
         public bool BinEu { get; set; }
 
         /// <summary>
         /// The id of the card that is returned. Should be used for referencing the card when perform any changes.
         /// </summary>
         /// <value>The id of the card that is returned. Should be used for referencing the card when perform any changes.</value>
-        [DataMember(Name="card_id", EmitDefaultValue=false)]
+        [DataMember(Name = "card_id", EmitDefaultValue = false)]
         public string CardId { get; set; }
 
         /// <summary>
-        /// The status of the card such, valid values are  - ACTIVE the card is active for processing  - INACTIVE the card is not active for processing  - EXPIRED for cards that have passed their expiry date. 
+        /// The status of the card such, valid values are   - ACTIVE the card is active for processing   - INACTIVE the card is not active for processing   - EXPIRED for cards that have passed their expiry date. 
         /// </summary>
-        /// <value>The status of the card such, valid values are  - ACTIVE the card is active for processing  - INACTIVE the card is not active for processing  - EXPIRED for cards that have passed their expiry date. </value>
-        [DataMember(Name="card_status", EmitDefaultValue=false)]
+        /// <value>The status of the card such, valid values are   - ACTIVE the card is active for processing   - INACTIVE the card is not active for processing   - EXPIRED for cards that have passed their expiry date. </value>
+        [DataMember(Name = "card_status", EmitDefaultValue = false)]
         public string CardStatus { get; set; }
 
         /// <summary>
         /// The date time of when the card was created.
         /// </summary>
         /// <value>The date time of when the card was created.</value>
-        [DataMember(Name="date_created", EmitDefaultValue=false)]
+        [DataMember(Name = "date_created", EmitDefaultValue = false)]
         public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// Determines if the card is the default card for the account and should be regarded as the first option to be used for processing.
         /// </summary>
         /// <value>Determines if the card is the default card for the account and should be regarded as the first option to be used for processing.</value>
-        [DataMember(Name="default", EmitDefaultValue=false)]
+        [DataMember(Name = "default", EmitDefaultValue = true)]
         public bool Default { get; set; }
 
         /// <summary>
         /// The expiry month of the card.
         /// </summary>
         /// <value>The expiry month of the card.</value>
-        [DataMember(Name="expmonth", EmitDefaultValue=false)]
+        [DataMember(Name = "expmonth", EmitDefaultValue = false)]
         public int Expmonth { get; set; }
 
         /// <summary>
         /// The expiry year of the card.
         /// </summary>
         /// <value>The expiry year of the card.</value>
-        [DataMember(Name="expyear", EmitDefaultValue=false)]
+        [DataMember(Name = "expyear", EmitDefaultValue = false)]
         public int Expyear { get; set; }
 
         /// <summary>
         /// A label which identifies this card.
         /// </summary>
         /// <value>A label which identifies this card.</value>
-        [DataMember(Name="label", EmitDefaultValue=false)]
+        [DataMember(Name = "label", EmitDefaultValue = false)]
         public string Label { get; set; }
 
         /// <summary>
         /// A label which also provides the expiry date of the card.
         /// </summary>
         /// <value>A label which also provides the expiry date of the card.</value>
-        [DataMember(Name="label2", EmitDefaultValue=false)]
+        [DataMember(Name = "label2", EmitDefaultValue = false)]
         public string Label2 { get; set; }
 
         /// <summary>
         /// The last 4 digits of the card to aid in identification.
         /// </summary>
         /// <value>The last 4 digits of the card to aid in identification.</value>
-        [DataMember(Name="last4digits", EmitDefaultValue=false)]
+        [DataMember(Name = "last4digits", EmitDefaultValue = false)]
         public string Last4digits { get; set; }
 
         /// <summary>
         /// The scheme that issued the card.
         /// </summary>
         /// <value>The scheme that issued the card.</value>
-        [DataMember(Name="scheme", EmitDefaultValue=false)]
+        [DataMember(Name = "scheme", EmitDefaultValue = false)]
         public string Scheme { get; set; }
 
         /// <summary>
         /// A token that can be used to process against the card.
         /// </summary>
         /// <value>A token that can be used to process against the card.</value>
-        [DataMember(Name="token", EmitDefaultValue=false)]
+        [DataMember(Name = "token", EmitDefaultValue = false)]
         public string Token { get; set; }
 
         /// <summary>
@@ -238,14 +239,14 @@ namespace CityPayAPI.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
         public virtual string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
         }
 
         /// <summary>

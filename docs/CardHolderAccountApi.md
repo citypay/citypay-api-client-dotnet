@@ -41,7 +41,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -84,6 +84,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -120,7 +121,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -163,6 +164,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -199,7 +201,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -244,6 +246,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -251,7 +254,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | Acknowledges the card status has changed, returning a response code of &#x60;001&#x60; for a valid change or &#x60;000&#x60; for a non valid change.  |  -  |
+| **200** | &lt;/br&gt;Acknowledges the card status has changed, returning a response code of &#x60;001&#x60; for a valid change or &#x60;000&#x60; for a non valid change. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -280,7 +283,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -323,6 +326,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -359,7 +363,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountCreate = new AccountCreate(); // AccountCreate | 
@@ -400,6 +404,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -436,7 +441,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -477,6 +482,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -494,7 +500,7 @@ Name | Type | Description  | Notes
 
 Account Exists
 
-.
+Checks that an account exists and is active by providing the account id as a url parameter  Checks that an account exists and is active by providing the account id as a url parameter. 
 
 ### Example
 ```csharp
@@ -513,7 +519,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -554,6 +560,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -590,7 +597,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -631,6 +638,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -667,7 +675,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
@@ -710,6 +718,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -717,7 +726,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **200** | An acknowledgment that the card holder account status has been updated. A response code of &#x60;001&#x60; is returned if the request was accepted or no change required. A response code of &#x60;000&#x60; is returned if the request contains invalid data.  |  -  |
+| **200** | An acknowledgment that the card holder account status has been updated.&lt;/br&gt;&lt;/br&gt;A response code of &#x60;001&#x60; is returned if the request was accepted or no change required.&lt;/br&gt;&lt;/br&gt;A response code of &#x60;000&#x60; is returned if the request contains invalid data. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -746,7 +755,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
             var chargeRequest = new ChargeRequest(); // ChargeRequest | 
@@ -786,6 +795,7 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
+
 
 ### HTTP response details
 | Status code | Description | Response headers |

@@ -1,4 +1,5 @@
 # CityPayAPI.Model.RetrieveRequest
+
 ## Properties
 
 Name | Type | Description | Notes

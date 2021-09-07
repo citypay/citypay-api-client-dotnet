@@ -1,4 +1,5 @@
 # CityPayAPI.Model.AirlineSegment
+
 ## Properties
 
 Name | Type | Description | Notes

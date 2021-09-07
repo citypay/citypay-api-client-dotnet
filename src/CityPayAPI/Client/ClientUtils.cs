@@ -1,4 +1,4 @@
-/* 
+/*
  * CityPay Payment API
  *
  *  This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokinsed payments using Card Holder Accounts.  ## Compliance and Security <aside class=\"notice\">   Before we begin a reminder that your application will need to adhere to PCI-DSS standards to operate safely   and to meet requirements set out by Visa and MasterCard and the PCI Security Standards Council including: </aside>  * Data must be collected using TLS version 1.2 using [strong cryptography](#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive card holder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
@@ -35,7 +35,7 @@ namespace CityPayAPI.Client
         }
 
         /// <summary>
-        /// Convert params to key/value pairs. 
+        /// Convert params to key/value pairs.
         /// Use collectionFormat to properly format lists and collections.
         /// </summary>
         /// <param name="collectionFormat">The swagger-supported collection format, one of: csv, tsv, ssv, pipes, multi</param>
@@ -53,6 +53,21 @@ namespace CityPayAPI.Client
                     parameters.Add(name, ParameterToString(item));
                 }
             }
+            else if (value is IDictionary dictionary)
+            {
+                if(collectionFormat == "deepObject") {
+                    foreach (DictionaryEntry entry in dictionary)
+                    {
+                        parameters.Add(name + "[" + entry.Key + "]", ParameterToString(entry.Value));
+                    }
+                }
+                else {
+                    foreach (DictionaryEntry entry in dictionary)
+                    {
+                        parameters.Add(entry.Key.ToString(), ParameterToString(entry.Value));
+                    }
+                }
+            }
             else
             {
                 parameters.Add(name, ParameterToString(value));
@@ -60,7 +75,7 @@ namespace CityPayAPI.Client
 
             return parameters;
         }
-        
+
         /// <summary>
         /// If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
         /// If parameter is a list, join the list with ",".
@@ -95,7 +110,7 @@ namespace CityPayAPI.Client
         /// URL encode a string
         /// Credit/Ref: https://github.com/restsharp/RestSharp/blob/master/RestSharp/Extensions/StringExtensions.cs#L50
         /// </summary>
-        /// <param name="input">String to be URL encoded</param>
+        /// <param name="input">string to be URL encoded</param>
         /// <returns>Byte array</returns>
         public static string UrlEncode(string input)
         {
@@ -129,7 +144,7 @@ namespace CityPayAPI.Client
         /// <summary>
         /// Encode string in base64 format.
         /// </summary>
-        /// <param name="text">String to be encoded.</param>
+        /// <param name="text">string to be encoded.</param>
         /// <returns>Encoded string.</returns>
         public static string Base64Encode(string text)
         {
@@ -157,7 +172,7 @@ namespace CityPayAPI.Client
         /// </summary>
         /// <param name="contentTypes">The Content-Type array to select from.</param>
         /// <returns>The Content-Type header to use.</returns>
-        public static String SelectHeaderContentType(String[] contentTypes)
+        public static string SelectHeaderContentType(string[] contentTypes)
         {
             if (contentTypes.Length == 0)
                 return null;
@@ -178,7 +193,7 @@ namespace CityPayAPI.Client
         /// </summary>
         /// <param name="accepts">The accepts array to select from.</param>
         /// <returns>The Accept header to use.</returns>
-        public static String SelectHeaderAccept(String[] accepts)
+        public static string SelectHeaderAccept(string[] accepts)
         {
             if (accepts.Length == 0)
                 return null;
@@ -186,7 +201,7 @@ namespace CityPayAPI.Client
             if (accepts.Contains("application/json", StringComparer.OrdinalIgnoreCase))
                 return "application/json";
 
-            return String.Join(",", accepts);
+            return string.Join(",", accepts);
         }
 
         /// <summary>
@@ -204,9 +219,9 @@ namespace CityPayAPI.Client
         /// </summary>
         /// <param name="mime">MIME</param>
         /// <returns>Returns True if MIME type is json.</returns>
-        public static bool IsJsonMime(String mime)
+        public static bool IsJsonMime(string mime)
         {
-            if (String.IsNullOrWhiteSpace(mime)) return false;
+            if (string.IsNullOrWhiteSpace(mime)) return false;
 
             return JsonRegex.IsMatch(mime) || mime.Equals("application/json-patch+json");
         }

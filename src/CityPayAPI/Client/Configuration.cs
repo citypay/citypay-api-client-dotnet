@@ -1,4 +1,4 @@
-/* 
+/*
  * CityPay Payment API
  *
  *  This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokinsed payments using Card Holder Accounts.  ## Compliance and Security <aside class=\"notice\">   Before we begin a reminder that your application will need to adhere to PCI-DSS standards to operate safely   and to meet requirements set out by Visa and MasterCard and the PCI Security Standards Council including: </aside>  * Data must be collected using TLS version 1.2 using [strong cryptography](#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive card holder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
@@ -9,11 +9,12 @@
 
 
 using System;
-using System.Reflection;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -53,9 +54,8 @@ namespace CityPayAPI.Client
             {
                 return new ApiException(status,
                     string.Format("Error calling {0}: {1}", methodName, response.RawContent),
-                    response.RawContent);
+                    response.RawContent, response.Headers);
             }
-            
             return null;
         };
 
@@ -67,11 +67,11 @@ namespace CityPayAPI.Client
         /// Defines the base path of the target API server.
         /// Example: http://localhost:3000/v1/
         /// </summary>
-        private String _basePath;
+        private string _basePath;
 
         /// <summary>
         /// Gets or sets the API key based on the authentication name.
-        /// This is the key and value comprising the "secret" for acessing an API.
+        /// This is the key and value comprising the "secret" for accessing an API.
         /// </summary>
         /// <value>The API key.</value>
         private IDictionary<string, string> _apiKey;
@@ -85,6 +85,11 @@ namespace CityPayAPI.Client
         private string _dateTimeFormat = ISO8601_DATETIME_FORMAT;
         private string _tempFolderPath = Path.GetTempPath();
 
+        /// <summary>
+        /// Gets or sets the servers defined in the OpenAPI spec.
+        /// </summary>
+        /// <value>The servers</value>
+        private IList<IReadOnlyDictionary<string, object>> _servers;
         #endregion Private Members
 
         #region Constructors
@@ -95,11 +100,27 @@ namespace CityPayAPI.Client
         [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
         public Configuration()
         {
+            Proxy = null;
             UserAgent = "OpenAPI-Generator/1.0.0/csharp";
             BasePath = "https://api.citypay.com/v6";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
+            Servers = new List<IReadOnlyDictionary<string, object>>()
+            {
+                {
+                    new Dictionary<string, object> {
+                        {"url", "https://api.citypay.com/v6"},
+                        {"description", "Production processing endpoint"},
+                    }
+                },
+                {
+                    new Dictionary<string, object> {
+                        {"url", "https://sandbox.citypay.com/v6"},
+                        {"description", "Testing service returning test results for all transactions"},
+                    }
+                }
+            };
 
             // Setting Timeout has side effects (forces ApiClient creation).
             Timeout = 100000;
@@ -151,9 +172,7 @@ namespace CityPayAPI.Client
         /// </summary>
         public virtual string BasePath {
             get { return _basePath; }
-            set {
-                _basePath = value;
-            }
+            set { _basePath = value; }
         }
 
         /// <summary>
@@ -183,6 +202,12 @@ namespace CityPayAPI.Client
         public virtual int Timeout { get; set; }
 
         /// <summary>
+        /// Gets or sets the proxy
+        /// </summary>
+        /// <value>Proxy.</value>
+        public virtual WebProxy Proxy { get; set; }
+
+        /// <summary>
         /// Gets or sets the HTTP user agent.
         /// </summary>
         /// <value>Http user agent.</value>
@@ -208,13 +233,13 @@ namespace CityPayAPI.Client
         public string GetApiKeyWithPrefix(string apiKeyIdentifier)
         {
             string apiKeyValue;
-            ApiKey.TryGetValue (apiKeyIdentifier, out apiKeyValue);
+            ApiKey.TryGetValue(apiKeyIdentifier, out apiKeyValue);
             string apiKeyPrefix;
             if (ApiKeyPrefix.TryGetValue(apiKeyIdentifier, out apiKeyPrefix))
             {
                 return apiKeyPrefix + " " + apiKeyValue;
             }
-            
+
             return apiKeyValue;
         }
 
@@ -226,7 +251,7 @@ namespace CityPayAPI.Client
 
         /// <summary>
         /// Gets or sets the access token for OAuth2 authentication.
-        /// 
+        ///
         /// This helper property simplifies code generation.
         /// </summary>
         /// <value>The access token.</value>
@@ -296,13 +321,13 @@ namespace CityPayAPI.Client
         /// Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
         ///
         /// Whatever you set here will be prepended to the value defined in AddApiKey.
-        /// 
+        ///
         /// An example invocation here might be:
         /// <example>
         /// ApiKeyPrefix["Authorization"] = "Bearer";
         /// </example>
         /// … where ApiKey["Authorization"] would then be used to set the value of your bearer token.
-        /// 
+        ///
         /// <remarks>
         /// OAuth2 workflows should set tokens via AccessToken.
         /// </remarks>
@@ -338,6 +363,82 @@ namespace CityPayAPI.Client
             }
         }
 
+        /// <summary>
+        /// Gets or sets the servers.
+        /// </summary>
+        /// <value>The servers.</value>
+        public virtual IList<IReadOnlyDictionary<string, object>> Servers
+        {
+            get { return _servers; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new InvalidOperationException("Servers may not be null.");
+                }
+                _servers = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns URL based on server settings without providing values
+        /// for the variables
+        /// </summary>
+        /// <param name="index">Array index of the server settings.</param>
+        /// <return>The server URL.</return>
+        public string GetServerUrl(int index)
+        {
+            return GetServerUrl(index, null);
+        }
+
+        /// <summary>
+        /// Returns URL based on server settings.
+        /// </summary>
+        /// <param name="index">Array index of the server settings.</param>
+        /// <param name="inputVariables">Dictionary of the variables and the corresponding values.</param>
+        /// <return>The server URL.</return>
+        public string GetServerUrl(int index, Dictionary<string, string> inputVariables)
+        {
+            if (index < 0 || index >= Servers.Count)
+            {
+                throw new InvalidOperationException($"Invalid index {index} when selecting the server. Must be less than {Servers.Count}.");
+            }
+
+            if (inputVariables == null)
+            {
+                inputVariables = new Dictionary<string, string>();
+            }
+
+            IReadOnlyDictionary<string, object> server = Servers[index];
+            string url = (string)server["url"];
+
+            // go through variable and assign a value
+            foreach (KeyValuePair<string, object> variable in (IReadOnlyDictionary<string, object>)server["variables"])
+            {
+
+                IReadOnlyDictionary<string, object> serverVariables = (IReadOnlyDictionary<string, object>)(variable.Value);
+
+                if (inputVariables.ContainsKey(variable.Key))
+                {
+                    if (((List<string>)serverVariables["enum_values"]).Contains(inputVariables[variable.Key]))
+                    {
+                        url = url.Replace("{" + variable.Key + "}", inputVariables[variable.Key]);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"The variable `{variable.Key}` in the server URL has invalid value #{inputVariables[variable.Key]}. Must be {(List<string>)serverVariables["enum_values"]}");
+                    }
+                }
+                else
+                {
+                    // use default value
+                    url = url.Replace("{" + variable.Key + "}", (string)serverVariables["default_value"]);
+                }
+            }
+
+            return url;
+        }
+
         #endregion Properties
 
         #region Methods
@@ -345,12 +446,13 @@ namespace CityPayAPI.Client
         /// <summary>
         /// Returns a string with essential information for debugging.
         /// </summary>
-        public static String ToDebugReport()
+        public static string ToDebugReport()
         {
-            String report = "C# SDK (CityPayAPI) Debug Report:\n";
-            report += "    OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + "\n";
-            report += "    Version of the API: 6.0.12\n";
-            report += "    SDK Package Version: 1.0.5\n";
+            string report = "C# SDK (CityPayAPI) Debug Report:\n";
+            report += "    OS: " + System.Environment.OSVersion + "\n";
+            report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
+            report += "    Version of the API: 6.2.2\n";
+            report += "    SDK Package Version: 1.0.6\n";
 
             return report;
         }
@@ -388,11 +490,11 @@ namespace CityPayAPI.Client
         public static IReadableConfiguration MergeConfigurations(IReadableConfiguration first, IReadableConfiguration second)
         {
             if (second == null) return first ?? GlobalConfiguration.Instance;
-            
+
             Dictionary<string, string> apiKey = first.ApiKey.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Dictionary<string, string> apiKeyPrefix = first.ApiKeyPrefix.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Dictionary<string, string> defaultHeaders = first.DefaultHeaders.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            
+
             foreach (var kvp in second.ApiKey) apiKey[kvp.Key] = kvp.Value;
             foreach (var kvp in second.ApiKeyPrefix) apiKeyPrefix[kvp.Key] = kvp.Value;
             foreach (var kvp in second.DefaultHeaders) defaultHeaders[kvp.Key] = kvp.Value;
@@ -404,6 +506,7 @@ namespace CityPayAPI.Client
                 DefaultHeaders = defaultHeaders,
                 BasePath = second.BasePath ?? first.BasePath,
                 Timeout = second.Timeout,
+                Proxy = second.Proxy ?? first.Proxy,
                 UserAgent = second.UserAgent ?? first.UserAgent,
                 Username = second.Username ?? first.Username,
                 Password = second.Password ?? first.Password,

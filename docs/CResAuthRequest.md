@@ -1,4 +1,5 @@
 # CityPayAPI.Model.CResAuthRequest
+
 ## Properties
 
 Name | Type | Description | Notes

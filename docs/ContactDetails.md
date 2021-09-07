@@ -1,4 +1,5 @@
 # CityPayAPI.Model.ContactDetails
+
 ## Properties
 
 Name | Type | Description | Notes

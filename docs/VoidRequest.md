@@ -1,4 +1,5 @@
 # CityPayAPI.Model.VoidRequest
+
 ## Properties
 
 Name | Type | Description | Notes

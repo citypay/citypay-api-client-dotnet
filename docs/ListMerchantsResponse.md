@@ -1,4 +1,5 @@
 # CityPayAPI.Model.ListMerchantsResponse
+
 ## Properties
 
 Name | Type | Description | Notes

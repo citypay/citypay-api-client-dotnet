@@ -1,4 +1,4 @@
-/* 
+/*
  * CityPay Payment API
  *
  *  This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokinsed payments using Card Holder Accounts.  ## Compliance and Security <aside class=\"notice\">   Before we begin a reminder that your application will need to adhere to PCI-DSS standards to operate safely   and to meet requirements set out by Visa and MasterCard and the PCI Security Standards Council including: </aside>  * Data must be collected using TLS version 1.2 using [strong cryptography](#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive card holder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
@@ -9,16 +9,17 @@
 
 
 using System;
-using System.Linq;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 
@@ -27,8 +28,8 @@ namespace CityPayAPI.Model
     /// <summary>
     /// AuthReference
     /// </summary>
-    [DataContract]
-    public partial class AuthReference :  IEquatable<AuthReference>, IValidatableObject
+    [DataContract(Name = "AuthReference")]
+    public partial class AuthReference : IEquatable<AuthReference>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthReference" /> class.
@@ -64,103 +65,103 @@ namespace CityPayAPI.Model
             this.TransType = transType;
             this.Transno = transno;
         }
-        
+
         /// <summary>
         /// The amount of the transaction in decimal currency format.
         /// </summary>
         /// <value>The amount of the transaction in decimal currency format.</value>
-        [DataMember(Name="amount", EmitDefaultValue=false)]
+        [DataMember(Name = "amount", EmitDefaultValue = false)]
         public string Amount { get; set; }
 
         /// <summary>
         /// The amount of the transaction in integer/request format.
         /// </summary>
         /// <value>The amount of the transaction in integer/request format.</value>
-        [DataMember(Name="amount_value", EmitDefaultValue=false)]
+        [DataMember(Name = "amount_value", EmitDefaultValue = false)]
         public int AmountValue { get; set; }
 
         /// <summary>
         /// A reference number provided by the acquiring services.
         /// </summary>
         /// <value>A reference number provided by the acquiring services.</value>
-        [DataMember(Name="atrn", EmitDefaultValue=false)]
+        [DataMember(Name = "atrn", EmitDefaultValue = false)]
         public string Atrn { get; set; }
 
         /// <summary>
         /// The authorisation code of the transaction returned by the acquirer or card issuer.
         /// </summary>
         /// <value>The authorisation code of the transaction returned by the acquirer or card issuer.</value>
-        [DataMember(Name="authcode", EmitDefaultValue=false)]
+        [DataMember(Name = "authcode", EmitDefaultValue = false)]
         public string Authcode { get; set; }
 
         /// <summary>
         /// A batch number which the transaction has been end of day batched towards.
         /// </summary>
         /// <value>A batch number which the transaction has been end of day batched towards.</value>
-        [DataMember(Name="batchno", EmitDefaultValue=false)]
+        [DataMember(Name = "batchno", EmitDefaultValue = false)]
         public string Batchno { get; set; }
 
         /// <summary>
         /// The currency of the transaction in ISO 4217 code format.
         /// </summary>
         /// <value>The currency of the transaction in ISO 4217 code format.</value>
-        [DataMember(Name="currency", EmitDefaultValue=false)]
+        [DataMember(Name = "currency", EmitDefaultValue = false)]
         public string Currency { get; set; }
 
         /// <summary>
         /// The date and time of the transaction.
         /// </summary>
         /// <value>The date and time of the transaction.</value>
-        [DataMember(Name="datetime", EmitDefaultValue=false)]
+        [DataMember(Name = "datetime", EmitDefaultValue = false)]
         public DateTime Datetime { get; set; }
 
         /// <summary>
         /// The identifier of the transaction used to process the transaction.
         /// </summary>
         /// <value>The identifier of the transaction used to process the transaction.</value>
-        [DataMember(Name="identifier", EmitDefaultValue=false)]
+        [DataMember(Name = "identifier", EmitDefaultValue = false)]
         public string Identifier { get; set; }
 
         /// <summary>
         /// A masking of the card number which was used to process the tranasction.
         /// </summary>
         /// <value>A masking of the card number which was used to process the tranasction.</value>
-        [DataMember(Name="maskedpan", EmitDefaultValue=false)]
+        [DataMember(Name = "maskedpan", EmitDefaultValue = false)]
         public string Maskedpan { get; set; }
 
         /// <summary>
         /// The merchant id of the transaction result.
         /// </summary>
         /// <value>The merchant id of the transaction result.</value>
-        [DataMember(Name="merchantid", EmitDefaultValue=false)]
+        [DataMember(Name = "merchantid", EmitDefaultValue = false)]
         public int Merchantid { get; set; }
 
         /// <summary>
         /// The result of the transaction.
         /// </summary>
         /// <value>The result of the transaction.</value>
-        [DataMember(Name="result", EmitDefaultValue=false)]
+        [DataMember(Name = "result", EmitDefaultValue = false)]
         public string Result { get; set; }
 
         /// <summary>
         /// The current status of the transaction through it&#39;s lifecycle.
         /// </summary>
         /// <value>The current status of the transaction through it&#39;s lifecycle.</value>
-        [DataMember(Name="trans_status", EmitDefaultValue=false)]
+        [DataMember(Name = "trans_status", EmitDefaultValue = false)]
         public string TransStatus { get; set; }
 
         /// <summary>
         /// The type of transaction that was processed.
         /// </summary>
         /// <value>The type of transaction that was processed.</value>
-        [DataMember(Name="trans_type", EmitDefaultValue=false)]
+        [DataMember(Name = "trans_type", EmitDefaultValue = false)]
         public string TransType { get; set; }
 
         /// <summary>
         /// The transaction number of the transaction.
         /// </summary>
         /// <value>The transaction number of the transaction.</value>
-        [DataMember(Name="transno", EmitDefaultValue=false)]
+        [DataMember(Name = "transno", EmitDefaultValue = false)]
         public int Transno { get; set; }
 
         /// <summary>
@@ -188,14 +189,14 @@ namespace CityPayAPI.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
         public virtual string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
         }
 
         /// <summary>

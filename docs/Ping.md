@@ -1,4 +1,5 @@
 # CityPayAPI.Model.Ping
+
 ## Properties
 
 Name | Type | Description | Notes

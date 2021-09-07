@@ -1,4 +1,5 @@
 # CityPayAPI.Model.Card
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -12,7 +13,7 @@ Name | Type | Description | Notes
 **BinDescription** | **string** | A description of the bin on the card to identify what type of product the card is. | [optional] 
 **BinEu** | **bool** | Defines whether the card is regulated within the EU. | [optional] 
 **CardId** | **string** | The id of the card that is returned. Should be used for referencing the card when perform any changes. | [optional] 
-**CardStatus** | **string** | The status of the card such, valid values are  - ACTIVE the card is active for processing  - INACTIVE the card is not active for processing  - EXPIRED for cards that have passed their expiry date.  | [optional] 
+**CardStatus** | **string** | The status of the card such, valid values are   - ACTIVE the card is active for processing   - INACTIVE the card is not active for processing   - EXPIRED for cards that have passed their expiry date.  | [optional] 
 **DateCreated** | **DateTime** | The date time of when the card was created. | [optional] 
 **Default** | **bool** | Determines if the card is the default card for the account and should be regarded as the first option to be used for processing. | [optional] 
 **Expmonth** | **int** | The expiry month of the card. | [optional] 

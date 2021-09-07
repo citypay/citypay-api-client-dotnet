@@ -33,7 +33,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new OperationalApi(config);
             var clientid = clientid_example;  // string | The client id to return merchants for, specifying \"default\" will use the value in your api key.
@@ -74,6 +74,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/xml
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -110,7 +111,7 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com/v6";
             // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey();
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new OperationalApi(config);
             var ping = new Ping(); // Ping | 
@@ -150,6 +151,7 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json, text/xml
  - **Accept**: application/json, text/xml
+
 
 ### HTTP response details
 | Status code | Description | Response headers |

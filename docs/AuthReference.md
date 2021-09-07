@@ -1,4 +1,5 @@
 # CityPayAPI.Model.AuthReference
+
 ## Properties
 
 Name | Type | Description | Notes

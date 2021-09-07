@@ -1,4 +1,4 @@
-/* 
+/*
  * CityPay Payment API
  *
  *  This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokinsed payments using Card Holder Accounts.  ## Compliance and Security <aside class=\"notice\">   Before we begin a reminder that your application will need to adhere to PCI-DSS standards to operate safely   and to meet requirements set out by Visa and MasterCard and the PCI Security Standards Council including: </aside>  * Data must be collected using TLS version 1.2 using [strong cryptography](#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive card holder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
@@ -35,7 +35,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
         /// <returns>ListMerchantsResponse</returns>
-        ListMerchantsResponse ListMerchantsRequest (string clientid);
+        ListMerchantsResponse ListMerchantsRequest(string clientid);
 
         /// <summary>
         /// List Merchants Request
@@ -46,7 +46,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
         /// <returns>ApiResponse of ListMerchantsResponse</returns>
-        ApiResponse<ListMerchantsResponse> ListMerchantsRequestWithHttpInfo (string clientid);
+        ApiResponse<ListMerchantsResponse> ListMerchantsRequestWithHttpInfo(string clientid);
         /// <summary>
         /// Ping Request
         /// </summary>
@@ -56,7 +56,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement PingRequest (Ping ping);
+        Acknowledgement PingRequest(Ping ping);
 
         /// <summary>
         /// Ping Request
@@ -67,7 +67,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> PingRequestWithHttpInfo (Ping ping);
+        ApiResponse<Acknowledgement> PingRequestWithHttpInfo(Ping ping);
         #endregion Synchronous Operations
     }
 
@@ -85,8 +85,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListMerchantsResponse</returns>
-        System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync (string clientid);
+        System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// List Merchants Request
@@ -96,8 +97,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListMerchantsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ListMerchantsResponse>> ListMerchantsRequestAsyncWithHttpInfo (string clientid);
+        System.Threading.Tasks.Task<ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Ping Request
         /// </summary>
@@ -106,8 +108,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync (Ping ping);
+        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Ping Request
@@ -117,8 +120,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestAsyncWithHttpInfo (Ping ping);
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -141,7 +145,7 @@ namespace CityPayAPI.Api
         /// Initializes a new instance of the <see cref="OperationalApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public OperationalApi() : this((string) null)
+        public OperationalApi() : this((string)null)
         {
         }
 
@@ -149,7 +153,7 @@ namespace CityPayAPI.Api
         /// Initializes a new instance of the <see cref="OperationalApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public OperationalApi(String basePath)
+        public OperationalApi(string basePath)
         {
             this.Configuration = CityPayAPI.Client.Configuration.MergeConfigurations(
                 CityPayAPI.Client.GlobalConfiguration.Instance,
@@ -186,11 +190,11 @@ namespace CityPayAPI.Api
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public OperationalApi(CityPayAPI.Client.ISynchronousClient client,CityPayAPI.Client.IAsynchronousClient asyncClient, CityPayAPI.Client.IReadableConfiguration configuration)
+        public OperationalApi(CityPayAPI.Client.ISynchronousClient client, CityPayAPI.Client.IAsynchronousClient asyncClient, CityPayAPI.Client.IReadableConfiguration configuration)
         {
-            if(client == null) throw new ArgumentNullException("client");
-            if(asyncClient == null) throw new ArgumentNullException("asyncClient");
-            if(configuration == null) throw new ArgumentNullException("configuration");
+            if (client == null) throw new ArgumentNullException("client");
+            if (asyncClient == null) throw new ArgumentNullException("asyncClient");
+            if (configuration == null) throw new ArgumentNullException("configuration");
 
             this.Client = client;
             this.AsynchronousClient = asyncClient;
@@ -212,7 +216,7 @@ namespace CityPayAPI.Api
         /// Gets the base path of the API client.
         /// </summary>
         /// <value>The base path</value>
-        public String GetBasePath()
+        public string GetBasePath()
         {
             return this.Configuration.BasePath;
         }
@@ -221,7 +225,7 @@ namespace CityPayAPI.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public CityPayAPI.Client.IReadableConfiguration Configuration {get; set;}
+        public CityPayAPI.Client.IReadableConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -245,10 +249,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
         /// <returns>ListMerchantsResponse</returns>
-        public ListMerchantsResponse ListMerchantsRequest (string clientid)
+        public ListMerchantsResponse ListMerchantsRequest(string clientid)
         {
-             CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = ListMerchantsRequestWithHttpInfo(clientid);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = ListMerchantsRequestWithHttpInfo(clientid);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -257,7 +261,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
         /// <returns>ApiResponse of ListMerchantsResponse</returns>
-        public CityPayAPI.Client.ApiResponse< ListMerchantsResponse > ListMerchantsRequestWithHttpInfo (string clientid)
+        public CityPayAPI.Client.ApiResponse<ListMerchantsResponse> ListMerchantsRequestWithHttpInfo(string clientid)
         {
             // verify the required parameter 'clientid' is set
             if (clientid == null)
@@ -265,11 +269,11 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -283,13 +287,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.PathParameters.Add("clientid", CityPayAPI.Client.ClientUtils.ParameterToString(clientid)); // path parameter
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get< ListMerchantsResponse >("/merchants/{clientid}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ListMerchantsResponse>("/merchants/{clientid}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -305,12 +309,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListMerchantsResponse</returns>
-        public async System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync (string clientid)
+        public async System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = await ListMerchantsRequestAsyncWithHttpInfo(clientid);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = await ListMerchantsRequestWithHttpInfoAsync(clientid, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -318,8 +322,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListMerchantsResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ListMerchantsResponse>> ListMerchantsRequestAsyncWithHttpInfo (string clientid)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'clientid' is set
             if (clientid == null)
@@ -328,32 +333,33 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.PathParameters.Add("clientid", CityPayAPI.Client.ClientUtils.ParameterToString(clientid)); // path parameter
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ListMerchantsResponse>("/merchants/{clientid}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ListMerchantsResponse>("/merchants/{clientid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -370,10 +376,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement PingRequest (Ping ping)
+        public Acknowledgement PingRequest(Ping ping)
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = PingRequestWithHttpInfo(ping);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = PingRequestWithHttpInfo(ping);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -382,7 +388,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse< Acknowledgement > PingRequestWithHttpInfo (Ping ping)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> PingRequestWithHttpInfo(Ping ping)
         {
             // verify the required parameter 'ping' is set
             if (ping == null)
@@ -390,13 +396,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -410,13 +416,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = ping;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< Acknowledgement >("/ping", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Acknowledgement>("/ping", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -432,12 +438,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync (Ping ping)
+        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await PingRequestAsyncWithHttpInfo(ping);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await PingRequestWithHttpInfoAsync(ping, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -445,8 +451,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestAsyncWithHttpInfo (Ping ping)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'ping' is set
             if (ping == null)
@@ -455,34 +462,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = ping;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/ping", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/ping", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

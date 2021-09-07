@@ -1,4 +1,5 @@
 # CityPayAPI.Model.Exists
+
 ## Properties
 
 Name | Type | Description | Notes

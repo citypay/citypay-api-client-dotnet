@@ -1,4 +1,5 @@
 # CityPayAPI.Model.AuthenRequired
+
 ## Properties
 
 Name | Type | Description | Notes

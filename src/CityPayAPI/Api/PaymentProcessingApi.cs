@@ -1,4 +1,4 @@
-/* 
+/*
  * CityPay Payment API
  *
  *  This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokinsed payments using Card Holder Accounts.  ## Compliance and Security <aside class=\"notice\">   Before we begin a reminder that your application will need to adhere to PCI-DSS standards to operate safely   and to meet requirements set out by Visa and MasterCard and the PCI Security Standards Council including: </aside>  * Data must be collected using TLS version 1.2 using [strong cryptography](#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive card holder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
@@ -30,23 +30,23 @@ namespace CityPayAPI.Api
         /// Authorisation
         /// </summary>
         /// <remarks>
-        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
         /// <returns>Decision</returns>
-        Decision AuthorisationRequest (AuthRequest authRequest);
+        Decision AuthorisationRequest(AuthRequest authRequest);
 
         /// <summary>
         /// Authorisation
         /// </summary>
         /// <remarks>
-        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
         /// <returns>ApiResponse of Decision</returns>
-        ApiResponse<Decision> AuthorisationRequestWithHttpInfo (AuthRequest authRequest);
+        ApiResponse<Decision> AuthorisationRequestWithHttpInfo(AuthRequest authRequest);
         /// <summary>
         /// CRes
         /// </summary>
@@ -56,7 +56,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
         /// <returns>AuthResponse</returns>
-        AuthResponse CResRequest (CResAuthRequest cResAuthRequest);
+        AuthResponse CResRequest(CResAuthRequest cResAuthRequest);
 
         /// <summary>
         /// CRes
@@ -67,7 +67,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> CResRequestWithHttpInfo (CResAuthRequest cResAuthRequest);
+        ApiResponse<AuthResponse> CResRequestWithHttpInfo(CResAuthRequest cResAuthRequest);
         /// <summary>
         /// Capture
         /// </summary>
@@ -77,7 +77,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement CaptureRequest (CaptureRequest captureRequest);
+        Acknowledgement CaptureRequest(CaptureRequest captureRequest);
 
         /// <summary>
         /// Capture
@@ -88,7 +88,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> CaptureRequestWithHttpInfo (CaptureRequest captureRequest);
+        ApiResponse<Acknowledgement> CaptureRequestWithHttpInfo(CaptureRequest captureRequest);
         /// <summary>
         /// PaRes
         /// </summary>
@@ -98,7 +98,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
         /// <returns>AuthResponse</returns>
-        AuthResponse PaResRequest (PaResAuthRequest paResAuthRequest);
+        AuthResponse PaResRequest(PaResAuthRequest paResAuthRequest);
 
         /// <summary>
         /// PaRes
@@ -109,7 +109,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> PaResRequestWithHttpInfo (PaResAuthRequest paResAuthRequest);
+        ApiResponse<AuthResponse> PaResRequestWithHttpInfo(PaResAuthRequest paResAuthRequest);
         /// <summary>
         /// Refund
         /// </summary>
@@ -119,7 +119,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
         /// <returns>AuthResponse</returns>
-        AuthResponse RefundRequest (RefundRequest refundRequest);
+        AuthResponse RefundRequest(RefundRequest refundRequest);
 
         /// <summary>
         /// Refund
@@ -130,7 +130,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> RefundRequestWithHttpInfo (RefundRequest refundRequest);
+        ApiResponse<AuthResponse> RefundRequestWithHttpInfo(RefundRequest refundRequest);
         /// <summary>
         /// Retrieval
         /// </summary>
@@ -140,7 +140,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
         /// <returns>AuthReferences</returns>
-        AuthReferences RetrievalRequest (RetrieveRequest retrieveRequest);
+        AuthReferences RetrievalRequest(RetrieveRequest retrieveRequest);
 
         /// <summary>
         /// Retrieval
@@ -151,7 +151,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
         /// <returns>ApiResponse of AuthReferences</returns>
-        ApiResponse<AuthReferences> RetrievalRequestWithHttpInfo (RetrieveRequest retrieveRequest);
+        ApiResponse<AuthReferences> RetrievalRequestWithHttpInfo(RetrieveRequest retrieveRequest);
         /// <summary>
         /// Void
         /// </summary>
@@ -161,7 +161,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement VoidRequest (VoidRequest voidRequest);
+        Acknowledgement VoidRequest(VoidRequest voidRequest);
 
         /// <summary>
         /// Void
@@ -172,7 +172,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> VoidRequestWithHttpInfo (VoidRequest voidRequest);
+        ApiResponse<Acknowledgement> VoidRequestWithHttpInfo(VoidRequest voidRequest);
         #endregion Synchronous Operations
     }
 
@@ -186,23 +186,25 @@ namespace CityPayAPI.Api
         /// Authorisation
         /// </summary>
         /// <remarks>
-        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync (AuthRequest authRequest);
+        System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Authorisation
         /// </summary>
         /// <remarks>
-        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Decision>> AuthorisationRequestAsyncWithHttpInfo (AuthRequest authRequest);
+        System.Threading.Tasks.Task<ApiResponse<Decision>> AuthorisationRequestWithHttpInfoAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// CRes
         /// </summary>
@@ -211,8 +213,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> CResRequestAsync (CResAuthRequest cResAuthRequest);
+        System.Threading.Tasks.Task<AuthResponse> CResRequestAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// CRes
@@ -222,8 +225,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> CResRequestAsyncWithHttpInfo (CResAuthRequest cResAuthRequest);
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> CResRequestWithHttpInfoAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Capture
         /// </summary>
@@ -232,8 +236,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync (CaptureRequest captureRequest);
+        System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Capture
@@ -243,8 +248,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> CaptureRequestAsyncWithHttpInfo (CaptureRequest captureRequest);
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> CaptureRequestWithHttpInfoAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// PaRes
         /// </summary>
@@ -253,8 +259,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync (PaResAuthRequest paResAuthRequest);
+        System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// PaRes
@@ -264,8 +271,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> PaResRequestAsyncWithHttpInfo (PaResAuthRequest paResAuthRequest);
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> PaResRequestWithHttpInfoAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Refund
         /// </summary>
@@ -274,8 +282,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync (RefundRequest refundRequest);
+        System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Refund
@@ -285,8 +294,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> RefundRequestAsyncWithHttpInfo (RefundRequest refundRequest);
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> RefundRequestWithHttpInfoAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Retrieval
         /// </summary>
@@ -295,8 +305,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthReferences</returns>
-        System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync (RetrieveRequest retrieveRequest);
+        System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Retrieval
@@ -306,8 +317,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthReferences)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthReferences>> RetrievalRequestAsyncWithHttpInfo (RetrieveRequest retrieveRequest);
+        System.Threading.Tasks.Task<ApiResponse<AuthReferences>> RetrievalRequestWithHttpInfoAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Void
         /// </summary>
@@ -316,8 +328,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync (VoidRequest voidRequest);
+        System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Void
@@ -327,8 +340,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> VoidRequestAsyncWithHttpInfo (VoidRequest voidRequest);
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> VoidRequestWithHttpInfoAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -351,7 +365,7 @@ namespace CityPayAPI.Api
         /// Initializes a new instance of the <see cref="PaymentProcessingApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public PaymentProcessingApi() : this((string) null)
+        public PaymentProcessingApi() : this((string)null)
         {
         }
 
@@ -359,7 +373,7 @@ namespace CityPayAPI.Api
         /// Initializes a new instance of the <see cref="PaymentProcessingApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public PaymentProcessingApi(String basePath)
+        public PaymentProcessingApi(string basePath)
         {
             this.Configuration = CityPayAPI.Client.Configuration.MergeConfigurations(
                 CityPayAPI.Client.GlobalConfiguration.Instance,
@@ -396,11 +410,11 @@ namespace CityPayAPI.Api
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public PaymentProcessingApi(CityPayAPI.Client.ISynchronousClient client,CityPayAPI.Client.IAsynchronousClient asyncClient, CityPayAPI.Client.IReadableConfiguration configuration)
+        public PaymentProcessingApi(CityPayAPI.Client.ISynchronousClient client, CityPayAPI.Client.IAsynchronousClient asyncClient, CityPayAPI.Client.IReadableConfiguration configuration)
         {
-            if(client == null) throw new ArgumentNullException("client");
-            if(asyncClient == null) throw new ArgumentNullException("asyncClient");
-            if(configuration == null) throw new ArgumentNullException("configuration");
+            if (client == null) throw new ArgumentNullException("client");
+            if (asyncClient == null) throw new ArgumentNullException("asyncClient");
+            if (configuration == null) throw new ArgumentNullException("configuration");
 
             this.Client = client;
             this.AsynchronousClient = asyncClient;
@@ -422,7 +436,7 @@ namespace CityPayAPI.Api
         /// Gets the base path of the API client.
         /// </summary>
         /// <value>The base path</value>
-        public String GetBasePath()
+        public string GetBasePath()
         {
             return this.Configuration.BasePath;
         }
@@ -431,7 +445,7 @@ namespace CityPayAPI.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public CityPayAPI.Client.IReadableConfiguration Configuration {get; set;}
+        public CityPayAPI.Client.IReadableConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -450,24 +464,24 @@ namespace CityPayAPI.Api
         }
 
         /// <summary>
-        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
         /// <returns>Decision</returns>
-        public Decision AuthorisationRequest (AuthRequest authRequest)
+        public Decision AuthorisationRequest(AuthRequest authRequest)
         {
-             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = AuthorisationRequestWithHttpInfo(authRequest);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<Decision> localVarResponse = AuthorisationRequestWithHttpInfo(authRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
         /// <returns>ApiResponse of Decision</returns>
-        public CityPayAPI.Client.ApiResponse< Decision > AuthorisationRequestWithHttpInfo (AuthRequest authRequest)
+        public CityPayAPI.Client.ApiResponse<Decision> AuthorisationRequestWithHttpInfo(AuthRequest authRequest)
         {
             // verify the required parameter 'authRequest' is set
             if (authRequest == null)
@@ -475,13 +489,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -495,13 +509,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = authRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< Decision >("/authorise", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Decision>("/authorise", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -513,25 +527,26 @@ namespace CityPayAPI.Api
         }
 
         /// <summary>
-        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        public async System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync (AuthRequest authRequest)
+        public async System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await AuthorisationRequestAsyncWithHttpInfo(authRequest);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await AuthorisationRequestWithHttpInfoAsync(authRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
+        /// Authorisation An authorisation process performs a standard transaction authorisation based on the provided parameters of its request. The CityPay gateway will route your transaction via an Acquiring bank for subsequent authorisation to the appropriate card  schemes such as Visa or MasterCard.  The authorisation API should be used for server environments to process transactions on demand and in realtime.   The authorisation API can be used for multiple types of transactions including E-commerce, mail order, telephone order, customer present (keyed), continuous authority, pre-authorisation and others. CityPay will configure your account for  the appropriate coding and this will perform transparently by the gateway.   Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to   transact.      ### E-commerce workflows   For E-commerce transactions requiring 3DSv1 and 3DSv2 transactions, the API contains a fully accredited in built mechanism to handle authentication.  The gateway has been accredited extensively with both Acquirers and Card Schemes and simplifies the nature of these calls into a simple structure for authentication, preventing integrators from performing lengthy and a costly accreditation with Visa and MasterCard.  3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder  verification value (CAVV) as evidence of authorisation.   #### 3DSv1  &#x60;&#x60;&#x60;json {    \&quot;AuthenticationRequired\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;pareq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;md\&quot;: \&quot;WQgZXZlcnl0aGluZyBiZW\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;AuthenticationRequired&gt;  &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;  &lt;pareq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/pareq&gt;  &lt;md&gt;WQgZXZlcnl0aGluZyBiZW&lt;/md&gt; &lt;/AuthenticationRequired&gt; &#x60;&#x60;&#x60;  For E-commerce transactions requiring 3DSv1, the API contains a built in MPI which will be called to check whether the  card is participating in 3DSv1 with Verified by Visa or MasterCard SecureCode. We only support Amex SafeKey with 3DSv2. Should the card be enrolled, a payer  request (PAReq) value will be created and returned back as an [authentication required](#authenticationrequired) response object.   Your system will need to process this authentication packet and forward the user&#39;s browser to an authentication server (ACS)  to gain the user&#39;s authentication. Once complete, the ACS will produce a HTTP &#x60;POST&#x60; call back to the URL supplied in   the authentication request as &#x60;merchant_termurl&#x60;. This URL should behave as a controller and handle the post data from the   ACS and on a forked server to server HTTP request, forward this data to the [pares authentication url](#pares) for    subsequent authorisation processing. You may prefer to provide a processing page whilst this is being processed.   Processing with our systems should be relatively quick and be between 500ms - 3000ms however it is desirable to let   the user see that something is happening rather than a pending browser.      The main reason for ensuring that this controller is two fold:      1. We are never in control of the user&#39;s browser in a server API call   2. The controller is actioned on your site to ensure that any post actions from authorisation can be executed in real time    To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;PaReq\&quot; value&#x3D;\&quot;{{PaReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;TermUrl\&quot; value&#x3D;\&quot;{{Your Controller}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;MD\&quot; value&#x3D;\&quot;{{MD From Response}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  Please note that 3DSv1 is being phased out due to changes to strong customer authentication mechanisms. 3DSv2 addresses this and will solidify the authorisation and confirmation process.  We provide a Test ACS for full 3DSv1 integration testing that simulates an ACS.    #### 3DSv2  &#x60;&#x60;&#x60;json {    \&quot;RequestChallenged\&quot;: {     \&quot;acsurl\&quot;: \&quot;https://bank.com/3DS/ACS\&quot;,     \&quot;creq\&quot;: \&quot;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...\&quot;,     \&quot;merchantid\&quot;: 12345,     \&quot;transno\&quot;: 1,     \&quot;threedserver_trans_id\&quot;: \&quot;d652d8d2-d74a-4264-a051-a7862b10d5d6\&quot;   }                } &#x60;&#x60;&#x60;  &#x60;&#x60;&#x60;xml &lt;RequestChallenged&gt;   &lt;acsurl&gt;https://bank.com/3DS/ACS&lt;/acsurl&gt;   &lt;creq&gt;SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...&lt;/creq&gt;   &lt;merchantid&gt;12345&lt;/merchantid&gt;   &lt;transno&gt;1&lt;/transno&gt;   &lt;threedserver_trans_id&gt;d652d8d2-d74a-4264-a051-a7862b10d5d6&lt;/threedserver_trans_id&gt; &lt;/RequestChallenged&gt; &#x60;&#x60;&#x60;  All merchants in the EEC will require to migrate their E-commerce transactions to a secure customer authentication  model (SCA) throughout 2020. This has been adopted by the payment&#39;s industry as a progressive move alongside the European  Unions payments service directive.  CityPay support 3DSv2 for Verified by Visa, MasterCard Identity Check and American Express SafeKey 2.0 and will be rolling out acquirers on the new platform from Q4 2020. The new enhancement to 3DSv2 will allow for CityPay to seamlessly authenticate transactions in a \&quot;frictionless\&quot; flowed method which will authenticate low risk transactions with minimal impact to a  standard authorisation flow. Our API simply performs this on behalf of the merchant and cardholder. For these transactions you will not be required to change anything.  However, should a transaction be \&quot;challenged\&quot; the API will return a [request challenge](#requestchallenged) which will  require your integration to forward the cardholder&#39;s browser to the given [ACS url](#acsurl) by posting the [creq](#creq) value. Once complete, the ACS will have already been in touch with our servers by sending us a result of the authentication known as &#x60;RReq&#x60;.  To maintain session state, a parameter &#x60;ThreeDSSessionData&#x60; can be posted to the ACS url and will be returned alongside  the &#x60;CRes&#x60; value. This will ensure that any controller code will be able to isolate state between calls. This field is to be used by your own systems rather than ours and may be any value which can uniquely identify your cardholder&#39;s session. As an option, we do provide a &#x60;threedserver_trans_id&#x60; value in the &#x60;RequestChallenged&#x60; packet which can be used for the &#x60;ThreeDSSessionData&#x60; value as it is used to uniquely identify the 3D-Secure session.   Our servers however will await confirmation that the authorisation should continue and on receipt of a [cres](#cres) value, the flow will perform full authorisation processing.   Please note that the CRes returned to us is purely a mechanism of acknowledging that transactions should be committed for authorisation. The ACS by this point will have sent us the verification value (CAVV) to perform a liability shift. The CRes value will be validated for receipt of the CAVV and subsequently may return back response codes illustrating this.   To forward the user to the ACS, we recommend a simple auto submit HTML form.  &gt; Simple auto submit HTML form  &#x60;&#x60;&#x60;html &lt;html lang&#x3D;\&quot;en\&quot;&gt; &lt;head&gt;         &lt;title&gt;Forward to ACS&lt;/title&gt; &lt;script type&#x3D;\&quot;text/javascript\&quot;&gt;         function onLoadEvent() {              document.acs.submit();          }         &lt;/script&gt;         &lt;noscript&gt;You will require JavaScript to be enabled to complete this transaction&lt;/noscript&gt;     &lt;/head&gt;     &lt;body onload&#x3D;\&quot;onLoadEvent();\&quot;&gt;         &lt;form name&#x3D;\&quot;acs\&quot; action&#x3D;\&quot;{{ACSURL from Response}}\&quot; method&#x3D;\&quot;POST\&quot;&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;creq\&quot; value&#x3D;\&quot;{{CReq Packet from Response}}\&quot; /&gt;             &lt;input type&#x3D;\&quot;hidden\&quot; name&#x3D;\&quot;ThreeDSSessionData\&quot; value&#x3D;\&quot;{{session-identifier}}\&quot; /&gt;         &lt;/form&gt;     &lt;/body&gt; &lt;/html&gt; &#x60;&#x60;&#x60;  We are currently working on an integration test suite for 3DSv2 which will mock the ACS challenge process.          ### Testing 3DSv2 Integrations  The API provides a mock 3dsV2 handler which performs a number of scenarios based on the value of the CSC in the request.  | CSC Value | Behaviour | |- -- -- -- -- --|- -- -- -- -- --| | 731       | Frictionless processing - Not authenticated | | 732       | Frictionless processing - Account verification count not be performed |         | 733       | Frictionless processing - Verification Rejected |         | 741       | Frictionless processing - Attempts Processing |         | 750       | Frictionless processing - Authenticated  |         | 761       | Triggers an error message |   | Any       | Challenge Request | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> AuthorisationRequestAsyncWithHttpInfo (AuthRequest authRequest)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> AuthorisationRequestWithHttpInfoAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'authRequest' is set
             if (authRequest == null)
@@ -540,34 +555,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = authRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Decision>("/authorise", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Decision>("/authorise", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -584,10 +600,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse CResRequest (CResAuthRequest cResAuthRequest)
+        public AuthResponse CResRequest(CResAuthRequest cResAuthRequest)
         {
-             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = CResRequestWithHttpInfo(cResAuthRequest);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = CResRequestWithHttpInfo(cResAuthRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -596,7 +612,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse< AuthResponse > CResRequestWithHttpInfo (CResAuthRequest cResAuthRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> CResRequestWithHttpInfo(CResAuthRequest cResAuthRequest)
         {
             // verify the required parameter 'cResAuthRequest' is set
             if (cResAuthRequest == null)
@@ -604,13 +620,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -624,13 +640,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = cResAuthRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< AuthResponse >("/cres", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthResponse>("/cres", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -646,12 +662,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> CResRequestAsync (CResAuthRequest cResAuthRequest)
+        public async System.Threading.Tasks.Task<AuthResponse> CResRequestAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await CResRequestAsyncWithHttpInfo(cResAuthRequest);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await CResRequestWithHttpInfoAsync(cResAuthRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -659,8 +675,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> CResRequestAsyncWithHttpInfo (CResAuthRequest cResAuthRequest)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> CResRequestWithHttpInfoAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'cResAuthRequest' is set
             if (cResAuthRequest == null)
@@ -669,34 +686,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = cResAuthRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/cres", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/cres", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -713,10 +731,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement CaptureRequest (CaptureRequest captureRequest)
+        public Acknowledgement CaptureRequest(CaptureRequest captureRequest)
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = CaptureRequestWithHttpInfo(captureRequest);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = CaptureRequestWithHttpInfo(captureRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -725,7 +743,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse< Acknowledgement > CaptureRequestWithHttpInfo (CaptureRequest captureRequest)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> CaptureRequestWithHttpInfo(CaptureRequest captureRequest)
         {
             // verify the required parameter 'captureRequest' is set
             if (captureRequest == null)
@@ -733,13 +751,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -753,13 +771,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = captureRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< Acknowledgement >("/capture", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Acknowledgement>("/capture", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -775,12 +793,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync (CaptureRequest captureRequest)
+        public async System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await CaptureRequestAsyncWithHttpInfo(captureRequest);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await CaptureRequestWithHttpInfoAsync(captureRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -788,8 +806,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> CaptureRequestAsyncWithHttpInfo (CaptureRequest captureRequest)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> CaptureRequestWithHttpInfoAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'captureRequest' is set
             if (captureRequest == null)
@@ -798,34 +817,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = captureRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/capture", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/capture", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -842,10 +862,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse PaResRequest (PaResAuthRequest paResAuthRequest)
+        public AuthResponse PaResRequest(PaResAuthRequest paResAuthRequest)
         {
-             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = PaResRequestWithHttpInfo(paResAuthRequest);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = PaResRequestWithHttpInfo(paResAuthRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -854,7 +874,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse< AuthResponse > PaResRequestWithHttpInfo (PaResAuthRequest paResAuthRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> PaResRequestWithHttpInfo(PaResAuthRequest paResAuthRequest)
         {
             // verify the required parameter 'paResAuthRequest' is set
             if (paResAuthRequest == null)
@@ -862,13 +882,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -882,13 +902,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = paResAuthRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< AuthResponse >("/pares", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthResponse>("/pares", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -904,12 +924,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync (PaResAuthRequest paResAuthRequest)
+        public async System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await PaResRequestAsyncWithHttpInfo(paResAuthRequest);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await PaResRequestWithHttpInfoAsync(paResAuthRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -917,8 +937,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> PaResRequestAsyncWithHttpInfo (PaResAuthRequest paResAuthRequest)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> PaResRequestWithHttpInfoAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'paResAuthRequest' is set
             if (paResAuthRequest == null)
@@ -927,34 +948,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = paResAuthRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/pares", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/pares", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -971,10 +993,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse RefundRequest (RefundRequest refundRequest)
+        public AuthResponse RefundRequest(RefundRequest refundRequest)
         {
-             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = RefundRequestWithHttpInfo(refundRequest);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = RefundRequestWithHttpInfo(refundRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -983,7 +1005,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse< AuthResponse > RefundRequestWithHttpInfo (RefundRequest refundRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> RefundRequestWithHttpInfo(RefundRequest refundRequest)
         {
             // verify the required parameter 'refundRequest' is set
             if (refundRequest == null)
@@ -991,13 +1013,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -1011,13 +1033,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = refundRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< AuthResponse >("/refund", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthResponse>("/refund", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1033,12 +1055,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync (RefundRequest refundRequest)
+        public async System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await RefundRequestAsyncWithHttpInfo(refundRequest);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await RefundRequestWithHttpInfoAsync(refundRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1046,8 +1068,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> RefundRequestAsyncWithHttpInfo (RefundRequest refundRequest)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> RefundRequestWithHttpInfoAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'refundRequest' is set
             if (refundRequest == null)
@@ -1056,34 +1079,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = refundRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/refund", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/refund", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1100,10 +1124,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
         /// <returns>AuthReferences</returns>
-        public AuthReferences RetrievalRequest (RetrieveRequest retrieveRequest)
+        public AuthReferences RetrievalRequest(RetrieveRequest retrieveRequest)
         {
-             CityPayAPI.Client.ApiResponse<AuthReferences> localVarResponse = RetrievalRequestWithHttpInfo(retrieveRequest);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<AuthReferences> localVarResponse = RetrievalRequestWithHttpInfo(retrieveRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1112,7 +1136,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
         /// <returns>ApiResponse of AuthReferences</returns>
-        public CityPayAPI.Client.ApiResponse< AuthReferences > RetrievalRequestWithHttpInfo (RetrieveRequest retrieveRequest)
+        public CityPayAPI.Client.ApiResponse<AuthReferences> RetrievalRequestWithHttpInfo(RetrieveRequest retrieveRequest)
         {
             // verify the required parameter 'retrieveRequest' is set
             if (retrieveRequest == null)
@@ -1120,13 +1144,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -1140,13 +1164,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = retrieveRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< AuthReferences >("/retrieve", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthReferences>("/retrieve", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1162,12 +1186,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthReferences</returns>
-        public async System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync (RetrieveRequest retrieveRequest)
+        public async System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<AuthReferences> localVarResponse = await RetrievalRequestAsyncWithHttpInfo(retrieveRequest);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<AuthReferences> localVarResponse = await RetrievalRequestWithHttpInfoAsync(retrieveRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1175,8 +1199,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthReferences)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthReferences>> RetrievalRequestAsyncWithHttpInfo (RetrieveRequest retrieveRequest)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthReferences>> RetrievalRequestWithHttpInfoAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'retrieveRequest' is set
             if (retrieveRequest == null)
@@ -1185,34 +1210,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = retrieveRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthReferences>("/retrieve", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthReferences>("/retrieve", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1229,10 +1255,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement VoidRequest (VoidRequest voidRequest)
+        public Acknowledgement VoidRequest(VoidRequest voidRequest)
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = VoidRequestWithHttpInfo(voidRequest);
-             return localVarResponse.Data;
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = VoidRequestWithHttpInfo(voidRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1241,7 +1267,7 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse< Acknowledgement > VoidRequestWithHttpInfo (VoidRequest voidRequest)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> VoidRequestWithHttpInfo(VoidRequest voidRequest)
         {
             // verify the required parameter 'voidRequest' is set
             if (voidRequest == null)
@@ -1249,13 +1275,13 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
-                "application/json", 
+            string[] _contentTypes = new string[] {
+                "application/json",
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
@@ -1269,13 +1295,13 @@ namespace CityPayAPI.Api
             localVarRequestOptions.Data = voidRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post< Acknowledgement >("/void", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Acknowledgement>("/void", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1291,12 +1317,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync (VoidRequest voidRequest)
+        public async System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await VoidRequestAsyncWithHttpInfo(voidRequest);
-             return localVarResponse.Data;
-
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await VoidRequestWithHttpInfoAsync(voidRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1304,8 +1330,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> VoidRequestAsyncWithHttpInfo (VoidRequest voidRequest)
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> VoidRequestWithHttpInfoAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'voidRequest' is set
             if (voidRequest == null)
@@ -1314,34 +1341,35 @@ namespace CityPayAPI.Api
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json", 
                 "text/xml"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
                 "application/json",
                 "text/xml"
             };
-            
-            foreach (var _contentType in _contentTypes)
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", _contentType);
-            
-            foreach (var _accept in _accepts)
-                localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
             localVarRequestOptions.Data = voidRequest;
 
             // authentication (cp-api-key) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
             {
                 localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
             }
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/void", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/void", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

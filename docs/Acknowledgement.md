@@ -1,4 +1,5 @@
 # CityPayAPI.Model.Acknowledgement
+
 ## Properties
 
 Name | Type | Description | Notes

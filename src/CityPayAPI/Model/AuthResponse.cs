@@ -1,4 +1,4 @@
-/* 
+/*
  * CityPay Payment API
  *
  *  This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokinsed payments using Card Holder Accounts.  ## Compliance and Security <aside class=\"notice\">   Before we begin a reminder that your application will need to adhere to PCI-DSS standards to operate safely   and to meet requirements set out by Visa and MasterCard and the PCI Security Standards Council including: </aside>  * Data must be collected using TLS version 1.2 using [strong cryptography](#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive card holder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
@@ -9,16 +9,17 @@
 
 
 using System;
-using System.Linq;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 
@@ -27,8 +28,8 @@ namespace CityPayAPI.Model
     /// <summary>
     /// AuthResponse
     /// </summary>
-    [DataContract]
-    public partial class AuthResponse :  IEquatable<AuthResponse>, IValidatableObject
+    [DataContract(Name = "AuthResponse")]
+    public partial class AuthResponse : IEquatable<AuthResponse>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthResponse" /> class.
@@ -37,28 +38,28 @@ namespace CityPayAPI.Model
         /// <param name="atrn">A reference number provided by the acquirer for a transaction it can be used to cross reference transactions with an Acquirers reporting panel. .</param>
         /// <param name="atsd">Additional Transaction Security Data used for ecommerce transactions to decipher security capabilities and attempts against a transaction..</param>
         /// <param name="authcode">The authorisation code as returned by the card issuer or acquiring bank when a transaction has successfully   been authorised. Authorisation codes contain alphanumeric values. Whilst the code confirms authorisation it   should not be used to determine whether a transaction was successfully processed. For instance an auth code   may be returned when a transaction has been subsequently declined due to a CSC mismatch. .</param>
-        /// <param name="authenResult">The result of any authentication using 3d_secure authorisation against ecommerce transactions. Values are | Value | Description | |- -- -- --|- -- -- -- -- -- --| | Y | Authentication Successful. The Cardholder&#39;s password was successfully validated. | | N | Authentication Failed. Customer failed or cancelled authentication, transaction denied. | | A | Attempts Processing Performed Authentication could not be completed but a proof of authentication attempt (CAVV) was generated | | U | Authentication Could Not Be Performed Authentication could not be completed, due to technical or other problem | .</param>
-        /// <param name="authorised">A boolean definition that indicates that the transaction was authorised. It will return false if the transaction  was declined, rejected or cancelled due to CSC matching failures. Attention should be referenced to the AuthResult and Response code for accurate determination of the result. .</param>
-        /// <param name="avsResult">The AVS result codes determine the result of checking the AVS values within the Address Verification fraud system. If a transaction is declined due to the AVS code not matching, this value can help determine the reason for the decline.   | Code | Description |  |- -- -- -|- -- -- -- -- -- -|  | Y | Address and 5 digit post code match |  | M | Street address and Postal codes match for international transaction |  | U | No AVS data available from issuer auth system |  | A | Addres matches, post code does not |  | I | Address information verified for international transaction |  | Z | 5 digit post code matches, Address does not |  | W | 9 digit post code matches, Address does not |  | X | Postcode and address match |  | B | Postal code not verified due to incompatible formats |  | P | Postal codes match. Street address not verified due to to incompatible formats |  | E | AVS Error |  | C | Street address and Postal code not verified due to incompatible formats |  | D | Street address and postal codes match |  |   | No information |  | N | Neither postcode nor address match |  | R | Retry, System unavailble or Timed Out |  | S | AVS Service not supported by issuer or processor |  | G | Issuer does not participate in AVS | .</param>
+        /// <param name="authenResult">The result of any authentication using 3d_secure authorisation against ecommerce transactions. Values are:  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Value&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;Y&lt;/td&gt; &lt;td&gt;Authentication Successful. The Cardholder&#39;s password was successfully validated.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;N&lt;/td&gt; &lt;td&gt;Authentication Failed. Customer failed or cancelled authentication, transaction denied.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;A&lt;/td&gt; &lt;td&gt;Attempts Processing Performed Authentication could not be completed but a proof of authentication attempt (CAVV) was generated.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;U&lt;/td&gt; &lt;td&gt;Authentication Could Not Be Performed Authentication could not be completed, due to technical or other problem.&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; .</param>
+        /// <param name="authorised">A boolean definition that indicates that the transaction was authorised. It will return false if the transaction  was declined, rejected or cancelled due to CSC matching failures.  Attention should be referenced to the AuthResult and Response code for accurate determination of the result. .</param>
+        /// <param name="avsResult">The AVS result codes determine the result of checking the AVS values within the Address Verification fraud system. If a transaction is declined due to the AVS code not matching, this value can help determine the reason for the decline.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt;Y&lt;/td&gt;&lt;td&gt;Address and 5 digit post code match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;M&lt;/td&gt;&lt;td&gt;Street address and Postal codes match for international transaction&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;U&lt;/td&gt;&lt;td&gt;No AVS data available from issuer auth system&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;Addres matches, post code does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;I&lt;/td&gt;&lt;td&gt;Address information verified for international transaction&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;Z&lt;/td&gt;&lt;td&gt;5 digit post code matches, Address does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;W&lt;/td&gt;&lt;td&gt;9 digit post code matches, Address does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;X&lt;/td&gt;&lt;td&gt;Postcode and address match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;Postal code not verified due to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;P&lt;/td&gt;&lt;td&gt;Postal codes match. Street address not verified due to to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;E&lt;/td&gt;&lt;td&gt;AVS Error&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;Street address and Postal code not verified due to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;D&lt;/td&gt;&lt;td&gt;Street address and postal codes match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt; &lt;/td&gt;&lt;td&gt;No information&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;N&lt;/td&gt;&lt;td&gt;Neither postcode nor address match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;R&lt;/td&gt;&lt;td&gt;Retry, System unavailble or Timed Out&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;S&lt;/td&gt;&lt;td&gt;AVS Service not supported by issuer or processor&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;G&lt;/td&gt;&lt;td&gt;Issuer does not participate in AVS&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; .</param>
         /// <param name="binCommercial">Determines whether the bin range was found to be a commercial or business card..</param>
         /// <param name="binDebit">Determines whether the bin range was found to be a debit card. If false the card was considered as a credit card..</param>
         /// <param name="binDescription">A description of the bin range found for the card..</param>
         /// <param name="cavv">The cardholder authentication verification value which can be returned for verification purposes of the authenticated  transaction for dispute realisation. .</param>
         /// <param name="context">The context which processed the transaction, can be used for support purposes to trace transactions..</param>
-        /// <param name="cscResult">The CSC rseult codes determine the result of checking the provided CSC value within the Card Security Code fraud system. If a transaction is declined due to the CSC code not matching, this value can help determine the reason for the decline.   | Code | Description |  |- -- -- -|- -- -- -- -- -- -|  |   | No information |  | M | Card verification data matches |  | N | Card verification data was checked but did not match |  | P | Card verification was not processed |  | S | The card verification data should be on the card but the merchant indicates that it is not |  | U | The card issuer is not certified | .</param>
+        /// <param name="cscResult">The CSC rseult codes determine the result of checking the provided CSC value within the Card Security Code fraud system. If a transaction is declined due to the CSC code not matching, this value can help determine the reason for the decline.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt; &lt;/td&gt;&lt;td&gt;No information&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;M&lt;/td&gt;&lt;td&gt;Card verification data matches&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;N&lt;/td&gt;&lt;td&gt;Card verification data was checked but did not match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;P&lt;/td&gt;&lt;td&gt;Card verification was not processed&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;S&lt;/td&gt;&lt;td&gt;The card verification data should be on the card but the merchant indicates that it is not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;U&lt;/td&gt;&lt;td&gt;The card issuer is not certified&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; .</param>
         /// <param name="currency">The currency the transaction was processed in. This is an &#x60;ISO4217&#x60; alpha currency value..</param>
         /// <param name="datetime">The UTC date time of the transaction in ISO data time format. .</param>
         /// <param name="eci">An Electronic Commerce Indicator (ECI) used to identify the result of authentication using 3DSecure. .</param>
         /// <param name="identifier">The identifier provided within the request..</param>
-        /// <param name="live">Used to identify that a tranasction was processed on a live authorisation platform..</param>
+        /// <param name="live">Used to identify that a transaction was processed on a live authorisation platform..</param>
         /// <param name="maskedpan">A masked value of the card number used for processing displaying limited values that can be used on a receipt. .</param>
         /// <param name="merchantid">The merchant id that processed this transaction..</param>
-        /// <param name="result">An integer result that indicates the outcome of the transaction. The Code value below maps to the result value   | Code | Abbrev | Description |  |- -- -- -|- -- -- --|- -- -- -- -- -- --|  | 0 | Declined | Declined |  | 1 | Accepted | Accepted |  | 2 | Rejected | Rejected |  | 3 | Not Attempted | Not Attempted |  | 4 | Referred | Referred |  | 5 | PinRetry | Perform PIN Retry |  | 6 | ForSigVer | Force Signature Verification |  | 7 | Hold | Hold |  | 8 | SecErr | Security Error |  | 9 | CallAcq | Call Acquirer |  | 10 | DNH | Do Not Honour |  | 11 | RtnCrd | Retain Card |  | 12 | ExprdCrd | Expired Card |  | 13 | InvldCrd | Invalid Card No |  | 14 | PinExcd | Pin Tries Exceeded |  | 15 | PinInvld | Pin Invalid |  | 16 | AuthReq | Authentication Required |  | 17 | AuthenFail | Authentication Failed |  | 18 | Verified | Card Verified |  | 19 | Cancelled | Cancelled |  | 20 | Un | Unknown | .</param>
-        /// <param name="resultCode">The result code as defined in the Response Codes Reference for example 000 is an accepted live transaction whilst 001 is an accepted test transaction. Result codes identify the source of success and failure. Codes may start with an alpha character i.e. C001 indicating a type of error such as a card validation error. .</param>
+        /// <param name="result">An integer result that indicates the outcome of the transaction. The Code value below maps to the result value  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Abbrev&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;PinRetry&lt;/td&gt;&lt;td&gt;Perform PIN Retry&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;ForSigVer&lt;/td&gt;&lt;td&gt;Force Signature Verification&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;SecErr&lt;/td&gt;&lt;td&gt;Security Error&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;CallAcq&lt;/td&gt;&lt;td&gt;Call Acquirer&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;DNH&lt;/td&gt;&lt;td&gt;Do Not Honour&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;RtnCrd&lt;/td&gt;&lt;td&gt;Retain Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;ExprdCrd&lt;/td&gt;&lt;td&gt;Expired Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;InvldCrd&lt;/td&gt;&lt;td&gt;Invalid Card No&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;PinExcd&lt;/td&gt;&lt;td&gt;Pin Tries Exceeded&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;PinInvld&lt;/td&gt;&lt;td&gt;Pin Invalid&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;AuthReq&lt;/td&gt;&lt;td&gt;Authentication Required&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;AuthenFail&lt;/td&gt;&lt;td&gt;Authentication Failed&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;Verified&lt;/td&gt;&lt;td&gt;Card Verified&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;Un&lt;/td&gt;&lt;td&gt;Unknown&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; .</param>
+        /// <param name="resultCode">The result code as defined in the Response Codes Reference for example 000 is an accepted live transaction whilst 001 is an accepted test transaction. Result codes identify the source of success and failure.  Codes may start with an alpha character i.e. C001 indicating a type of error such as a card validation error. .</param>
         /// <param name="resultMessage">The message regarding the result which provides further narrative to the result code. .</param>
         /// <param name="scheme">A name of the card scheme of the transaction that processed the transaction such as Visa or MasterCard. .</param>
-        /// <param name="sha256">A SHA256 digest value of the transaction used to validate the response data The digest is calculated by concatenating  * authcode  * amount  * response_code  * merchant_id  * trans_no  * identifier  * licence_key - which is not provided in the response. .</param>
-        /// <param name="transStatus">Used to identify the status of a transaction. The status is used to track a transaction through its life cycle.  | Id | Description | |- -- -|- -- -- -- -- -- --| | O | Transaction is open for settlement | | A | Transaction is assigned for settlement and can no longer be voided | | S | Transaction has been settled   | | D | Transaction has been declined | | R | Transaction has been rejected | | P | Transaction has been authorised only and awaiting a capture. Used in pre-auth situations | | C | Transaction has been cancelled | | E | Transaction has expired | | I | Transaction has been initialised but no action was able to be carried out | | H | Transaction is awaiting authorisation | | . | Transaction is on hold | | V | Transaction has been verified | .</param>
+        /// <param name="sha256">A SHA256 digest value of the transaction used to validate the response data The digest is calculated by concatenating   * authcode   * amount   * response_code   * merchant_id   * trans_no   * identifier   * licence_key - which is not provided in the response. .</param>
+        /// <param name="transStatus">Used to identify the status of a transaction. The status is used to track a transaction through its life cycle.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Id&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;O&lt;/td&gt; &lt;td&gt;Transaction is open for settlement&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;A&lt;/td&gt; &lt;td&gt;Transaction is assigned for settlement and can no longer be voided&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;S&lt;/td&gt; &lt;td&gt;Transaction has been settled&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;D&lt;/td&gt; &lt;td&gt;Transaction has been declined&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;R&lt;/td&gt; &lt;td&gt;Transaction has been rejected&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;P&lt;/td&gt; &lt;td&gt;Transaction has been authorised only and awaiting a capture. Used in pre-auth situations&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;C&lt;/td&gt; &lt;td&gt;Transaction has been cancelled&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;E&lt;/td&gt; &lt;td&gt;Transaction has expired&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;I&lt;/td&gt; &lt;td&gt;Transaction has been initialised but no action was able to be carried out&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;H&lt;/td&gt; &lt;td&gt;Transaction is awaiting authorisation&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;.&lt;/td&gt; &lt;td&gt;Transaction is on hold&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;V&lt;/td&gt; &lt;td&gt;Transaction has been verified&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; .</param>
         /// <param name="transno">The resulting transaction number, ordered incrementally from 1 for every merchant_id. The value will default to less than 1 for transactions that do not have a transaction number issued. .</param>
         public AuthResponse(int amount = default(int), string atrn = default(string), string atsd = default(string), string authcode = default(string), string authenResult = default(string), bool authorised = default(bool), string avsResult = default(string), bool binCommercial = default(bool), bool binDebit = default(bool), string binDescription = default(string), string cavv = default(string), string context = default(string), string cscResult = default(string), string currency = default(string), DateTime datetime = default(DateTime), string eci = default(string), string identifier = default(string), bool live = default(bool), string maskedpan = default(string), int merchantid = default(int), int result = default(int), string resultCode = default(string), string resultMessage = default(string), string scheme = default(string), string sha256 = default(string), string transStatus = default(string), int transno = default(int))
         {
@@ -90,194 +91,194 @@ namespace CityPayAPI.Model
             this.TransStatus = transStatus;
             this.Transno = transno;
         }
-        
+
         /// <summary>
         /// The amount of the transaction processed.
         /// </summary>
         /// <value>The amount of the transaction processed.</value>
-        [DataMember(Name="amount", EmitDefaultValue=false)]
+        [DataMember(Name = "amount", EmitDefaultValue = false)]
         public int Amount { get; set; }
 
         /// <summary>
         /// A reference number provided by the acquirer for a transaction it can be used to cross reference transactions with an Acquirers reporting panel. 
         /// </summary>
         /// <value>A reference number provided by the acquirer for a transaction it can be used to cross reference transactions with an Acquirers reporting panel. </value>
-        [DataMember(Name="atrn", EmitDefaultValue=false)]
+        [DataMember(Name = "atrn", EmitDefaultValue = false)]
         public string Atrn { get; set; }
 
         /// <summary>
         /// Additional Transaction Security Data used for ecommerce transactions to decipher security capabilities and attempts against a transaction.
         /// </summary>
         /// <value>Additional Transaction Security Data used for ecommerce transactions to decipher security capabilities and attempts against a transaction.</value>
-        [DataMember(Name="atsd", EmitDefaultValue=false)]
+        [DataMember(Name = "atsd", EmitDefaultValue = false)]
         public string Atsd { get; set; }
 
         /// <summary>
         /// The authorisation code as returned by the card issuer or acquiring bank when a transaction has successfully   been authorised. Authorisation codes contain alphanumeric values. Whilst the code confirms authorisation it   should not be used to determine whether a transaction was successfully processed. For instance an auth code   may be returned when a transaction has been subsequently declined due to a CSC mismatch. 
         /// </summary>
         /// <value>The authorisation code as returned by the card issuer or acquiring bank when a transaction has successfully   been authorised. Authorisation codes contain alphanumeric values. Whilst the code confirms authorisation it   should not be used to determine whether a transaction was successfully processed. For instance an auth code   may be returned when a transaction has been subsequently declined due to a CSC mismatch. </value>
-        [DataMember(Name="authcode", EmitDefaultValue=false)]
+        [DataMember(Name = "authcode", EmitDefaultValue = false)]
         public string Authcode { get; set; }
 
         /// <summary>
-        /// The result of any authentication using 3d_secure authorisation against ecommerce transactions. Values are | Value | Description | |- -- -- --|- -- -- -- -- -- --| | Y | Authentication Successful. The Cardholder&#39;s password was successfully validated. | | N | Authentication Failed. Customer failed or cancelled authentication, transaction denied. | | A | Attempts Processing Performed Authentication could not be completed but a proof of authentication attempt (CAVV) was generated | | U | Authentication Could Not Be Performed Authentication could not be completed, due to technical or other problem | 
+        /// The result of any authentication using 3d_secure authorisation against ecommerce transactions. Values are:  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Value&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;Y&lt;/td&gt; &lt;td&gt;Authentication Successful. The Cardholder&#39;s password was successfully validated.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;N&lt;/td&gt; &lt;td&gt;Authentication Failed. Customer failed or cancelled authentication, transaction denied.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;A&lt;/td&gt; &lt;td&gt;Attempts Processing Performed Authentication could not be completed but a proof of authentication attempt (CAVV) was generated.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;U&lt;/td&gt; &lt;td&gt;Authentication Could Not Be Performed Authentication could not be completed, due to technical or other problem.&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; 
         /// </summary>
-        /// <value>The result of any authentication using 3d_secure authorisation against ecommerce transactions. Values are | Value | Description | |- -- -- --|- -- -- -- -- -- --| | Y | Authentication Successful. The Cardholder&#39;s password was successfully validated. | | N | Authentication Failed. Customer failed or cancelled authentication, transaction denied. | | A | Attempts Processing Performed Authentication could not be completed but a proof of authentication attempt (CAVV) was generated | | U | Authentication Could Not Be Performed Authentication could not be completed, due to technical or other problem | </value>
-        [DataMember(Name="authen_result", EmitDefaultValue=false)]
+        /// <value>The result of any authentication using 3d_secure authorisation against ecommerce transactions. Values are:  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Value&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;Y&lt;/td&gt; &lt;td&gt;Authentication Successful. The Cardholder&#39;s password was successfully validated.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;N&lt;/td&gt; &lt;td&gt;Authentication Failed. Customer failed or cancelled authentication, transaction denied.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;A&lt;/td&gt; &lt;td&gt;Attempts Processing Performed Authentication could not be completed but a proof of authentication attempt (CAVV) was generated.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;U&lt;/td&gt; &lt;td&gt;Authentication Could Not Be Performed Authentication could not be completed, due to technical or other problem.&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; </value>
+        [DataMember(Name = "authen_result", EmitDefaultValue = false)]
         public string AuthenResult { get; set; }
 
         /// <summary>
-        /// A boolean definition that indicates that the transaction was authorised. It will return false if the transaction  was declined, rejected or cancelled due to CSC matching failures. Attention should be referenced to the AuthResult and Response code for accurate determination of the result. 
+        /// A boolean definition that indicates that the transaction was authorised. It will return false if the transaction  was declined, rejected or cancelled due to CSC matching failures.  Attention should be referenced to the AuthResult and Response code for accurate determination of the result. 
         /// </summary>
-        /// <value>A boolean definition that indicates that the transaction was authorised. It will return false if the transaction  was declined, rejected or cancelled due to CSC matching failures. Attention should be referenced to the AuthResult and Response code for accurate determination of the result. </value>
-        [DataMember(Name="authorised", EmitDefaultValue=false)]
+        /// <value>A boolean definition that indicates that the transaction was authorised. It will return false if the transaction  was declined, rejected or cancelled due to CSC matching failures.  Attention should be referenced to the AuthResult and Response code for accurate determination of the result. </value>
+        [DataMember(Name = "authorised", EmitDefaultValue = true)]
         public bool Authorised { get; set; }
 
         /// <summary>
-        /// The AVS result codes determine the result of checking the AVS values within the Address Verification fraud system. If a transaction is declined due to the AVS code not matching, this value can help determine the reason for the decline.   | Code | Description |  |- -- -- -|- -- -- -- -- -- -|  | Y | Address and 5 digit post code match |  | M | Street address and Postal codes match for international transaction |  | U | No AVS data available from issuer auth system |  | A | Addres matches, post code does not |  | I | Address information verified for international transaction |  | Z | 5 digit post code matches, Address does not |  | W | 9 digit post code matches, Address does not |  | X | Postcode and address match |  | B | Postal code not verified due to incompatible formats |  | P | Postal codes match. Street address not verified due to to incompatible formats |  | E | AVS Error |  | C | Street address and Postal code not verified due to incompatible formats |  | D | Street address and postal codes match |  |   | No information |  | N | Neither postcode nor address match |  | R | Retry, System unavailble or Timed Out |  | S | AVS Service not supported by issuer or processor |  | G | Issuer does not participate in AVS | 
+        /// The AVS result codes determine the result of checking the AVS values within the Address Verification fraud system. If a transaction is declined due to the AVS code not matching, this value can help determine the reason for the decline.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt;Y&lt;/td&gt;&lt;td&gt;Address and 5 digit post code match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;M&lt;/td&gt;&lt;td&gt;Street address and Postal codes match for international transaction&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;U&lt;/td&gt;&lt;td&gt;No AVS data available from issuer auth system&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;Addres matches, post code does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;I&lt;/td&gt;&lt;td&gt;Address information verified for international transaction&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;Z&lt;/td&gt;&lt;td&gt;5 digit post code matches, Address does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;W&lt;/td&gt;&lt;td&gt;9 digit post code matches, Address does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;X&lt;/td&gt;&lt;td&gt;Postcode and address match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;Postal code not verified due to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;P&lt;/td&gt;&lt;td&gt;Postal codes match. Street address not verified due to to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;E&lt;/td&gt;&lt;td&gt;AVS Error&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;Street address and Postal code not verified due to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;D&lt;/td&gt;&lt;td&gt;Street address and postal codes match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt; &lt;/td&gt;&lt;td&gt;No information&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;N&lt;/td&gt;&lt;td&gt;Neither postcode nor address match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;R&lt;/td&gt;&lt;td&gt;Retry, System unavailble or Timed Out&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;S&lt;/td&gt;&lt;td&gt;AVS Service not supported by issuer or processor&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;G&lt;/td&gt;&lt;td&gt;Issuer does not participate in AVS&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; 
         /// </summary>
-        /// <value>The AVS result codes determine the result of checking the AVS values within the Address Verification fraud system. If a transaction is declined due to the AVS code not matching, this value can help determine the reason for the decline.   | Code | Description |  |- -- -- -|- -- -- -- -- -- -|  | Y | Address and 5 digit post code match |  | M | Street address and Postal codes match for international transaction |  | U | No AVS data available from issuer auth system |  | A | Addres matches, post code does not |  | I | Address information verified for international transaction |  | Z | 5 digit post code matches, Address does not |  | W | 9 digit post code matches, Address does not |  | X | Postcode and address match |  | B | Postal code not verified due to incompatible formats |  | P | Postal codes match. Street address not verified due to to incompatible formats |  | E | AVS Error |  | C | Street address and Postal code not verified due to incompatible formats |  | D | Street address and postal codes match |  |   | No information |  | N | Neither postcode nor address match |  | R | Retry, System unavailble or Timed Out |  | S | AVS Service not supported by issuer or processor |  | G | Issuer does not participate in AVS | </value>
-        [DataMember(Name="avs_result", EmitDefaultValue=false)]
+        /// <value>The AVS result codes determine the result of checking the AVS values within the Address Verification fraud system. If a transaction is declined due to the AVS code not matching, this value can help determine the reason for the decline.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt;Y&lt;/td&gt;&lt;td&gt;Address and 5 digit post code match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;M&lt;/td&gt;&lt;td&gt;Street address and Postal codes match for international transaction&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;U&lt;/td&gt;&lt;td&gt;No AVS data available from issuer auth system&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;Addres matches, post code does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;I&lt;/td&gt;&lt;td&gt;Address information verified for international transaction&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;Z&lt;/td&gt;&lt;td&gt;5 digit post code matches, Address does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;W&lt;/td&gt;&lt;td&gt;9 digit post code matches, Address does not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;X&lt;/td&gt;&lt;td&gt;Postcode and address match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;Postal code not verified due to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;P&lt;/td&gt;&lt;td&gt;Postal codes match. Street address not verified due to to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;E&lt;/td&gt;&lt;td&gt;AVS Error&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;Street address and Postal code not verified due to incompatible formats&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;D&lt;/td&gt;&lt;td&gt;Street address and postal codes match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt; &lt;/td&gt;&lt;td&gt;No information&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;N&lt;/td&gt;&lt;td&gt;Neither postcode nor address match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;R&lt;/td&gt;&lt;td&gt;Retry, System unavailble or Timed Out&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;S&lt;/td&gt;&lt;td&gt;AVS Service not supported by issuer or processor&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;G&lt;/td&gt;&lt;td&gt;Issuer does not participate in AVS&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; </value>
+        [DataMember(Name = "avs_result", EmitDefaultValue = false)]
         public string AvsResult { get; set; }
 
         /// <summary>
         /// Determines whether the bin range was found to be a commercial or business card.
         /// </summary>
         /// <value>Determines whether the bin range was found to be a commercial or business card.</value>
-        [DataMember(Name="bin_commercial", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_commercial", EmitDefaultValue = true)]
         public bool BinCommercial { get; set; }
 
         /// <summary>
         /// Determines whether the bin range was found to be a debit card. If false the card was considered as a credit card.
         /// </summary>
         /// <value>Determines whether the bin range was found to be a debit card. If false the card was considered as a credit card.</value>
-        [DataMember(Name="bin_debit", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_debit", EmitDefaultValue = true)]
         public bool BinDebit { get; set; }
 
         /// <summary>
         /// A description of the bin range found for the card.
         /// </summary>
         /// <value>A description of the bin range found for the card.</value>
-        [DataMember(Name="bin_description", EmitDefaultValue=false)]
+        [DataMember(Name = "bin_description", EmitDefaultValue = false)]
         public string BinDescription { get; set; }
 
         /// <summary>
         /// The cardholder authentication verification value which can be returned for verification purposes of the authenticated  transaction for dispute realisation. 
         /// </summary>
         /// <value>The cardholder authentication verification value which can be returned for verification purposes of the authenticated  transaction for dispute realisation. </value>
-        [DataMember(Name="cavv", EmitDefaultValue=false)]
+        [DataMember(Name = "cavv", EmitDefaultValue = false)]
         public string Cavv { get; set; }
 
         /// <summary>
         /// The context which processed the transaction, can be used for support purposes to trace transactions.
         /// </summary>
         /// <value>The context which processed the transaction, can be used for support purposes to trace transactions.</value>
-        [DataMember(Name="context", EmitDefaultValue=false)]
+        [DataMember(Name = "context", EmitDefaultValue = false)]
         public string Context { get; set; }
 
         /// <summary>
-        /// The CSC rseult codes determine the result of checking the provided CSC value within the Card Security Code fraud system. If a transaction is declined due to the CSC code not matching, this value can help determine the reason for the decline.   | Code | Description |  |- -- -- -|- -- -- -- -- -- -|  |   | No information |  | M | Card verification data matches |  | N | Card verification data was checked but did not match |  | P | Card verification was not processed |  | S | The card verification data should be on the card but the merchant indicates that it is not |  | U | The card issuer is not certified | 
+        /// The CSC rseult codes determine the result of checking the provided CSC value within the Card Security Code fraud system. If a transaction is declined due to the CSC code not matching, this value can help determine the reason for the decline.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt; &lt;/td&gt;&lt;td&gt;No information&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;M&lt;/td&gt;&lt;td&gt;Card verification data matches&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;N&lt;/td&gt;&lt;td&gt;Card verification data was checked but did not match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;P&lt;/td&gt;&lt;td&gt;Card verification was not processed&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;S&lt;/td&gt;&lt;td&gt;The card verification data should be on the card but the merchant indicates that it is not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;U&lt;/td&gt;&lt;td&gt;The card issuer is not certified&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; 
         /// </summary>
-        /// <value>The CSC rseult codes determine the result of checking the provided CSC value within the Card Security Code fraud system. If a transaction is declined due to the CSC code not matching, this value can help determine the reason for the decline.   | Code | Description |  |- -- -- -|- -- -- -- -- -- -|  |   | No information |  | M | Card verification data matches |  | N | Card verification data was checked but did not match |  | P | Card verification was not processed |  | S | The card verification data should be on the card but the merchant indicates that it is not |  | U | The card issuer is not certified | </value>
-        [DataMember(Name="csc_result", EmitDefaultValue=false)]
+        /// <value>The CSC rseult codes determine the result of checking the provided CSC value within the Card Security Code fraud system. If a transaction is declined due to the CSC code not matching, this value can help determine the reason for the decline.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt; &lt;/td&gt;&lt;td&gt;No information&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;M&lt;/td&gt;&lt;td&gt;Card verification data matches&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;N&lt;/td&gt;&lt;td&gt;Card verification data was checked but did not match&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;P&lt;/td&gt;&lt;td&gt;Card verification was not processed&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;S&lt;/td&gt;&lt;td&gt;The card verification data should be on the card but the merchant indicates that it is not&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;U&lt;/td&gt;&lt;td&gt;The card issuer is not certified&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; </value>
+        [DataMember(Name = "csc_result", EmitDefaultValue = false)]
         public string CscResult { get; set; }
 
         /// <summary>
         /// The currency the transaction was processed in. This is an &#x60;ISO4217&#x60; alpha currency value.
         /// </summary>
         /// <value>The currency the transaction was processed in. This is an &#x60;ISO4217&#x60; alpha currency value.</value>
-        [DataMember(Name="currency", EmitDefaultValue=false)]
+        [DataMember(Name = "currency", EmitDefaultValue = false)]
         public string Currency { get; set; }
 
         /// <summary>
         /// The UTC date time of the transaction in ISO data time format. 
         /// </summary>
         /// <value>The UTC date time of the transaction in ISO data time format. </value>
-        [DataMember(Name="datetime", EmitDefaultValue=false)]
+        [DataMember(Name = "datetime", EmitDefaultValue = false)]
         public DateTime Datetime { get; set; }
 
         /// <summary>
         /// An Electronic Commerce Indicator (ECI) used to identify the result of authentication using 3DSecure. 
         /// </summary>
         /// <value>An Electronic Commerce Indicator (ECI) used to identify the result of authentication using 3DSecure. </value>
-        [DataMember(Name="eci", EmitDefaultValue=false)]
+        [DataMember(Name = "eci", EmitDefaultValue = false)]
         public string Eci { get; set; }
 
         /// <summary>
         /// The identifier provided within the request.
         /// </summary>
         /// <value>The identifier provided within the request.</value>
-        [DataMember(Name="identifier", EmitDefaultValue=false)]
+        [DataMember(Name = "identifier", EmitDefaultValue = false)]
         public string Identifier { get; set; }
 
         /// <summary>
-        /// Used to identify that a tranasction was processed on a live authorisation platform.
+        /// Used to identify that a transaction was processed on a live authorisation platform.
         /// </summary>
-        /// <value>Used to identify that a tranasction was processed on a live authorisation platform.</value>
-        [DataMember(Name="live", EmitDefaultValue=false)]
+        /// <value>Used to identify that a transaction was processed on a live authorisation platform.</value>
+        [DataMember(Name = "live", EmitDefaultValue = true)]
         public bool Live { get; set; }
 
         /// <summary>
         /// A masked value of the card number used for processing displaying limited values that can be used on a receipt. 
         /// </summary>
         /// <value>A masked value of the card number used for processing displaying limited values that can be used on a receipt. </value>
-        [DataMember(Name="maskedpan", EmitDefaultValue=false)]
+        [DataMember(Name = "maskedpan", EmitDefaultValue = false)]
         public string Maskedpan { get; set; }
 
         /// <summary>
         /// The merchant id that processed this transaction.
         /// </summary>
         /// <value>The merchant id that processed this transaction.</value>
-        [DataMember(Name="merchantid", EmitDefaultValue=false)]
+        [DataMember(Name = "merchantid", EmitDefaultValue = false)]
         public int Merchantid { get; set; }
 
         /// <summary>
-        /// An integer result that indicates the outcome of the transaction. The Code value below maps to the result value   | Code | Abbrev | Description |  |- -- -- -|- -- -- --|- -- -- -- -- -- --|  | 0 | Declined | Declined |  | 1 | Accepted | Accepted |  | 2 | Rejected | Rejected |  | 3 | Not Attempted | Not Attempted |  | 4 | Referred | Referred |  | 5 | PinRetry | Perform PIN Retry |  | 6 | ForSigVer | Force Signature Verification |  | 7 | Hold | Hold |  | 8 | SecErr | Security Error |  | 9 | CallAcq | Call Acquirer |  | 10 | DNH | Do Not Honour |  | 11 | RtnCrd | Retain Card |  | 12 | ExprdCrd | Expired Card |  | 13 | InvldCrd | Invalid Card No |  | 14 | PinExcd | Pin Tries Exceeded |  | 15 | PinInvld | Pin Invalid |  | 16 | AuthReq | Authentication Required |  | 17 | AuthenFail | Authentication Failed |  | 18 | Verified | Card Verified |  | 19 | Cancelled | Cancelled |  | 20 | Un | Unknown | 
+        /// An integer result that indicates the outcome of the transaction. The Code value below maps to the result value  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Abbrev&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;PinRetry&lt;/td&gt;&lt;td&gt;Perform PIN Retry&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;ForSigVer&lt;/td&gt;&lt;td&gt;Force Signature Verification&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;SecErr&lt;/td&gt;&lt;td&gt;Security Error&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;CallAcq&lt;/td&gt;&lt;td&gt;Call Acquirer&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;DNH&lt;/td&gt;&lt;td&gt;Do Not Honour&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;RtnCrd&lt;/td&gt;&lt;td&gt;Retain Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;ExprdCrd&lt;/td&gt;&lt;td&gt;Expired Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;InvldCrd&lt;/td&gt;&lt;td&gt;Invalid Card No&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;PinExcd&lt;/td&gt;&lt;td&gt;Pin Tries Exceeded&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;PinInvld&lt;/td&gt;&lt;td&gt;Pin Invalid&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;AuthReq&lt;/td&gt;&lt;td&gt;Authentication Required&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;AuthenFail&lt;/td&gt;&lt;td&gt;Authentication Failed&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;Verified&lt;/td&gt;&lt;td&gt;Card Verified&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;Un&lt;/td&gt;&lt;td&gt;Unknown&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; 
         /// </summary>
-        /// <value>An integer result that indicates the outcome of the transaction. The Code value below maps to the result value   | Code | Abbrev | Description |  |- -- -- -|- -- -- --|- -- -- -- -- -- --|  | 0 | Declined | Declined |  | 1 | Accepted | Accepted |  | 2 | Rejected | Rejected |  | 3 | Not Attempted | Not Attempted |  | 4 | Referred | Referred |  | 5 | PinRetry | Perform PIN Retry |  | 6 | ForSigVer | Force Signature Verification |  | 7 | Hold | Hold |  | 8 | SecErr | Security Error |  | 9 | CallAcq | Call Acquirer |  | 10 | DNH | Do Not Honour |  | 11 | RtnCrd | Retain Card |  | 12 | ExprdCrd | Expired Card |  | 13 | InvldCrd | Invalid Card No |  | 14 | PinExcd | Pin Tries Exceeded |  | 15 | PinInvld | Pin Invalid |  | 16 | AuthReq | Authentication Required |  | 17 | AuthenFail | Authentication Failed |  | 18 | Verified | Card Verified |  | 19 | Cancelled | Cancelled |  | 20 | Un | Unknown | </value>
-        [DataMember(Name="result", EmitDefaultValue=false)]
+        /// <value>An integer result that indicates the outcome of the transaction. The Code value below maps to the result value  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Abbrev&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;PinRetry&lt;/td&gt;&lt;td&gt;Perform PIN Retry&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;ForSigVer&lt;/td&gt;&lt;td&gt;Force Signature Verification&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;SecErr&lt;/td&gt;&lt;td&gt;Security Error&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;CallAcq&lt;/td&gt;&lt;td&gt;Call Acquirer&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;DNH&lt;/td&gt;&lt;td&gt;Do Not Honour&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;RtnCrd&lt;/td&gt;&lt;td&gt;Retain Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;ExprdCrd&lt;/td&gt;&lt;td&gt;Expired Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;InvldCrd&lt;/td&gt;&lt;td&gt;Invalid Card No&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;PinExcd&lt;/td&gt;&lt;td&gt;Pin Tries Exceeded&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;PinInvld&lt;/td&gt;&lt;td&gt;Pin Invalid&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;AuthReq&lt;/td&gt;&lt;td&gt;Authentication Required&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;AuthenFail&lt;/td&gt;&lt;td&gt;Authentication Failed&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;Verified&lt;/td&gt;&lt;td&gt;Card Verified&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;Un&lt;/td&gt;&lt;td&gt;Unknown&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; </value>
+        [DataMember(Name = "result", EmitDefaultValue = false)]
         public int Result { get; set; }
 
         /// <summary>
-        /// The result code as defined in the Response Codes Reference for example 000 is an accepted live transaction whilst 001 is an accepted test transaction. Result codes identify the source of success and failure. Codes may start with an alpha character i.e. C001 indicating a type of error such as a card validation error. 
+        /// The result code as defined in the Response Codes Reference for example 000 is an accepted live transaction whilst 001 is an accepted test transaction. Result codes identify the source of success and failure.  Codes may start with an alpha character i.e. C001 indicating a type of error such as a card validation error. 
         /// </summary>
-        /// <value>The result code as defined in the Response Codes Reference for example 000 is an accepted live transaction whilst 001 is an accepted test transaction. Result codes identify the source of success and failure. Codes may start with an alpha character i.e. C001 indicating a type of error such as a card validation error. </value>
-        [DataMember(Name="result_code", EmitDefaultValue=false)]
+        /// <value>The result code as defined in the Response Codes Reference for example 000 is an accepted live transaction whilst 001 is an accepted test transaction. Result codes identify the source of success and failure.  Codes may start with an alpha character i.e. C001 indicating a type of error such as a card validation error. </value>
+        [DataMember(Name = "result_code", EmitDefaultValue = false)]
         public string ResultCode { get; set; }
 
         /// <summary>
         /// The message regarding the result which provides further narrative to the result code. 
         /// </summary>
         /// <value>The message regarding the result which provides further narrative to the result code. </value>
-        [DataMember(Name="result_message", EmitDefaultValue=false)]
+        [DataMember(Name = "result_message", EmitDefaultValue = false)]
         public string ResultMessage { get; set; }
 
         /// <summary>
         /// A name of the card scheme of the transaction that processed the transaction such as Visa or MasterCard. 
         /// </summary>
         /// <value>A name of the card scheme of the transaction that processed the transaction such as Visa or MasterCard. </value>
-        [DataMember(Name="scheme", EmitDefaultValue=false)]
+        [DataMember(Name = "scheme", EmitDefaultValue = false)]
         public string Scheme { get; set; }
 
         /// <summary>
-        /// A SHA256 digest value of the transaction used to validate the response data The digest is calculated by concatenating  * authcode  * amount  * response_code  * merchant_id  * trans_no  * identifier  * licence_key - which is not provided in the response. 
+        /// A SHA256 digest value of the transaction used to validate the response data The digest is calculated by concatenating   * authcode   * amount   * response_code   * merchant_id   * trans_no   * identifier   * licence_key - which is not provided in the response. 
         /// </summary>
-        /// <value>A SHA256 digest value of the transaction used to validate the response data The digest is calculated by concatenating  * authcode  * amount  * response_code  * merchant_id  * trans_no  * identifier  * licence_key - which is not provided in the response. </value>
-        [DataMember(Name="sha256", EmitDefaultValue=false)]
+        /// <value>A SHA256 digest value of the transaction used to validate the response data The digest is calculated by concatenating   * authcode   * amount   * response_code   * merchant_id   * trans_no   * identifier   * licence_key - which is not provided in the response. </value>
+        [DataMember(Name = "sha256", EmitDefaultValue = false)]
         public string Sha256 { get; set; }
 
         /// <summary>
-        /// Used to identify the status of a transaction. The status is used to track a transaction through its life cycle.  | Id | Description | |- -- -|- -- -- -- -- -- --| | O | Transaction is open for settlement | | A | Transaction is assigned for settlement and can no longer be voided | | S | Transaction has been settled   | | D | Transaction has been declined | | R | Transaction has been rejected | | P | Transaction has been authorised only and awaiting a capture. Used in pre-auth situations | | C | Transaction has been cancelled | | E | Transaction has expired | | I | Transaction has been initialised but no action was able to be carried out | | H | Transaction is awaiting authorisation | | . | Transaction is on hold | | V | Transaction has been verified | 
+        /// Used to identify the status of a transaction. The status is used to track a transaction through its life cycle.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Id&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;O&lt;/td&gt; &lt;td&gt;Transaction is open for settlement&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;A&lt;/td&gt; &lt;td&gt;Transaction is assigned for settlement and can no longer be voided&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;S&lt;/td&gt; &lt;td&gt;Transaction has been settled&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;D&lt;/td&gt; &lt;td&gt;Transaction has been declined&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;R&lt;/td&gt; &lt;td&gt;Transaction has been rejected&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;P&lt;/td&gt; &lt;td&gt;Transaction has been authorised only and awaiting a capture. Used in pre-auth situations&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;C&lt;/td&gt; &lt;td&gt;Transaction has been cancelled&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;E&lt;/td&gt; &lt;td&gt;Transaction has expired&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;I&lt;/td&gt; &lt;td&gt;Transaction has been initialised but no action was able to be carried out&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;H&lt;/td&gt; &lt;td&gt;Transaction is awaiting authorisation&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;.&lt;/td&gt; &lt;td&gt;Transaction is on hold&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;V&lt;/td&gt; &lt;td&gt;Transaction has been verified&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; 
         /// </summary>
-        /// <value>Used to identify the status of a transaction. The status is used to track a transaction through its life cycle.  | Id | Description | |- -- -|- -- -- -- -- -- --| | O | Transaction is open for settlement | | A | Transaction is assigned for settlement and can no longer be voided | | S | Transaction has been settled   | | D | Transaction has been declined | | R | Transaction has been rejected | | P | Transaction has been authorised only and awaiting a capture. Used in pre-auth situations | | C | Transaction has been cancelled | | E | Transaction has expired | | I | Transaction has been initialised but no action was able to be carried out | | H | Transaction is awaiting authorisation | | . | Transaction is on hold | | V | Transaction has been verified | </value>
-        [DataMember(Name="trans_status", EmitDefaultValue=false)]
+        /// <value>Used to identify the status of a transaction. The status is used to track a transaction through its life cycle.  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Id&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;O&lt;/td&gt; &lt;td&gt;Transaction is open for settlement&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;A&lt;/td&gt; &lt;td&gt;Transaction is assigned for settlement and can no longer be voided&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;S&lt;/td&gt; &lt;td&gt;Transaction has been settled&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;D&lt;/td&gt; &lt;td&gt;Transaction has been declined&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;R&lt;/td&gt; &lt;td&gt;Transaction has been rejected&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;P&lt;/td&gt; &lt;td&gt;Transaction has been authorised only and awaiting a capture. Used in pre-auth situations&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;C&lt;/td&gt; &lt;td&gt;Transaction has been cancelled&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;E&lt;/td&gt; &lt;td&gt;Transaction has expired&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;I&lt;/td&gt; &lt;td&gt;Transaction has been initialised but no action was able to be carried out&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;H&lt;/td&gt; &lt;td&gt;Transaction is awaiting authorisation&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;.&lt;/td&gt; &lt;td&gt;Transaction is on hold&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;V&lt;/td&gt; &lt;td&gt;Transaction has been verified&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; </value>
+        [DataMember(Name = "trans_status", EmitDefaultValue = false)]
         public string TransStatus { get; set; }
 
         /// <summary>
         /// The resulting transaction number, ordered incrementally from 1 for every merchant_id. The value will default to less than 1 for transactions that do not have a transaction number issued. 
         /// </summary>
         /// <value>The resulting transaction number, ordered incrementally from 1 for every merchant_id. The value will default to less than 1 for transactions that do not have a transaction number issued. </value>
-        [DataMember(Name="transno", EmitDefaultValue=false)]
+        [DataMember(Name = "transno", EmitDefaultValue = false)]
         public int Transno { get; set; }
 
         /// <summary>
@@ -318,14 +319,14 @@ namespace CityPayAPI.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
         public virtual string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
         }
 
         /// <summary>

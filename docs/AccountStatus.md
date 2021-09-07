@@ -1,4 +1,5 @@
 # CityPayAPI.Model.AccountStatus
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,5 @@
 # CityPayAPI.Model.RegisterCard
+
 ## Properties
 
 Name | Type | Description | Notes

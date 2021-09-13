@@ -48,6 +48,27 @@ namespace CityPayAPI.Api
         /// <returns>ApiResponse of Decision</returns>
         ApiResponse<Decision> AuthorisationRequestWithHttpInfo(AuthRequest authRequest);
         /// <summary>
+        /// Bin Lookup
+        /// </summary>
+        /// <remarks>
+        /// A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <returns>Bin</returns>
+        Bin BinRangeLookupRequest(BinLookup binLookup);
+
+        /// <summary>
+        /// Bin Lookup
+        /// </summary>
+        /// <remarks>
+        /// A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <returns>ApiResponse of Bin</returns>
+        ApiResponse<Bin> BinRangeLookupRequestWithHttpInfo(BinLookup binLookup);
+        /// <summary>
         /// CRes
         /// </summary>
         /// <remarks>
@@ -205,6 +226,29 @@ namespace CityPayAPI.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
         System.Threading.Tasks.Task<ApiResponse<Decision>> AuthorisationRequestWithHttpInfoAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Bin Lookup
+        /// </summary>
+        /// <remarks>
+        /// A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Bin</returns>
+        System.Threading.Tasks.Task<Bin> BinRangeLookupRequestAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Bin Lookup
+        /// </summary>
+        /// <remarks>
+        /// A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Bin)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Bin>> BinRangeLookupRequestWithHttpInfoAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// CRes
         /// </summary>
@@ -588,6 +632,137 @@ namespace CityPayAPI.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AuthorisationRequest", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Bin Lookup A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <returns>Bin</returns>
+        public Bin BinRangeLookupRequest(BinLookup binLookup)
+        {
+            CityPayAPI.Client.ApiResponse<Bin> localVarResponse = BinRangeLookupRequestWithHttpInfo(binLookup);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Bin Lookup A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <returns>ApiResponse of Bin</returns>
+        public CityPayAPI.Client.ApiResponse<Bin> BinRangeLookupRequestWithHttpInfo(BinLookup binLookup)
+        {
+            // verify the required parameter 'binLookup' is set
+            if (binLookup == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'binLookup' when calling PaymentProcessingApi->BinRangeLookupRequest");
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.Data = binLookup;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<Bin>("/bin", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("BinRangeLookupRequest", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Bin Lookup A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Bin</returns>
+        public async System.Threading.Tasks.Task<Bin> BinRangeLookupRequestAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            CityPayAPI.Client.ApiResponse<Bin> localVarResponse = await BinRangeLookupRequestWithHttpInfoAsync(binLookup, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Bin Lookup A bin range lookup service can be used to check what a card is, as seen by the gateway. Each card number&#39;s  leading digits help to identify who  0. the card scheme is such as Visa, MasterCard or American Express  1. the issuer of the card, such as the bank 2. it&#39;s country of origin 3. it&#39;s currency of origin  Our gateway has 450 thousand possible bin ranges and uses a number of algorithms to determine the likelihood of the bin data. The request requires a bin value of between 6 and 12 digits. The more digits provided may ensure a more accurate result. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="binLookup"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Bin)</returns>
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Bin>> BinRangeLookupRequestWithHttpInfoAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'binLookup' is set
+            if (binLookup == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'binLookup' when calling PaymentProcessingApi->BinRangeLookupRequest");
+
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json", 
+                "text/xml"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.Data = binLookup;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Bin>("/bin", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("BinRangeLookupRequest", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

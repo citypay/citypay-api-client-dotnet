@@ -31,7 +31,7 @@ namespace CityPayAPI.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "1.0.0";
+        public const string Version = "1.0.7";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -101,7 +101,7 @@ namespace CityPayAPI.Client
         public Configuration()
         {
             Proxy = null;
-            UserAgent = "OpenAPI-Generator/1.0.0/csharp";
+            UserAgent = "CityPay-csharp-SDK/1.0.7";
             BasePath = "https://api.citypay.com/v6";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();

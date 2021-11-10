@@ -411,7 +411,7 @@ namespace CityPayAPI.Model
             }
 
             // TicketIssueDate (DateTime) maxLength
-            if(this.TicketIssueDate != null && this.TicketIssueDate.ToShortDateString().Length > 10)
+            if(this.TicketIssueDate != null && this.TicketIssueDate.Length > 10)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueDate, length must be less than 10.", new [] { "TicketIssueDate" });
             }

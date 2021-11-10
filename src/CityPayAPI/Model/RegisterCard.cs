@@ -39,18 +39,27 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterCard" /> class.
         /// </summary>
+        /// <param name="cardHolderName">The card holder name as it appears on the card. The value is required if the account is to be used for 3dsv2 processing, otherwise it is optional..</param>
         /// <param name="cardnumber">The primary number of the card. (required).</param>
         /// <param name="_default">Determines whether the card should be the new default card..</param>
         /// <param name="expmonth">The expiry month of the card. (required).</param>
         /// <param name="expyear">The expiry year of the card. (required).</param>
-        public RegisterCard(string cardnumber = default(string), bool _default = default(bool), int expmonth = default(int), int expyear = default(int))
+        public RegisterCard(string cardHolderName = default(string), string cardnumber = default(string), bool _default = default(bool), int expmonth = default(int), int expyear = default(int))
         {
             // to ensure "cardnumber" is required (not null)
             this.Cardnumber = cardnumber ?? throw new ArgumentNullException("cardnumber is a required property for RegisterCard and cannot be null");
             this.Expmonth = expmonth;
             this.Expyear = expyear;
+            this.CardHolderName = cardHolderName;
             this.Default = _default;
         }
+
+        /// <summary>
+        /// The card holder name as it appears on the card. The value is required if the account is to be used for 3dsv2 processing, otherwise it is optional.
+        /// </summary>
+        /// <value>The card holder name as it appears on the card. The value is required if the account is to be used for 3dsv2 processing, otherwise it is optional.</value>
+        [DataMember(Name = "card_holder_name", EmitDefaultValue = false)]
+        public string CardHolderName { get; set; }
 
         /// <summary>
         /// The primary number of the card.
@@ -88,6 +97,7 @@ namespace CityPayAPI.Model
         {
             var sb = new StringBuilder();
             sb.Append("class RegisterCard {\n");
+            sb.Append("  CardHolderName: ").Append(CardHolderName).Append("\n");
             sb.Append("  Cardnumber: ").Append(Cardnumber).Append("\n");
             sb.Append("  Default: ").Append(Default).Append("\n");
             sb.Append("  Expmonth: ").Append(Expmonth).Append("\n");
@@ -127,6 +137,11 @@ namespace CityPayAPI.Model
 
             return 
                 (
+                    this.CardHolderName == input.CardHolderName ||
+                    (this.CardHolderName != null &&
+                    this.CardHolderName.Equals(input.CardHolderName))
+                ) && 
+                (
                     this.Cardnumber == input.Cardnumber ||
                     (this.Cardnumber != null &&
                     this.Cardnumber.Equals(input.Cardnumber))
@@ -154,6 +169,8 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
+                if (this.CardHolderName != null)
+                    hashCode = hashCode * 59 + this.CardHolderName.GetHashCode();
                 if (this.Cardnumber != null)
                     hashCode = hashCode * 59 + this.Cardnumber.GetHashCode();
                 hashCode = hashCode * 59 + this.Default.GetHashCode();
@@ -170,6 +187,18 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // CardHolderName (string) maxLength
+            if(this.CardHolderName != null && this.CardHolderName.Length > 45)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardHolderName, length must be less than 45.", new [] { "CardHolderName" });
+            }
+
+            // CardHolderName (string) minLength
+            if(this.CardHolderName != null && this.CardHolderName.Length < 2)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardHolderName, length must be greater than 2.", new [] { "CardHolderName" });
+            }
+
             // Cardnumber (string) maxLength
             if(this.Cardnumber != null && this.Cardnumber.Length > 22)
             {

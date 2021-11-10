@@ -452,6 +452,18 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // CardHolderName (string) maxLength
+            if(this.CardHolderName != null && this.CardHolderName.Length > 45)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardHolderName, length must be less than 45.", new [] { "CardHolderName" });
+            }
+
+            // CardHolderName (string) minLength
+            if(this.CardHolderName != null && this.CardHolderName.Length < 2)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardHolderName, length must be greater than 2.", new [] { "CardHolderName" });
+            }
+
             // Cardnumber (string) maxLength
             if(this.Cardnumber != null && this.Cardnumber.Length > 22)
             {

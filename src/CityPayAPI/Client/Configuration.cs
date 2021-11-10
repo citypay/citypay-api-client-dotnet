@@ -101,7 +101,7 @@ namespace CityPayAPI.Client
         public Configuration()
         {
             Proxy = null;
-            UserAgent = "CityPay-Java-SDK/1.0.8";
+            UserAgent = "CityPay-CSharp-SDK/1.0.8";
             BasePath = "https://api.citypay.com/v6";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
@@ -507,7 +507,7 @@ namespace CityPayAPI.Client
                 BasePath = second.BasePath ?? first.BasePath,
                 Timeout = second.Timeout,
                 Proxy = second.Proxy ?? first.Proxy,
-                UserAgent = "CityPay-Java-SDK/1.0.8",
+                UserAgent = "CityPay-CSharp-SDK/1.0.8",
                 Username = second.Username ?? first.Username,
                 Password = second.Password ?? first.Password,
                 AccessToken = second.AccessToken ?? first.AccessToken,

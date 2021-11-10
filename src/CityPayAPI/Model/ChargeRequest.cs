@@ -41,18 +41,20 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="amount">The amount to authorise in the lowest unit of currency with a variable length to a maximum of 12 digits.  No decimal points are to be included and no divisional characters such as 1,024.  The amount should be the total amount required for the transaction.  For example with GBP £1,021.95 the amount value is 102195.  (required).</param>
         /// <param name="avsPostcodePolicy">A policy value which determines whether an AVS postcode policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS postcode numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the postcode did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send postcode details for authorisation. .</param>
+        /// <param name="cardholderAgreement">Merchant-initiated transactions (MITs) are payments you trigger, where the cardholder has previously consented to you carrying out such payments. These may be scheduled (such as recurring payments and installments) or unscheduled (like account top-ups triggered by balance thresholds and no-show charges).  Scheduled - -- These are regular payments using stored card details, like installments or a monthly subscription fee.  - &#x60;I&#x60; Instalment - A single purchase of goods or services billed to a cardholder in multiple transactions, over a period of time agreed by the cardholder and you. - &#x60;R&#x60; Recurring - Transactions processed at fixed, regular intervals not to exceed one year between transactions, representing an agreement between a cardholder and you to purchase goods or services provided over a period of time.  Unscheduled - -- These are payments using stored card details that do not occur on a regular schedule, like top-ups for a digital wallet triggered by the balance falling below a certain threshold.  - &#x60;A&#x60; Reauthorisation - a purchase made after the original purchase. A common scenario is delayed/split shipments. - &#x60;C&#x60; Unscheduled Payment - A transaction using a stored credential for a fixed or variable amount that does not occur on a scheduled or regularly occurring transaction date. This includes account top-ups triggered by balance thresholds. - &#x60;D&#x60; Delayed Charge - A delayed charge is typically used in hotel, cruise lines and vehicle rental environments to perform a supplemental account charge after original services are rendered. - &#x60;L&#x60; Incremental - An incremental authorisation is typically found in hotel and car rental environments, where the cardholder has agreed to pay for any service incurred during the duration of the contract. An incremental authorisation is where you need to seek authorisation of further funds in addition to what you have originally requested. A common scenario is additional services charged to the contract, such as extending a stay in a hotel. - &#x60;S&#x60; Resubmission - When the original purchase occurred, but you were not able to get authorisation at the time the goods or services were provided. It should be only used where the goods or services have already been provided, but the authorisation request is declined for insufficient funds. - &#x60;X&#x60; No-show - A no-show is a transaction where you are enabled to charge for services which the cardholder entered into an agreement to purchase, but the cardholder did not meet the terms of the agreement. .</param>
         /// <param name="csc">The Card Security Code (CSC) (also known as CV2/CVV2) is normally found on the back of the card (American Express has it on the front). The value helps to identify posession of the card as it is not available within the chip or magnetic swipe.  When forwarding the CSC, please ensure the value is a string as some values start with 0 and this will be stripped out by any integer parsing.  The CSC number aids fraud prevention in Mail Order and Internet payments.  Business rules are available on your account to identify whether to accept or decline transactions based on mismatched results of the CSC.  The Payment Card Industry (PCI) requires that at no stage of a transaction should the CSC be stored.  This applies to all entities handling card data.  It should also not be used in any hashing process.  CityPay do not store the value and have no method of retrieving the value once the transaction has been processed. For this reason, duplicate checking is unable to determine the CSC in its duplication check algorithm. .</param>
         /// <param name="cscPolicy">A policy value which determines whether a CSC policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the CSC value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the CSC did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send the CSC details for authorisation. .</param>
         /// <param name="currency">The processing currency for the transaction. Will default to the merchant account currency..</param>
         /// <param name="duplicatePolicy">A policy value which determines whether a duplication policy is enforced or bypassed. A duplication check has a window of time set against your account within which it can action. If a previous transaction with matching values occurred within the window, any subsequent transaction will result in a T001 result.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be checked for duplication within the duplication window.   &#x60;2&#x60; to bypass. Transactions that are bypassed will not be checked for duplication within the duplication window.   &#x60;3&#x60; to ignore. Transactions that are ignored will have the same affect as bypass. .</param>
         /// <param name="identifier">The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 0x32 to 0x127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different.  (required).</param>
+        /// <param name="initiation">Transactions charged using the API are defined as:  **Cardholder Initiated**: A _cardholder initiated transaction_ (CIT) is where the cardholder selects the card for use for a purchase using previously stored details. An example would be a customer buying an item from your website after being present with their saved card details at checkout.  **Merchant Intiaited**: A _merchant initiated transaction_ (MIT) is an authorisation initiated where you are the  merchant submit a cardholders previously stored details without the cardholder&#39;s participation. An example would  be a subscription to a membership scheme to debit their card monthly.  MITs have different reasons such as reauthorisation, delayed, unscheduled, incremental, recurring, instalment, no-show or resubmission.  The following values apply   - &#x60;M&#x60; - specifies that the transaction is initiated by the merchant  - &#x60;C&#x60; - specifies that the transaction is initiated by the cardholder  Where transactions are merchant initiated, a valid cardholder agreement must be defined. .</param>
         /// <param name="matchAvsa">A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the address did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation. .</param>
         /// <param name="merchantid">Identifies the merchant account to perform processing for. (required).</param>
         /// <param name="threedsecure">threedsecure.</param>
         /// <param name="token">A tokenised form of a card that belongs to a card holder&#39;s account and that has been previously registered. The token is time based and will only be active for a short duration. The value is therefore designed not to be stored remotely for future use.   Tokens will start with ct and are resiliently tamper proof using HMacSHA-256. No sensitive card data is stored internally within the token.   Each card will contain a different token and the value may be different on any retrieval call.   The value can be presented for payment as a selection value to an end user in a web application.  (required).</param>
         /// <param name="transInfo">Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id..</param>
         /// <param name="transType">The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field..</param>
-        public ChargeRequest(int amount = default(int), string avsPostcodePolicy = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), string identifier = default(string), string matchAvsa = default(string), int merchantid = default(int), ThreeDSecure threedsecure = default(ThreeDSecure), string token = default(string), string transInfo = default(string), string transType = default(string))
+        public ChargeRequest(int amount = default(int), string avsPostcodePolicy = default(string), string cardholderAgreement = default(string), string csc = default(string), string cscPolicy = default(string), string currency = default(string), string duplicatePolicy = default(string), string identifier = default(string), string initiation = default(string), string matchAvsa = default(string), int merchantid = default(int), ThreeDSecure threedsecure = default(ThreeDSecure), string token = default(string), string transInfo = default(string), string transType = default(string))
         {
             this.Amount = amount;
             // to ensure "identifier" is required (not null)
@@ -61,10 +63,12 @@ namespace CityPayAPI.Model
             // to ensure "token" is required (not null)
             this.Token = token ?? throw new ArgumentNullException("token is a required property for ChargeRequest and cannot be null");
             this.AvsPostcodePolicy = avsPostcodePolicy;
+            this.CardholderAgreement = cardholderAgreement;
             this.Csc = csc;
             this.CscPolicy = cscPolicy;
             this.Currency = currency;
             this.DuplicatePolicy = duplicatePolicy;
+            this.Initiation = initiation;
             this.MatchAvsa = matchAvsa;
             this.Threedsecure = threedsecure;
             this.TransInfo = transInfo;
@@ -84,6 +88,13 @@ namespace CityPayAPI.Model
         /// <value>A policy value which determines whether an AVS postcode policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS postcode numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the postcode did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send postcode details for authorisation. </value>
         [DataMember(Name = "avs_postcode_policy", EmitDefaultValue = false)]
         public string AvsPostcodePolicy { get; set; }
+
+        /// <summary>
+        /// Merchant-initiated transactions (MITs) are payments you trigger, where the cardholder has previously consented to you carrying out such payments. These may be scheduled (such as recurring payments and installments) or unscheduled (like account top-ups triggered by balance thresholds and no-show charges).  Scheduled - -- These are regular payments using stored card details, like installments or a monthly subscription fee.  - &#x60;I&#x60; Instalment - A single purchase of goods or services billed to a cardholder in multiple transactions, over a period of time agreed by the cardholder and you. - &#x60;R&#x60; Recurring - Transactions processed at fixed, regular intervals not to exceed one year between transactions, representing an agreement between a cardholder and you to purchase goods or services provided over a period of time.  Unscheduled - -- These are payments using stored card details that do not occur on a regular schedule, like top-ups for a digital wallet triggered by the balance falling below a certain threshold.  - &#x60;A&#x60; Reauthorisation - a purchase made after the original purchase. A common scenario is delayed/split shipments. - &#x60;C&#x60; Unscheduled Payment - A transaction using a stored credential for a fixed or variable amount that does not occur on a scheduled or regularly occurring transaction date. This includes account top-ups triggered by balance thresholds. - &#x60;D&#x60; Delayed Charge - A delayed charge is typically used in hotel, cruise lines and vehicle rental environments to perform a supplemental account charge after original services are rendered. - &#x60;L&#x60; Incremental - An incremental authorisation is typically found in hotel and car rental environments, where the cardholder has agreed to pay for any service incurred during the duration of the contract. An incremental authorisation is where you need to seek authorisation of further funds in addition to what you have originally requested. A common scenario is additional services charged to the contract, such as extending a stay in a hotel. - &#x60;S&#x60; Resubmission - When the original purchase occurred, but you were not able to get authorisation at the time the goods or services were provided. It should be only used where the goods or services have already been provided, but the authorisation request is declined for insufficient funds. - &#x60;X&#x60; No-show - A no-show is a transaction where you are enabled to charge for services which the cardholder entered into an agreement to purchase, but the cardholder did not meet the terms of the agreement. 
+        /// </summary>
+        /// <value>Merchant-initiated transactions (MITs) are payments you trigger, where the cardholder has previously consented to you carrying out such payments. These may be scheduled (such as recurring payments and installments) or unscheduled (like account top-ups triggered by balance thresholds and no-show charges).  Scheduled - -- These are regular payments using stored card details, like installments or a monthly subscription fee.  - &#x60;I&#x60; Instalment - A single purchase of goods or services billed to a cardholder in multiple transactions, over a period of time agreed by the cardholder and you. - &#x60;R&#x60; Recurring - Transactions processed at fixed, regular intervals not to exceed one year between transactions, representing an agreement between a cardholder and you to purchase goods or services provided over a period of time.  Unscheduled - -- These are payments using stored card details that do not occur on a regular schedule, like top-ups for a digital wallet triggered by the balance falling below a certain threshold.  - &#x60;A&#x60; Reauthorisation - a purchase made after the original purchase. A common scenario is delayed/split shipments. - &#x60;C&#x60; Unscheduled Payment - A transaction using a stored credential for a fixed or variable amount that does not occur on a scheduled or regularly occurring transaction date. This includes account top-ups triggered by balance thresholds. - &#x60;D&#x60; Delayed Charge - A delayed charge is typically used in hotel, cruise lines and vehicle rental environments to perform a supplemental account charge after original services are rendered. - &#x60;L&#x60; Incremental - An incremental authorisation is typically found in hotel and car rental environments, where the cardholder has agreed to pay for any service incurred during the duration of the contract. An incremental authorisation is where you need to seek authorisation of further funds in addition to what you have originally requested. A common scenario is additional services charged to the contract, such as extending a stay in a hotel. - &#x60;S&#x60; Resubmission - When the original purchase occurred, but you were not able to get authorisation at the time the goods or services were provided. It should be only used where the goods or services have already been provided, but the authorisation request is declined for insufficient funds. - &#x60;X&#x60; No-show - A no-show is a transaction where you are enabled to charge for services which the cardholder entered into an agreement to purchase, but the cardholder did not meet the terms of the agreement. </value>
+        [DataMember(Name = "cardholder_agreement", EmitDefaultValue = false)]
+        public string CardholderAgreement { get; set; }
 
         /// <summary>
         /// The Card Security Code (CSC) (also known as CV2/CVV2) is normally found on the back of the card (American Express has it on the front). The value helps to identify posession of the card as it is not available within the chip or magnetic swipe.  When forwarding the CSC, please ensure the value is a string as some values start with 0 and this will be stripped out by any integer parsing.  The CSC number aids fraud prevention in Mail Order and Internet payments.  Business rules are available on your account to identify whether to accept or decline transactions based on mismatched results of the CSC.  The Payment Card Industry (PCI) requires that at no stage of a transaction should the CSC be stored.  This applies to all entities handling card data.  It should also not be used in any hashing process.  CityPay do not store the value and have no method of retrieving the value once the transaction has been processed. For this reason, duplicate checking is unable to determine the CSC in its duplication check algorithm. 
@@ -119,6 +130,13 @@ namespace CityPayAPI.Model
         /// <value>The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 0x32 to 0x127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different. </value>
         [DataMember(Name = "identifier", IsRequired = true, EmitDefaultValue = false)]
         public string Identifier { get; set; }
+
+        /// <summary>
+        /// Transactions charged using the API are defined as:  **Cardholder Initiated**: A _cardholder initiated transaction_ (CIT) is where the cardholder selects the card for use for a purchase using previously stored details. An example would be a customer buying an item from your website after being present with their saved card details at checkout.  **Merchant Intiaited**: A _merchant initiated transaction_ (MIT) is an authorisation initiated where you are the  merchant submit a cardholders previously stored details without the cardholder&#39;s participation. An example would  be a subscription to a membership scheme to debit their card monthly.  MITs have different reasons such as reauthorisation, delayed, unscheduled, incremental, recurring, instalment, no-show or resubmission.  The following values apply   - &#x60;M&#x60; - specifies that the transaction is initiated by the merchant  - &#x60;C&#x60; - specifies that the transaction is initiated by the cardholder  Where transactions are merchant initiated, a valid cardholder agreement must be defined. 
+        /// </summary>
+        /// <value>Transactions charged using the API are defined as:  **Cardholder Initiated**: A _cardholder initiated transaction_ (CIT) is where the cardholder selects the card for use for a purchase using previously stored details. An example would be a customer buying an item from your website after being present with their saved card details at checkout.  **Merchant Intiaited**: A _merchant initiated transaction_ (MIT) is an authorisation initiated where you are the  merchant submit a cardholders previously stored details without the cardholder&#39;s participation. An example would  be a subscription to a membership scheme to debit their card monthly.  MITs have different reasons such as reauthorisation, delayed, unscheduled, incremental, recurring, instalment, no-show or resubmission.  The following values apply   - &#x60;M&#x60; - specifies that the transaction is initiated by the merchant  - &#x60;C&#x60; - specifies that the transaction is initiated by the cardholder  Where transactions are merchant initiated, a valid cardholder agreement must be defined. </value>
+        [DataMember(Name = "initiation", EmitDefaultValue = false)]
+        public string Initiation { get; set; }
 
         /// <summary>
         /// A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the address did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation. 
@@ -171,11 +189,13 @@ namespace CityPayAPI.Model
             sb.Append("class ChargeRequest {\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  AvsPostcodePolicy: ").Append(AvsPostcodePolicy).Append("\n");
+            sb.Append("  CardholderAgreement: ").Append(CardholderAgreement).Append("\n");
             sb.Append("  Csc: ").Append(Csc).Append("\n");
             sb.Append("  CscPolicy: ").Append(CscPolicy).Append("\n");
             sb.Append("  Currency: ").Append(Currency).Append("\n");
             sb.Append("  DuplicatePolicy: ").Append(DuplicatePolicy).Append("\n");
             sb.Append("  Identifier: ").Append(Identifier).Append("\n");
+            sb.Append("  Initiation: ").Append(Initiation).Append("\n");
             sb.Append("  MatchAvsa: ").Append(MatchAvsa).Append("\n");
             sb.Append("  Merchantid: ").Append(Merchantid).Append("\n");
             sb.Append("  Threedsecure: ").Append(Threedsecure).Append("\n");
@@ -226,6 +246,11 @@ namespace CityPayAPI.Model
                     this.AvsPostcodePolicy.Equals(input.AvsPostcodePolicy))
                 ) && 
                 (
+                    this.CardholderAgreement == input.CardholderAgreement ||
+                    (this.CardholderAgreement != null &&
+                    this.CardholderAgreement.Equals(input.CardholderAgreement))
+                ) && 
+                (
                     this.Csc == input.Csc ||
                     (this.Csc != null &&
                     this.Csc.Equals(input.Csc))
@@ -249,6 +274,11 @@ namespace CityPayAPI.Model
                     this.Identifier == input.Identifier ||
                     (this.Identifier != null &&
                     this.Identifier.Equals(input.Identifier))
+                ) && 
+                (
+                    this.Initiation == input.Initiation ||
+                    (this.Initiation != null &&
+                    this.Initiation.Equals(input.Initiation))
                 ) && 
                 (
                     this.MatchAvsa == input.MatchAvsa ||
@@ -293,6 +323,8 @@ namespace CityPayAPI.Model
                 hashCode = hashCode * 59 + this.Amount.GetHashCode();
                 if (this.AvsPostcodePolicy != null)
                     hashCode = hashCode * 59 + this.AvsPostcodePolicy.GetHashCode();
+                if (this.CardholderAgreement != null)
+                    hashCode = hashCode * 59 + this.CardholderAgreement.GetHashCode();
                 if (this.Csc != null)
                     hashCode = hashCode * 59 + this.Csc.GetHashCode();
                 if (this.CscPolicy != null)
@@ -303,6 +335,8 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.DuplicatePolicy.GetHashCode();
                 if (this.Identifier != null)
                     hashCode = hashCode * 59 + this.Identifier.GetHashCode();
+                if (this.Initiation != null)
+                    hashCode = hashCode * 59 + this.Initiation.GetHashCode();
                 if (this.MatchAvsa != null)
                     hashCode = hashCode * 59 + this.MatchAvsa.GetHashCode();
                 hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
@@ -325,6 +359,12 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // CardholderAgreement (string) maxLength
+            if(this.CardholderAgreement != null && this.CardholderAgreement.Length > 1)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardholderAgreement, length must be less than 1.", new [] { "CardholderAgreement" });
+            }
+
             // Csc (string) maxLength
             if(this.Csc != null && this.Csc.Length > 4)
             {
@@ -359,6 +399,12 @@ namespace CityPayAPI.Model
             if(this.Identifier != null && this.Identifier.Length < 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
+            }
+
+            // Initiation (string) maxLength
+            if(this.Initiation != null && this.Initiation.Length > 1)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Initiation, length must be less than 1.", new [] { "Initiation" });
             }
 
             // TransInfo (string) maxLength

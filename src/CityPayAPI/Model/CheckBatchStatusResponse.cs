@@ -34,42 +34,17 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckBatchStatusResponse" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected CheckBatchStatusResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CheckBatchStatusResponse" /> class.
-        /// </summary>
-        /// <param name="batchDate">The date and time that the file was created in ISO-8601 format. (required).</param>
-        /// <param name="batchId">The batch id requested..</param>
-        /// <param name="batchStatus">The status of the batch. Possible values are. (required).</param>
-        public CheckBatchStatusResponse(DateTime batchDate = default(DateTime), int batchId = default(int), string batchStatus = default(string))
+        /// <param name="batches">batches.</param>
+        public CheckBatchStatusResponse(List<Batch> batches = default(List<Batch>))
         {
-            this.BatchDate = batchDate;
-            // to ensure "batchStatus" is required (not null)
-            this.BatchStatus = batchStatus ?? throw new ArgumentNullException("batchStatus is a required property for CheckBatchStatusResponse and cannot be null");
-            this.BatchId = batchId;
+            this.Batches = batches;
         }
 
         /// <summary>
-        /// The date and time that the file was created in ISO-8601 format.
+        /// Gets or Sets Batches
         /// </summary>
-        /// <value>The date and time that the file was created in ISO-8601 format.</value>
-        [DataMember(Name = "batch_date", IsRequired = true, EmitDefaultValue = false)]
-        public DateTime BatchDate { get; set; }
-
-        /// <summary>
-        /// The batch id requested.
-        /// </summary>
-        /// <value>The batch id requested.</value>
-        [DataMember(Name = "batch_id", EmitDefaultValue = false)]
-        public int BatchId { get; set; }
-
-        /// <summary>
-        /// The status of the batch. Possible values are.
-        /// </summary>
-        /// <value>The status of the batch. Possible values are.</value>
-        [DataMember(Name = "batch_status", IsRequired = true, EmitDefaultValue = false)]
-        public string BatchStatus { get; set; }
+        [DataMember(Name = "batches", EmitDefaultValue = false)]
+        public List<Batch> Batches { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -79,9 +54,7 @@ namespace CityPayAPI.Model
         {
             var sb = new StringBuilder();
             sb.Append("class CheckBatchStatusResponse {\n");
-            sb.Append("  BatchDate: ").Append(BatchDate).Append("\n");
-            sb.Append("  BatchId: ").Append(BatchId).Append("\n");
-            sb.Append("  BatchStatus: ").Append(BatchStatus).Append("\n");
+            sb.Append("  Batches: ").Append(Batches).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -117,18 +90,10 @@ namespace CityPayAPI.Model
 
             return 
                 (
-                    this.BatchDate == input.BatchDate ||
-                    (this.BatchDate != null &&
-                    this.BatchDate.Equals(input.BatchDate))
-                ) && 
-                (
-                    this.BatchId == input.BatchId ||
-                    this.BatchId.Equals(input.BatchId)
-                ) && 
-                (
-                    this.BatchStatus == input.BatchStatus ||
-                    (this.BatchStatus != null &&
-                    this.BatchStatus.Equals(input.BatchStatus))
+                    this.Batches == input.Batches ||
+                    this.Batches != null &&
+                    input.Batches != null &&
+                    this.Batches.SequenceEqual(input.Batches)
                 );
         }
 
@@ -141,11 +106,8 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.BatchDate != null)
-                    hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
-                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
-                if (this.BatchStatus != null)
-                    hashCode = hashCode * 59 + this.BatchStatus.GetHashCode();
+                if (this.Batches != null)
+                    hashCode = hashCode * 59 + this.Batches.GetHashCode();
                 return hashCode;
             }
         }
@@ -157,12 +119,6 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // BatchId (int) minimum
-            if(this.BatchId < (int)1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
-            }
-
             yield break;
         }
     }

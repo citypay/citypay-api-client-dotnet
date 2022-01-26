@@ -43,13 +43,15 @@ namespace CityPayAPI.Model
         /// <param name="_default">Determines whether the card should be the new default card..</param>
         /// <param name="expmonth">The expiry month of the card. (required).</param>
         /// <param name="expyear">The expiry year of the card. (required).</param>
-        public RegisterCard(string cardnumber = default(string), bool _default = default(bool), int expmonth = default(int), int expyear = default(int))
+        /// <param name="nameOnCard">The card holder name as it appears on the card. The value is required if the account is to be used for 3dsv2 processing, otherwise it is optional..</param>
+        public RegisterCard(string cardnumber = default(string), bool _default = default(bool), int expmonth = default(int), int expyear = default(int), string nameOnCard = default(string))
         {
             // to ensure "cardnumber" is required (not null)
             this.Cardnumber = cardnumber ?? throw new ArgumentNullException("cardnumber is a required property for RegisterCard and cannot be null");
             this.Expmonth = expmonth;
             this.Expyear = expyear;
             this.Default = _default;
+            this.NameOnCard = nameOnCard;
         }
 
         /// <summary>
@@ -81,6 +83,13 @@ namespace CityPayAPI.Model
         public int Expyear { get; set; }
 
         /// <summary>
+        /// The card holder name as it appears on the card. The value is required if the account is to be used for 3dsv2 processing, otherwise it is optional.
+        /// </summary>
+        /// <value>The card holder name as it appears on the card. The value is required if the account is to be used for 3dsv2 processing, otherwise it is optional.</value>
+        [DataMember(Name = "name_on_card", EmitDefaultValue = false)]
+        public string NameOnCard { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -92,6 +101,7 @@ namespace CityPayAPI.Model
             sb.Append("  Default: ").Append(Default).Append("\n");
             sb.Append("  Expmonth: ").Append(Expmonth).Append("\n");
             sb.Append("  Expyear: ").Append(Expyear).Append("\n");
+            sb.Append("  NameOnCard: ").Append(NameOnCard).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -142,6 +152,11 @@ namespace CityPayAPI.Model
                 (
                     this.Expyear == input.Expyear ||
                     this.Expyear.Equals(input.Expyear)
+                ) && 
+                (
+                    this.NameOnCard == input.NameOnCard ||
+                    (this.NameOnCard != null &&
+                    this.NameOnCard.Equals(input.NameOnCard))
                 );
         }
 
@@ -159,6 +174,8 @@ namespace CityPayAPI.Model
                 hashCode = hashCode * 59 + this.Default.GetHashCode();
                 hashCode = hashCode * 59 + this.Expmonth.GetHashCode();
                 hashCode = hashCode * 59 + this.Expyear.GetHashCode();
+                if (this.NameOnCard != null)
+                    hashCode = hashCode * 59 + this.NameOnCard.GetHashCode();
                 return hashCode;
             }
         }
@@ -204,6 +221,18 @@ namespace CityPayAPI.Model
             if(this.Expyear < (int)2000)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expyear, must be a value greater than or equal to 2000.", new [] { "Expyear" });
+            }
+
+            // NameOnCard (string) maxLength
+            if(this.NameOnCard != null && this.NameOnCard.Length > 45)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be less than 45.", new [] { "NameOnCard" });
+            }
+
+            // NameOnCard (string) minLength
+            if(this.NameOnCard != null && this.NameOnCard.Length < 2)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be greater than 2.", new [] { "NameOnCard" });
             }
 
             yield break;

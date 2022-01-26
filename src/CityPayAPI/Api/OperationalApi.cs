@@ -27,6 +27,27 @@ namespace CityPayAPI.Api
     {
         #region Synchronous Operations
         /// <summary>
+        /// ACL Check Request
+        /// </summary>
+        /// <remarks>
+        /// Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <returns>AclCheckResponseModel</returns>
+        AclCheckResponseModel AclCheckRequest(AclCheckRequest aclCheckRequest);
+
+        /// <summary>
+        /// ACL Check Request
+        /// </summary>
+        /// <remarks>
+        /// Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <returns>ApiResponse of AclCheckResponseModel</returns>
+        ApiResponse<AclCheckResponseModel> AclCheckRequestWithHttpInfo(AclCheckRequest aclCheckRequest);
+        /// <summary>
         /// List Merchants Request
         /// </summary>
         /// <remarks>
@@ -77,6 +98,29 @@ namespace CityPayAPI.Api
     public interface IOperationalApiAsync : IApiAccessor
     {
         #region Asynchronous Operations
+        /// <summary>
+        /// ACL Check Request
+        /// </summary>
+        /// <remarks>
+        /// Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AclCheckResponseModel</returns>
+        System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// ACL Check Request
+        /// </summary>
+        /// <remarks>
+        /// Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AclCheckResponseModel)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// List Merchants Request
         /// </summary>
@@ -241,6 +285,137 @@ namespace CityPayAPI.Api
                 return _exceptionFactory;
             }
             set { _exceptionFactory = value; }
+        }
+
+        /// <summary>
+        /// ACL Check Request Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <returns>AclCheckResponseModel</returns>
+        public AclCheckResponseModel AclCheckRequest(AclCheckRequest aclCheckRequest)
+        {
+            CityPayAPI.Client.ApiResponse<AclCheckResponseModel> localVarResponse = AclCheckRequestWithHttpInfo(aclCheckRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// ACL Check Request Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <returns>ApiResponse of AclCheckResponseModel</returns>
+        public CityPayAPI.Client.ApiResponse<AclCheckResponseModel> AclCheckRequestWithHttpInfo(AclCheckRequest aclCheckRequest)
+        {
+            // verify the required parameter 'aclCheckRequest' is set
+            if (aclCheckRequest == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'aclCheckRequest' when calling OperationalApi->AclCheckRequest");
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.Data = aclCheckRequest;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<AclCheckResponseModel>("/acl/check", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AclCheckRequest", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// ACL Check Request Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AclCheckResponseModel</returns>
+        public async System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            CityPayAPI.Client.ApiResponse<AclCheckResponseModel> localVarResponse = await AclCheckRequestWithHttpInfoAsync(aclCheckRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// ACL Check Request Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="aclCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AclCheckResponseModel)</returns>
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'aclCheckRequest' is set
+            if (aclCheckRequest == null)
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'aclCheckRequest' when calling OperationalApi->AclCheckRequest");
+
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json", 
+                "text/xml"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.Data = aclCheckRequest;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AclCheckResponseModel>("/acl/check", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AclCheckRequest", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
         }
 
         /// <summary>

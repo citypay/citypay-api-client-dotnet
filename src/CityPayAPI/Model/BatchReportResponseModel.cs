@@ -39,31 +39,25 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchReportResponseModel" /> class.
         /// </summary>
-        /// <param name="accountId">The batch account id that the batch was processed with. (required).</param>
         /// <param name="amount">The total amount that the batch contains. (required).</param>
         /// <param name="batchDate">The date and time of the batch in ISO-8601 format. (required).</param>
-        /// <param name="batchId">The batch id specified in the batch processing request. (required).</param>
-        /// <param name="batchStatus">The status of the batch. Possible values are. (required).</param>
+        /// <param name="batchId">batchId (required).</param>
+        /// <param name="batchStatus">The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received.  (required).</param>
+        /// <param name="clientAccountId">The batch account id that the batch was processed with. (required).</param>
         /// <param name="transactions">transactions (required).</param>
-        public BatchReportResponseModel(string accountId = default(string), int amount = default(int), DateTime batchDate = default(DateTime), int batchId = default(int), string batchStatus = default(string), List<BatchTransactionResultModel> transactions = default(List<BatchTransactionResultModel>))
+        public BatchReportResponseModel(int amount = default(int), DateTime batchDate = default(DateTime), List<int> batchId = default(List<int>), string batchStatus = default(string), string clientAccountId = default(string), List<BatchTransactionResultModel> transactions = default(List<BatchTransactionResultModel>))
         {
-            // to ensure "accountId" is required (not null)
-            this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for BatchReportResponseModel and cannot be null");
             this.Amount = amount;
             this.BatchDate = batchDate;
-            this.BatchId = batchId;
+            // to ensure "batchId" is required (not null)
+            this.BatchId = batchId ?? throw new ArgumentNullException("batchId is a required property for BatchReportResponseModel and cannot be null");
             // to ensure "batchStatus" is required (not null)
             this.BatchStatus = batchStatus ?? throw new ArgumentNullException("batchStatus is a required property for BatchReportResponseModel and cannot be null");
+            // to ensure "clientAccountId" is required (not null)
+            this.ClientAccountId = clientAccountId ?? throw new ArgumentNullException("clientAccountId is a required property for BatchReportResponseModel and cannot be null");
             // to ensure "transactions" is required (not null)
             this.Transactions = transactions ?? throw new ArgumentNullException("transactions is a required property for BatchReportResponseModel and cannot be null");
         }
-
-        /// <summary>
-        /// The batch account id that the batch was processed with.
-        /// </summary>
-        /// <value>The batch account id that the batch was processed with.</value>
-        [DataMember(Name = "account_id", IsRequired = true, EmitDefaultValue = false)]
-        public string AccountId { get; set; }
 
         /// <summary>
         /// The total amount that the batch contains.
@@ -77,21 +71,28 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <value>The date and time of the batch in ISO-8601 format.</value>
         [DataMember(Name = "batch_date", IsRequired = true, EmitDefaultValue = false)]
+        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateTime BatchDate { get; set; }
 
         /// <summary>
-        /// The batch id specified in the batch processing request.
+        /// Gets or Sets BatchId
         /// </summary>
-        /// <value>The batch id specified in the batch processing request.</value>
         [DataMember(Name = "batch_id", IsRequired = true, EmitDefaultValue = false)]
-        public int BatchId { get; set; }
+        public List<int> BatchId { get; set; }
 
         /// <summary>
-        /// The status of the batch. Possible values are.
+        /// The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received. 
         /// </summary>
-        /// <value>The status of the batch. Possible values are.</value>
+        /// <value>The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received. </value>
         [DataMember(Name = "batch_status", IsRequired = true, EmitDefaultValue = false)]
         public string BatchStatus { get; set; }
+
+        /// <summary>
+        /// The batch account id that the batch was processed with.
+        /// </summary>
+        /// <value>The batch account id that the batch was processed with.</value>
+        [DataMember(Name = "client_account_id", IsRequired = true, EmitDefaultValue = false)]
+        public string ClientAccountId { get; set; }
 
         /// <summary>
         /// Gets or Sets Transactions
@@ -107,11 +108,11 @@ namespace CityPayAPI.Model
         {
             var sb = new StringBuilder();
             sb.Append("class BatchReportResponseModel {\n");
-            sb.Append("  AccountId: ").Append(AccountId).Append("\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  BatchDate: ").Append(BatchDate).Append("\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
             sb.Append("  BatchStatus: ").Append(BatchStatus).Append("\n");
+            sb.Append("  ClientAccountId: ").Append(ClientAccountId).Append("\n");
             sb.Append("  Transactions: ").Append(Transactions).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -148,11 +149,6 @@ namespace CityPayAPI.Model
 
             return 
                 (
-                    this.AccountId == input.AccountId ||
-                    (this.AccountId != null &&
-                    this.AccountId.Equals(input.AccountId))
-                ) && 
-                (
                     this.Amount == input.Amount ||
                     this.Amount.Equals(input.Amount)
                 ) && 
@@ -163,12 +159,19 @@ namespace CityPayAPI.Model
                 ) && 
                 (
                     this.BatchId == input.BatchId ||
-                    this.BatchId.Equals(input.BatchId)
+                    this.BatchId != null &&
+                    input.BatchId != null &&
+                    this.BatchId.SequenceEqual(input.BatchId)
                 ) && 
                 (
                     this.BatchStatus == input.BatchStatus ||
                     (this.BatchStatus != null &&
                     this.BatchStatus.Equals(input.BatchStatus))
+                ) && 
+                (
+                    this.ClientAccountId == input.ClientAccountId ||
+                    (this.ClientAccountId != null &&
+                    this.ClientAccountId.Equals(input.ClientAccountId))
                 ) && 
                 (
                     this.Transactions == input.Transactions ||
@@ -187,14 +190,15 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.AccountId != null)
-                    hashCode = hashCode * 59 + this.AccountId.GetHashCode();
                 hashCode = hashCode * 59 + this.Amount.GetHashCode();
                 if (this.BatchDate != null)
                     hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
-                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                if (this.BatchId != null)
+                    hashCode = hashCode * 59 + this.BatchId.GetHashCode();
                 if (this.BatchStatus != null)
                     hashCode = hashCode * 59 + this.BatchStatus.GetHashCode();
+                if (this.ClientAccountId != null)
+                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
                 if (this.Transactions != null)
                     hashCode = hashCode * 59 + this.Transactions.GetHashCode();
                 return hashCode;
@@ -208,22 +212,16 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // AccountId (string) maxLength
-            if(this.AccountId != null && this.AccountId.Length > 20)
+            // ClientAccountId (string) maxLength
+            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be less than 20.", new [] { "AccountId" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
             }
 
-            // AccountId (string) minLength
-            if(this.AccountId != null && this.AccountId.Length < 3)
+            // ClientAccountId (string) minLength
+            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be greater than 3.", new [] { "AccountId" });
-            }
-
-            // BatchId (int) minimum
-            if(this.BatchId < (int)1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
             }
 
             yield break;

@@ -4,9 +4,88 @@ All URIs are relative to *https://api.citypay.com/v6*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AclCheckRequest**](OperationalApi.md#aclcheckrequest) | **POST** /acl/check | ACL Check Request
 [**ListMerchantsRequest**](OperationalApi.md#listmerchantsrequest) | **GET** /merchants/{clientid} | List Merchants Request
 [**PingRequest**](OperationalApi.md#pingrequest) | **POST** /ping | Ping Request
 
+
+<a name="aclcheckrequest"></a>
+# **AclCheckRequest**
+> AclCheckResponseModel AclCheckRequest (AclCheckRequest aclCheckRequest)
+
+ACL Check Request
+
+Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using CityPayAPI.Api;
+using CityPayAPI.Client;
+using CityPayAPI.Model;
+
+namespace Example
+{
+    public class AclCheckRequestExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.citypay.com/v6";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
+
+            var apiInstance = new OperationalApi(config);
+            var aclCheckRequest = new AclCheckRequest(); // AclCheckRequest | 
+
+            try
+            {
+                // ACL Check Request
+                AclCheckResponseModel result = apiInstance.AclCheckRequest(aclCheckRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling OperationalApi.AclCheckRequest: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **aclCheckRequest** | [**AclCheckRequest**](AclCheckRequest.md)|  | 
+
+### Return type
+
+[**AclCheckResponseModel**](AclCheckResponseModel.md)
+
+### Authorization
+
+[cp-api-key](../README.md#cp-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/xml
+ - **Accept**: application/json, text/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Response to the ACL Check request. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="listmerchantsrequest"></a>
 # **ListMerchantsRequest**
@@ -78,11 +157,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
-| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
 | **200** | A list of merchants that are configured against the client id. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -156,11 +235,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
-| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
 | **200** | A result of the ping request, returning on 044 response code on successful receipt of the ping request. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

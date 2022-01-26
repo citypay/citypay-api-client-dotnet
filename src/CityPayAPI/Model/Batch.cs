@@ -26,37 +26,34 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// ProcessBatchRequest
+    /// Batch
     /// </summary>
-    [DataContract(Name = "ProcessBatchRequest")]
-    public partial class ProcessBatchRequest : IEquatable<ProcessBatchRequest>, IValidatableObject
+    [DataContract(Name = "Batch")]
+    public partial class Batch : IEquatable<Batch>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessBatchRequest" /> class.
+        /// Initializes a new instance of the <see cref="Batch" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected ProcessBatchRequest() { }
+        protected Batch() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessBatchRequest" /> class.
+        /// Initializes a new instance of the <see cref="Batch" /> class.
         /// </summary>
-        /// <param name="batchDate">The date and time that the file was created in ISO-8601 format. (required).</param>
-        /// <param name="batchId">batchId (required).</param>
-        /// <param name="clientAccountId">The batch account id to process the batch for. Defaults to your client id if not provided..</param>
-        /// <param name="transactions">transactions (required).</param>
-        public ProcessBatchRequest(DateTime batchDate = default(DateTime), List<int> batchId = default(List<int>), string clientAccountId = default(string), List<BatchTransaction> transactions = default(List<BatchTransaction>))
+        /// <param name="batchDate">The date that the file was created in ISO-8601 format. (required).</param>
+        /// <param name="batchId">batchId.</param>
+        /// <param name="batchStatus">The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received.  (required).</param>
+        public Batch(DateTime batchDate = default(DateTime), List<int> batchId = default(List<int>), string batchStatus = default(string))
         {
             this.BatchDate = batchDate;
-            // to ensure "batchId" is required (not null)
-            this.BatchId = batchId ?? throw new ArgumentNullException("batchId is a required property for ProcessBatchRequest and cannot be null");
-            // to ensure "transactions" is required (not null)
-            this.Transactions = transactions ?? throw new ArgumentNullException("transactions is a required property for ProcessBatchRequest and cannot be null");
-            this.ClientAccountId = clientAccountId;
+            // to ensure "batchStatus" is required (not null)
+            this.BatchStatus = batchStatus ?? throw new ArgumentNullException("batchStatus is a required property for Batch and cannot be null");
+            this.BatchId = batchId;
         }
 
         /// <summary>
-        /// The date and time that the file was created in ISO-8601 format.
+        /// The date that the file was created in ISO-8601 format.
         /// </summary>
-        /// <value>The date and time that the file was created in ISO-8601 format.</value>
+        /// <value>The date that the file was created in ISO-8601 format.</value>
         [DataMember(Name = "batch_date", IsRequired = true, EmitDefaultValue = false)]
         [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateTime BatchDate { get; set; }
@@ -64,21 +61,15 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Gets or Sets BatchId
         /// </summary>
-        [DataMember(Name = "batch_id", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "batch_id", EmitDefaultValue = false)]
         public List<int> BatchId { get; set; }
 
         /// <summary>
-        /// The batch account id to process the batch for. Defaults to your client id if not provided.
+        /// The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received. 
         /// </summary>
-        /// <value>The batch account id to process the batch for. Defaults to your client id if not provided.</value>
-        [DataMember(Name = "client_account_id", EmitDefaultValue = false)]
-        public string ClientAccountId { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Transactions
-        /// </summary>
-        [DataMember(Name = "transactions", IsRequired = true, EmitDefaultValue = false)]
-        public List<BatchTransaction> Transactions { get; set; }
+        /// <value>The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received. </value>
+        [DataMember(Name = "batch_status", IsRequired = true, EmitDefaultValue = false)]
+        public string BatchStatus { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -87,11 +78,10 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class ProcessBatchRequest {\n");
+            sb.Append("class Batch {\n");
             sb.Append("  BatchDate: ").Append(BatchDate).Append("\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
-            sb.Append("  ClientAccountId: ").Append(ClientAccountId).Append("\n");
-            sb.Append("  Transactions: ").Append(Transactions).Append("\n");
+            sb.Append("  BatchStatus: ").Append(BatchStatus).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -112,15 +102,15 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as ProcessBatchRequest);
+            return this.Equals(input as Batch);
         }
 
         /// <summary>
-        /// Returns true if ProcessBatchRequest instances are equal
+        /// Returns true if Batch instances are equal
         /// </summary>
-        /// <param name="input">Instance of ProcessBatchRequest to be compared</param>
+        /// <param name="input">Instance of Batch to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ProcessBatchRequest input)
+        public bool Equals(Batch input)
         {
             if (input == null)
                 return false;
@@ -138,15 +128,9 @@ namespace CityPayAPI.Model
                     this.BatchId.SequenceEqual(input.BatchId)
                 ) && 
                 (
-                    this.ClientAccountId == input.ClientAccountId ||
-                    (this.ClientAccountId != null &&
-                    this.ClientAccountId.Equals(input.ClientAccountId))
-                ) && 
-                (
-                    this.Transactions == input.Transactions ||
-                    this.Transactions != null &&
-                    input.Transactions != null &&
-                    this.Transactions.SequenceEqual(input.Transactions)
+                    this.BatchStatus == input.BatchStatus ||
+                    (this.BatchStatus != null &&
+                    this.BatchStatus.Equals(input.BatchStatus))
                 );
         }
 
@@ -163,10 +147,8 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
                 if (this.BatchId != null)
                     hashCode = hashCode * 59 + this.BatchId.GetHashCode();
-                if (this.ClientAccountId != null)
-                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
-                if (this.Transactions != null)
-                    hashCode = hashCode * 59 + this.Transactions.GetHashCode();
+                if (this.BatchStatus != null)
+                    hashCode = hashCode * 59 + this.BatchStatus.GetHashCode();
                 return hashCode;
             }
         }
@@ -178,18 +160,6 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // ClientAccountId (string) maxLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
-            }
-
-            // ClientAccountId (string) minLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
-            }
-
             yield break;
         }
     }

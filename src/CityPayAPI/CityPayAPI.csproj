@@ -12,7 +12,7 @@
     <Description>CityPayAPI client for .Net</Description>
     <Copyright>No Copyright</Copyright>
     <RootNamespace>CityPayAPI</RootNamespace>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CityPayAPI.xml</DocumentationFile>
     <RepositoryUrl>https://github.com/citypay/citypay-api-client-dotnet.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -22,7 +22,7 @@
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4')) AND '$(MSBuildRuntimeType)' == 'Core' AND '$(OS)' != 'Windows_NT'"><PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" /></ItemGroup><ItemGroup>
     <PackageReference Include="JsonSubTypes" Version="1.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="RestSharp" Version="106.11.8-alpha.0.40" />
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>

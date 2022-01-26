@@ -26,40 +26,53 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// CheckBatchStatus
+    /// AclCheckResponseModel
     /// </summary>
-    [DataContract(Name = "CheckBatchStatus")]
-    public partial class CheckBatchStatus : IEquatable<CheckBatchStatus>, IValidatableObject
+    [DataContract(Name = "AclCheckResponseModel")]
+    public partial class AclCheckResponseModel : IEquatable<AclCheckResponseModel>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckBatchStatus" /> class.
+        /// Initializes a new instance of the <see cref="AclCheckResponseModel" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected CheckBatchStatus() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CheckBatchStatus" /> class.
-        /// </summary>
-        /// <param name="batchId">batchId (required).</param>
-        /// <param name="clientAccountId">The batch account id to obtain the batch for. Defaults to your client id if not provided..</param>
-        public CheckBatchStatus(List<int> batchId = default(List<int>), string clientAccountId = default(string))
+        /// <param name="acl">The name or value of the acl which was found to match the ip address..</param>
+        /// <param name="cache">Whether the ACL was returned via a cached instance..</param>
+        /// <param name="ip">The IP address used in the lookup..</param>
+        /// <param name="provider">The source provider of the ACL..</param>
+        public AclCheckResponseModel(string acl = default(string), bool cache = default(bool), string ip = default(string), string provider = default(string))
         {
-            // to ensure "batchId" is required (not null)
-            this.BatchId = batchId ?? throw new ArgumentNullException("batchId is a required property for CheckBatchStatus and cannot be null");
-            this.ClientAccountId = clientAccountId;
+            this.Acl = acl;
+            this.Cache = cache;
+            this.Ip = ip;
+            this.Provider = provider;
         }
 
         /// <summary>
-        /// Gets or Sets BatchId
+        /// The name or value of the acl which was found to match the ip address.
         /// </summary>
-        [DataMember(Name = "batch_id", IsRequired = true, EmitDefaultValue = false)]
-        public List<int> BatchId { get; set; }
+        /// <value>The name or value of the acl which was found to match the ip address.</value>
+        [DataMember(Name = "acl", EmitDefaultValue = false)]
+        public string Acl { get; set; }
 
         /// <summary>
-        /// The batch account id to obtain the batch for. Defaults to your client id if not provided.
+        /// Whether the ACL was returned via a cached instance.
         /// </summary>
-        /// <value>The batch account id to obtain the batch for. Defaults to your client id if not provided.</value>
-        [DataMember(Name = "client_account_id", EmitDefaultValue = false)]
-        public string ClientAccountId { get; set; }
+        /// <value>Whether the ACL was returned via a cached instance.</value>
+        [DataMember(Name = "cache", EmitDefaultValue = true)]
+        public bool Cache { get; set; }
+
+        /// <summary>
+        /// The IP address used in the lookup.
+        /// </summary>
+        /// <value>The IP address used in the lookup.</value>
+        [DataMember(Name = "ip", EmitDefaultValue = false)]
+        public string Ip { get; set; }
+
+        /// <summary>
+        /// The source provider of the ACL.
+        /// </summary>
+        /// <value>The source provider of the ACL.</value>
+        [DataMember(Name = "provider", EmitDefaultValue = false)]
+        public string Provider { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -68,9 +81,11 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CheckBatchStatus {\n");
-            sb.Append("  BatchId: ").Append(BatchId).Append("\n");
-            sb.Append("  ClientAccountId: ").Append(ClientAccountId).Append("\n");
+            sb.Append("class AclCheckResponseModel {\n");
+            sb.Append("  Acl: ").Append(Acl).Append("\n");
+            sb.Append("  Cache: ").Append(Cache).Append("\n");
+            sb.Append("  Ip: ").Append(Ip).Append("\n");
+            sb.Append("  Provider: ").Append(Provider).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -91,30 +106,38 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as CheckBatchStatus);
+            return this.Equals(input as AclCheckResponseModel);
         }
 
         /// <summary>
-        /// Returns true if CheckBatchStatus instances are equal
+        /// Returns true if AclCheckResponseModel instances are equal
         /// </summary>
-        /// <param name="input">Instance of CheckBatchStatus to be compared</param>
+        /// <param name="input">Instance of AclCheckResponseModel to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CheckBatchStatus input)
+        public bool Equals(AclCheckResponseModel input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.BatchId == input.BatchId ||
-                    this.BatchId != null &&
-                    input.BatchId != null &&
-                    this.BatchId.SequenceEqual(input.BatchId)
+                    this.Acl == input.Acl ||
+                    (this.Acl != null &&
+                    this.Acl.Equals(input.Acl))
                 ) && 
                 (
-                    this.ClientAccountId == input.ClientAccountId ||
-                    (this.ClientAccountId != null &&
-                    this.ClientAccountId.Equals(input.ClientAccountId))
+                    this.Cache == input.Cache ||
+                    this.Cache.Equals(input.Cache)
+                ) && 
+                (
+                    this.Ip == input.Ip ||
+                    (this.Ip != null &&
+                    this.Ip.Equals(input.Ip))
+                ) && 
+                (
+                    this.Provider == input.Provider ||
+                    (this.Provider != null &&
+                    this.Provider.Equals(input.Provider))
                 );
         }
 
@@ -127,10 +150,13 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.BatchId != null)
-                    hashCode = hashCode * 59 + this.BatchId.GetHashCode();
-                if (this.ClientAccountId != null)
-                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
+                if (this.Acl != null)
+                    hashCode = hashCode * 59 + this.Acl.GetHashCode();
+                hashCode = hashCode * 59 + this.Cache.GetHashCode();
+                if (this.Ip != null)
+                    hashCode = hashCode * 59 + this.Ip.GetHashCode();
+                if (this.Provider != null)
+                    hashCode = hashCode * 59 + this.Provider.GetHashCode();
                 return hashCode;
             }
         }
@@ -142,18 +168,6 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // ClientAccountId (string) maxLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
-            }
-
-            // ClientAccountId (string) minLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
-            }
-
             yield break;
         }
     }

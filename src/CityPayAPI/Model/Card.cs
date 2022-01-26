@@ -51,9 +51,10 @@ namespace CityPayAPI.Model
         /// <param name="label">A label which identifies this card..</param>
         /// <param name="label2">A label which also provides the expiry date of the card..</param>
         /// <param name="last4digits">The last 4 digits of the card to aid in identification..</param>
+        /// <param name="nameOnCard">The name on the card..</param>
         /// <param name="scheme">The scheme that issued the card..</param>
         /// <param name="token">A token that can be used to process against the card..</param>
-        public Card(bool binCommercial = default(bool), bool binCorporate = default(bool), string binCountryIssued = default(string), bool binCredit = default(bool), string binCurrency = default(string), bool binDebit = default(bool), string binDescription = default(string), bool binEu = default(bool), string cardId = default(string), string cardStatus = default(string), DateTime dateCreated = default(DateTime), bool _default = default(bool), int expmonth = default(int), int expyear = default(int), string label = default(string), string label2 = default(string), string last4digits = default(string), string scheme = default(string), string token = default(string))
+        public Card(bool binCommercial = default(bool), bool binCorporate = default(bool), string binCountryIssued = default(string), bool binCredit = default(bool), string binCurrency = default(string), bool binDebit = default(bool), string binDescription = default(string), bool binEu = default(bool), string cardId = default(string), string cardStatus = default(string), DateTime dateCreated = default(DateTime), bool _default = default(bool), int expmonth = default(int), int expyear = default(int), string label = default(string), string label2 = default(string), string last4digits = default(string), string nameOnCard = default(string), string scheme = default(string), string token = default(string))
         {
             this.BinCommercial = binCommercial;
             this.BinCorporate = binCorporate;
@@ -72,6 +73,7 @@ namespace CityPayAPI.Model
             this.Label = label;
             this.Label2 = label2;
             this.Last4digits = last4digits;
+            this.NameOnCard = nameOnCard;
             this.Scheme = scheme;
             this.Token = token;
         }
@@ -196,6 +198,13 @@ namespace CityPayAPI.Model
         public string Last4digits { get; set; }
 
         /// <summary>
+        /// The name on the card.
+        /// </summary>
+        /// <value>The name on the card.</value>
+        [DataMember(Name = "name_on_card", EmitDefaultValue = false)]
+        public string NameOnCard { get; set; }
+
+        /// <summary>
         /// The scheme that issued the card.
         /// </summary>
         /// <value>The scheme that issued the card.</value>
@@ -234,6 +243,7 @@ namespace CityPayAPI.Model
             sb.Append("  Label: ").Append(Label).Append("\n");
             sb.Append("  Label2: ").Append(Label2).Append("\n");
             sb.Append("  Last4digits: ").Append(Last4digits).Append("\n");
+            sb.Append("  NameOnCard: ").Append(NameOnCard).Append("\n");
             sb.Append("  Scheme: ").Append(Scheme).Append("\n");
             sb.Append("  Token: ").Append(Token).Append("\n");
             sb.Append("}\n");
@@ -348,6 +358,11 @@ namespace CityPayAPI.Model
                     this.Last4digits.Equals(input.Last4digits))
                 ) && 
                 (
+                    this.NameOnCard == input.NameOnCard ||
+                    (this.NameOnCard != null &&
+                    this.NameOnCard.Equals(input.NameOnCard))
+                ) && 
+                (
                     this.Scheme == input.Scheme ||
                     (this.Scheme != null &&
                     this.Scheme.Equals(input.Scheme))
@@ -394,6 +409,8 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.Label2.GetHashCode();
                 if (this.Last4digits != null)
                     hashCode = hashCode * 59 + this.Last4digits.GetHashCode();
+                if (this.NameOnCard != null)
+                    hashCode = hashCode * 59 + this.NameOnCard.GetHashCode();
                 if (this.Scheme != null)
                     hashCode = hashCode * 59 + this.Scheme.GetHashCode();
                 if (this.Token != null)
@@ -431,6 +448,18 @@ namespace CityPayAPI.Model
             if(this.Expyear < (int)2000)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expyear, must be a value greater than or equal to 2000.", new [] { "Expyear" });
+            }
+
+            // NameOnCard (string) maxLength
+            if(this.NameOnCard != null && this.NameOnCard.Length > 45)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be less than 45.", new [] { "NameOnCard" });
+            }
+
+            // NameOnCard (string) minLength
+            if(this.NameOnCard != null && this.NameOnCard.Length < 2)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be greater than 2.", new [] { "NameOnCard" });
             }
 
             yield break;

@@ -64,7 +64,10 @@ namespace CityPayAPI.Test
                 expyear: 2030,
                 csc: "012",
                 identifier: id,
-                merchantid: _cpMerchantId
+                merchantid: _cpMerchantId,
+                threedsecure: new ThreeDSecure(
+                                    tdsPolicy: "2"
+                                )
             ));
 
             Assert.True(decision.IsAuthResponse());
@@ -121,7 +124,10 @@ namespace CityPayAPI.Test
                 identifier: identifier,
                 merchantid: _cpMerchantId,
                 token: result.Cards[0].Token,
-                csc: "012"
+                csc: "012",
+                threedsecure: new ThreeDSecure(
+                    tdsPolicy: "2"
+                )
             ));
 
             Assert.False(decision.IsRequestChallenged());

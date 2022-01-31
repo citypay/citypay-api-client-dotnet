@@ -39,20 +39,13 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchReportRequest" /> class.
         /// </summary>
-        /// <param name="accountId">The batch account id that the batch was processed for. Defaults to your client id if not provided..</param>
         /// <param name="batchId">The batch id specified in the batch processing request. (required).</param>
-        public BatchReportRequest(string accountId = default(string), int batchId = default(int))
+        /// <param name="clientAccountId">The batch account id that the batch was processed for. Defaults to your client id if not provided..</param>
+        public BatchReportRequest(int batchId = default(int), string clientAccountId = default(string))
         {
             this.BatchId = batchId;
-            this.AccountId = accountId;
+            this.ClientAccountId = clientAccountId;
         }
-
-        /// <summary>
-        /// The batch account id that the batch was processed for. Defaults to your client id if not provided.
-        /// </summary>
-        /// <value>The batch account id that the batch was processed for. Defaults to your client id if not provided.</value>
-        [DataMember(Name = "account_id", EmitDefaultValue = false)]
-        public string AccountId { get; set; }
 
         /// <summary>
         /// The batch id specified in the batch processing request.
@@ -62,6 +55,13 @@ namespace CityPayAPI.Model
         public int BatchId { get; set; }
 
         /// <summary>
+        /// The batch account id that the batch was processed for. Defaults to your client id if not provided.
+        /// </summary>
+        /// <value>The batch account id that the batch was processed for. Defaults to your client id if not provided.</value>
+        [DataMember(Name = "client_account_id", EmitDefaultValue = false)]
+        public string ClientAccountId { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -69,8 +69,8 @@ namespace CityPayAPI.Model
         {
             var sb = new StringBuilder();
             sb.Append("class BatchReportRequest {\n");
-            sb.Append("  AccountId: ").Append(AccountId).Append("\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
+            sb.Append("  ClientAccountId: ").Append(ClientAccountId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -106,13 +106,13 @@ namespace CityPayAPI.Model
 
             return 
                 (
-                    this.AccountId == input.AccountId ||
-                    (this.AccountId != null &&
-                    this.AccountId.Equals(input.AccountId))
-                ) && 
-                (
                     this.BatchId == input.BatchId ||
                     this.BatchId.Equals(input.BatchId)
+                ) && 
+                (
+                    this.ClientAccountId == input.ClientAccountId ||
+                    (this.ClientAccountId != null &&
+                    this.ClientAccountId.Equals(input.ClientAccountId))
                 );
         }
 
@@ -125,9 +125,9 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.AccountId != null)
-                    hashCode = hashCode * 59 + this.AccountId.GetHashCode();
                 hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                if (this.ClientAccountId != null)
+                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
                 return hashCode;
             }
         }
@@ -139,22 +139,22 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // AccountId (string) maxLength
-            if(this.AccountId != null && this.AccountId.Length > 20)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be less than 20.", new [] { "AccountId" });
-            }
-
-            // AccountId (string) minLength
-            if(this.AccountId != null && this.AccountId.Length < 3)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be greater than 3.", new [] { "AccountId" });
-            }
-
             // BatchId (int) minimum
             if(this.BatchId < (int)1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
+            }
+
+            // ClientAccountId (string) maxLength
+            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
+            }
+
+            // ClientAccountId (string) minLength
+            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
             }
 
             yield break;

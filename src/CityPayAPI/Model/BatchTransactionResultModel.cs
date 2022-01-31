@@ -48,7 +48,8 @@ namespace CityPayAPI.Model
         /// <param name="message">A response message pertaining to the transaction. (required).</param>
         /// <param name="result">An integer result that indicates the outcome of the transaction. The Code value below maps to the result value  &lt;table&gt; &lt;tr&gt; &lt;th&gt;Code&lt;/th&gt; &lt;th&gt;Abbrev&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;td&gt;Declined&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;td&gt;Accepted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;td&gt;Rejected&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;td&gt;Not Attempted&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;td&gt;Referred&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;PinRetry&lt;/td&gt;&lt;td&gt;Perform PIN Retry&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;ForSigVer&lt;/td&gt;&lt;td&gt;Force Signature Verification&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;td&gt;Hold&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;SecErr&lt;/td&gt;&lt;td&gt;Security Error&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;CallAcq&lt;/td&gt;&lt;td&gt;Call Acquirer&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;DNH&lt;/td&gt;&lt;td&gt;Do Not Honour&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;RtnCrd&lt;/td&gt;&lt;td&gt;Retain Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;ExprdCrd&lt;/td&gt;&lt;td&gt;Expired Card&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;InvldCrd&lt;/td&gt;&lt;td&gt;Invalid Card No&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;PinExcd&lt;/td&gt;&lt;td&gt;Pin Tries Exceeded&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;PinInvld&lt;/td&gt;&lt;td&gt;Pin Invalid&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;AuthReq&lt;/td&gt;&lt;td&gt;Authentication Required&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;AuthenFail&lt;/td&gt;&lt;td&gt;Authentication Failed&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;Verified&lt;/td&gt;&lt;td&gt;Card Verified&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;td&gt;Cancelled&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;Un&lt;/td&gt;&lt;td&gt;Unknown&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt;  (required).</param>
         /// <param name="scheme">A name of the card scheme of the transaction that processed the transaction such as Visa or MasterCard. .</param>
-        public BatchTransactionResultModel(string accountId = default(string), int amount = default(int), string authcode = default(string), string identifier = default(string), string maskedpan = default(string), int merchantid = default(int), string message = default(string), int result = default(int), string scheme = default(string))
+        /// <param name="transno">The resulting transaction number, ordered incrementally from 1 for every merchant_id. The value will default to less than 1 for transactions that do not have a transaction number issued. .</param>
+        public BatchTransactionResultModel(string accountId = default(string), int amount = default(int), string authcode = default(string), string identifier = default(string), string maskedpan = default(string), int merchantid = default(int), string message = default(string), int result = default(int), string scheme = default(string), int transno = default(int))
         {
             // to ensure "accountId" is required (not null)
             this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for BatchTransactionResultModel and cannot be null");
@@ -62,6 +63,7 @@ namespace CityPayAPI.Model
             this.Authcode = authcode;
             this.Maskedpan = maskedpan;
             this.Scheme = scheme;
+            this.Transno = transno;
         }
 
         /// <summary>
@@ -128,6 +130,13 @@ namespace CityPayAPI.Model
         public string Scheme { get; set; }
 
         /// <summary>
+        /// The resulting transaction number, ordered incrementally from 1 for every merchant_id. The value will default to less than 1 for transactions that do not have a transaction number issued. 
+        /// </summary>
+        /// <value>The resulting transaction number, ordered incrementally from 1 for every merchant_id. The value will default to less than 1 for transactions that do not have a transaction number issued. </value>
+        [DataMember(Name = "transno", EmitDefaultValue = false)]
+        public int Transno { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -144,6 +153,7 @@ namespace CityPayAPI.Model
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  Result: ").Append(Result).Append("\n");
             sb.Append("  Scheme: ").Append(Scheme).Append("\n");
+            sb.Append("  Transno: ").Append(Transno).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -219,6 +229,10 @@ namespace CityPayAPI.Model
                     this.Scheme == input.Scheme ||
                     (this.Scheme != null &&
                     this.Scheme.Equals(input.Scheme))
+                ) && 
+                (
+                    this.Transno == input.Transno ||
+                    this.Transno.Equals(input.Transno)
                 );
         }
 
@@ -246,6 +260,7 @@ namespace CityPayAPI.Model
                 hashCode = hashCode * 59 + this.Result.GetHashCode();
                 if (this.Scheme != null)
                     hashCode = hashCode * 59 + this.Scheme.GetHashCode();
+                hashCode = hashCode * 59 + this.Transno.GetHashCode();
                 return hashCode;
             }
         }

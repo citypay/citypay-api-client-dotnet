@@ -40,9 +40,9 @@ namespace CityPayAPI.Model
         /// Initializes a new instance of the <see cref="Batch" /> class.
         /// </summary>
         /// <param name="batchDate">The date that the file was created in ISO-8601 format. (required).</param>
-        /// <param name="batchId">batchId.</param>
+        /// <param name="batchId">The batch id requested..</param>
         /// <param name="batchStatus">The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received.  (required).</param>
-        public Batch(DateTime batchDate = default(DateTime), List<int> batchId = default(List<int>), string batchStatus = default(string))
+        public Batch(DateTime batchDate = default(DateTime), int batchId = default(int), string batchStatus = default(string))
         {
             this.BatchDate = batchDate;
             // to ensure "batchStatus" is required (not null)
@@ -59,10 +59,11 @@ namespace CityPayAPI.Model
         public DateTime BatchDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets BatchId
+        /// The batch id requested.
         /// </summary>
+        /// <value>The batch id requested.</value>
         [DataMember(Name = "batch_id", EmitDefaultValue = false)]
-        public List<int> BatchId { get; set; }
+        public int BatchId { get; set; }
 
         /// <summary>
         /// The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received. 
@@ -123,9 +124,7 @@ namespace CityPayAPI.Model
                 ) && 
                 (
                     this.BatchId == input.BatchId ||
-                    this.BatchId != null &&
-                    input.BatchId != null &&
-                    this.BatchId.SequenceEqual(input.BatchId)
+                    this.BatchId.Equals(input.BatchId)
                 ) && 
                 (
                     this.BatchStatus == input.BatchStatus ||
@@ -145,8 +144,7 @@ namespace CityPayAPI.Model
                 int hashCode = 41;
                 if (this.BatchDate != null)
                     hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
-                if (this.BatchId != null)
-                    hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
                 if (this.BatchStatus != null)
                     hashCode = hashCode * 59 + this.BatchStatus.GetHashCode();
                 return hashCode;
@@ -160,6 +158,12 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // BatchId (int) minimum
+            if(this.BatchId < (int)1)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
+            }
+
             yield break;
         }
     }

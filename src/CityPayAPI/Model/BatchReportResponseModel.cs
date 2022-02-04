@@ -41,16 +41,15 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="amount">The total amount that the batch contains. (required).</param>
         /// <param name="batchDate">The date and time of the batch in ISO-8601 format. (required).</param>
-        /// <param name="batchId">batchId (required).</param>
+        /// <param name="batchId">The batch id specified in the batch processing request. (required).</param>
         /// <param name="batchStatus">The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received.  (required).</param>
         /// <param name="clientAccountId">The batch account id that the batch was processed with. (required).</param>
         /// <param name="transactions">transactions (required).</param>
-        public BatchReportResponseModel(int amount = default(int), DateTime batchDate = default(DateTime), List<int> batchId = default(List<int>), string batchStatus = default(string), string clientAccountId = default(string), List<BatchTransactionResultModel> transactions = default(List<BatchTransactionResultModel>))
+        public BatchReportResponseModel(int amount = default(int), DateTime batchDate = default(DateTime), int batchId = default(int), string batchStatus = default(string), string clientAccountId = default(string), List<BatchTransactionResultModel> transactions = default(List<BatchTransactionResultModel>))
         {
             this.Amount = amount;
             this.BatchDate = batchDate;
-            // to ensure "batchId" is required (not null)
-            this.BatchId = batchId ?? throw new ArgumentNullException("batchId is a required property for BatchReportResponseModel and cannot be null");
+            this.BatchId = batchId;
             // to ensure "batchStatus" is required (not null)
             this.BatchStatus = batchStatus ?? throw new ArgumentNullException("batchStatus is a required property for BatchReportResponseModel and cannot be null");
             // to ensure "clientAccountId" is required (not null)
@@ -75,10 +74,11 @@ namespace CityPayAPI.Model
         public DateTime BatchDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets BatchId
+        /// The batch id specified in the batch processing request.
         /// </summary>
+        /// <value>The batch id specified in the batch processing request.</value>
         [DataMember(Name = "batch_id", IsRequired = true, EmitDefaultValue = false)]
-        public List<int> BatchId { get; set; }
+        public int BatchId { get; set; }
 
         /// <summary>
         /// The status of the batch. Possible values are - CANCELLED. The file has been cancelled by an administrator or server process.  - COMPLETE. The file has passed through the processing cycle and is determined as being complete further information should be obtained on the results of the processing - ERROR_IN_PROCESSING. Errors have occurred in the processing that has deemed that processing can not continue. - INITIALISED. The file has been initialised and no action has yet been performed - LOCKED. The file has been locked for processing - QUEUED. The file has been queued for processing yet no processing has yet been performed - UNKNOWN. The file is of an unknown status, that is the file can either not be determined by the information requested of the file has not yet been received. 
@@ -159,9 +159,7 @@ namespace CityPayAPI.Model
                 ) && 
                 (
                     this.BatchId == input.BatchId ||
-                    this.BatchId != null &&
-                    input.BatchId != null &&
-                    this.BatchId.SequenceEqual(input.BatchId)
+                    this.BatchId.Equals(input.BatchId)
                 ) && 
                 (
                     this.BatchStatus == input.BatchStatus ||
@@ -193,8 +191,7 @@ namespace CityPayAPI.Model
                 hashCode = hashCode * 59 + this.Amount.GetHashCode();
                 if (this.BatchDate != null)
                     hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
-                if (this.BatchId != null)
-                    hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
                 if (this.BatchStatus != null)
                     hashCode = hashCode * 59 + this.BatchStatus.GetHashCode();
                 if (this.ClientAccountId != null)
@@ -212,6 +209,12 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // BatchId (int) minimum
+            if(this.BatchId < (int)1)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
+            }
+
             // ClientAccountId (string) maxLength
             if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
             {

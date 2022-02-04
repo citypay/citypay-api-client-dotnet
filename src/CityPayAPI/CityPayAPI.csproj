@@ -12,7 +12,7 @@
     <Description>CityPayAPI client for .Net</Description>
     <Copyright>No Copyright</Copyright>
     <RootNamespace>CityPayAPI</RootNamespace>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\CityPayAPI.xml</DocumentationFile>
     <RepositoryUrl>https://github.com/citypay/citypay-api-client-dotnet.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

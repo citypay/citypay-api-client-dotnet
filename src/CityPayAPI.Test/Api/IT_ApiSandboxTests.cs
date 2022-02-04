@@ -2,9 +2,11 @@ using System;
 using CityPayAPI.Api;
 using CityPayAPI.Model;
 using CityPayAPI.Client;
-using System.Reflection;
 using Newtonsoft.Json;
 using Xunit;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace CityPayAPI.Test
 {
@@ -66,8 +68,8 @@ namespace CityPayAPI.Test
                 identifier: id,
                 merchantid: _cpMerchantId,
                 threedsecure: new ThreeDSecure(
-                                    tdsPolicy: "2"
-                                )
+                    tdsPolicy: "2"
+                )
             ));
 
             Assert.True(decision.IsAuthResponse());
@@ -144,6 +146,25 @@ namespace CityPayAPI.Test
             Assert.Equal("001", ack.Code);
         }
         
+        public class Cres
+        {
+            public string AcsTransID { get; set; }
+            public string MessageType { get; set; }
+            public string MessageVersion { get; set; }
+            public string ThreeDSServerTransID { get; set; }
+            public string TransStatus { get; set; }
+            
+            public Cres(string acsTransID, string messageType, string messageVersion, string threeDSServerTransID, string transStatus)
+            {
+                AcsTransID = acsTransID;
+                MessageType = messageType;
+                MessageVersion = messageVersion;
+                ThreeDSServerTransID = threeDSServerTransID;
+                TransStatus = transStatus;
+            }
+            // Other properties, methods, events...
+        }
+
         [Fact]
         public void Authorise3DSv2Test()
         {
@@ -159,18 +180,57 @@ namespace CityPayAPI.Test
                 merchantid: _cpMerchantId,
                 transType: "A", //Enforcing Ecom Transaction
                 threedsecure: new ThreeDSecure(
-                    cpBx:"eyJhIjoiRkFwSCIsImMiOjI0LCJpIjoid3dIOTExTlBKSkdBRVhVZCIsImoiOmZhbHNlLCJsIjoiZW4tVVMiLCJoIjoxNDQwLCJ3IjoyNTYwLCJ0IjowLCJ1IjoiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTFfMl8zKSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvODkuMC40Mzg5LjgyIFNhZmFyaS81MzcuMzYiLCJ2IjoiMS4wLjAifQ==",
-                    merchantTermurl:"https://citypay.com/acs/return"
-                    )
+                    cpBx:
+                    "eyJhIjoiRkFwSCIsImMiOjI0LCJpIjoid3dIOTExTlBKSkdBRVhVZCIsImoiOmZhbHNlLCJsIjoiZW4tVVMiLCJoIjoxNDQwLCJ3IjoyNTYwLCJ0IjowLCJ1IjoiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTFfMl8zKSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvODkuMC40Mzg5LjgyIFNhZmFyaS81MzcuMzYiLCJ2IjoiMS4wLjAifQ==",
+                    merchantTermurl: "https://citypay.com/acs/return"
+                )
             ));
 
             Assert.False(decision.IsAuthResponse());
             Assert.True(decision.IsRequestChallenged());
             Assert.False(decision.IsAuthenRequired());
             var response = decision.RequestChallenged;
+            var creq = response.Creq;
+            var threedserverTransId = response.ThreedserverTransId;
 
-            Assert.NotEmpty(response.Creq);
             Assert.NotEmpty(response.AcsUrl);
+            Assert.NotEmpty(creq);
+            Assert.NotEmpty(threedserverTransId);
+            
+            if (creq == string.Empty) return;
+            
+            // Sending Creq 
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://sandbox.citypay.com/3dsv2/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders
+                .Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var content = new
+            {
+                threeDSSessionData = response.ThreedserverTransId,
+                creq = response.Creq
+            };
+
+            var jsonContent = JsonConvert.SerializeObject(content);
+            var stringContent = new StringContent(jsonContent.ToString(), Encoding.UTF8,
+                "application/json");
+            var res = client.PostAsync("acs", stringContent).Result;
+
+            Assert.True(res.IsSuccessStatusCode);
+            
+            if (res.IsSuccessStatusCode)
+            {
+                var cRes = JsonConvert.DeserializeObject<Cres>(res.Content.ReadAsStringAsync()
+                    .Result);
+                
+                Assert.NotEmpty(cRes.AcsTransID);
+                Assert.NotEmpty(cRes.MessageType);
+                Assert.NotEmpty(cRes.MessageVersion);
+                Assert.NotEmpty(cRes.ThreeDSServerTransID);
+                Assert.NotEmpty(cRes.TransStatus);
+            }
         }
     }
 }

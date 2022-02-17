@@ -5,8 +5,8 @@ All URIs are relative to *https://api.citypay.com/v6*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**BatchProcessRequest**](BatchProcessingApi.md#batchprocessrequest) | **POST** /batch/process | Batch Process Request
+[**BatchReportRequest**](BatchProcessingApi.md#batchreportrequest) | **POST** /batch/retrieve | BatchReportRequest
 [**CheckBatchStatusRequest**](BatchProcessingApi.md#checkbatchstatusrequest) | **POST** /batch/status | CheckBatchStatus
-[**GetBatchReportRequest**](BatchProcessingApi.md#getbatchreportrequest) | **POST** /batch/retrieve | BatchReportRequest
 
 
 <a name="batchprocessrequest"></a>
@@ -87,6 +87,84 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="batchreportrequest"></a>
+# **BatchReportRequest**
+> BatchReportResponseModel BatchReportRequest (BatchReportRequest batchReportRequest)
+
+BatchReportRequest
+
+The operation is used to retrieve a report of the result of a batch process.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using CityPayAPI.Api;
+using CityPayAPI.Client;
+using CityPayAPI.Model;
+
+namespace Example
+{
+    public class BatchReportRequestExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.citypay.com/v6";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
+
+            var apiInstance = new BatchProcessingApi(config);
+            var batchReportRequest = new BatchReportRequest(); // BatchReportRequest | 
+
+            try
+            {
+                // BatchReportRequest
+                BatchReportResponseModel result = apiInstance.BatchReportRequest(batchReportRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling BatchProcessingApi.BatchReportRequest: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **batchReportRequest** | [**BatchReportRequest**](BatchReportRequest.md)|  | 
+
+### Return type
+
+[**BatchReportResponseModel**](BatchReportResponseModel.md)
+
+### Authorization
+
+[cp-api-key](../README.md#cp-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/xml
+ - **Accept**: application/json, text/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The report for a given batch. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="checkbatchstatusrequest"></a>
 # **CheckBatchStatusRequest**
 > CheckBatchStatusResponse CheckBatchStatusRequest (CheckBatchStatus checkBatchStatus)
@@ -158,84 +236,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | The status of batches provided in the request. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
-| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
-| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="getbatchreportrequest"></a>
-# **GetBatchReportRequest**
-> BatchReportResponseModel GetBatchReportRequest (BatchReportRequest batchReportRequest)
-
-BatchReportRequest
-
-The operation is used to retrieve a report of the result of a batch process.
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using CityPayAPI.Api;
-using CityPayAPI.Client;
-using CityPayAPI.Model;
-
-namespace Example
-{
-    public class GetBatchReportRequestExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "https://api.citypay.com/v6";
-            // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
-
-            var apiInstance = new BatchProcessingApi(config);
-            var batchReportRequest = new BatchReportRequest(); // BatchReportRequest | 
-
-            try
-            {
-                // BatchReportRequest
-                BatchReportResponseModel result = apiInstance.GetBatchReportRequest(batchReportRequest);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling BatchProcessingApi.GetBatchReportRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **batchReportRequest** | [**BatchReportRequest**](BatchReportRequest.md)|  | 
-
-### Return type
-
-[**BatchReportResponseModel**](BatchReportResponseModel.md)
-
-### Authorization
-
-[cp-api-key](../README.md#cp-api-key)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/xml
- - **Accept**: application/json, text/xml
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The report for a given batch. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |

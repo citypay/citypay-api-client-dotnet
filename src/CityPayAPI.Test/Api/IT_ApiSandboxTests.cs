@@ -222,14 +222,24 @@ namespace CityPayAPI.Test
             
             if (res.IsSuccessStatusCode)
             {
-                var cRes = JsonConvert.DeserializeObject<Cres>(res.Content.ReadAsStringAsync()
-                    .Result);
+                var cResString = res.Content.ReadAsStringAsync().Result;
+                
+                var cRes = JsonConvert.DeserializeObject<Cres>(cResString);
                 
                 Assert.NotEmpty(cRes.AcsTransID);
                 Assert.NotEmpty(cRes.MessageType);
                 Assert.NotEmpty(cRes.MessageVersion);
                 Assert.NotEmpty(cRes.ThreeDSServerTransID);
                 Assert.NotEmpty(cRes.TransStatus);
+
+                var cResAuthRequest =
+                    new CResAuthRequest(Convert.ToBase64String(Encoding.UTF8.GetBytes(cResString)));
+
+                var cResRequestResponse = api.CResRequest(cResAuthRequest);
+                Assert.Equal(1595, cResRequestResponse.Amount);
+                Assert.Equal("A12345",cResRequestResponse.Authcode);
+                Assert.Equal("Y", cResRequestResponse.AuthenResult);
+                Assert.True(cResRequestResponse.Authorised);
             }
         }
     }

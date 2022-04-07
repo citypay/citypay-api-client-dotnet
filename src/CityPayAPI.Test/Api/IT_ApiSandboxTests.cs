@@ -81,6 +81,10 @@ namespace CityPayAPI.Test
             Assert.Equal(id, response.Identifier);
             Assert.Equal("A12345", response.Authcode);
             Assert.Equal(1395, response.Amount);
+            
+            Boolean isValidDigest = Utils.Digest.validateDigest(response, _cpLicenceKey);
+            
+            Assert.True(isValidDigest);
         }
 
         [Fact]

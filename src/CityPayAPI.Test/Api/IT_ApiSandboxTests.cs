@@ -81,6 +81,10 @@ namespace CityPayAPI.Test
             Assert.Equal(id, response.Identifier);
             Assert.Equal("A12345", response.Authcode);
             Assert.Equal(1395, response.Amount);
+            
+            Boolean isValidDigest = Utils.Digest.validateDigest(response, _cpLicenceKey);
+            
+            Assert.True(isValidDigest);
         }
 
         [Fact]
@@ -88,7 +92,7 @@ namespace CityPayAPI.Test
         {
             var guid = Guid.NewGuid().ToString();
             var api = new CardHolderAccountApi(_configuration);
-            var result = api.AccountCreate(new AccountCreate(guid, new ContactDetails(
+            var resultAccountCreate = api.AccountCreate(new AccountCreate(guid, new ContactDetails(
                 address1: "7 Esplanade",
                 area: "St Helier",
                 company: "CityPay Limited",
@@ -99,33 +103,33 @@ namespace CityPayAPI.Test
                 postcode: "JE2 3QA"
             )));
 
-            Assert.Equal(guid, result.AccountId);
-            Assert.Equal("7 Esplanade", result.Contact.Address1);
+            Assert.Equal(guid, resultAccountCreate.AccountId);
+            Assert.Equal("7 Esplanade", resultAccountCreate.Contact.Address1);
 
-            result = api.AccountCardRegisterRequest(guid, new RegisterCard(
+            var resultAccountCardRegister = api.AccountCardRegisterRequest(guid, new RegisterCard(
                 cardnumber: "4000 0000 0000 0002",
                 expmonth: 12,
                 expyear: 2030
             ));
 
-            Assert.Equal(guid, result.AccountId);
-            Assert.Single(result.Cards);
-            Assert.Equal(12, result.Cards[0].Expmonth);
-            Assert.Equal(2030, result.Cards[0].Expyear);
+            Assert.Equal(guid, resultAccountCardRegister.AccountId);
+            Assert.Single(resultAccountCardRegister.Cards);
+            Assert.Equal(12, resultAccountCardRegister.Cards[0].Expmonth);
+            Assert.Equal(2030, resultAccountCardRegister.Cards[0].Expyear);
 
-            result = api.AccountRetrieveRequest(guid);
-            Assert.Equal(guid, result.AccountId);
-            Assert.Equal("7 Esplanade", result.Contact.Address1);
-            Assert.Single(result.Cards);
-            Assert.Equal(12, result.Cards[0].Expmonth);
-            Assert.Equal(2030, result.Cards[0].Expyear);
+            var resultAccountRetrieve = api.AccountRetrieveRequest(guid);
+            Assert.Equal(guid, resultAccountRetrieve.AccountId);
+            Assert.Equal("7 Esplanade", resultAccountRetrieve.Contact.Address1);
+            Assert.Single(resultAccountRetrieve.Cards);
+            Assert.Equal(12, resultAccountRetrieve.Cards[0].Expmonth);
+            Assert.Equal(2030, resultAccountRetrieve.Cards[0].Expyear);
 
             var identifier = Guid.NewGuid().ToString();
             var decision = api.ChargeRequest(new ChargeRequest(
                 amount: 7801,
                 identifier: identifier,
                 merchantid: _cpMerchantId,
-                token: result.Cards[0].Token,
+                token: resultAccountRetrieve.Cards[0].Token,
                 csc: "012",
                 threedsecure: new ThreeDSecure(
                     tdsPolicy: "2"

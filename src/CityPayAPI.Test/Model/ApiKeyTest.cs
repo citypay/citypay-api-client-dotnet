@@ -1,27 +1,14 @@
 using System;
 using System.Security.Cryptography;
 using CityPayAPI.Model;
+using CityPayAPI.Utils;
 using Xunit;
 
 namespace CityPayAPI.Test
 {
     
     public class ApiKeyTest : IDisposable
-    {
-        private static int GetHexVal(char hex) {
-            int val = hex;
-            return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
-        }
-        
-        private static byte[] HexToByteArray(string hex) {
-            if (hex.Length % 2 == 1)
-                throw new Exception("odd number of digits");
-            byte[] arr = new byte[hex.Length >> 1];
-            for (int i = 0; i<hex.Length>> 1; ++i)
-                arr[i] = (byte) ((GetHexVal(hex[i << 1]) << 4) + (GetHexVal(hex[(i << 1) + 1])));
-            return arr;
-        }
-        
+    { 
         [Fact]
         public void KeyTest()
         {
@@ -33,7 +20,7 @@ namespace CityPayAPI.Test
             //     Rnd.GetBytes(b);
             // }
 
-            var nonce = HexToByteArray("acb875aef083de292299bd69fcdeb5c5");
+            var nonce = HexToByteArray.Encode("acb875aef083de292299bd69fcdeb5c5");
             var lk = "7G79TG62BAJTK669";
             var clientId = "PC2";
 

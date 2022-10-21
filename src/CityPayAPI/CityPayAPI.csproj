@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <TargetFrameworks>netcoreapp2.1;net452;net461;net472</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net452;net461;net472</TargetFrameworks>
     <AssemblyName>CityPayAPI</AssemblyName>
     <PackageId>CityPayAPI</PackageId>
     <OutputType>Library</OutputType>

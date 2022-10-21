@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**DirectCResAuthRequest**](DirectPostAPIApi.md#directcresauthrequest) | **POST** /direct/cres/auth/{uuid} | Handles a CRes response from ACS, returning back the result of authorisation
 [**DirectCResTokeniseRequest**](DirectPostAPIApi.md#directcrestokeniserequest) | **POST** /direct/cres/tokenise/{uuid} | Handles a CRes response from ACS, returning back a token for future authorisation
 [**DirectPostAuthRequest**](DirectPostAPIApi.md#directpostauthrequest) | **POST** /direct/auth | Direct Post Auth Request
-[**DirectPostTokeniseRequest**](DirectPostAPIApi.md#directposttokeniserequest) | **POST** / direct/tokenise | Direct Post Tokenise Request
+[**DirectPostTokeniseRequest**](DirectPostAPIApi.md#directposttokeniserequest) | **POST** /direct/tokenise | Direct Post Tokenise Request
 [**TokenRequest**](DirectPostAPIApi.md#tokenrequest) | **POST** /direct/token | Direct Post Token Request
 
 
@@ -89,6 +89,7 @@ No authorization required
 | **403** | Forbidden. The domain key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **406** | Not Acceptable. Should the incoming data not be validly determined. |  -  |
 | **412** | Bad Request. Should the incoming data not be validly determined and an error code results. |  -  |
+| **500** | Server Error. Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -170,12 +171,13 @@ No authorization required
 | **403** | Forbidden. The domain key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **406** | Not Acceptable. Should the incoming data not be validly determined. |  -  |
 | **412** | Bad Request. Should the incoming data not be validly determined and an error code results. |  -  |
+| **500** | Server Error. Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="directpostauthrequest"></a>
 # **DirectPostAuthRequest**
-> AuthResponse DirectPostAuthRequest (int amount, string cardnumber, int expmonth, int expyear, string identifier, string avsPostcodePolicy = null, ContactDetails billTo = null, string csc = null, string cscPolicy = null, string currency = null, string duplicatePolicy = null, string matchAvsa = null, string nameOnCard = null, string nonce = null, string redirectFailure = null, string redirectSuccess = null, ContactDetails shipTo = null, ThreeDSecure threedsecure = null, string transInfo = null, string transType = null)
+> AuthResponse DirectPostAuthRequest (DirectPostRequest directPostRequest)
 
 Direct Post Auth Request
 
@@ -204,31 +206,12 @@ namespace Example
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
 
             var apiInstance = new DirectPostAPIApi(config);
-            var amount = 56;  // int | The amount to authorise in the lowest unit of currency with a variable length to a maximum of 12 digits.  No decimal points are to be included and no divisional characters such as 1,024.  The amount should be the total amount required for the transaction.  For example with GBP £1,021.95 the amount value is 102195. 
-            var cardnumber = cardnumber_example;  // string | The card number (PAN) with a variable length to a maximum of 21 digits in numerical form. Any non numeric characters will be stripped out of the card number, this includes whitespace or separators internal of the provided value.  The card number must be treated as sensitive data. We only provide an obfuscated value in logging and reporting.  The plaintext value is encrypted in our database using AES 256 GMC bit encryption for settlement or refund purposes.  When providing the card number to our gateway through the authorisation API you will be handling the card data on your application. This will require further PCI controls to be in place and this value must never be stored. 
-            var expmonth = 56;  // int | The month of expiry of the card. The month value should be a numerical value between 1 and 12. 
-            var expyear = 56;  // int | The year of expiry of the card. 
-            var identifier = identifier_example;  // string | The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 0x32 to 0x127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different. 
-            var avsPostcodePolicy = avsPostcodePolicy_example;  // string | A policy value which determines whether an AVS postcode policy is enforced or bypassed.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be rejected if the AVS postcode numeric value does not match.   `2` to bypass. Transactions that are bypassed will be allowed through even if the postcode did not match.   `3` to ignore. Transactions that are ignored will bypass the result and not send postcode details for authorisation.  (optional) 
-            var billTo = new ContactDetails(); // ContactDetails |  (optional) 
-            var csc = csc_example;  // string | The Card Security Code (CSC) (also known as CV2/CVV2) is normally found on the back of the card (American Express has it on the front). The value helps to identify posession of the card as it is not available within the chip or magnetic swipe.  When forwarding the CSC, please ensure the value is a string as some values start with 0 and this will be stripped out by any integer parsing.  The CSC number aids fraud prevention in Mail Order and Internet payments.  Business rules are available on your account to identify whether to accept or decline transactions based on mismatched results of the CSC.  The Payment Card Industry (PCI) requires that at no stage of a transaction should the CSC be stored.  This applies to all entities handling card data.  It should also not be used in any hashing process.  CityPay do not store the value and have no method of retrieving the value once the transaction has been processed. For this reason, duplicate checking is unable to determine the CSC in its duplication check algorithm.  (optional) 
-            var cscPolicy = cscPolicy_example;  // string | A policy value which determines whether a CSC policy is enforced or bypassed.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be rejected if the CSC value does not match.   `2` to bypass. Transactions that are bypassed will be allowed through even if the CSC did not match.   `3` to ignore. Transactions that are ignored will bypass the result and not send the CSC details for authorisation.  (optional) 
-            var currency = currency_example;  // string | The processing currency for the transaction. Will default to the merchant account currency. (optional) 
-            var duplicatePolicy = duplicatePolicy_example;  // string | A policy value which determines whether a duplication policy is enforced or bypassed. A duplication check has a window of time set against your account within which it can action. If a previous transaction with matching values occurred within the window, any subsequent transaction will result in a T001 result.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be checked for duplication within the duplication window.   `2` to bypass. Transactions that are bypassed will not be checked for duplication within the duplication window.   `3` to ignore. Transactions that are ignored will have the same affect as bypass.  (optional) 
-            var matchAvsa = matchAvsa_example;  // string | A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.   `2` to bypass. Transactions that are bypassed will be allowed through even if the address did not match.   `3` to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation.  (optional) 
-            var nameOnCard = nameOnCard_example;  // string | The card holder name as appears on the card such as MR N E BODY. Required for some acquirers.  (optional) 
-            var nonce = nonce_example;  // string | A random value string which is provided to the API to perform a digest. The value will be used by its UTF-8 byte representation of any digest function.  (optional) 
-            var redirectFailure = redirectFailure_example;  // string | The URL used to redirect back to your site when a transaction has been rejected or declined. Required if a url-encoded request.  (optional) 
-            var redirectSuccess = redirectSuccess_example;  // string | The URL used to redirect back to your site when a transaction has been tokenised or authorised. Required if a url-encoded request.  (optional) 
-            var shipTo = new ContactDetails(); // ContactDetails |  (optional) 
-            var threedsecure = new ThreeDSecure(); // ThreeDSecure |  (optional) 
-            var transInfo = transInfo_example;  // string | Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id. (optional) 
-            var transType = transType_example;  // string | The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field. (optional) 
+            var directPostRequest = new DirectPostRequest(); // DirectPostRequest | 
 
             try
             {
                 // Direct Post Auth Request
-                AuthResponse result = apiInstance.DirectPostAuthRequest(amount, cardnumber, expmonth, expyear, identifier, avsPostcodePolicy, billTo, csc, cscPolicy, currency, duplicatePolicy, matchAvsa, nameOnCard, nonce, redirectFailure, redirectSuccess, shipTo, threedsecure, transInfo, transType);
+                AuthResponse result = apiInstance.DirectPostAuthRequest(directPostRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -246,26 +229,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **amount** | **int**| The amount to authorise in the lowest unit of currency with a variable length to a maximum of 12 digits.  No decimal points are to be included and no divisional characters such as 1,024.  The amount should be the total amount required for the transaction.  For example with GBP £1,021.95 the amount value is 102195.  | 
- **cardnumber** | **string**| The card number (PAN) with a variable length to a maximum of 21 digits in numerical form. Any non numeric characters will be stripped out of the card number, this includes whitespace or separators internal of the provided value.  The card number must be treated as sensitive data. We only provide an obfuscated value in logging and reporting.  The plaintext value is encrypted in our database using AES 256 GMC bit encryption for settlement or refund purposes.  When providing the card number to our gateway through the authorisation API you will be handling the card data on your application. This will require further PCI controls to be in place and this value must never be stored.  | 
- **expmonth** | **int**| The month of expiry of the card. The month value should be a numerical value between 1 and 12.  | 
- **expyear** | **int**| The year of expiry of the card.  | 
- **identifier** | **string**| The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 0x32 to 0x127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different.  | 
- **avsPostcodePolicy** | **string**| A policy value which determines whether an AVS postcode policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS postcode numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the postcode did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send postcode details for authorisation.  | [optional] 
- **billTo** | [**ContactDetails**](ContactDetails.md)|  | [optional] 
- **csc** | **string**| The Card Security Code (CSC) (also known as CV2/CVV2) is normally found on the back of the card (American Express has it on the front). The value helps to identify posession of the card as it is not available within the chip or magnetic swipe.  When forwarding the CSC, please ensure the value is a string as some values start with 0 and this will be stripped out by any integer parsing.  The CSC number aids fraud prevention in Mail Order and Internet payments.  Business rules are available on your account to identify whether to accept or decline transactions based on mismatched results of the CSC.  The Payment Card Industry (PCI) requires that at no stage of a transaction should the CSC be stored.  This applies to all entities handling card data.  It should also not be used in any hashing process.  CityPay do not store the value and have no method of retrieving the value once the transaction has been processed. For this reason, duplicate checking is unable to determine the CSC in its duplication check algorithm.  | [optional] 
- **cscPolicy** | **string**| A policy value which determines whether a CSC policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the CSC value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the CSC did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send the CSC details for authorisation.  | [optional] 
- **currency** | **string**| The processing currency for the transaction. Will default to the merchant account currency. | [optional] 
- **duplicatePolicy** | **string**| A policy value which determines whether a duplication policy is enforced or bypassed. A duplication check has a window of time set against your account within which it can action. If a previous transaction with matching values occurred within the window, any subsequent transaction will result in a T001 result.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be checked for duplication within the duplication window.   &#x60;2&#x60; to bypass. Transactions that are bypassed will not be checked for duplication within the duplication window.   &#x60;3&#x60; to ignore. Transactions that are ignored will have the same affect as bypass.  | [optional] 
- **matchAvsa** | **string**| A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the address did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation.  | [optional] 
- **nameOnCard** | **string**| The card holder name as appears on the card such as MR N E BODY. Required for some acquirers.  | [optional] 
- **nonce** | **string**| A random value string which is provided to the API to perform a digest. The value will be used by its UTF-8 byte representation of any digest function.  | [optional] 
- **redirectFailure** | **string**| The URL used to redirect back to your site when a transaction has been rejected or declined. Required if a url-encoded request.  | [optional] 
- **redirectSuccess** | **string**| The URL used to redirect back to your site when a transaction has been tokenised or authorised. Required if a url-encoded request.  | [optional] 
- **shipTo** | [**ContactDetails**](ContactDetails.md)|  | [optional] 
- **threedsecure** | [**ThreeDSecure**](ThreeDSecure.md)|  | [optional] 
- **transInfo** | **string**| Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id. | [optional] 
- **transType** | **string**| The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field. | [optional] 
+ **directPostRequest** | [**DirectPostRequest**](DirectPostRequest.md)|  | 
 
 ### Return type
 
@@ -277,7 +241,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json, text/xml
+ - **Content-Type**: application/json, application/x-www-form-urlencoded, text/xml
  - **Accept**: application/json, application/xml, application/x-www-form-urlencoded, text/xml
 
 
@@ -291,12 +255,13 @@ Name | Type | Description  | Notes
 | **403** | Forbidden. The domain key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **406** | Not Acceptable. Should the incoming data not be validly determined. |  -  |
 | **412** | Bad Request. Should the incoming data not be validly determined and an error code results. |  -  |
+| **500** | Server Error. Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="directposttokeniserequest"></a>
 # **DirectPostTokeniseRequest**
-> AuthResponse DirectPostTokeniseRequest (int amount, string cardnumber, int expmonth, int expyear, string identifier, string avsPostcodePolicy = null, ContactDetails billTo = null, string csc = null, string cscPolicy = null, string currency = null, string duplicatePolicy = null, string matchAvsa = null, string nameOnCard = null, string nonce = null, string redirectFailure = null, string redirectSuccess = null, ContactDetails shipTo = null, ThreeDSecure threedsecure = null, string transInfo = null, string transType = null)
+> AuthResponse DirectPostTokeniseRequest (DirectPostRequest directPostRequest)
 
 Direct Post Tokenise Request
 
@@ -325,31 +290,12 @@ namespace Example
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
 
             var apiInstance = new DirectPostAPIApi(config);
-            var amount = 56;  // int | The amount to authorise in the lowest unit of currency with a variable length to a maximum of 12 digits.  No decimal points are to be included and no divisional characters such as 1,024.  The amount should be the total amount required for the transaction.  For example with GBP £1,021.95 the amount value is 102195. 
-            var cardnumber = cardnumber_example;  // string | The card number (PAN) with a variable length to a maximum of 21 digits in numerical form. Any non numeric characters will be stripped out of the card number, this includes whitespace or separators internal of the provided value.  The card number must be treated as sensitive data. We only provide an obfuscated value in logging and reporting.  The plaintext value is encrypted in our database using AES 256 GMC bit encryption for settlement or refund purposes.  When providing the card number to our gateway through the authorisation API you will be handling the card data on your application. This will require further PCI controls to be in place and this value must never be stored. 
-            var expmonth = 56;  // int | The month of expiry of the card. The month value should be a numerical value between 1 and 12. 
-            var expyear = 56;  // int | The year of expiry of the card. 
-            var identifier = identifier_example;  // string | The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 0x32 to 0x127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different. 
-            var avsPostcodePolicy = avsPostcodePolicy_example;  // string | A policy value which determines whether an AVS postcode policy is enforced or bypassed.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be rejected if the AVS postcode numeric value does not match.   `2` to bypass. Transactions that are bypassed will be allowed through even if the postcode did not match.   `3` to ignore. Transactions that are ignored will bypass the result and not send postcode details for authorisation.  (optional) 
-            var billTo = new ContactDetails(); // ContactDetails |  (optional) 
-            var csc = csc_example;  // string | The Card Security Code (CSC) (also known as CV2/CVV2) is normally found on the back of the card (American Express has it on the front). The value helps to identify posession of the card as it is not available within the chip or magnetic swipe.  When forwarding the CSC, please ensure the value is a string as some values start with 0 and this will be stripped out by any integer parsing.  The CSC number aids fraud prevention in Mail Order and Internet payments.  Business rules are available on your account to identify whether to accept or decline transactions based on mismatched results of the CSC.  The Payment Card Industry (PCI) requires that at no stage of a transaction should the CSC be stored.  This applies to all entities handling card data.  It should also not be used in any hashing process.  CityPay do not store the value and have no method of retrieving the value once the transaction has been processed. For this reason, duplicate checking is unable to determine the CSC in its duplication check algorithm.  (optional) 
-            var cscPolicy = cscPolicy_example;  // string | A policy value which determines whether a CSC policy is enforced or bypassed.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be rejected if the CSC value does not match.   `2` to bypass. Transactions that are bypassed will be allowed through even if the CSC did not match.   `3` to ignore. Transactions that are ignored will bypass the result and not send the CSC details for authorisation.  (optional) 
-            var currency = currency_example;  // string | The processing currency for the transaction. Will default to the merchant account currency. (optional) 
-            var duplicatePolicy = duplicatePolicy_example;  // string | A policy value which determines whether a duplication policy is enforced or bypassed. A duplication check has a window of time set against your account within which it can action. If a previous transaction with matching values occurred within the window, any subsequent transaction will result in a T001 result.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be checked for duplication within the duplication window.   `2` to bypass. Transactions that are bypassed will not be checked for duplication within the duplication window.   `3` to ignore. Transactions that are ignored will have the same affect as bypass.  (optional) 
-            var matchAvsa = matchAvsa_example;  // string | A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.  Values are  `0` for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   `1` for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.   `2` to bypass. Transactions that are bypassed will be allowed through even if the address did not match.   `3` to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation.  (optional) 
-            var nameOnCard = nameOnCard_example;  // string | The card holder name as appears on the card such as MR N E BODY. Required for some acquirers.  (optional) 
-            var nonce = nonce_example;  // string | A random value string which is provided to the API to perform a digest. The value will be used by its UTF-8 byte representation of any digest function.  (optional) 
-            var redirectFailure = redirectFailure_example;  // string | The URL used to redirect back to your site when a transaction has been rejected or declined. Required if a url-encoded request.  (optional) 
-            var redirectSuccess = redirectSuccess_example;  // string | The URL used to redirect back to your site when a transaction has been tokenised or authorised. Required if a url-encoded request.  (optional) 
-            var shipTo = new ContactDetails(); // ContactDetails |  (optional) 
-            var threedsecure = new ThreeDSecure(); // ThreeDSecure |  (optional) 
-            var transInfo = transInfo_example;  // string | Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id. (optional) 
-            var transType = transType_example;  // string | The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field. (optional) 
+            var directPostRequest = new DirectPostRequest(); // DirectPostRequest | 
 
             try
             {
                 // Direct Post Tokenise Request
-                AuthResponse result = apiInstance.DirectPostTokeniseRequest(amount, cardnumber, expmonth, expyear, identifier, avsPostcodePolicy, billTo, csc, cscPolicy, currency, duplicatePolicy, matchAvsa, nameOnCard, nonce, redirectFailure, redirectSuccess, shipTo, threedsecure, transInfo, transType);
+                AuthResponse result = apiInstance.DirectPostTokeniseRequest(directPostRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -367,26 +313,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **amount** | **int**| The amount to authorise in the lowest unit of currency with a variable length to a maximum of 12 digits.  No decimal points are to be included and no divisional characters such as 1,024.  The amount should be the total amount required for the transaction.  For example with GBP £1,021.95 the amount value is 102195.  | 
- **cardnumber** | **string**| The card number (PAN) with a variable length to a maximum of 21 digits in numerical form. Any non numeric characters will be stripped out of the card number, this includes whitespace or separators internal of the provided value.  The card number must be treated as sensitive data. We only provide an obfuscated value in logging and reporting.  The plaintext value is encrypted in our database using AES 256 GMC bit encryption for settlement or refund purposes.  When providing the card number to our gateway through the authorisation API you will be handling the card data on your application. This will require further PCI controls to be in place and this value must never be stored.  | 
- **expmonth** | **int**| The month of expiry of the card. The month value should be a numerical value between 1 and 12.  | 
- **expyear** | **int**| The year of expiry of the card.  | 
- **identifier** | **string**| The identifier of the transaction to process. The value should be a valid reference and may be used to perform  post processing actions and to aid in reconciliation of transactions.  The value should be a valid printable string with ASCII character ranges from 0x32 to 0x127.  The identifier is recommended to be distinct for each transaction such as a [random unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) this will aid in ensuring each transaction is identifiable.  When transactions are processed they are also checked for duplicate requests. Changing the identifier on a subsequent request will ensure that a transaction is considered as different.  | 
- **avsPostcodePolicy** | **string**| A policy value which determines whether an AVS postcode policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS postcode numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the postcode did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send postcode details for authorisation.  | [optional] 
- **billTo** | [**ContactDetails**](ContactDetails.md)|  | [optional] 
- **csc** | **string**| The Card Security Code (CSC) (also known as CV2/CVV2) is normally found on the back of the card (American Express has it on the front). The value helps to identify posession of the card as it is not available within the chip or magnetic swipe.  When forwarding the CSC, please ensure the value is a string as some values start with 0 and this will be stripped out by any integer parsing.  The CSC number aids fraud prevention in Mail Order and Internet payments.  Business rules are available on your account to identify whether to accept or decline transactions based on mismatched results of the CSC.  The Payment Card Industry (PCI) requires that at no stage of a transaction should the CSC be stored.  This applies to all entities handling card data.  It should also not be used in any hashing process.  CityPay do not store the value and have no method of retrieving the value once the transaction has been processed. For this reason, duplicate checking is unable to determine the CSC in its duplication check algorithm.  | [optional] 
- **cscPolicy** | **string**| A policy value which determines whether a CSC policy is enforced or bypassed.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the CSC value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the CSC did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send the CSC details for authorisation.  | [optional] 
- **currency** | **string**| The processing currency for the transaction. Will default to the merchant account currency. | [optional] 
- **duplicatePolicy** | **string**| A policy value which determines whether a duplication policy is enforced or bypassed. A duplication check has a window of time set against your account within which it can action. If a previous transaction with matching values occurred within the window, any subsequent transaction will result in a T001 result.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be checked for duplication within the duplication window.   &#x60;2&#x60; to bypass. Transactions that are bypassed will not be checked for duplication within the duplication window.   &#x60;3&#x60; to ignore. Transactions that are ignored will have the same affect as bypass.  | [optional] 
- **matchAvsa** | **string**| A policy value which determines whether an AVS address policy is enforced, bypassed or ignored.  Values are  &#x60;0&#x60; for the default policy (default value if not supplied). Your default values are determined by your account manager on setup of the account.   &#x60;1&#x60; for an enforced policy. Transactions that are enforced will be rejected if the AVS address numeric value does not match.   &#x60;2&#x60; to bypass. Transactions that are bypassed will be allowed through even if the address did not match.   &#x60;3&#x60; to ignore. Transactions that are ignored will bypass the result and not send address numeric details for authorisation.  | [optional] 
- **nameOnCard** | **string**| The card holder name as appears on the card such as MR N E BODY. Required for some acquirers.  | [optional] 
- **nonce** | **string**| A random value string which is provided to the API to perform a digest. The value will be used by its UTF-8 byte representation of any digest function.  | [optional] 
- **redirectFailure** | **string**| The URL used to redirect back to your site when a transaction has been rejected or declined. Required if a url-encoded request.  | [optional] 
- **redirectSuccess** | **string**| The URL used to redirect back to your site when a transaction has been tokenised or authorised. Required if a url-encoded request.  | [optional] 
- **shipTo** | [**ContactDetails**](ContactDetails.md)|  | [optional] 
- **threedsecure** | [**ThreeDSecure**](ThreeDSecure.md)|  | [optional] 
- **transInfo** | **string**| Further information that can be added to the transaction will display in reporting. Can be used for flexible values such as operator id. | [optional] 
- **transType** | **string**| The type of transaction being submitted. Normally this value is not required and your account manager may request that you set this field. | [optional] 
+ **directPostRequest** | [**DirectPostRequest**](DirectPostRequest.md)|  | 
 
 ### Return type
 
@@ -398,7 +325,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json, text/xml
+ - **Content-Type**: application/json, application/x-www-form-urlencoded, text/xml
  - **Accept**: application/json, application/xml, application/x-www-form-urlencoded, text/xml
 
 
@@ -412,12 +339,13 @@ Name | Type | Description  | Notes
 | **403** | Forbidden. The domain key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **406** | Not Acceptable. Should the incoming data not be validly determined. |  -  |
 | **412** | Bad Request. Should the incoming data not be validly determined and an error code results. |  -  |
+| **500** | Server Error. Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="tokenrequest"></a>
 # **TokenRequest**
-> AuthResponse TokenRequest (string nonce = null, string redirectFailure = null, string redirectSuccess = null, string token = null)
+> AuthResponse TokenRequest (DirectTokenAuthRequest directTokenAuthRequest)
 
 Direct Post Token Request
 
@@ -446,15 +374,12 @@ namespace Example
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
 
             var apiInstance = new DirectPostAPIApi(config);
-            var nonce = nonce_example;  // string | A random value string which is provided to the API to perform a digest. The value will be used by its UTF-8 byte representation of any digest function.  (optional) 
-            var redirectFailure = redirectFailure_example;  // string | The URL used to redirect back to your site when a transaction has been rejected or declined. Required if a url-encoded request.  (optional) 
-            var redirectSuccess = redirectSuccess_example;  // string | The URL used to redirect back to your site when a transaction has been authorised. Required if a url-encoded request.  (optional) 
-            var token = token_example;  // string | The token required to process the transaction as presented by the direct post methodology.  (optional) 
+            var directTokenAuthRequest = new DirectTokenAuthRequest(); // DirectTokenAuthRequest | 
 
             try
             {
                 // Direct Post Token Request
-                AuthResponse result = apiInstance.TokenRequest(nonce, redirectFailure, redirectSuccess, token);
+                AuthResponse result = apiInstance.TokenRequest(directTokenAuthRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -472,10 +397,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **nonce** | **string**| A random value string which is provided to the API to perform a digest. The value will be used by its UTF-8 byte representation of any digest function.  | [optional] 
- **redirectFailure** | **string**| The URL used to redirect back to your site when a transaction has been rejected or declined. Required if a url-encoded request.  | [optional] 
- **redirectSuccess** | **string**| The URL used to redirect back to your site when a transaction has been authorised. Required if a url-encoded request.  | [optional] 
- **token** | **string**| The token required to process the transaction as presented by the direct post methodology.  | [optional] 
+ **directTokenAuthRequest** | [**DirectTokenAuthRequest**](DirectTokenAuthRequest.md)|  | 
 
 ### Return type
 
@@ -487,7 +409,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json, text/xml
+ - **Content-Type**: application/json, application/x-www-form-urlencoded, text/xml
  - **Accept**: application/json, application/xml, application/x-www-form-urlencoded, text/xml
 
 

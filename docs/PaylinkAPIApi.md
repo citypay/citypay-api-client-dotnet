@@ -4,19 +4,19 @@ All URIs are relative to *https://api.citypay.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**TokenAdjustmentRequest**](PaylinkAPIApi.md#tokenadjustmentrequest) | **POST** /v6/paylink/{token}/adjustment | Paylink Token Adjustment
-[**TokenCloseRequest**](PaylinkAPIApi.md#tokencloserequest) | **PUT** /v6/paylink/{token}/close | Close Paylink Token
-[**TokenCreateBillPaymentRequest**](PaylinkAPIApi.md#tokencreatebillpaymentrequest) | **POST** /v6/paylink/bill-payment | Create Bill Payment Paylink Token
-[**TokenCreateRequest**](PaylinkAPIApi.md#tokencreaterequest) | **POST** /v6/paylink/create | Create Paylink Token
-[**TokenReconciledRequest**](PaylinkAPIApi.md#tokenreconciledrequest) | **PUT** /v6/paylink/{token}/reconciled | Reconcile Paylink Token
-[**TokenReopenRequest**](PaylinkAPIApi.md#tokenreopenrequest) | **PUT** /v6/paylink/{token}/reopen | Reopens Paylink Token
-[**TokenStatusChangesRequest**](PaylinkAPIApi.md#tokenstatuschangesrequest) | **POST** /v6/paylink/token/changes | Paylink Token Audit
-[**TokenStatusRequest**](PaylinkAPIApi.md#tokenstatusrequest) | **GET** /v6/paylink/{token}/status | Paylink Token Status
+[**TokenAdjustmentRequest**](PaylinkAPIApi.md#tokenadjustmentrequest) | **POST** /paylink/{token}/adjustment | Paylink Token Adjustment
+[**TokenCloseRequest**](PaylinkAPIApi.md#tokencloserequest) | **PUT** /paylink/{token}/close | Close Paylink Token
+[**TokenCreateBillPaymentRequest**](PaylinkAPIApi.md#tokencreatebillpaymentrequest) | **POST** /paylink/bill-payment | Create Bill Payment Paylink Token
+[**TokenCreateRequest**](PaylinkAPIApi.md#tokencreaterequest) | **POST** /paylink/create | Create Paylink Token
+[**TokenReconciledRequest**](PaylinkAPIApi.md#tokenreconciledrequest) | **PUT** /paylink/{token}/reconciled | Reconcile Paylink Token
+[**TokenReopenRequest**](PaylinkAPIApi.md#tokenreopenrequest) | **PUT** /paylink/{token}/reopen | Reopen Paylink Token
+[**TokenStatusChangesRequest**](PaylinkAPIApi.md#tokenstatuschangesrequest) | **POST** /paylink/token/changes | Paylink Token Audit
+[**TokenStatusRequest**](PaylinkAPIApi.md#tokenstatusrequest) | **GET** /paylink/{token}/status | Paylink Token Status
 
 
 <a name="tokenadjustmentrequest"></a>
 # **TokenAdjustmentRequest**
-> Acknowledgement TokenAdjustmentRequest (string token, AdjustmentRequest adjustmentRequest)
+> Acknowledgement TokenAdjustmentRequest (string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest)
 
 Paylink Token Adjustment
 
@@ -43,12 +43,12 @@ namespace Example
 
             var apiInstance = new PaylinkAPIApi(config);
             var token = token_example;  // string | The token returned by the create token process.
-            var adjustmentRequest = new AdjustmentRequest(); // AdjustmentRequest | 
+            var paylinkAdjustmentRequest = new PaylinkAdjustmentRequest(); // PaylinkAdjustmentRequest | 
 
             try
             {
                 // Paylink Token Adjustment
-                Acknowledgement result = apiInstance.TokenAdjustmentRequest(token, adjustmentRequest);
+                Acknowledgement result = apiInstance.TokenAdjustmentRequest(token, paylinkAdjustmentRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -67,7 +67,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **token** | **string**| The token returned by the create token process. | 
- **adjustmentRequest** | [**AdjustmentRequest**](AdjustmentRequest.md)|  | 
+ **paylinkAdjustmentRequest** | [**PaylinkAdjustmentRequest**](PaylinkAdjustmentRequest.md)|  | 
 
 ### Return type
 
@@ -91,6 +91,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -169,12 +170,13 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="tokencreatebillpaymentrequest"></a>
 # **TokenCreateBillPaymentRequest**
-> TokenCreated TokenCreateBillPaymentRequest (BillPaymentTokenRequest billPaymentTokenRequest)
+> PaylinkTokenCreated TokenCreateBillPaymentRequest (PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest)
 
 Create Bill Payment Paylink Token
 
@@ -200,12 +202,12 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkAPIApi(config);
-            var billPaymentTokenRequest = new BillPaymentTokenRequest(); // BillPaymentTokenRequest | 
+            var paylinkBillPaymentTokenRequest = new PaylinkBillPaymentTokenRequest(); // PaylinkBillPaymentTokenRequest | 
 
             try
             {
                 // Create Bill Payment Paylink Token
-                TokenCreated result = apiInstance.TokenCreateBillPaymentRequest(billPaymentTokenRequest);
+                PaylinkTokenCreated result = apiInstance.TokenCreateBillPaymentRequest(paylinkBillPaymentTokenRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -223,11 +225,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **billPaymentTokenRequest** | [**BillPaymentTokenRequest**](BillPaymentTokenRequest.md)|  | 
+ **paylinkBillPaymentTokenRequest** | [**PaylinkBillPaymentTokenRequest**](PaylinkBillPaymentTokenRequest.md)|  | 
 
 ### Return type
 
-[**TokenCreated**](TokenCreated.md)
+[**PaylinkTokenCreated**](PaylinkTokenCreated.md)
 
 ### Authorization
 
@@ -247,12 +249,13 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="tokencreaterequest"></a>
 # **TokenCreateRequest**
-> TokenCreated TokenCreateRequest (TokenRequestModel tokenRequestModel)
+> PaylinkTokenCreated TokenCreateRequest (PaylinkTokenRequestModel paylinkTokenRequestModel)
 
 Create Paylink Token
 
@@ -278,12 +281,12 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkAPIApi(config);
-            var tokenRequestModel = new TokenRequestModel(); // TokenRequestModel | 
+            var paylinkTokenRequestModel = new PaylinkTokenRequestModel(); // PaylinkTokenRequestModel | 
 
             try
             {
                 // Create Paylink Token
-                TokenCreated result = apiInstance.TokenCreateRequest(tokenRequestModel);
+                PaylinkTokenCreated result = apiInstance.TokenCreateRequest(paylinkTokenRequestModel);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -301,11 +304,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tokenRequestModel** | [**TokenRequestModel**](TokenRequestModel.md)|  | 
+ **paylinkTokenRequestModel** | [**PaylinkTokenRequestModel**](PaylinkTokenRequestModel.md)|  | 
 
 ### Return type
 
-[**TokenCreated**](TokenCreated.md)
+[**PaylinkTokenCreated**](PaylinkTokenCreated.md)
 
 ### Authorization
 
@@ -325,6 +328,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -403,6 +407,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -410,7 +415,7 @@ Name | Type | Description  | Notes
 # **TokenReopenRequest**
 > Acknowledgement TokenReopenRequest (string token)
 
-Reopens Paylink Token
+Reopen Paylink Token
 
 Allows for a Paylink Token to be reopened if a Token has been previously closed and payment has not yet been made.
 
@@ -438,7 +443,7 @@ namespace Example
 
             try
             {
-                // Reopens Paylink Token
+                // Reopen Paylink Token
                 Acknowledgement result = apiInstance.TokenReopenRequest(token);
                 Debug.WriteLine(result);
             }
@@ -481,12 +486,13 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="tokenstatuschangesrequest"></a>
 # **TokenStatusChangesRequest**
-> TokenStatusChangeResponse TokenStatusChangesRequest (TokenStatusChangeRequest tokenStatusChangeRequest)
+> PaylinkTokenStatusChangeResponse TokenStatusChangesRequest (PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest)
 
 Paylink Token Audit
 
@@ -512,12 +518,12 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkAPIApi(config);
-            var tokenStatusChangeRequest = new TokenStatusChangeRequest(); // TokenStatusChangeRequest | 
+            var paylinkTokenStatusChangeRequest = new PaylinkTokenStatusChangeRequest(); // PaylinkTokenStatusChangeRequest | 
 
             try
             {
                 // Paylink Token Audit
-                TokenStatusChangeResponse result = apiInstance.TokenStatusChangesRequest(tokenStatusChangeRequest);
+                PaylinkTokenStatusChangeResponse result = apiInstance.TokenStatusChangesRequest(paylinkTokenStatusChangeRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -535,11 +541,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tokenStatusChangeRequest** | [**TokenStatusChangeRequest**](TokenStatusChangeRequest.md)|  | 
+ **paylinkTokenStatusChangeRequest** | [**PaylinkTokenStatusChangeRequest**](PaylinkTokenStatusChangeRequest.md)|  | 
 
 ### Return type
 
-[**TokenStatusChangeResponse**](TokenStatusChangeResponse.md)
+[**PaylinkTokenStatusChangeResponse**](PaylinkTokenStatusChangeResponse.md)
 
 ### Authorization
 
@@ -559,12 +565,13 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="tokenstatusrequest"></a>
 # **TokenStatusRequest**
-> TokenStatus TokenStatusRequest (string token)
+> PaylinkTokenStatus TokenStatusRequest (string token)
 
 Paylink Token Status
 
@@ -595,7 +602,7 @@ namespace Example
             try
             {
                 // Paylink Token Status
-                TokenStatus result = apiInstance.TokenStatusRequest(token);
+                PaylinkTokenStatus result = apiInstance.TokenStatusRequest(token);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -617,7 +624,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TokenStatus**](TokenStatus.md)
+[**PaylinkTokenStatus**](PaylinkTokenStatus.md)
 
 ### Authorization
 
@@ -637,6 +644,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

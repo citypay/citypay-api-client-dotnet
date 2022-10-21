@@ -7,6 +7,7 @@ using Xunit;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using CityPayAPI.Utils;
 
 namespace CityPayAPI.Test
 {
@@ -82,7 +83,7 @@ namespace CityPayAPI.Test
             Assert.Equal("A12345", response.Authcode);
             Assert.Equal(1395, response.Amount);
             
-            Boolean isValidDigest = Utils.Digest.validateDigest(response, _cpLicenceKey);
+            Boolean isValidDigest = Digest.validateDigest(response, _cpLicenceKey);
             
             Assert.True(isValidDigest);
         }

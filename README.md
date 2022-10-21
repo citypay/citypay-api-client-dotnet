@@ -1,6 +1,6 @@
 # CityPay API Client for DotNet
 
-[![Build Status](https://api.travis-ci.com/citypay/citypay-api-client-dotnet.svg?branch=master)](https://app.travis-ci.com/github/citypay/citypay-api-client-dotnet)
+[![Build Status](https://api.travis-ci.com/citypay/citypay-api-client-dotnet.svg?branch=main)](https://app.travis-ci.com/github/citypay/citypay-api-client-dotnet)
 
 This CityPay API is a HTTP RESTful payment API used for direct server to server transactional processing. It
 provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing,

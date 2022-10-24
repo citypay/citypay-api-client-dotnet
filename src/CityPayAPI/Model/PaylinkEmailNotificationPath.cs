@@ -39,12 +39,12 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PaylinkEmailNotificationPath" /> class.
         /// </summary>
-        /// <param name="bcc">An array of email addresses to be used for blind carbon copy delivery. A maximum of 5 addresses can be added..</param>
-        /// <param name="cc">An array of email addresses to be used for carbon copy delivery. A maximum of 5 addresses can be added..</param>
-        /// <param name="replyTo">An email address to be used for the Reply-To header of an email..</param>
+        /// <param name="bcc">bcc.</param>
+        /// <param name="cc">cc.</param>
+        /// <param name="replyTo">replyTo.</param>
         /// <param name="template">An optional template name to use a template other than the default..</param>
-        /// <param name="to">An array of email addresses to be used for the send to email address for delivery. A maximum of 5 addresses can be added. (required).</param>
-        public PaylinkEmailNotificationPath(string bcc = default(string), string cc = default(string), string replyTo = default(string), string template = default(string), string to = default(string))
+        /// <param name="to">to (required).</param>
+        public PaylinkEmailNotificationPath(List<string> bcc = default(List<string>), List<string> cc = default(List<string>), List<string> replyTo = default(List<string>), string template = default(string), List<string> to = default(List<string>))
         {
             // to ensure "to" is required (not null)
             this.To = to ?? throw new ArgumentNullException("to is a required property for PaylinkEmailNotificationPath and cannot be null");
@@ -55,25 +55,22 @@ namespace CityPayAPI.Model
         }
 
         /// <summary>
-        /// An array of email addresses to be used for blind carbon copy delivery. A maximum of 5 addresses can be added.
+        /// Gets or Sets Bcc
         /// </summary>
-        /// <value>An array of email addresses to be used for blind carbon copy delivery. A maximum of 5 addresses can be added.</value>
         [DataMember(Name = "bcc", EmitDefaultValue = false)]
-        public string Bcc { get; set; }
+        public List<string> Bcc { get; set; }
 
         /// <summary>
-        /// An array of email addresses to be used for carbon copy delivery. A maximum of 5 addresses can be added.
+        /// Gets or Sets Cc
         /// </summary>
-        /// <value>An array of email addresses to be used for carbon copy delivery. A maximum of 5 addresses can be added.</value>
         [DataMember(Name = "cc", EmitDefaultValue = false)]
-        public string Cc { get; set; }
+        public List<string> Cc { get; set; }
 
         /// <summary>
-        /// An email address to be used for the Reply-To header of an email.
+        /// Gets or Sets ReplyTo
         /// </summary>
-        /// <value>An email address to be used for the Reply-To header of an email.</value>
         [DataMember(Name = "reply_to", EmitDefaultValue = false)]
-        public string ReplyTo { get; set; }
+        public List<string> ReplyTo { get; set; }
 
         /// <summary>
         /// An optional template name to use a template other than the default.
@@ -83,11 +80,10 @@ namespace CityPayAPI.Model
         public string Template { get; set; }
 
         /// <summary>
-        /// An array of email addresses to be used for the send to email address for delivery. A maximum of 5 addresses can be added.
+        /// Gets or Sets To
         /// </summary>
-        /// <value>An array of email addresses to be used for the send to email address for delivery. A maximum of 5 addresses can be added.</value>
         [DataMember(Name = "to", IsRequired = true, EmitDefaultValue = false)]
-        public string To { get; set; }
+        public List<string> To { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -138,18 +134,21 @@ namespace CityPayAPI.Model
             return 
                 (
                     this.Bcc == input.Bcc ||
-                    (this.Bcc != null &&
-                    this.Bcc.Equals(input.Bcc))
+                    this.Bcc != null &&
+                    input.Bcc != null &&
+                    this.Bcc.SequenceEqual(input.Bcc)
                 ) && 
                 (
                     this.Cc == input.Cc ||
-                    (this.Cc != null &&
-                    this.Cc.Equals(input.Cc))
+                    this.Cc != null &&
+                    input.Cc != null &&
+                    this.Cc.SequenceEqual(input.Cc)
                 ) && 
                 (
                     this.ReplyTo == input.ReplyTo ||
-                    (this.ReplyTo != null &&
-                    this.ReplyTo.Equals(input.ReplyTo))
+                    this.ReplyTo != null &&
+                    input.ReplyTo != null &&
+                    this.ReplyTo.SequenceEqual(input.ReplyTo)
                 ) && 
                 (
                     this.Template == input.Template ||
@@ -158,8 +157,9 @@ namespace CityPayAPI.Model
                 ) && 
                 (
                     this.To == input.To ||
-                    (this.To != null &&
-                    this.To.Equals(input.To))
+                    this.To != null &&
+                    input.To != null &&
+                    this.To.SequenceEqual(input.To)
                 );
         }
 

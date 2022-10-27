@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using CityPayAPI.Utils;
+using static System.Guid;
 
 namespace CityPayAPI.Test
 {
@@ -40,7 +41,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void PingTest()
         {
-            var api = new OperationalApi(_configuration);
+            var api = new OperationalFunctionsApi(_configuration);
             var ack = api.PingRequest(new Ping("it_test_cs"));
             Assert.Equal("044", ack.Code);
             Assert.Equal("it_test_cs", ack.Identifier);
@@ -50,7 +51,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void ListMerchantsTest()
         {
-            var api = new OperationalApi(_configuration);
+            var api = new OperationalFunctionsApi(_configuration);
             var merchants = api.ListMerchantsRequest(_cpClientId);
             Assert.Equal(_cpClientId, merchants.Clientid);
         }
@@ -58,7 +59,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void AuthoriseTest()
         {
-            var id = Guid.NewGuid().ToString();
+            var id = NewGuid().ToString();
             var api = new PaymentProcessingApi(_configuration);
             var decision = api.AuthorisationRequest(new AuthRequest(
                 amount: 1395,
@@ -91,7 +92,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void CardholderAccountTests()
         {
-            var guid = Guid.NewGuid().ToString();
+            var guid = NewGuid().ToString();
             var api = new CardHolderAccountApi(_configuration);
             var resultAccountCreate = api.AccountCreate(new AccountCreate(guid, new ContactDetails(
                 address1: "7 Esplanade",
@@ -125,7 +126,7 @@ namespace CityPayAPI.Test
             Assert.Equal(12, resultAccountRetrieve.Cards[0].Expmonth);
             Assert.Equal(2030, resultAccountRetrieve.Cards[0].Expyear);
 
-            var identifier = Guid.NewGuid().ToString();
+            var identifier = NewGuid().ToString();
             var decision = api.ChargeRequest(new ChargeRequest(
                 amount: 7801,
                 identifier: identifier,
@@ -173,7 +174,7 @@ namespace CityPayAPI.Test
         [Fact]
         public void Authorise3DSv2Test()
         {
-            var id = Guid.NewGuid().ToString();
+            var id = NewGuid().ToString();
             var api = new PaymentProcessingApi(_configuration);
             var decision = api.AuthorisationRequest(new AuthRequest(
                 amount: 1595,

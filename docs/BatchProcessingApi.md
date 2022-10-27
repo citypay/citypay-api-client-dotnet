@@ -1,13 +1,12 @@
 # CityPayAPI.Api.BatchProcessingApi
 
-All URIs are relative to *https://api.citypay.com/v6*
+All URIs are relative to *https://api.citypay.com*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**BatchProcessRequest**](BatchProcessingApi.md#batchprocessrequest) | **POST** /batch/process | Batch Process Request
-[**BatchReportRequest**](BatchProcessingApi.md#batchreportrequest) | **POST** /batch/retrieve | BatchReportRequest
-[**CheckBatchStatusRequest**](BatchProcessingApi.md#checkbatchstatusrequest) | **POST** /batch/status | CheckBatchStatus
-
+| Method | HTTP request | Description |
+|--------|--------------|-------------|
+| [**BatchProcessRequest**](BatchProcessingApi.md#batchprocessrequest) | **POST** /v6/batch/process | Batch Process Request |
+| [**BatchReportRequest**](BatchProcessingApi.md#batchreportrequest) | **POST** /v6/batch/retrieve | BatchReportRequest |
+| [**CheckBatchStatusRequest**](BatchProcessingApi.md#checkbatchstatusrequest) | **POST** /v6/batch/status | CheckBatchStatus |
 
 <a name="batchprocessrequest"></a>
 # **BatchProcessRequest**
@@ -15,7 +14,11 @@ Method | HTTP request | Description
 
 Batch Process Request
 
-A batch process request is used to start the batch process workflow by uploading batch data and initialising a new batch for processing. Once validated the batch will be queued for processing and further updates can be received by a subsequent call to retrieve the batch status. 
+A batch process request is used to start the batch process workflow by uploading batch
+data and initialising a new batch for processing. Once validated the batch will be queued
+for processing and further updates can be received by a subsequent call to retrieve the batch
+status.
+
 
 ### Example
 ```csharp
@@ -32,7 +35,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.citypay.com/v6";
+            config.BasePath = "https://api.citypay.com";
             // Create a temporal ApiKey using your client id and licence key
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
@@ -47,8 +50,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling BatchProcessingApi.BatchProcessRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling BatchProcessingApi.BatchProcessRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -56,11 +59,31 @@ namespace Example
 }
 ```
 
+#### Using the BatchProcessRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Batch Process Request
+    ApiResponse<ProcessBatchResponse> response = apiInstance.BatchProcessRequestWithHttpInfo(processBatchRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling BatchProcessingApi.BatchProcessRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **processBatchRequest** | [**ProcessBatchRequest**](ProcessBatchRequest.md)|  | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **processBatchRequest** | [**ProcessBatchRequest**](ProcessBatchRequest.md) |  |  |
 
 ### Return type
 
@@ -84,6 +107,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -110,7 +134,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.citypay.com/v6";
+            config.BasePath = "https://api.citypay.com";
             // Create a temporal ApiKey using your client id and licence key
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
@@ -125,8 +149,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling BatchProcessingApi.BatchReportRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling BatchProcessingApi.BatchReportRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -134,11 +158,31 @@ namespace Example
 }
 ```
 
+#### Using the BatchReportRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // BatchReportRequest
+    ApiResponse<BatchReportResponseModel> response = apiInstance.BatchReportRequestWithHttpInfo(batchReportRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling BatchProcessingApi.BatchReportRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **batchReportRequest** | [**BatchReportRequest**](BatchReportRequest.md)|  | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **batchReportRequest** | [**BatchReportRequest**](BatchReportRequest.md) |  |  |
 
 ### Return type
 
@@ -162,6 +206,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -188,7 +233,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.citypay.com/v6";
+            config.BasePath = "https://api.citypay.com";
             // Create a temporal ApiKey using your client id and licence key
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
@@ -203,8 +248,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling BatchProcessingApi.CheckBatchStatusRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling BatchProcessingApi.CheckBatchStatusRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -212,11 +257,31 @@ namespace Example
 }
 ```
 
+#### Using the CheckBatchStatusRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // CheckBatchStatus
+    ApiResponse<CheckBatchStatusResponse> response = apiInstance.CheckBatchStatusRequestWithHttpInfo(checkBatchStatus);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling BatchProcessingApi.CheckBatchStatusRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **checkBatchStatus** | [**CheckBatchStatus**](CheckBatchStatus.md)|  | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **checkBatchStatus** | [**CheckBatchStatus**](CheckBatchStatus.md) |  |  |
 
 ### Return type
 
@@ -240,6 +305,7 @@ Name | Type | Description  | Notes
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
 | **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

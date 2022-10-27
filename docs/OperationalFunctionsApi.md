@@ -1,15 +1,14 @@
-# CityPayAPI.Api.OperationalAPIFunctionsApi
+# CityPayAPI.Api.OperationalFunctionsApi
 
 All URIs are relative to *https://api.citypay.com*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**AclCheckRequest**](OperationalAPIFunctionsApi.md#aclcheckrequest) | **POST** /v6/acl/check | ACL Check Request
-[**DomainKeyCheckRequest**](OperationalAPIFunctionsApi.md#domainkeycheckrequest) | **POST** /dk/check | Domain Key Check Request
-[**DomainKeyGenRequest**](OperationalAPIFunctionsApi.md#domainkeygenrequest) | **POST** /dk/gen | Domain Key Generation Request
-[**ListMerchantsRequest**](OperationalAPIFunctionsApi.md#listmerchantsrequest) | **GET** /v6/merchants/{clientid} | List Merchants Request
-[**PingRequest**](OperationalAPIFunctionsApi.md#pingrequest) | **POST** /v6/ping | Ping Request
-
+| Method | HTTP request | Description |
+|--------|--------------|-------------|
+| [**AclCheckRequest**](OperationalFunctionsApi.md#aclcheckrequest) | **POST** /v6/acl/check | ACL Check Request |
+| [**DomainKeyCheckRequest**](OperationalFunctionsApi.md#domainkeycheckrequest) | **POST** /dk/check | Domain Key Check Request |
+| [**DomainKeyGenRequest**](OperationalFunctionsApi.md#domainkeygenrequest) | **POST** /dk/gen | Domain Key Generation Request |
+| [**ListMerchantsRequest**](OperationalFunctionsApi.md#listmerchantsrequest) | **GET** /v6/merchants/{clientid} | List Merchants Request |
+| [**PingRequest**](OperationalFunctionsApi.md#pingrequest) | **POST** /v6/ping | Ping Request |
 
 <a name="aclcheckrequest"></a>
 # **AclCheckRequest**
@@ -17,7 +16,9 @@ Method | HTTP request | Description
 
 ACL Check Request
 
-Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
+Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and
+services such as AWS or Azure to check that those addresses are listed in the ACLs.
+
 
 ### Example
 ```csharp
@@ -38,7 +39,7 @@ namespace Example
             // Create a temporal ApiKey using your client id and licence key
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
-            var apiInstance = new OperationalAPIFunctionsApi(config);
+            var apiInstance = new OperationalFunctionsApi(config);
             var aclCheckRequest = new AclCheckRequest(); // AclCheckRequest | 
 
             try
@@ -49,8 +50,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling OperationalAPIFunctionsApi.AclCheckRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling OperationalFunctionsApi.AclCheckRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -58,11 +59,31 @@ namespace Example
 }
 ```
 
+#### Using the AclCheckRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ACL Check Request
+    ApiResponse<AclCheckResponseModel> response = apiInstance.AclCheckRequestWithHttpInfo(aclCheckRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling OperationalFunctionsApi.AclCheckRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **aclCheckRequest** | [**AclCheckRequest**](AclCheckRequest.md)|  | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **aclCheckRequest** | [**AclCheckRequest**](AclCheckRequest.md) |  |  |
 
 ### Return type
 
@@ -96,7 +117,9 @@ Name | Type | Description  | Notes
 
 Domain Key Check Request
 
-Checks the contents of a `domain key`. Can be used for operational processes to ensure that the properties of a  domain key meet their expectations. 
+Checks the contents of a `domain key`. Can be used for operational processes to ensure that the properties of a 
+domain key meet their expectations.
+
 
 ### Example
 ```csharp
@@ -117,7 +140,7 @@ namespace Example
             // Create a temporal ApiKey using your client id and licence key
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
-            var apiInstance = new OperationalAPIFunctionsApi(config);
+            var apiInstance = new OperationalFunctionsApi(config);
             var domainKeyCheckRequest = new DomainKeyCheckRequest(); // DomainKeyCheckRequest | 
 
             try
@@ -128,8 +151,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling OperationalAPIFunctionsApi.DomainKeyCheckRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling OperationalFunctionsApi.DomainKeyCheckRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -137,11 +160,31 @@ namespace Example
 }
 ```
 
+#### Using the DomainKeyCheckRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Domain Key Check Request
+    ApiResponse<DomainKeyResponse> response = apiInstance.DomainKeyCheckRequestWithHttpInfo(domainKeyCheckRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling OperationalFunctionsApi.DomainKeyCheckRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **domainKeyCheckRequest** | [**DomainKeyCheckRequest**](DomainKeyCheckRequest.md)|  | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **domainKeyCheckRequest** | [**DomainKeyCheckRequest**](DomainKeyCheckRequest.md) |  |  |
 
 ### Return type
 
@@ -175,7 +218,9 @@ Name | Type | Description  | Notes
 
 Domain Key Generation Request
 
-Generates a domain key based on the permissions of the calling `api-key`. Domain keys can be used in _Direct Post_ and `XHR` calls to the API services. 
+Generates a domain key based on the permissions of the calling `api-key`. Domain keys can be used in _Direct Post_ and
+`XHR` calls to the API services.
+
 
 ### Example
 ```csharp
@@ -196,7 +241,7 @@ namespace Example
             // Create a temporal ApiKey using your client id and licence key
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
-            var apiInstance = new OperationalAPIFunctionsApi(config);
+            var apiInstance = new OperationalFunctionsApi(config);
             var domainKeyRequest = new DomainKeyRequest(); // DomainKeyRequest | 
 
             try
@@ -207,8 +252,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling OperationalAPIFunctionsApi.DomainKeyGenRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling OperationalFunctionsApi.DomainKeyGenRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -216,11 +261,31 @@ namespace Example
 }
 ```
 
+#### Using the DomainKeyGenRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Domain Key Generation Request
+    ApiResponse<DomainKeyResponse> response = apiInstance.DomainKeyGenRequestWithHttpInfo(domainKeyRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling OperationalFunctionsApi.DomainKeyGenRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **domainKeyRequest** | [**DomainKeyRequest**](DomainKeyRequest.md)|  | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **domainKeyRequest** | [**DomainKeyRequest**](DomainKeyRequest.md) |  |  |
 
 ### Return type
 
@@ -254,7 +319,14 @@ Name | Type | Description  | Notes
 
 List Merchants Request
 
-An operational request to list current merchants for a client.  ### Sorting  Sorting can be performed by include a query parameter i.e. `/merchants/?sort=merchantid`  Fields that can be sorted are `merchantid` or `name`. 
+An operational request to list current merchants for a client.
+
+### Sorting
+
+Sorting can be performed by include a query parameter i.e. `/merchants/?sort=merchantid`
+
+Fields that can be sorted are `merchantid` or `name`.
+
 
 ### Example
 ```csharp
@@ -275,7 +347,7 @@ namespace Example
             // Create a temporal ApiKey using your client id and licence key
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
-            var apiInstance = new OperationalAPIFunctionsApi(config);
+            var apiInstance = new OperationalFunctionsApi(config);
             var clientid = clientid_example;  // string | The client id to return merchants for, specifying \"default\" will use the value in your api key.
 
             try
@@ -286,8 +358,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling OperationalAPIFunctionsApi.ListMerchantsRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling OperationalFunctionsApi.ListMerchantsRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -295,11 +367,31 @@ namespace Example
 }
 ```
 
+#### Using the ListMerchantsRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // List Merchants Request
+    ApiResponse<ListMerchantsResponse> response = apiInstance.ListMerchantsRequestWithHttpInfo(clientid);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling OperationalFunctionsApi.ListMerchantsRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **clientid** | **string**| The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key. | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **clientid** | **string** | The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key. |  |
 
 ### Return type
 
@@ -333,7 +425,14 @@ Name | Type | Description  | Notes
 
 Ping Request
 
-A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code `044` to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
+A ping request which performs a connection and authentication test to the CityPay API server. The request
+will return a standard Acknowledgement with a response code `044` to signify a successful
+ping.
+
+The ping call is useful to confirm that you will be able to access 
+the API from behind any firewalls and that the permission
+model is granting access from your source.
+
 
 ### Example
 ```csharp
@@ -357,7 +456,7 @@ namespace Example
             config.AddApiKey("cp-domain-key", "YOUR_API_KEY");
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
 
-            var apiInstance = new OperationalAPIFunctionsApi(config);
+            var apiInstance = new OperationalFunctionsApi(config);
             var ping = new Ping(); // Ping | 
 
             try
@@ -368,8 +467,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling OperationalAPIFunctionsApi.PingRequest: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling OperationalFunctionsApi.PingRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -377,11 +476,31 @@ namespace Example
 }
 ```
 
+#### Using the PingRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Ping Request
+    ApiResponse<Acknowledgement> response = apiInstance.PingRequestWithHttpInfo(ping);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling OperationalFunctionsApi.PingRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ping** | [**Ping**](Ping.md)|  | 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **ping** | [**Ping**](Ping.md) |  |  |
 
 ### Return type
 

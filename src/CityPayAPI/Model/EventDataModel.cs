@@ -26,64 +26,64 @@ using OpenAPIDateConverter = CityPayAPI.Client.OpenAPIDateConverter;
 namespace CityPayAPI.Model
 {
     /// <summary>
-    /// PaylinkEmailNotificationPath
+    /// EventDataModel
     /// </summary>
-    [DataContract(Name = "PaylinkEmailNotificationPath")]
-    public partial class PaylinkEmailNotificationPath : IEquatable<PaylinkEmailNotificationPath>, IValidatableObject
+    [DataContract(Name = "EventDataModel")]
+    public partial class EventDataModel : IEquatable<EventDataModel>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaylinkEmailNotificationPath" /> class.
+        /// Initializes a new instance of the <see cref="EventDataModel" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected PaylinkEmailNotificationPath() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaylinkEmailNotificationPath" /> class.
-        /// </summary>
-        /// <param name="bcc">bcc.</param>
-        /// <param name="cc">cc.</param>
-        /// <param name="replyTo">replyTo.</param>
-        /// <param name="template">An optional template name to use a template other than the default..</param>
-        /// <param name="to">to (required).</param>
-        public PaylinkEmailNotificationPath(List<string> bcc = default(List<string>), List<string> cc = default(List<string>), List<string> replyTo = default(List<string>), string template = default(string), List<string> to = default(List<string>))
+        /// <param name="eventEndDate">The date when the event ends in ISO format (yyyy-MM-dd)..</param>
+        /// <param name="eventId">An id of the event..</param>
+        /// <param name="eventOrganiserId">An id of the event organiser..</param>
+        /// <param name="eventStartDate">The date when the event starts in ISO format (yyyy-MM-dd)..</param>
+        /// <param name="paymentType">The type of payment such as &#x60;deposit&#x60; or &#x60;balance&#x60;..</param>
+        public EventDataModel(DateTime eventEndDate = default(DateTime), string eventId = default(string), string eventOrganiserId = default(string), DateTime eventStartDate = default(DateTime), string paymentType = default(string))
         {
-            // to ensure "to" is required (not null)
-            this.To = to ?? throw new ArgumentNullException("to is a required property for PaylinkEmailNotificationPath and cannot be null");
-            this.Bcc = bcc;
-            this.Cc = cc;
-            this.ReplyTo = replyTo;
-            this.Template = template;
+            this.EventEndDate = eventEndDate;
+            this.EventId = eventId;
+            this.EventOrganiserId = eventOrganiserId;
+            this.EventStartDate = eventStartDate;
+            this.PaymentType = paymentType;
         }
 
         /// <summary>
-        /// Gets or Sets Bcc
+        /// The date when the event ends in ISO format (yyyy-MM-dd).
         /// </summary>
-        [DataMember(Name = "bcc", EmitDefaultValue = false)]
-        public List<string> Bcc { get; set; }
+        /// <value>The date when the event ends in ISO format (yyyy-MM-dd).</value>
+        [DataMember(Name = "event_end_date", EmitDefaultValue = false)]
+        [JsonConverter(typeof(OpenAPIDateConverter))]
+        public DateTime EventEndDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets Cc
+        /// An id of the event.
         /// </summary>
-        [DataMember(Name = "cc", EmitDefaultValue = false)]
-        public List<string> Cc { get; set; }
+        /// <value>An id of the event.</value>
+        [DataMember(Name = "event_id", EmitDefaultValue = false)]
+        public string EventId { get; set; }
 
         /// <summary>
-        /// Gets or Sets ReplyTo
+        /// An id of the event organiser.
         /// </summary>
-        [DataMember(Name = "reply_to", EmitDefaultValue = false)]
-        public List<string> ReplyTo { get; set; }
+        /// <value>An id of the event organiser.</value>
+        [DataMember(Name = "event_organiser_id", EmitDefaultValue = false)]
+        public string EventOrganiserId { get; set; }
 
         /// <summary>
-        /// An optional template name to use a template other than the default.
+        /// The date when the event starts in ISO format (yyyy-MM-dd).
         /// </summary>
-        /// <value>An optional template name to use a template other than the default.</value>
-        [DataMember(Name = "template", EmitDefaultValue = false)]
-        public string Template { get; set; }
+        /// <value>The date when the event starts in ISO format (yyyy-MM-dd).</value>
+        [DataMember(Name = "event_start_date", EmitDefaultValue = false)]
+        [JsonConverter(typeof(OpenAPIDateConverter))]
+        public DateTime EventStartDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets To
+        /// The type of payment such as &#x60;deposit&#x60; or &#x60;balance&#x60;.
         /// </summary>
-        [DataMember(Name = "to", IsRequired = true, EmitDefaultValue = false)]
-        public List<string> To { get; set; }
+        /// <value>The type of payment such as &#x60;deposit&#x60; or &#x60;balance&#x60;.</value>
+        [DataMember(Name = "payment_type", EmitDefaultValue = false)]
+        public string PaymentType { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -92,12 +92,12 @@ namespace CityPayAPI.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class PaylinkEmailNotificationPath {\n");
-            sb.Append("  Bcc: ").Append(Bcc).Append("\n");
-            sb.Append("  Cc: ").Append(Cc).Append("\n");
-            sb.Append("  ReplyTo: ").Append(ReplyTo).Append("\n");
-            sb.Append("  Template: ").Append(Template).Append("\n");
-            sb.Append("  To: ").Append(To).Append("\n");
+            sb.Append("class EventDataModel {\n");
+            sb.Append("  EventEndDate: ").Append(EventEndDate).Append("\n");
+            sb.Append("  EventId: ").Append(EventId).Append("\n");
+            sb.Append("  EventOrganiserId: ").Append(EventOrganiserId).Append("\n");
+            sb.Append("  EventStartDate: ").Append(EventStartDate).Append("\n");
+            sb.Append("  PaymentType: ").Append(PaymentType).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -118,48 +118,44 @@ namespace CityPayAPI.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as PaylinkEmailNotificationPath);
+            return this.Equals(input as EventDataModel);
         }
 
         /// <summary>
-        /// Returns true if PaylinkEmailNotificationPath instances are equal
+        /// Returns true if EventDataModel instances are equal
         /// </summary>
-        /// <param name="input">Instance of PaylinkEmailNotificationPath to be compared</param>
+        /// <param name="input">Instance of EventDataModel to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PaylinkEmailNotificationPath input)
+        public bool Equals(EventDataModel input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Bcc == input.Bcc ||
-                    this.Bcc != null &&
-                    input.Bcc != null &&
-                    this.Bcc.SequenceEqual(input.Bcc)
+                    this.EventEndDate == input.EventEndDate ||
+                    (this.EventEndDate != null &&
+                    this.EventEndDate.Equals(input.EventEndDate))
                 ) && 
                 (
-                    this.Cc == input.Cc ||
-                    this.Cc != null &&
-                    input.Cc != null &&
-                    this.Cc.SequenceEqual(input.Cc)
+                    this.EventId == input.EventId ||
+                    (this.EventId != null &&
+                    this.EventId.Equals(input.EventId))
                 ) && 
                 (
-                    this.ReplyTo == input.ReplyTo ||
-                    this.ReplyTo != null &&
-                    input.ReplyTo != null &&
-                    this.ReplyTo.SequenceEqual(input.ReplyTo)
+                    this.EventOrganiserId == input.EventOrganiserId ||
+                    (this.EventOrganiserId != null &&
+                    this.EventOrganiserId.Equals(input.EventOrganiserId))
                 ) && 
                 (
-                    this.Template == input.Template ||
-                    (this.Template != null &&
-                    this.Template.Equals(input.Template))
+                    this.EventStartDate == input.EventStartDate ||
+                    (this.EventStartDate != null &&
+                    this.EventStartDate.Equals(input.EventStartDate))
                 ) && 
                 (
-                    this.To == input.To ||
-                    this.To != null &&
-                    input.To != null &&
-                    this.To.SequenceEqual(input.To)
+                    this.PaymentType == input.PaymentType ||
+                    (this.PaymentType != null &&
+                    this.PaymentType.Equals(input.PaymentType))
                 );
         }
 
@@ -172,16 +168,16 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Bcc != null)
-                    hashCode = hashCode * 59 + this.Bcc.GetHashCode();
-                if (this.Cc != null)
-                    hashCode = hashCode * 59 + this.Cc.GetHashCode();
-                if (this.ReplyTo != null)
-                    hashCode = hashCode * 59 + this.ReplyTo.GetHashCode();
-                if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
-                if (this.To != null)
-                    hashCode = hashCode * 59 + this.To.GetHashCode();
+                if (this.EventEndDate != null)
+                    hashCode = hashCode * 59 + this.EventEndDate.GetHashCode();
+                if (this.EventId != null)
+                    hashCode = hashCode * 59 + this.EventId.GetHashCode();
+                if (this.EventOrganiserId != null)
+                    hashCode = hashCode * 59 + this.EventOrganiserId.GetHashCode();
+                if (this.EventStartDate != null)
+                    hashCode = hashCode * 59 + this.EventStartDate.GetHashCode();
+                if (this.PaymentType != null)
+                    hashCode = hashCode * 59 + this.PaymentType.GetHashCode();
                 return hashCode;
             }
         }

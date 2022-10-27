@@ -559,7 +559,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Decision>("/authorise", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Decision>("/v6/authorise", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -627,7 +627,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Decision>("/authorise", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Decision>("/v6/authorise", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -690,7 +690,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Bin>("/bin", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Bin>("/v6/bin", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -758,7 +758,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Bin>("/bin", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Bin>("/v6/bin", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -821,7 +821,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<AuthResponse>("/cres", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthResponse>("/v6/cres", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -889,7 +889,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/cres", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/v6/cres", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -952,7 +952,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Acknowledgement>("/capture", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Acknowledgement>("/v6/capture", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1020,7 +1020,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/capture", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/v6/capture", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1083,7 +1083,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<AuthResponse>("/pares", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthResponse>("/v6/pares", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1151,7 +1151,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/pares", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/v6/pares", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1214,7 +1214,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<AuthResponse>("/refund", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthResponse>("/v6/refund", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1282,7 +1282,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/refund", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/v6/refund", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1345,7 +1345,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<AuthReferences>("/retrieve", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AuthReferences>("/v6/retrieve", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1413,7 +1413,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthReferences>("/retrieve", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AuthReferences>("/v6/retrieve", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1476,7 +1476,7 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Acknowledgement>("/void", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<Acknowledgement>("/v6/void", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1544,7 +1544,7 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/void", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/v6/void", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

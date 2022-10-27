@@ -30,7 +30,7 @@ namespace CityPayAPI.Test
             //     throw new ArgumentException("No CP_MERCHANT_ID value set");
 
             _configuration = new Configuration();
-            _configuration.BasePath = "https://sandbox.citypay.com/v6";
+            _configuration.BasePath = "https://sandbox.citypay.com";
             _configuration.AddApiKey("cp-api-key", new ApiKey(_cpClientId, _cpLicenceKey).GenerateKey());
         }
 

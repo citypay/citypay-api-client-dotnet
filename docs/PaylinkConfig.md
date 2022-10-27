@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **MerchTerms** | **string** | A URL of the merchant terms and conditions for payment. If a value is supplied, a checkbox will be required to be completed to confirm that the cardholder agrees to these conditions before payment. A modal dialogue is displayed with the content of the conditions displayed. | [optional] 
 **Options** | **List&lt;string&gt;** |  | [optional] 
 **PartPayments** | [**PaylinkPartPayments**](PaylinkPartPayments.md) |  | [optional] 
+**PassThroughData** | **Dictionary&lt;string, string&gt;** |  | [optional] 
+**PassThroughHeaders** | **Dictionary&lt;string, string&gt;** |  | [optional] 
 **Postback** | **string** | Specifies a URL to use for a call back when the payment is completed. see Postback Handling }. | [optional] 
 **PostbackPassword** | **string** | A password to be added to the postback for HTTP Basic Authentication. | [optional] 
 **PostbackPolicy** | **string** | The policy setting for the postback see Postback Handling. | [optional] 
@@ -22,7 +24,7 @@ Name | Type | Description | Notes
 **RedirectFailure** | **string** | A URL which the browser is redirected to on non-completion of a transaction. | [optional] 
 **RedirectSuccess** | **string** | A URL which the browser is redirected to on authorisation of a transaction. | [optional] 
 **Renderer** | **string** | The Paylink renderer engine to use. | [optional] 
-**ReturnParams** | **string** | If a value of true is specified, any redirection will include the transaction result in parameters. It is recommended to use the postback integration rather than redirection parameters. | [optional] 
+**ReturnParams** | **bool** | If a value of true is specified, any redirection will include the transaction result in parameters. It is recommended to use the postback integration rather than redirection parameters. | [optional] 
 **Ui** | [**PaylinkUI**](PaylinkUI.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

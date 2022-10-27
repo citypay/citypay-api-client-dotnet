@@ -23,7 +23,7 @@ namespace CityPayAPI.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IPaylinkAPIApiSync : IApiAccessor
+    public interface IPaylinkAPISync : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -202,7 +202,7 @@ namespace CityPayAPI.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IPaylinkAPIApiAsync : IApiAccessor
+    public interface IPaylinkAPIAsync : IApiAccessor
     {
         #region Asynchronous Operations
         /// <summary>
@@ -397,7 +397,7 @@ namespace CityPayAPI.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IPaylinkAPIApi : IPaylinkAPIApiSync, IPaylinkAPIApiAsync
+    public interface IPaylinkAPI : IPaylinkAPISync, IPaylinkAPIAsync
     {
 
     }
@@ -405,23 +405,23 @@ namespace CityPayAPI.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public partial class PaylinkAPIApi : IPaylinkAPIApi
+    public partial class PaylinkAPI : IPaylinkAPI
     {
         private CityPayAPI.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaylinkAPIApi"/> class.
+        /// Initializes a new instance of the <see cref="PaylinkAPI"/> class.
         /// </summary>
         /// <returns></returns>
-        public PaylinkAPIApi() : this((string)null)
+        public PaylinkAPI() : this((string)null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaylinkAPIApi"/> class.
+        /// Initializes a new instance of the <see cref="PaylinkAPI"/> class.
         /// </summary>
         /// <returns></returns>
-        public PaylinkAPIApi(string basePath)
+        public PaylinkAPI(string basePath)
         {
             this.Configuration = CityPayAPI.Client.Configuration.MergeConfigurations(
                 CityPayAPI.Client.GlobalConfiguration.Instance,
@@ -433,12 +433,12 @@ namespace CityPayAPI.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaylinkAPIApi"/> class
+        /// Initializes a new instance of the <see cref="PaylinkAPI"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public PaylinkAPIApi(CityPayAPI.Client.Configuration configuration)
+        public PaylinkAPI(CityPayAPI.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
@@ -452,13 +452,13 @@ namespace CityPayAPI.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaylinkAPIApi"/> class
+        /// Initializes a new instance of the <see cref="PaylinkAPI"/> class
         /// using a Configuration object and client instance.
         /// </summary>
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public PaylinkAPIApi(CityPayAPI.Client.ISynchronousClient client, CityPayAPI.Client.IAsynchronousClient asyncClient, CityPayAPI.Client.IReadableConfiguration configuration)
+        public PaylinkAPI(CityPayAPI.Client.ISynchronousClient client, CityPayAPI.Client.IAsynchronousClient asyncClient, CityPayAPI.Client.IReadableConfiguration configuration)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -535,11 +535,11 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenAdjustmentRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenAdjustmentRequest");
 
             // verify the required parameter 'paylinkAdjustmentRequest' is set
             if (paylinkAdjustmentRequest == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkAdjustmentRequest' when calling PaylinkAPIApi->TokenAdjustmentRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkAdjustmentRequest' when calling PaylinkAPI->TokenAdjustmentRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -607,11 +607,11 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenAdjustmentRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenAdjustmentRequest");
 
             // verify the required parameter 'paylinkAdjustmentRequest' is set
             if (paylinkAdjustmentRequest == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkAdjustmentRequest' when calling PaylinkAPIApi->TokenAdjustmentRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkAdjustmentRequest' when calling PaylinkAPI->TokenAdjustmentRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -678,7 +678,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenCloseRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenCloseRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -741,7 +741,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenCloseRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenCloseRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -805,7 +805,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'paylinkBillPaymentTokenRequest' is set
             if (paylinkBillPaymentTokenRequest == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkBillPaymentTokenRequest' when calling PaylinkAPIApi->TokenCreateBillPaymentRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkBillPaymentTokenRequest' when calling PaylinkAPI->TokenCreateBillPaymentRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -870,7 +870,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'paylinkBillPaymentTokenRequest' is set
             if (paylinkBillPaymentTokenRequest == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkBillPaymentTokenRequest' when calling PaylinkAPIApi->TokenCreateBillPaymentRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkBillPaymentTokenRequest' when calling PaylinkAPI->TokenCreateBillPaymentRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -936,7 +936,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'paylinkTokenRequestModel' is set
             if (paylinkTokenRequestModel == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenRequestModel' when calling PaylinkAPIApi->TokenCreateRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenRequestModel' when calling PaylinkAPI->TokenCreateRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1001,7 +1001,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'paylinkTokenRequestModel' is set
             if (paylinkTokenRequestModel == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenRequestModel' when calling PaylinkAPIApi->TokenCreateRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenRequestModel' when calling PaylinkAPI->TokenCreateRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1067,7 +1067,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenReconciledRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenReconciledRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1130,7 +1130,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenReconciledRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenReconciledRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1194,7 +1194,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenReopenRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenReopenRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1257,7 +1257,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenReopenRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenReopenRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1321,7 +1321,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'paylinkTokenStatusChangeRequest' is set
             if (paylinkTokenStatusChangeRequest == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenStatusChangeRequest' when calling PaylinkAPIApi->TokenStatusChangesRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenStatusChangeRequest' when calling PaylinkAPI->TokenStatusChangesRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1386,7 +1386,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'paylinkTokenStatusChangeRequest' is set
             if (paylinkTokenStatusChangeRequest == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenStatusChangeRequest' when calling PaylinkAPIApi->TokenStatusChangesRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenStatusChangeRequest' when calling PaylinkAPI->TokenStatusChangesRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1452,7 +1452,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenStatusRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenStatusRequest");
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1515,7 +1515,7 @@ namespace CityPayAPI.Api
         {
             // verify the required parameter 'token' is set
             if (token == null)
-                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPIApi->TokenStatusRequest");
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkAPI->TokenStatusRequest");
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();

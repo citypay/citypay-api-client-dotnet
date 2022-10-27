@@ -44,6 +44,8 @@ namespace CityPayAPI.Model
         /// <param name="merchTerms">A URL of the merchant terms and conditions for payment. If a value is supplied, a checkbox will be required to be completed to confirm that the cardholder agrees to these conditions before payment. A modal dialogue is displayed with the content of the conditions displayed..</param>
         /// <param name="options">options.</param>
         /// <param name="partPayments">partPayments.</param>
+        /// <param name="passThroughData">passThroughData.</param>
+        /// <param name="passThroughHeaders">passThroughHeaders.</param>
         /// <param name="postback">Specifies a URL to use for a call back when the payment is completed. see Postback Handling }..</param>
         /// <param name="postbackPassword">A password to be added to the postback for HTTP Basic Authentication..</param>
         /// <param name="postbackPolicy">The policy setting for the postback see Postback Handling..</param>
@@ -54,7 +56,7 @@ namespace CityPayAPI.Model
         /// <param name="renderer">The Paylink renderer engine to use..</param>
         /// <param name="returnParams">If a value of true is specified, any redirection will include the transaction result in parameters. It is recommended to use the postback integration rather than redirection parameters..</param>
         /// <param name="ui">ui.</param>
-        public PaylinkConfig(string acsMode = default(string), List<PaylinkCustomParam> customParams = default(List<PaylinkCustomParam>), string descriptor = default(string), string expireIn = default(string), List<PaylinkFieldGuardModel> fieldGuard = default(List<PaylinkFieldGuardModel>), List<string> lockParams = default(List<string>), string merchLogo = default(string), string merchTerms = default(string), List<string> options = default(List<string>), PaylinkPartPayments partPayments = default(PaylinkPartPayments), string postback = default(string), string postbackPassword = default(string), string postbackPolicy = default(string), string postbackUsername = default(string), int redirectDelay = default(int), string redirectFailure = default(string), string redirectSuccess = default(string), string renderer = default(string), string returnParams = default(string), PaylinkUI ui = default(PaylinkUI))
+        public PaylinkConfig(string acsMode = default(string), List<PaylinkCustomParam> customParams = default(List<PaylinkCustomParam>), string descriptor = default(string), string expireIn = default(string), List<PaylinkFieldGuardModel> fieldGuard = default(List<PaylinkFieldGuardModel>), List<string> lockParams = default(List<string>), string merchLogo = default(string), string merchTerms = default(string), List<string> options = default(List<string>), PaylinkPartPayments partPayments = default(PaylinkPartPayments), Dictionary<string, string> passThroughData = default(Dictionary<string, string>), Dictionary<string, string> passThroughHeaders = default(Dictionary<string, string>), string postback = default(string), string postbackPassword = default(string), string postbackPolicy = default(string), string postbackUsername = default(string), int redirectDelay = default(int), string redirectFailure = default(string), string redirectSuccess = default(string), string renderer = default(string), bool returnParams = default(bool), PaylinkUI ui = default(PaylinkUI))
         {
             this.AcsMode = acsMode;
             this.CustomParams = customParams;
@@ -66,6 +68,8 @@ namespace CityPayAPI.Model
             this.MerchTerms = merchTerms;
             this.Options = options;
             this.PartPayments = partPayments;
+            this.PassThroughData = passThroughData;
+            this.PassThroughHeaders = passThroughHeaders;
             this.Postback = postback;
             this.PostbackPassword = postbackPassword;
             this.PostbackPolicy = postbackPolicy;
@@ -144,6 +148,18 @@ namespace CityPayAPI.Model
         public PaylinkPartPayments PartPayments { get; set; }
 
         /// <summary>
+        /// Gets or Sets PassThroughData
+        /// </summary>
+        [DataMember(Name = "pass_through_data", EmitDefaultValue = false)]
+        public Dictionary<string, string> PassThroughData { get; set; }
+
+        /// <summary>
+        /// Gets or Sets PassThroughHeaders
+        /// </summary>
+        [DataMember(Name = "pass_through_headers", EmitDefaultValue = false)]
+        public Dictionary<string, string> PassThroughHeaders { get; set; }
+
+        /// <summary>
         /// Specifies a URL to use for a call back when the payment is completed. see Postback Handling }.
         /// </summary>
         /// <value>Specifies a URL to use for a call back when the payment is completed. see Postback Handling }.</value>
@@ -203,8 +219,8 @@ namespace CityPayAPI.Model
         /// If a value of true is specified, any redirection will include the transaction result in parameters. It is recommended to use the postback integration rather than redirection parameters.
         /// </summary>
         /// <value>If a value of true is specified, any redirection will include the transaction result in parameters. It is recommended to use the postback integration rather than redirection parameters.</value>
-        [DataMember(Name = "return_params", EmitDefaultValue = false)]
-        public string ReturnParams { get; set; }
+        [DataMember(Name = "return_params", EmitDefaultValue = true)]
+        public bool ReturnParams { get; set; }
 
         /// <summary>
         /// Gets or Sets Ui
@@ -230,6 +246,8 @@ namespace CityPayAPI.Model
             sb.Append("  MerchTerms: ").Append(MerchTerms).Append("\n");
             sb.Append("  Options: ").Append(Options).Append("\n");
             sb.Append("  PartPayments: ").Append(PartPayments).Append("\n");
+            sb.Append("  PassThroughData: ").Append(PassThroughData).Append("\n");
+            sb.Append("  PassThroughHeaders: ").Append(PassThroughHeaders).Append("\n");
             sb.Append("  Postback: ").Append(Postback).Append("\n");
             sb.Append("  PostbackPassword: ").Append(PostbackPassword).Append("\n");
             sb.Append("  PostbackPolicy: ").Append(PostbackPolicy).Append("\n");
@@ -329,6 +347,18 @@ namespace CityPayAPI.Model
                     this.PartPayments.Equals(input.PartPayments))
                 ) && 
                 (
+                    this.PassThroughData == input.PassThroughData ||
+                    this.PassThroughData != null &&
+                    input.PassThroughData != null &&
+                    this.PassThroughData.SequenceEqual(input.PassThroughData)
+                ) && 
+                (
+                    this.PassThroughHeaders == input.PassThroughHeaders ||
+                    this.PassThroughHeaders != null &&
+                    input.PassThroughHeaders != null &&
+                    this.PassThroughHeaders.SequenceEqual(input.PassThroughHeaders)
+                ) && 
+                (
                     this.Postback == input.Postback ||
                     (this.Postback != null &&
                     this.Postback.Equals(input.Postback))
@@ -369,8 +399,7 @@ namespace CityPayAPI.Model
                 ) && 
                 (
                     this.ReturnParams == input.ReturnParams ||
-                    (this.ReturnParams != null &&
-                    this.ReturnParams.Equals(input.ReturnParams))
+                    this.ReturnParams.Equals(input.ReturnParams)
                 ) && 
                 (
                     this.Ui == input.Ui ||
@@ -408,6 +437,10 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.Options.GetHashCode();
                 if (this.PartPayments != null)
                     hashCode = hashCode * 59 + this.PartPayments.GetHashCode();
+                if (this.PassThroughData != null)
+                    hashCode = hashCode * 59 + this.PassThroughData.GetHashCode();
+                if (this.PassThroughHeaders != null)
+                    hashCode = hashCode * 59 + this.PassThroughHeaders.GetHashCode();
                 if (this.Postback != null)
                     hashCode = hashCode * 59 + this.Postback.GetHashCode();
                 if (this.PostbackPassword != null)
@@ -423,8 +456,7 @@ namespace CityPayAPI.Model
                     hashCode = hashCode * 59 + this.RedirectSuccess.GetHashCode();
                 if (this.Renderer != null)
                     hashCode = hashCode * 59 + this.Renderer.GetHashCode();
-                if (this.ReturnParams != null)
-                    hashCode = hashCode * 59 + this.ReturnParams.GetHashCode();
+                hashCode = hashCode * 59 + this.ReturnParams.GetHashCode();
                 if (this.Ui != null)
                     hashCode = hashCode * 59 + this.Ui.GetHashCode();
                 return hashCode;

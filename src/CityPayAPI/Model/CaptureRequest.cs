@@ -41,14 +41,16 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="airlineData">airlineData.</param>
         /// <param name="amount">The completion amount provided in the lowest unit of currency for the specific currency of the merchant, with a variable length to a maximum of 12 digits. No decimal points to be included. For example with GBP 75.45 use the value 7545. Please check that you do not supply divisional characters such as 1,024 in the request which may be caused by some number formatters.  If no amount is supplied, the original processing amount is used. .</param>
+        /// <param name="eventManagement">eventManagement.</param>
         /// <param name="identifier">The identifier of the transaction to capture. If an empty value is supplied then a &#x60;trans_no&#x60; value must be supplied..</param>
         /// <param name="merchantid">Identifies the merchant account to perform the capture for. (required).</param>
         /// <param name="transno">The transaction number of the transaction to look up and capture. If an empty value is supplied then an identifier value must be supplied..</param>
-        public CaptureRequest(AirlineAdvice airlineData = default(AirlineAdvice), int amount = default(int), string identifier = default(string), int merchantid = default(int), int transno = default(int))
+        public CaptureRequest(AirlineAdvice airlineData = default(AirlineAdvice), int amount = default(int), EventDataModel eventManagement = default(EventDataModel), string identifier = default(string), int merchantid = default(int), int transno = default(int))
         {
             this.Merchantid = merchantid;
             this.AirlineData = airlineData;
             this.Amount = amount;
+            this.EventManagement = eventManagement;
             this.Identifier = identifier;
             this.Transno = transno;
         }
@@ -65,6 +67,12 @@ namespace CityPayAPI.Model
         /// <value>The completion amount provided in the lowest unit of currency for the specific currency of the merchant, with a variable length to a maximum of 12 digits. No decimal points to be included. For example with GBP 75.45 use the value 7545. Please check that you do not supply divisional characters such as 1,024 in the request which may be caused by some number formatters.  If no amount is supplied, the original processing amount is used. </value>
         [DataMember(Name = "amount", EmitDefaultValue = false)]
         public int Amount { get; set; }
+
+        /// <summary>
+        /// Gets or Sets EventManagement
+        /// </summary>
+        [DataMember(Name = "event_management", EmitDefaultValue = false)]
+        public EventDataModel EventManagement { get; set; }
 
         /// <summary>
         /// The identifier of the transaction to capture. If an empty value is supplied then a &#x60;trans_no&#x60; value must be supplied.
@@ -97,6 +105,7 @@ namespace CityPayAPI.Model
             sb.Append("class CaptureRequest {\n");
             sb.Append("  AirlineData: ").Append(AirlineData).Append("\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
+            sb.Append("  EventManagement: ").Append(EventManagement).Append("\n");
             sb.Append("  Identifier: ").Append(Identifier).Append("\n");
             sb.Append("  Merchantid: ").Append(Merchantid).Append("\n");
             sb.Append("  Transno: ").Append(Transno).Append("\n");
@@ -144,6 +153,11 @@ namespace CityPayAPI.Model
                     this.Amount.Equals(input.Amount)
                 ) && 
                 (
+                    this.EventManagement == input.EventManagement ||
+                    (this.EventManagement != null &&
+                    this.EventManagement.Equals(input.EventManagement))
+                ) && 
+                (
                     this.Identifier == input.Identifier ||
                     (this.Identifier != null &&
                     this.Identifier.Equals(input.Identifier))
@@ -170,6 +184,8 @@ namespace CityPayAPI.Model
                 if (this.AirlineData != null)
                     hashCode = hashCode * 59 + this.AirlineData.GetHashCode();
                 hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                if (this.EventManagement != null)
+                    hashCode = hashCode * 59 + this.EventManagement.GetHashCode();
                 if (this.Identifier != null)
                     hashCode = hashCode * 59 + this.Identifier.GetHashCode();
                 hashCode = hashCode * 59 + this.Merchantid.GetHashCode();

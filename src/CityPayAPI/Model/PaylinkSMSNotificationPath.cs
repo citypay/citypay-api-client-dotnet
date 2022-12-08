@@ -44,7 +44,11 @@ namespace CityPayAPI.Model
         public PaylinkSMSNotificationPath(string template = default(string), string to = default(string))
         {
             // to ensure "to" is required (not null)
-            this.To = to ?? throw new ArgumentNullException("to is a required property for PaylinkSMSNotificationPath and cannot be null");
+            if (to == null)
+            {
+                throw new ArgumentNullException("to is a required property for PaylinkSMSNotificationPath and cannot be null");
+            }
+            this.To = to;
             this.Template = template;
         }
 
@@ -68,7 +72,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkSMSNotificationPath {\n");
             sb.Append("  Template: ").Append(Template).Append("\n");
             sb.Append("  To: ").Append(To).Append("\n");
@@ -103,8 +107,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkSMSNotificationPath input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Template == input.Template ||
@@ -128,9 +133,13 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Template.GetHashCode();
+                }
                 if (this.To != null)
-                    hashCode = hashCode * 59 + this.To.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.To.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -140,7 +149,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

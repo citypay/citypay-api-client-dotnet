@@ -34,8 +34,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AclCheckResponseModel</returns>
-        AclCheckResponseModel AclCheckRequest(AclCheckRequest aclCheckRequest);
+        AclCheckResponseModel AclCheckRequest(AclCheckRequest aclCheckRequest, int operationIndex = 0);
 
         /// <summary>
         /// ACL Check Request
@@ -45,8 +46,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AclCheckResponseModel</returns>
-        ApiResponse<AclCheckResponseModel> AclCheckRequestWithHttpInfo(AclCheckRequest aclCheckRequest);
+        ApiResponse<AclCheckResponseModel> AclCheckRequestWithHttpInfo(AclCheckRequest aclCheckRequest, int operationIndex = 0);
         /// <summary>
         /// Domain Key Check Request
         /// </summary>
@@ -55,8 +57,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>DomainKeyResponse</returns>
-        DomainKeyResponse DomainKeyCheckRequest(DomainKeyCheckRequest domainKeyCheckRequest);
+        DomainKeyResponse DomainKeyCheckRequest(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0);
 
         /// <summary>
         /// Domain Key Check Request
@@ -66,8 +69,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of DomainKeyResponse</returns>
-        ApiResponse<DomainKeyResponse> DomainKeyCheckRequestWithHttpInfo(DomainKeyCheckRequest domainKeyCheckRequest);
+        ApiResponse<DomainKeyResponse> DomainKeyCheckRequestWithHttpInfo(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0);
         /// <summary>
         /// Domain Key Generation Request
         /// </summary>
@@ -76,8 +80,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>DomainKeyResponse</returns>
-        DomainKeyResponse DomainKeyGenRequest(DomainKeyRequest domainKeyRequest);
+        DomainKeyResponse DomainKeyGenRequest(DomainKeyRequest domainKeyRequest, int operationIndex = 0);
 
         /// <summary>
         /// Domain Key Generation Request
@@ -87,8 +92,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of DomainKeyResponse</returns>
-        ApiResponse<DomainKeyResponse> DomainKeyGenRequestWithHttpInfo(DomainKeyRequest domainKeyRequest);
+        ApiResponse<DomainKeyResponse> DomainKeyGenRequestWithHttpInfo(DomainKeyRequest domainKeyRequest, int operationIndex = 0);
         /// <summary>
         /// List Merchants Request
         /// </summary>
@@ -97,8 +103,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ListMerchantsResponse</returns>
-        ListMerchantsResponse ListMerchantsRequest(string clientid);
+        ListMerchantsResponse ListMerchantsRequest(string clientid, int operationIndex = 0);
 
         /// <summary>
         /// List Merchants Request
@@ -108,8 +115,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of ListMerchantsResponse</returns>
-        ApiResponse<ListMerchantsResponse> ListMerchantsRequestWithHttpInfo(string clientid);
+        ApiResponse<ListMerchantsResponse> ListMerchantsRequestWithHttpInfo(string clientid, int operationIndex = 0);
         /// <summary>
         /// Ping Request
         /// </summary>
@@ -118,8 +126,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement PingRequest(Ping ping);
+        Acknowledgement PingRequest(Ping ping, int operationIndex = 0);
 
         /// <summary>
         /// Ping Request
@@ -129,8 +138,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> PingRequestWithHttpInfo(Ping ping);
+        ApiResponse<Acknowledgement> PingRequestWithHttpInfo(Ping ping, int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -148,9 +158,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AclCheckResponseModel</returns>
-        System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// ACL Check Request
@@ -160,9 +171,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AclCheckResponseModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Domain Key Check Request
         /// </summary>
@@ -171,9 +183,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Domain Key Check Request
@@ -183,9 +196,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Domain Key Generation Request
         /// </summary>
@@ -194,9 +208,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Domain Key Generation Request
@@ -206,9 +221,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// List Merchants Request
         /// </summary>
@@ -217,9 +233,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListMerchantsResponse</returns>
-        System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// List Merchants Request
@@ -229,9 +246,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListMerchantsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Ping Request
         /// </summary>
@@ -240,9 +258,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Ping Request
@@ -252,9 +271,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -380,8 +400,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AclCheckResponseModel</returns>
-        public AclCheckResponseModel AclCheckRequest(AclCheckRequest aclCheckRequest)
+        public AclCheckResponseModel AclCheckRequest(AclCheckRequest aclCheckRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AclCheckResponseModel> localVarResponse = AclCheckRequestWithHttpInfo(aclCheckRequest);
             return localVarResponse.Data;
@@ -392,12 +413,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AclCheckResponseModel</returns>
-        public CityPayAPI.Client.ApiResponse<AclCheckResponseModel> AclCheckRequestWithHttpInfo(AclCheckRequest aclCheckRequest)
+        public CityPayAPI.Client.ApiResponse<AclCheckResponseModel> AclCheckRequestWithHttpInfo(AclCheckRequest aclCheckRequest, int operationIndex = 0)
         {
             // verify the required parameter 'aclCheckRequest' is set
             if (aclCheckRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'aclCheckRequest' when calling OperationalFunctionsApi->AclCheckRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -413,12 +437,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = aclCheckRequest;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.AclCheckRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -428,11 +461,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AclCheckResponseModel>("/v6/acl/check", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AclCheckRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -443,11 +478,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AclCheckResponseModel</returns>
-        public async System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AclCheckResponseModel> localVarResponse = await AclCheckRequestWithHttpInfoAsync(aclCheckRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AclCheckResponseModel> localVarResponse = await AclCheckRequestWithHttpInfoAsync(aclCheckRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -456,13 +492,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="aclCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AclCheckResponseModel)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'aclCheckRequest' is set
             if (aclCheckRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'aclCheckRequest' when calling OperationalFunctionsApi->AclCheckRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -478,14 +517,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = aclCheckRequest;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.AclCheckRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -494,13 +541,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AclCheckResponseModel>("/v6/acl/check", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AclCheckRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -511,8 +560,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>DomainKeyResponse</returns>
-        public DomainKeyResponse DomainKeyCheckRequest(DomainKeyCheckRequest domainKeyCheckRequest)
+        public DomainKeyResponse DomainKeyCheckRequest(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = DomainKeyCheckRequestWithHttpInfo(domainKeyCheckRequest);
             return localVarResponse.Data;
@@ -523,12 +573,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of DomainKeyResponse</returns>
-        public CityPayAPI.Client.ApiResponse<DomainKeyResponse> DomainKeyCheckRequestWithHttpInfo(DomainKeyCheckRequest domainKeyCheckRequest)
+        public CityPayAPI.Client.ApiResponse<DomainKeyResponse> DomainKeyCheckRequestWithHttpInfo(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0)
         {
             // verify the required parameter 'domainKeyCheckRequest' is set
             if (domainKeyCheckRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'domainKeyCheckRequest' when calling OperationalFunctionsApi->DomainKeyCheckRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -544,12 +597,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = domainKeyCheckRequest;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.DomainKeyCheckRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -559,11 +621,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<DomainKeyResponse>("/dk/check", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DomainKeyCheckRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -574,11 +638,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = await DomainKeyCheckRequestWithHttpInfoAsync(domainKeyCheckRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = await DomainKeyCheckRequestWithHttpInfoAsync(domainKeyCheckRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -587,13 +652,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyCheckRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'domainKeyCheckRequest' is set
             if (domainKeyCheckRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'domainKeyCheckRequest' when calling OperationalFunctionsApi->DomainKeyCheckRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -609,14 +677,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = domainKeyCheckRequest;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.DomainKeyCheckRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -625,13 +701,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<DomainKeyResponse>("/dk/check", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DomainKeyCheckRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -642,8 +720,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>DomainKeyResponse</returns>
-        public DomainKeyResponse DomainKeyGenRequest(DomainKeyRequest domainKeyRequest)
+        public DomainKeyResponse DomainKeyGenRequest(DomainKeyRequest domainKeyRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = DomainKeyGenRequestWithHttpInfo(domainKeyRequest);
             return localVarResponse.Data;
@@ -654,12 +733,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of DomainKeyResponse</returns>
-        public CityPayAPI.Client.ApiResponse<DomainKeyResponse> DomainKeyGenRequestWithHttpInfo(DomainKeyRequest domainKeyRequest)
+        public CityPayAPI.Client.ApiResponse<DomainKeyResponse> DomainKeyGenRequestWithHttpInfo(DomainKeyRequest domainKeyRequest, int operationIndex = 0)
         {
             // verify the required parameter 'domainKeyRequest' is set
             if (domainKeyRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'domainKeyRequest' when calling OperationalFunctionsApi->DomainKeyGenRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -675,12 +757,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = domainKeyRequest;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.DomainKeyGenRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -690,11 +781,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<DomainKeyResponse>("/dk/gen", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DomainKeyGenRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -705,11 +798,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = await DomainKeyGenRequestWithHttpInfoAsync(domainKeyRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = await DomainKeyGenRequestWithHttpInfoAsync(domainKeyRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -718,13 +812,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="domainKeyRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'domainKeyRequest' is set
             if (domainKeyRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'domainKeyRequest' when calling OperationalFunctionsApi->DomainKeyGenRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -740,14 +837,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = domainKeyRequest;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.DomainKeyGenRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -756,13 +861,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<DomainKeyResponse>("/dk/gen", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DomainKeyGenRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -773,8 +880,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ListMerchantsResponse</returns>
-        public ListMerchantsResponse ListMerchantsRequest(string clientid)
+        public ListMerchantsResponse ListMerchantsRequest(string clientid, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = ListMerchantsRequestWithHttpInfo(clientid);
             return localVarResponse.Data;
@@ -785,12 +893,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of ListMerchantsResponse</returns>
-        public CityPayAPI.Client.ApiResponse<ListMerchantsResponse> ListMerchantsRequestWithHttpInfo(string clientid)
+        public CityPayAPI.Client.ApiResponse<ListMerchantsResponse> ListMerchantsRequestWithHttpInfo(string clientid, int operationIndex = 0)
         {
             // verify the required parameter 'clientid' is set
             if (clientid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'clientid' when calling OperationalFunctionsApi->ListMerchantsRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -804,12 +915,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("clientid", CityPayAPI.Client.ClientUtils.ParameterToString(clientid)); // path parameter
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.ListMerchantsRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -819,11 +939,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<ListMerchantsResponse>("/v6/merchants/{clientid}", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ListMerchantsRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -834,11 +956,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListMerchantsResponse</returns>
-        public async System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = await ListMerchantsRequestWithHttpInfoAsync(clientid, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = await ListMerchantsRequestWithHttpInfoAsync(clientid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -847,13 +970,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="clientid">The client id to return merchants for, specifying \&quot;default\&quot; will use the value in your api key.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListMerchantsResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'clientid' is set
             if (clientid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'clientid' when calling OperationalFunctionsApi->ListMerchantsRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -867,14 +993,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("clientid", CityPayAPI.Client.ClientUtils.ParameterToString(clientid)); // path parameter
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.ListMerchantsRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -883,13 +1017,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.GetAsync<ListMerchantsResponse>("/v6/merchants/{clientid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ListMerchantsRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -900,8 +1036,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement PingRequest(Ping ping)
+        public Acknowledgement PingRequest(Ping ping, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = PingRequestWithHttpInfo(ping);
             return localVarResponse.Data;
@@ -912,12 +1049,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> PingRequestWithHttpInfo(Ping ping)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> PingRequestWithHttpInfo(Ping ping, int operationIndex = 0)
         {
             // verify the required parameter 'ping' is set
             if (ping == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'ping' when calling OperationalFunctionsApi->PingRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -935,12 +1075,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = ping;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.PingRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -955,11 +1104,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Acknowledgement>("/v6/ping", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("PingRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -970,11 +1121,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await PingRequestWithHttpInfoAsync(ping, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await PingRequestWithHttpInfoAsync(ping, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -983,13 +1135,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ping"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'ping' is set
             if (ping == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'ping' when calling OperationalFunctionsApi->PingRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1007,14 +1162,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = ping;
+
+            localVarRequestOptions.Operation = "OperationalFunctionsApi.PingRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1028,13 +1191,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/v6/ping", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("PingRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;

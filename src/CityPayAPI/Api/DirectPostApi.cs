@@ -36,8 +36,9 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        AuthResponse DirectCResAuthRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string));
+        AuthResponse DirectCResAuthRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0);
 
         /// <summary>
         /// Handles a CRes response from ACS, returning back the result of authorisation
@@ -49,8 +50,9 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> DirectCResAuthRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string));
+        ApiResponse<AuthResponse> DirectCResAuthRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0);
         /// <summary>
         /// Handles a CRes response from ACS, returning back a token for future authorisation
         /// </summary>
@@ -61,8 +63,9 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>TokenisationResponseModel</returns>
-        TokenisationResponseModel DirectCResTokeniseRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string));
+        TokenisationResponseModel DirectCResTokeniseRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0);
 
         /// <summary>
         /// Handles a CRes response from ACS, returning back a token for future authorisation
@@ -74,29 +77,32 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of TokenisationResponseModel</returns>
-        ApiResponse<TokenisationResponseModel> DirectCResTokeniseRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string));
+        ApiResponse<TokenisationResponseModel> DirectCResTokeniseRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0);
         /// <summary>
         /// Direct Post Auth Request
         /// </summary>
         /// <remarks>
-        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        AuthResponse DirectPostAuthRequest(DirectPostRequest directPostRequest);
+        AuthResponse DirectPostAuthRequest(DirectPostRequest directPostRequest, int operationIndex = 0);
 
         /// <summary>
         /// Direct Post Auth Request
         /// </summary>
         /// <remarks>
-        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> DirectPostAuthRequestWithHttpInfo(DirectPostRequest directPostRequest);
+        ApiResponse<AuthResponse> DirectPostAuthRequestWithHttpInfo(DirectPostRequest directPostRequest, int operationIndex = 0);
         /// <summary>
         /// Direct Post Tokenise Request
         /// </summary>
@@ -105,8 +111,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        AuthResponse DirectPostTokeniseRequest(DirectPostRequest directPostRequest);
+        AuthResponse DirectPostTokeniseRequest(DirectPostRequest directPostRequest, int operationIndex = 0);
 
         /// <summary>
         /// Direct Post Tokenise Request
@@ -116,8 +123,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> DirectPostTokeniseRequestWithHttpInfo(DirectPostRequest directPostRequest);
+        ApiResponse<AuthResponse> DirectPostTokeniseRequestWithHttpInfo(DirectPostRequest directPostRequest, int operationIndex = 0);
         /// <summary>
         /// Direct Post Token Request
         /// </summary>
@@ -126,8 +134,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        AuthResponse TokenRequest(DirectTokenAuthRequest directTokenAuthRequest);
+        AuthResponse TokenRequest(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0);
 
         /// <summary>
         /// Direct Post Token Request
@@ -137,8 +146,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> TokenRequestWithHttpInfo(DirectTokenAuthRequest directTokenAuthRequest);
+        ApiResponse<AuthResponse> TokenRequestWithHttpInfo(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -158,9 +168,10 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Handles a CRes response from ACS, returning back the result of authorisation
@@ -172,9 +183,10 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Handles a CRes response from ACS, returning back a token for future authorisation
         /// </summary>
@@ -185,9 +197,10 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TokenisationResponseModel</returns>
-        System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Handles a CRes response from ACS, returning back a token for future authorisation
@@ -199,32 +212,35 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TokenisationResponseModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Direct Post Auth Request
         /// </summary>
         /// <remarks>
-        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Direct Post Auth Request
         /// </summary>
         /// <remarks>
-        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Direct Post Tokenise Request
         /// </summary>
@@ -233,9 +249,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Direct Post Tokenise Request
@@ -245,9 +262,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Direct Post Token Request
         /// </summary>
@@ -256,9 +274,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Direct Post Token Request
@@ -268,9 +287,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -398,8 +418,9 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse DirectCResAuthRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string))
+        public AuthResponse DirectCResAuthRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = DirectCResAuthRequestWithHttpInfo(uuid, cres, threeDSSessionData);
             return localVarResponse.Data;
@@ -412,12 +433,15 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse<AuthResponse> DirectCResAuthRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string))
+        public CityPayAPI.Client.ApiResponse<AuthResponse> DirectCResAuthRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0)
         {
             // verify the required parameter 'uuid' is set
             if (uuid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'uuid' when calling DirectPostApi->DirectCResAuthRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -433,10 +457,16 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("uuid", CityPayAPI.Client.ClientUtils.ParameterToString(uuid)); // path parameter
             if (cres != null)
@@ -448,14 +478,19 @@ namespace CityPayAPI.Api
                 localVarRequestOptions.FormParameters.Add("threeDSSessionData", CityPayAPI.Client.ClientUtils.ParameterToString(threeDSSessionData)); // form parameter
             }
 
+            localVarRequestOptions.Operation = "DirectPostApi.DirectCResAuthRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthResponse>("/direct/cres/auth/{uuid}", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectCResAuthRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -468,11 +503,12 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectCResAuthRequestWithHttpInfoAsync(uuid, cres, threeDSSessionData, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectCResAuthRequestWithHttpInfoAsync(uuid, cres, threeDSSessionData, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -483,13 +519,16 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'uuid' is set
             if (uuid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'uuid' when calling DirectPostApi->DirectCResAuthRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -505,12 +544,17 @@ namespace CityPayAPI.Api
                 "application/x-www-form-urlencoded"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("uuid", CityPayAPI.Client.ClientUtils.ParameterToString(uuid)); // path parameter
             if (cres != null)
@@ -522,15 +566,20 @@ namespace CityPayAPI.Api
                 localVarRequestOptions.FormParameters.Add("threeDSSessionData", CityPayAPI.Client.ClientUtils.ParameterToString(threeDSSessionData)); // form parameter
             }
 
+            localVarRequestOptions.Operation = "DirectPostApi.DirectCResAuthRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/direct/cres/auth/{uuid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectCResAuthRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -543,8 +592,9 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>TokenisationResponseModel</returns>
-        public TokenisationResponseModel DirectCResTokeniseRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string))
+        public TokenisationResponseModel DirectCResTokeniseRequest(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<TokenisationResponseModel> localVarResponse = DirectCResTokeniseRequestWithHttpInfo(uuid, cres, threeDSSessionData);
             return localVarResponse.Data;
@@ -557,12 +607,15 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of TokenisationResponseModel</returns>
-        public CityPayAPI.Client.ApiResponse<TokenisationResponseModel> DirectCResTokeniseRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string))
+        public CityPayAPI.Client.ApiResponse<TokenisationResponseModel> DirectCResTokeniseRequestWithHttpInfo(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0)
         {
             // verify the required parameter 'uuid' is set
             if (uuid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'uuid' when calling DirectPostApi->DirectCResTokeniseRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -578,10 +631,16 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("uuid", CityPayAPI.Client.ClientUtils.ParameterToString(uuid)); // path parameter
             if (cres != null)
@@ -593,14 +652,19 @@ namespace CityPayAPI.Api
                 localVarRequestOptions.FormParameters.Add("threeDSSessionData", CityPayAPI.Client.ClientUtils.ParameterToString(threeDSSessionData)); // form parameter
             }
 
+            localVarRequestOptions.Operation = "DirectPostApi.DirectCResTokeniseRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<TokenisationResponseModel>("/direct/cres/tokenise/{uuid}", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectCResTokeniseRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -613,11 +677,12 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TokenisationResponseModel</returns>
-        public async System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<TokenisationResponseModel> localVarResponse = await DirectCResTokeniseRequestWithHttpInfoAsync(uuid, cres, threeDSSessionData, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<TokenisationResponseModel> localVarResponse = await DirectCResTokeniseRequestWithHttpInfoAsync(uuid, cres, threeDSSessionData, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -628,13 +693,16 @@ namespace CityPayAPI.Api
         /// <param name="uuid">An identifier used to track the CReq/CRes cycle.</param>
         /// <param name="cres">The CRES from the ACS. (optional)</param>
         /// <param name="threeDSSessionData">The session data from the ACS. (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TokenisationResponseModel)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string cres = default(string), string threeDSSessionData = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'uuid' is set
             if (uuid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'uuid' when calling DirectPostApi->DirectCResTokeniseRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -650,12 +718,17 @@ namespace CityPayAPI.Api
                 "application/x-www-form-urlencoded"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("uuid", CityPayAPI.Client.ClientUtils.ParameterToString(uuid)); // path parameter
             if (cres != null)
@@ -667,43 +740,52 @@ namespace CityPayAPI.Api
                 localVarRequestOptions.FormParameters.Add("threeDSSessionData", CityPayAPI.Client.ClientUtils.ParameterToString(threeDSSessionData)); // form parameter
             }
 
+            localVarRequestOptions.Operation = "DirectPostApi.DirectCResTokeniseRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<TokenisationResponseModel>("/direct/cres/tokenise/{uuid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectCResTokeniseRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
         }
 
         /// <summary>
-        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse DirectPostAuthRequest(DirectPostRequest directPostRequest)
+        public AuthResponse DirectPostAuthRequest(DirectPostRequest directPostRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = DirectPostAuthRequestWithHttpInfo(directPostRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse<AuthResponse> DirectPostAuthRequestWithHttpInfo(DirectPostRequest directPostRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> DirectPostAuthRequestWithHttpInfo(DirectPostRequest directPostRequest, int operationIndex = 0)
         {
             // verify the required parameter 'directPostRequest' is set
             if (directPostRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'directPostRequest' when calling DirectPostApi->DirectPostAuthRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -722,12 +804,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = directPostRequest;
+
+            localVarRequestOptions.Operation = "DirectPostApi.DirectPostAuthRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -742,41 +833,47 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthResponse>("/direct/auth", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectPostAuthRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
         }
 
         /// <summary>
-        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectPostAuthRequestWithHttpInfoAsync(directPostRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectPostAuthRequestWithHttpInfoAsync(directPostRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/v6/direct?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
+        /// Direct Post Auth Request Used to initiate a direct post request transaction flow.  &lt;pre class&#x3D;\&quot;inline-code language-bash\&quot;&gt; &lt;code&gt; curl https://api.citypay.com/direct/auth?cp-domain-key&#x3D;n834ytqp84y... \\  -d \&quot;amount&#x3D;7500&amp;identifier&#x3D;example_trans&amp;cardnumber&#x3D;4000000000000002&amp;expmonth&#x3D;9&amp;expyear&#x3D;2028&amp;bill_to_postcode&#x3D;L1+7ZW &lt;/code&gt; &lt;/pre&gt;. 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'directPostRequest' is set
             if (directPostRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'directPostRequest' when calling DirectPostApi->DirectPostAuthRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -795,14 +892,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = directPostRequest;
+
+            localVarRequestOptions.Operation = "DirectPostApi.DirectPostAuthRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -816,13 +921,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/direct/auth", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectPostAuthRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -833,8 +940,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse DirectPostTokeniseRequest(DirectPostRequest directPostRequest)
+        public AuthResponse DirectPostTokeniseRequest(DirectPostRequest directPostRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = DirectPostTokeniseRequestWithHttpInfo(directPostRequest);
             return localVarResponse.Data;
@@ -845,12 +953,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse<AuthResponse> DirectPostTokeniseRequestWithHttpInfo(DirectPostRequest directPostRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> DirectPostTokeniseRequestWithHttpInfo(DirectPostRequest directPostRequest, int operationIndex = 0)
         {
             // verify the required parameter 'directPostRequest' is set
             if (directPostRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'directPostRequest' when calling DirectPostApi->DirectPostTokeniseRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -869,12 +980,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = directPostRequest;
+
+            localVarRequestOptions.Operation = "DirectPostApi.DirectPostTokeniseRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -889,11 +1009,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthResponse>("/direct/tokenise", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectPostTokeniseRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -904,11 +1026,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectPostTokeniseRequestWithHttpInfoAsync(directPostRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectPostTokeniseRequestWithHttpInfoAsync(directPostRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -917,13 +1040,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directPostRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'directPostRequest' is set
             if (directPostRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'directPostRequest' when calling DirectPostApi->DirectPostTokeniseRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -942,14 +1068,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = directPostRequest;
+
+            localVarRequestOptions.Operation = "DirectPostApi.DirectPostTokeniseRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -963,13 +1097,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/direct/tokenise", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DirectPostTokeniseRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -980,8 +1116,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse TokenRequest(DirectTokenAuthRequest directTokenAuthRequest)
+        public AuthResponse TokenRequest(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = TokenRequestWithHttpInfo(directTokenAuthRequest);
             return localVarResponse.Data;
@@ -992,12 +1129,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse<AuthResponse> TokenRequestWithHttpInfo(DirectTokenAuthRequest directTokenAuthRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> TokenRequestWithHttpInfo(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0)
         {
             // verify the required parameter 'directTokenAuthRequest' is set
             if (directTokenAuthRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'directTokenAuthRequest' when calling DirectPostApi->TokenRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1016,12 +1156,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = directTokenAuthRequest;
+
+            localVarRequestOptions.Operation = "DirectPostApi.TokenRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1036,11 +1185,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthResponse>("/direct/token", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1051,11 +1202,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await TokenRequestWithHttpInfoAsync(directTokenAuthRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await TokenRequestWithHttpInfoAsync(directTokenAuthRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1064,13 +1216,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="directTokenAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'directTokenAuthRequest' is set
             if (directTokenAuthRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'directTokenAuthRequest' when calling DirectPostApi->TokenRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1089,14 +1244,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = directTokenAuthRequest;
+
+            localVarRequestOptions.Operation = "DirectPostApi.TokenRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1110,13 +1273,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/direct/token", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;

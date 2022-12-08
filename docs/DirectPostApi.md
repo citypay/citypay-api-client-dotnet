@@ -38,9 +38,9 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com";
             var apiInstance = new DirectPostApi(config);
-            var uuid = uuid_example;  // string | An identifier used to track the CReq/CRes cycle.
-            var cres = cres_example;  // string | The CRES from the ACS. (optional) 
-            var threeDSSessionData = threeDSSessionData_example;  // string | The session data from the ACS. (optional) 
+            var uuid = "uuid_example";  // string | An identifier used to track the CReq/CRes cycle.
+            var cres = "cres_example";  // string | The CRES from the ACS. (optional) 
+            var threeDSSessionData = "threeDSSessionData_example";  // string | The session data from the ACS. (optional) 
 
             try
             {
@@ -143,9 +143,9 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com";
             var apiInstance = new DirectPostApi(config);
-            var uuid = uuid_example;  // string | An identifier used to track the CReq/CRes cycle.
-            var cres = cres_example;  // string | The CRES from the ACS. (optional) 
-            var threeDSSessionData = threeDSSessionData_example;  // string | The session data from the ACS. (optional) 
+            var uuid = "uuid_example";  // string | An identifier used to track the CReq/CRes cycle.
+            var cres = "cres_example";  // string | The CRES from the ACS. (optional) 
+            var threeDSSessionData = "threeDSSessionData_example";  // string | The session data from the ACS. (optional) 
 
             try
             {
@@ -230,7 +230,7 @@ Used to initiate a direct post request transaction flow.
 
 <pre class="inline-code language-bash">
 <code>
-curl https://api.citypay.com/v6/direct?cp-domain-key=n834ytqp84y... \
+curl https://api.citypay.com/direct/auth?cp-domain-key=n834ytqp84y... \
  -d "amount=7500&identifier=example_trans&cardnumber=4000000000000002&expmonth=9&expyear=2028&bill_to_postcode=L1+7ZW
 </code>
 </pre>.

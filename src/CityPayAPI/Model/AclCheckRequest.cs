@@ -43,7 +43,11 @@ namespace CityPayAPI.Model
         public AclCheckRequest(string ip = default(string))
         {
             // to ensure "ip" is required (not null)
-            this.Ip = ip ?? throw new ArgumentNullException("ip is a required property for AclCheckRequest and cannot be null");
+            if (ip == null)
+            {
+                throw new ArgumentNullException("ip is a required property for AclCheckRequest and cannot be null");
+            }
+            this.Ip = ip;
         }
 
         /// <summary>
@@ -59,7 +63,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class AclCheckRequest {\n");
             sb.Append("  Ip: ").Append(Ip).Append("\n");
             sb.Append("}\n");
@@ -93,8 +97,9 @@ namespace CityPayAPI.Model
         public bool Equals(AclCheckRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Ip == input.Ip ||
@@ -113,7 +118,9 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Ip != null)
-                    hashCode = hashCode * 59 + this.Ip.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Ip.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -123,7 +130,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

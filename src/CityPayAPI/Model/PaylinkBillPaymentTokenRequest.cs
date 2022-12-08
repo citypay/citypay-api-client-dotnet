@@ -39,22 +39,37 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PaylinkBillPaymentTokenRequest" /> class.
         /// </summary>
+        /// <param name="addressee">Who the bill payment request intended for. This should be a readable name such as a person or company..</param>
         /// <param name="attachments">attachments.</param>
         /// <param name="descriptor">A descriptor for the bill payment used to describe what the payment request is for for instance \&quot;Invoice\&quot;.  The descriptor can be used as descriptive text on emails or the payment page. For instance an invoice may have a button saying \&quot;View Invoice\&quot; or an email may say \&quot;to pay your Invoice online\&quot;. .</param>
         /// <param name="due">A date that the invoice is due. This can be displayed on the payment page..</param>
         /// <param name="emailNotificationPath">emailNotificationPath.</param>
+        /// <param name="memo">A memo that can be added to the payment page and email to provide to the customer..</param>
         /// <param name="request">request (required).</param>
         /// <param name="smsNotificationPath">smsNotificationPath.</param>
-        public PaylinkBillPaymentTokenRequest(List<PaylinkAttachmentRequest> attachments = default(List<PaylinkAttachmentRequest>), string descriptor = default(string), DateTime due = default(DateTime), PaylinkEmailNotificationPath emailNotificationPath = default(PaylinkEmailNotificationPath), PaylinkTokenRequestModel request = default(PaylinkTokenRequestModel), PaylinkSMSNotificationPath smsNotificationPath = default(PaylinkSMSNotificationPath))
+        public PaylinkBillPaymentTokenRequest(string addressee = default(string), List<PaylinkAttachmentRequest> attachments = default(List<PaylinkAttachmentRequest>), string descriptor = default(string), DateTime due = default(DateTime), PaylinkEmailNotificationPath emailNotificationPath = default(PaylinkEmailNotificationPath), string memo = default(string), PaylinkTokenRequestModel request = default(PaylinkTokenRequestModel), PaylinkSMSNotificationPath smsNotificationPath = default(PaylinkSMSNotificationPath))
         {
             // to ensure "request" is required (not null)
-            this.Request = request ?? throw new ArgumentNullException("request is a required property for PaylinkBillPaymentTokenRequest and cannot be null");
+            if (request == null)
+            {
+                throw new ArgumentNullException("request is a required property for PaylinkBillPaymentTokenRequest and cannot be null");
+            }
+            this.Request = request;
+            this.Addressee = addressee;
             this.Attachments = attachments;
             this.Descriptor = descriptor;
             this.Due = due;
             this.EmailNotificationPath = emailNotificationPath;
+            this.Memo = memo;
             this.SmsNotificationPath = smsNotificationPath;
         }
+
+        /// <summary>
+        /// Who the bill payment request intended for. This should be a readable name such as a person or company.
+        /// </summary>
+        /// <value>Who the bill payment request intended for. This should be a readable name such as a person or company.</value>
+        [DataMember(Name = "addressee", EmitDefaultValue = false)]
+        public string Addressee { get; set; }
 
         /// <summary>
         /// Gets or Sets Attachments
@@ -84,6 +99,13 @@ namespace CityPayAPI.Model
         public PaylinkEmailNotificationPath EmailNotificationPath { get; set; }
 
         /// <summary>
+        /// A memo that can be added to the payment page and email to provide to the customer.
+        /// </summary>
+        /// <value>A memo that can be added to the payment page and email to provide to the customer.</value>
+        [DataMember(Name = "memo", EmitDefaultValue = false)]
+        public string Memo { get; set; }
+
+        /// <summary>
         /// Gets or Sets Request
         /// </summary>
         [DataMember(Name = "request", IsRequired = true, EmitDefaultValue = false)]
@@ -101,12 +123,14 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkBillPaymentTokenRequest {\n");
+            sb.Append("  Addressee: ").Append(Addressee).Append("\n");
             sb.Append("  Attachments: ").Append(Attachments).Append("\n");
             sb.Append("  Descriptor: ").Append(Descriptor).Append("\n");
             sb.Append("  Due: ").Append(Due).Append("\n");
             sb.Append("  EmailNotificationPath: ").Append(EmailNotificationPath).Append("\n");
+            sb.Append("  Memo: ").Append(Memo).Append("\n");
             sb.Append("  Request: ").Append(Request).Append("\n");
             sb.Append("  SmsNotificationPath: ").Append(SmsNotificationPath).Append("\n");
             sb.Append("}\n");
@@ -140,9 +164,15 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkBillPaymentTokenRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
+                (
+                    this.Addressee == input.Addressee ||
+                    (this.Addressee != null &&
+                    this.Addressee.Equals(input.Addressee))
+                ) && 
                 (
                     this.Attachments == input.Attachments ||
                     this.Attachments != null &&
@@ -165,6 +195,11 @@ namespace CityPayAPI.Model
                     this.EmailNotificationPath.Equals(input.EmailNotificationPath))
                 ) && 
                 (
+                    this.Memo == input.Memo ||
+                    (this.Memo != null &&
+                    this.Memo.Equals(input.Memo))
+                ) && 
+                (
                     this.Request == input.Request ||
                     (this.Request != null &&
                     this.Request.Equals(input.Request))
@@ -185,18 +220,38 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
+                if (this.Addressee != null)
+                {
+                    hashCode = (hashCode * 59) + this.Addressee.GetHashCode();
+                }
                 if (this.Attachments != null)
-                    hashCode = hashCode * 59 + this.Attachments.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Attachments.GetHashCode();
+                }
                 if (this.Descriptor != null)
-                    hashCode = hashCode * 59 + this.Descriptor.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Descriptor.GetHashCode();
+                }
                 if (this.Due != null)
-                    hashCode = hashCode * 59 + this.Due.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Due.GetHashCode();
+                }
                 if (this.EmailNotificationPath != null)
-                    hashCode = hashCode * 59 + this.EmailNotificationPath.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.EmailNotificationPath.GetHashCode();
+                }
+                if (this.Memo != null)
+                {
+                    hashCode = (hashCode * 59) + this.Memo.GetHashCode();
+                }
                 if (this.Request != null)
-                    hashCode = hashCode * 59 + this.Request.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Request.GetHashCode();
+                }
                 if (this.SmsNotificationPath != null)
-                    hashCode = hashCode * 59 + this.SmsNotificationPath.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.SmsNotificationPath.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -206,7 +261,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

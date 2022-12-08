@@ -70,7 +70,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class ListMerchantsResponse {\n");
             sb.Append("  ClientName: ").Append(ClientName).Append("\n");
             sb.Append("  Clientid: ").Append(Clientid).Append("\n");
@@ -106,8 +106,9 @@ namespace CityPayAPI.Model
         public bool Equals(ListMerchantsResponse input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.ClientName == input.ClientName ||
@@ -137,11 +138,17 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.ClientName != null)
-                    hashCode = hashCode * 59 + this.ClientName.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ClientName.GetHashCode();
+                }
                 if (this.Clientid != null)
-                    hashCode = hashCode * 59 + this.Clientid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Clientid.GetHashCode();
+                }
                 if (this.Merchants != null)
-                    hashCode = hashCode * 59 + this.Merchants.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Merchants.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -151,16 +158,16 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Clientid (string) maxLength
-            if(this.Clientid != null && this.Clientid.Length > 10)
+            if (this.Clientid != null && this.Clientid.Length > 10)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Clientid, length must be less than 10.", new [] { "Clientid" });
             }
 
             // Clientid (string) minLength
-            if(this.Clientid != null && this.Clientid.Length < 3)
+            if (this.Clientid != null && this.Clientid.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Clientid, length must be greater than 3.", new [] { "Clientid" });
             }

@@ -43,7 +43,11 @@ namespace CityPayAPI.Model
         public DomainKeyCheckRequest(string domainKey = default(string))
         {
             // to ensure "domainKey" is required (not null)
-            this.DomainKey = domainKey ?? throw new ArgumentNullException("domainKey is a required property for DomainKeyCheckRequest and cannot be null");
+            if (domainKey == null)
+            {
+                throw new ArgumentNullException("domainKey is a required property for DomainKeyCheckRequest and cannot be null");
+            }
+            this.DomainKey = domainKey;
         }
 
         /// <summary>
@@ -59,7 +63,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class DomainKeyCheckRequest {\n");
             sb.Append("  DomainKey: ").Append(DomainKey).Append("\n");
             sb.Append("}\n");
@@ -93,8 +97,9 @@ namespace CityPayAPI.Model
         public bool Equals(DomainKeyCheckRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.DomainKey == input.DomainKey ||
@@ -113,7 +118,9 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.DomainKey != null)
-                    hashCode = hashCode * 59 + this.DomainKey.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.DomainKey.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -123,16 +130,16 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // DomainKey (string) maxLength
-            if(this.DomainKey != null && this.DomainKey.Length > 512)
+            if (this.DomainKey != null && this.DomainKey.Length > 512)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DomainKey, length must be less than 512.", new [] { "DomainKey" });
             }
 
             // DomainKey (string) minLength
-            if(this.DomainKey != null && this.DomainKey.Length < 64)
+            if (this.DomainKey != null && this.DomainKey.Length < 64)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DomainKey, length must be greater than 64.", new [] { "DomainKey" });
             }

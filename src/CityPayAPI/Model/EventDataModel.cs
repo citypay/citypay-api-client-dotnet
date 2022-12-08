@@ -91,7 +91,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class EventDataModel {\n");
             sb.Append("  EventEndDate: ").Append(EventEndDate).Append("\n");
             sb.Append("  EventId: ").Append(EventId).Append("\n");
@@ -129,8 +129,9 @@ namespace CityPayAPI.Model
         public bool Equals(EventDataModel input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.EventEndDate == input.EventEndDate ||
@@ -169,15 +170,25 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.EventEndDate != null)
-                    hashCode = hashCode * 59 + this.EventEndDate.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.EventEndDate.GetHashCode();
+                }
                 if (this.EventId != null)
-                    hashCode = hashCode * 59 + this.EventId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.EventId.GetHashCode();
+                }
                 if (this.EventOrganiserId != null)
-                    hashCode = hashCode * 59 + this.EventOrganiserId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.EventOrganiserId.GetHashCode();
+                }
                 if (this.EventStartDate != null)
-                    hashCode = hashCode * 59 + this.EventStartDate.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.EventStartDate.GetHashCode();
+                }
                 if (this.PaymentType != null)
-                    hashCode = hashCode * 59 + this.PaymentType.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PaymentType.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -187,7 +198,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

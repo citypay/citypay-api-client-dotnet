@@ -58,10 +58,18 @@ namespace CityPayAPI.Model
         {
             this.Amount = amount;
             // to ensure "identifier" is required (not null)
-            this.Identifier = identifier ?? throw new ArgumentNullException("identifier is a required property for ChargeRequest and cannot be null");
+            if (identifier == null)
+            {
+                throw new ArgumentNullException("identifier is a required property for ChargeRequest and cannot be null");
+            }
+            this.Identifier = identifier;
             this.Merchantid = merchantid;
             // to ensure "token" is required (not null)
-            this.Token = token ?? throw new ArgumentNullException("token is a required property for ChargeRequest and cannot be null");
+            if (token == null)
+            {
+                throw new ArgumentNullException("token is a required property for ChargeRequest and cannot be null");
+            }
+            this.Token = token;
             this.AvsPostcodePolicy = avsPostcodePolicy;
             this.CardholderAgreement = cardholderAgreement;
             this.Csc = csc;
@@ -185,7 +193,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class ChargeRequest {\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  AvsPostcodePolicy: ").Append(AvsPostcodePolicy).Append("\n");
@@ -233,8 +241,9 @@ namespace CityPayAPI.Model
         public bool Equals(ChargeRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Amount == input.Amount ||
@@ -320,34 +329,60 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                hashCode = (hashCode * 59) + this.Amount.GetHashCode();
                 if (this.AvsPostcodePolicy != null)
-                    hashCode = hashCode * 59 + this.AvsPostcodePolicy.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AvsPostcodePolicy.GetHashCode();
+                }
                 if (this.CardholderAgreement != null)
-                    hashCode = hashCode * 59 + this.CardholderAgreement.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.CardholderAgreement.GetHashCode();
+                }
                 if (this.Csc != null)
-                    hashCode = hashCode * 59 + this.Csc.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Csc.GetHashCode();
+                }
                 if (this.CscPolicy != null)
-                    hashCode = hashCode * 59 + this.CscPolicy.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.CscPolicy.GetHashCode();
+                }
                 if (this.Currency != null)
-                    hashCode = hashCode * 59 + this.Currency.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Currency.GetHashCode();
+                }
                 if (this.DuplicatePolicy != null)
-                    hashCode = hashCode * 59 + this.DuplicatePolicy.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.DuplicatePolicy.GetHashCode();
+                }
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
                 if (this.Initiation != null)
-                    hashCode = hashCode * 59 + this.Initiation.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Initiation.GetHashCode();
+                }
                 if (this.MatchAvsa != null)
-                    hashCode = hashCode * 59 + this.MatchAvsa.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MatchAvsa.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
                 if (this.Threedsecure != null)
-                    hashCode = hashCode * 59 + this.Threedsecure.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Threedsecure.GetHashCode();
+                }
                 if (this.Token != null)
-                    hashCode = hashCode * 59 + this.Token.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Token.GetHashCode();
+                }
                 if (this.TransInfo != null)
-                    hashCode = hashCode * 59 + this.TransInfo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TransInfo.GetHashCode();
+                }
                 if (this.TransType != null)
-                    hashCode = hashCode * 59 + this.TransType.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TransType.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -357,64 +392,64 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // CardholderAgreement (string) maxLength
-            if(this.CardholderAgreement != null && this.CardholderAgreement.Length > 1)
+            if (this.CardholderAgreement != null && this.CardholderAgreement.Length > 1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardholderAgreement, length must be less than 1.", new [] { "CardholderAgreement" });
             }
 
             // Csc (string) maxLength
-            if(this.Csc != null && this.Csc.Length > 4)
+            if (this.Csc != null && this.Csc.Length > 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Csc, length must be less than 4.", new [] { "Csc" });
             }
 
             // Csc (string) minLength
-            if(this.Csc != null && this.Csc.Length < 3)
+            if (this.Csc != null && this.Csc.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Csc, length must be greater than 3.", new [] { "Csc" });
             }
 
             // Currency (string) maxLength
-            if(this.Currency != null && this.Currency.Length > 3)
+            if (this.Currency != null && this.Currency.Length > 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Currency, length must be less than 3.", new [] { "Currency" });
             }
 
             // Currency (string) minLength
-            if(this.Currency != null && this.Currency.Length < 3)
+            if (this.Currency != null && this.Currency.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Currency, length must be greater than 3.", new [] { "Currency" });
             }
 
             // Identifier (string) maxLength
-            if(this.Identifier != null && this.Identifier.Length > 50)
+            if (this.Identifier != null && this.Identifier.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
-            if(this.Identifier != null && this.Identifier.Length < 4)
+            if (this.Identifier != null && this.Identifier.Length < 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }
 
             // Initiation (string) maxLength
-            if(this.Initiation != null && this.Initiation.Length > 1)
+            if (this.Initiation != null && this.Initiation.Length > 1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Initiation, length must be less than 1.", new [] { "Initiation" });
             }
 
             // TransInfo (string) maxLength
-            if(this.TransInfo != null && this.TransInfo.Length > 50)
+            if (this.TransInfo != null && this.TransInfo.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransInfo, length must be less than 50.", new [] { "TransInfo" });
             }
 
             // TransType (string) maxLength
-            if(this.TransType != null && this.TransType.Length > 1)
+            if (this.TransType != null && this.TransType.Length > 1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransType, length must be less than 1.", new [] { "TransType" });
             }

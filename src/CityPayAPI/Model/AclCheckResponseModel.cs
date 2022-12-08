@@ -80,7 +80,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class AclCheckResponseModel {\n");
             sb.Append("  Acl: ").Append(Acl).Append("\n");
             sb.Append("  Cache: ").Append(Cache).Append("\n");
@@ -117,8 +117,9 @@ namespace CityPayAPI.Model
         public bool Equals(AclCheckResponseModel input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Acl == input.Acl ||
@@ -151,12 +152,18 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Acl != null)
-                    hashCode = hashCode * 59 + this.Acl.GetHashCode();
-                hashCode = hashCode * 59 + this.Cache.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Acl.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Cache.GetHashCode();
                 if (this.Ip != null)
-                    hashCode = hashCode * 59 + this.Ip.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Ip.GetHashCode();
+                }
                 if (this.Provider != null)
-                    hashCode = hashCode * 59 + this.Provider.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Provider.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -166,7 +173,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

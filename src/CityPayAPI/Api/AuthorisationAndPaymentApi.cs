@@ -34,8 +34,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Decision</returns>
-        Decision AuthorisationRequest(AuthRequest authRequest);
+        Decision AuthorisationRequest(AuthRequest authRequest, int operationIndex = 0);
 
         /// <summary>
         /// Authorisation
@@ -45,8 +46,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Decision</returns>
-        ApiResponse<Decision> AuthorisationRequestWithHttpInfo(AuthRequest authRequest);
+        ApiResponse<Decision> AuthorisationRequestWithHttpInfo(AuthRequest authRequest, int operationIndex = 0);
         /// <summary>
         /// Bin Lookup
         /// </summary>
@@ -55,8 +57,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Bin</returns>
-        Bin BinRangeLookupRequest(BinLookup binLookup);
+        Bin BinRangeLookupRequest(BinLookup binLookup, int operationIndex = 0);
 
         /// <summary>
         /// Bin Lookup
@@ -66,8 +69,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Bin</returns>
-        ApiResponse<Bin> BinRangeLookupRequestWithHttpInfo(BinLookup binLookup);
+        ApiResponse<Bin> BinRangeLookupRequestWithHttpInfo(BinLookup binLookup, int operationIndex = 0);
         /// <summary>
         /// CRes
         /// </summary>
@@ -76,8 +80,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        AuthResponse CResRequest(CResAuthRequest cResAuthRequest);
+        AuthResponse CResRequest(CResAuthRequest cResAuthRequest, int operationIndex = 0);
 
         /// <summary>
         /// CRes
@@ -87,8 +92,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> CResRequestWithHttpInfo(CResAuthRequest cResAuthRequest);
+        ApiResponse<AuthResponse> CResRequestWithHttpInfo(CResAuthRequest cResAuthRequest, int operationIndex = 0);
         /// <summary>
         /// Capture
         /// </summary>
@@ -97,8 +103,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement CaptureRequest(CaptureRequest captureRequest);
+        Acknowledgement CaptureRequest(CaptureRequest captureRequest, int operationIndex = 0);
 
         /// <summary>
         /// Capture
@@ -108,8 +115,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> CaptureRequestWithHttpInfo(CaptureRequest captureRequest);
+        ApiResponse<Acknowledgement> CaptureRequestWithHttpInfo(CaptureRequest captureRequest, int operationIndex = 0);
         /// <summary>
         /// PaRes
         /// </summary>
@@ -118,8 +126,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        AuthResponse PaResRequest(PaResAuthRequest paResAuthRequest);
+        AuthResponse PaResRequest(PaResAuthRequest paResAuthRequest, int operationIndex = 0);
 
         /// <summary>
         /// PaRes
@@ -129,8 +138,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> PaResRequestWithHttpInfo(PaResAuthRequest paResAuthRequest);
+        ApiResponse<AuthResponse> PaResRequestWithHttpInfo(PaResAuthRequest paResAuthRequest, int operationIndex = 0);
         /// <summary>
         /// Refund
         /// </summary>
@@ -139,8 +149,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        AuthResponse RefundRequest(RefundRequest refundRequest);
+        AuthResponse RefundRequest(RefundRequest refundRequest, int operationIndex = 0);
 
         /// <summary>
         /// Refund
@@ -150,8 +161,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        ApiResponse<AuthResponse> RefundRequestWithHttpInfo(RefundRequest refundRequest);
+        ApiResponse<AuthResponse> RefundRequestWithHttpInfo(RefundRequest refundRequest, int operationIndex = 0);
         /// <summary>
         /// Retrieval
         /// </summary>
@@ -160,8 +172,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthReferences</returns>
-        AuthReferences RetrievalRequest(RetrieveRequest retrieveRequest);
+        AuthReferences RetrievalRequest(RetrieveRequest retrieveRequest, int operationIndex = 0);
 
         /// <summary>
         /// Retrieval
@@ -171,8 +184,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthReferences</returns>
-        ApiResponse<AuthReferences> RetrievalRequestWithHttpInfo(RetrieveRequest retrieveRequest);
+        ApiResponse<AuthReferences> RetrievalRequestWithHttpInfo(RetrieveRequest retrieveRequest, int operationIndex = 0);
         /// <summary>
         /// Void
         /// </summary>
@@ -181,8 +195,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement VoidRequest(VoidRequest voidRequest);
+        Acknowledgement VoidRequest(VoidRequest voidRequest, int operationIndex = 0);
 
         /// <summary>
         /// Void
@@ -192,8 +207,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> VoidRequestWithHttpInfo(VoidRequest voidRequest);
+        ApiResponse<Acknowledgement> VoidRequestWithHttpInfo(VoidRequest voidRequest, int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -211,9 +227,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync(AuthRequest authRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Authorisation
@@ -223,9 +240,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Decision>> AuthorisationRequestWithHttpInfoAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Decision>> AuthorisationRequestWithHttpInfoAsync(AuthRequest authRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Bin Lookup
         /// </summary>
@@ -234,9 +252,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Bin</returns>
-        System.Threading.Tasks.Task<Bin> BinRangeLookupRequestAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Bin> BinRangeLookupRequestAsync(BinLookup binLookup, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Bin Lookup
@@ -246,9 +265,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Bin)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Bin>> BinRangeLookupRequestWithHttpInfoAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Bin>> BinRangeLookupRequestWithHttpInfoAsync(BinLookup binLookup, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// CRes
         /// </summary>
@@ -257,9 +277,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> CResRequestAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> CResRequestAsync(CResAuthRequest cResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// CRes
@@ -269,9 +290,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> CResRequestWithHttpInfoAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> CResRequestWithHttpInfoAsync(CResAuthRequest cResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Capture
         /// </summary>
@@ -280,9 +302,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync(CaptureRequest captureRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Capture
@@ -292,9 +315,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> CaptureRequestWithHttpInfoAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> CaptureRequestWithHttpInfoAsync(CaptureRequest captureRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// PaRes
         /// </summary>
@@ -303,9 +327,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync(PaResAuthRequest paResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// PaRes
@@ -315,9 +340,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> PaResRequestWithHttpInfoAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> PaResRequestWithHttpInfoAsync(PaResAuthRequest paResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Refund
         /// </summary>
@@ -326,9 +352,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync(RefundRequest refundRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Refund
@@ -338,9 +365,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> RefundRequestWithHttpInfoAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> RefundRequestWithHttpInfoAsync(RefundRequest refundRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Retrieval
         /// </summary>
@@ -349,9 +377,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthReferences</returns>
-        System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync(RetrieveRequest retrieveRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Retrieval
@@ -361,9 +390,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthReferences)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthReferences>> RetrievalRequestWithHttpInfoAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthReferences>> RetrievalRequestWithHttpInfoAsync(RetrieveRequest retrieveRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Void
         /// </summary>
@@ -372,9 +402,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync(VoidRequest voidRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Void
@@ -384,9 +415,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> VoidRequestWithHttpInfoAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> VoidRequestWithHttpInfoAsync(VoidRequest voidRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -512,8 +544,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Decision</returns>
-        public Decision AuthorisationRequest(AuthRequest authRequest)
+        public Decision AuthorisationRequest(AuthRequest authRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = AuthorisationRequestWithHttpInfo(authRequest);
             return localVarResponse.Data;
@@ -524,12 +557,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Decision</returns>
-        public CityPayAPI.Client.ApiResponse<Decision> AuthorisationRequestWithHttpInfo(AuthRequest authRequest)
+        public CityPayAPI.Client.ApiResponse<Decision> AuthorisationRequestWithHttpInfo(AuthRequest authRequest, int operationIndex = 0)
         {
             // verify the required parameter 'authRequest' is set
             if (authRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'authRequest' when calling AuthorisationAndPaymentApi->AuthorisationRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -545,12 +581,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = authRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.AuthorisationRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -560,11 +605,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Decision>("/v6/authorise", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AuthorisationRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -575,11 +622,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        public async System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Decision> AuthorisationRequestAsync(AuthRequest authRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await AuthorisationRequestWithHttpInfoAsync(authRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await AuthorisationRequestWithHttpInfoAsync(authRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -588,13 +636,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> AuthorisationRequestWithHttpInfoAsync(AuthRequest authRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> AuthorisationRequestWithHttpInfoAsync(AuthRequest authRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'authRequest' is set
             if (authRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'authRequest' when calling AuthorisationAndPaymentApi->AuthorisationRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -610,14 +661,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = authRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.AuthorisationRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -626,13 +685,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Decision>("/v6/authorise", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AuthorisationRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -643,8 +704,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Bin</returns>
-        public Bin BinRangeLookupRequest(BinLookup binLookup)
+        public Bin BinRangeLookupRequest(BinLookup binLookup, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Bin> localVarResponse = BinRangeLookupRequestWithHttpInfo(binLookup);
             return localVarResponse.Data;
@@ -655,12 +717,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Bin</returns>
-        public CityPayAPI.Client.ApiResponse<Bin> BinRangeLookupRequestWithHttpInfo(BinLookup binLookup)
+        public CityPayAPI.Client.ApiResponse<Bin> BinRangeLookupRequestWithHttpInfo(BinLookup binLookup, int operationIndex = 0)
         {
             // verify the required parameter 'binLookup' is set
             if (binLookup == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'binLookup' when calling AuthorisationAndPaymentApi->BinRangeLookupRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -676,12 +741,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = binLookup;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.BinRangeLookupRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -691,11 +765,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Bin>("/v6/bin", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("BinRangeLookupRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -706,11 +782,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Bin</returns>
-        public async System.Threading.Tasks.Task<Bin> BinRangeLookupRequestAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Bin> BinRangeLookupRequestAsync(BinLookup binLookup, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Bin> localVarResponse = await BinRangeLookupRequestWithHttpInfoAsync(binLookup, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Bin> localVarResponse = await BinRangeLookupRequestWithHttpInfoAsync(binLookup, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -719,13 +796,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="binLookup"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Bin)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Bin>> BinRangeLookupRequestWithHttpInfoAsync(BinLookup binLookup, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Bin>> BinRangeLookupRequestWithHttpInfoAsync(BinLookup binLookup, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'binLookup' is set
             if (binLookup == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'binLookup' when calling AuthorisationAndPaymentApi->BinRangeLookupRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -741,14 +821,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = binLookup;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.BinRangeLookupRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -757,13 +845,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Bin>("/v6/bin", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("BinRangeLookupRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -774,8 +864,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse CResRequest(CResAuthRequest cResAuthRequest)
+        public AuthResponse CResRequest(CResAuthRequest cResAuthRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = CResRequestWithHttpInfo(cResAuthRequest);
             return localVarResponse.Data;
@@ -786,12 +877,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse<AuthResponse> CResRequestWithHttpInfo(CResAuthRequest cResAuthRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> CResRequestWithHttpInfo(CResAuthRequest cResAuthRequest, int operationIndex = 0)
         {
             // verify the required parameter 'cResAuthRequest' is set
             if (cResAuthRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cResAuthRequest' when calling AuthorisationAndPaymentApi->CResRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -807,12 +901,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = cResAuthRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.CResRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -822,11 +925,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthResponse>("/v6/cres", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("CResRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -837,11 +942,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> CResRequestAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> CResRequestAsync(CResAuthRequest cResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await CResRequestWithHttpInfoAsync(cResAuthRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await CResRequestWithHttpInfoAsync(cResAuthRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -850,13 +956,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> CResRequestWithHttpInfoAsync(CResAuthRequest cResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> CResRequestWithHttpInfoAsync(CResAuthRequest cResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'cResAuthRequest' is set
             if (cResAuthRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cResAuthRequest' when calling AuthorisationAndPaymentApi->CResRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -872,14 +981,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = cResAuthRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.CResRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -888,13 +1005,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/v6/cres", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("CResRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -905,8 +1024,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement CaptureRequest(CaptureRequest captureRequest)
+        public Acknowledgement CaptureRequest(CaptureRequest captureRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = CaptureRequestWithHttpInfo(captureRequest);
             return localVarResponse.Data;
@@ -917,12 +1037,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> CaptureRequestWithHttpInfo(CaptureRequest captureRequest)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> CaptureRequestWithHttpInfo(CaptureRequest captureRequest, int operationIndex = 0)
         {
             // verify the required parameter 'captureRequest' is set
             if (captureRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'captureRequest' when calling AuthorisationAndPaymentApi->CaptureRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -938,12 +1061,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = captureRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.CaptureRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -953,11 +1085,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Acknowledgement>("/v6/capture", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("CaptureRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -968,11 +1102,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> CaptureRequestAsync(CaptureRequest captureRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await CaptureRequestWithHttpInfoAsync(captureRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await CaptureRequestWithHttpInfoAsync(captureRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -981,13 +1116,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="captureRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> CaptureRequestWithHttpInfoAsync(CaptureRequest captureRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> CaptureRequestWithHttpInfoAsync(CaptureRequest captureRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'captureRequest' is set
             if (captureRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'captureRequest' when calling AuthorisationAndPaymentApi->CaptureRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1003,14 +1141,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = captureRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.CaptureRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1019,13 +1165,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/v6/capture", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("CaptureRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1036,8 +1184,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse PaResRequest(PaResAuthRequest paResAuthRequest)
+        public AuthResponse PaResRequest(PaResAuthRequest paResAuthRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = PaResRequestWithHttpInfo(paResAuthRequest);
             return localVarResponse.Data;
@@ -1048,12 +1197,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse<AuthResponse> PaResRequestWithHttpInfo(PaResAuthRequest paResAuthRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> PaResRequestWithHttpInfo(PaResAuthRequest paResAuthRequest, int operationIndex = 0)
         {
             // verify the required parameter 'paResAuthRequest' is set
             if (paResAuthRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paResAuthRequest' when calling AuthorisationAndPaymentApi->PaResRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1069,12 +1221,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paResAuthRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.PaResRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1084,11 +1245,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthResponse>("/v6/pares", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("PaResRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1099,11 +1262,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> PaResRequestAsync(PaResAuthRequest paResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await PaResRequestWithHttpInfoAsync(paResAuthRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await PaResRequestWithHttpInfoAsync(paResAuthRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1112,13 +1276,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paResAuthRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> PaResRequestWithHttpInfoAsync(PaResAuthRequest paResAuthRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> PaResRequestWithHttpInfoAsync(PaResAuthRequest paResAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'paResAuthRequest' is set
             if (paResAuthRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paResAuthRequest' when calling AuthorisationAndPaymentApi->PaResRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1134,14 +1301,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paResAuthRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.PaResRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1150,13 +1325,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/v6/pares", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("PaResRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1167,8 +1344,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthResponse</returns>
-        public AuthResponse RefundRequest(RefundRequest refundRequest)
+        public AuthResponse RefundRequest(RefundRequest refundRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = RefundRequestWithHttpInfo(refundRequest);
             return localVarResponse.Data;
@@ -1179,12 +1357,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthResponse</returns>
-        public CityPayAPI.Client.ApiResponse<AuthResponse> RefundRequestWithHttpInfo(RefundRequest refundRequest)
+        public CityPayAPI.Client.ApiResponse<AuthResponse> RefundRequestWithHttpInfo(RefundRequest refundRequest, int operationIndex = 0)
         {
             // verify the required parameter 'refundRequest' is set
             if (refundRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'refundRequest' when calling AuthorisationAndPaymentApi->RefundRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1200,12 +1381,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = refundRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.RefundRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1215,11 +1405,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthResponse>("/v6/refund", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RefundRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1230,11 +1422,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> RefundRequestAsync(RefundRequest refundRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await RefundRequestWithHttpInfoAsync(refundRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await RefundRequestWithHttpInfoAsync(refundRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1243,13 +1436,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="refundRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> RefundRequestWithHttpInfoAsync(RefundRequest refundRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> RefundRequestWithHttpInfoAsync(RefundRequest refundRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'refundRequest' is set
             if (refundRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'refundRequest' when calling AuthorisationAndPaymentApi->RefundRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1265,14 +1461,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = refundRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.RefundRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1281,13 +1485,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthResponse>("/v6/refund", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RefundRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1298,8 +1504,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>AuthReferences</returns>
-        public AuthReferences RetrievalRequest(RetrieveRequest retrieveRequest)
+        public AuthReferences RetrievalRequest(RetrieveRequest retrieveRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<AuthReferences> localVarResponse = RetrievalRequestWithHttpInfo(retrieveRequest);
             return localVarResponse.Data;
@@ -1310,12 +1517,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of AuthReferences</returns>
-        public CityPayAPI.Client.ApiResponse<AuthReferences> RetrievalRequestWithHttpInfo(RetrieveRequest retrieveRequest)
+        public CityPayAPI.Client.ApiResponse<AuthReferences> RetrievalRequestWithHttpInfo(RetrieveRequest retrieveRequest, int operationIndex = 0)
         {
             // verify the required parameter 'retrieveRequest' is set
             if (retrieveRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'retrieveRequest' when calling AuthorisationAndPaymentApi->RetrievalRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1331,12 +1541,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = retrieveRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.RetrievalRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1346,11 +1565,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<AuthReferences>("/v6/retrieve", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RetrievalRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1361,11 +1582,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthReferences</returns>
-        public async System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthReferences> RetrievalRequestAsync(RetrieveRequest retrieveRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<AuthReferences> localVarResponse = await RetrievalRequestWithHttpInfoAsync(retrieveRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<AuthReferences> localVarResponse = await RetrievalRequestWithHttpInfoAsync(retrieveRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1374,13 +1596,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="retrieveRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthReferences)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthReferences>> RetrievalRequestWithHttpInfoAsync(RetrieveRequest retrieveRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthReferences>> RetrievalRequestWithHttpInfoAsync(RetrieveRequest retrieveRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'retrieveRequest' is set
             if (retrieveRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'retrieveRequest' when calling AuthorisationAndPaymentApi->RetrievalRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1396,14 +1621,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = retrieveRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.RetrievalRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1412,13 +1645,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<AuthReferences>("/v6/retrieve", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RetrievalRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1429,8 +1664,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement VoidRequest(VoidRequest voidRequest)
+        public Acknowledgement VoidRequest(VoidRequest voidRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = VoidRequestWithHttpInfo(voidRequest);
             return localVarResponse.Data;
@@ -1441,12 +1677,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> VoidRequestWithHttpInfo(VoidRequest voidRequest)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> VoidRequestWithHttpInfo(VoidRequest voidRequest, int operationIndex = 0)
         {
             // verify the required parameter 'voidRequest' is set
             if (voidRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'voidRequest' when calling AuthorisationAndPaymentApi->VoidRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1462,12 +1701,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = voidRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.VoidRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1477,11 +1725,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Acknowledgement>("/v6/void", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("VoidRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1492,11 +1742,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> VoidRequestAsync(VoidRequest voidRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await VoidRequestWithHttpInfoAsync(voidRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await VoidRequestWithHttpInfoAsync(voidRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1505,13 +1756,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="voidRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> VoidRequestWithHttpInfoAsync(VoidRequest voidRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> VoidRequestWithHttpInfoAsync(VoidRequest voidRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'voidRequest' is set
             if (voidRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'voidRequest' when calling AuthorisationAndPaymentApi->VoidRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1527,14 +1781,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = voidRequest;
+
+            localVarRequestOptions.Operation = "AuthorisationAndPaymentApi.VoidRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1543,13 +1805,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/v6/void", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("VoidRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;

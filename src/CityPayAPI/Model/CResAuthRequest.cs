@@ -53,7 +53,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class CResAuthRequest {\n");
             sb.Append("  Cres: ").Append(Cres).Append("\n");
             sb.Append("}\n");
@@ -87,8 +87,9 @@ namespace CityPayAPI.Model
         public bool Equals(CResAuthRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Cres == input.Cres ||
@@ -107,7 +108,9 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Cres != null)
-                    hashCode = hashCode * 59 + this.Cres.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cres.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -117,7 +120,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -95,7 +95,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class Decision {\n");
             sb.Append("  AuthenRequired: ").Append(AuthenRequired).Append("\n");
             sb.Append("  AuthResponse: ").Append(AuthResponse).Append("\n");
@@ -131,8 +131,9 @@ namespace CityPayAPI.Model
         public bool Equals(Decision input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AuthenRequired == input.AuthenRequired ||
@@ -161,11 +162,17 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AuthenRequired != null)
-                    hashCode = hashCode * 59 + this.AuthenRequired.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AuthenRequired.GetHashCode();
+                }
                 if (this.AuthResponse != null)
-                    hashCode = hashCode * 59 + this.AuthResponse.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AuthResponse.GetHashCode();
+                }
                 if (this.RequestChallenged != null)
-                    hashCode = hashCode * 59 + this.RequestChallenged.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.RequestChallenged.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -175,7 +182,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

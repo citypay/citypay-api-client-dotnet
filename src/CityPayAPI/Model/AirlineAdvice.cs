@@ -58,19 +58,43 @@ namespace CityPayAPI.Model
         public AirlineAdvice(string carrierName = default(string), bool conjunctionTicketIndicator = default(bool), bool eticketIndicator = default(bool), int noAirSegments = default(int), int numberInParty = default(int), string originalTicketNo = default(string), string passengerName = default(string), AirlineSegment segment1 = default(AirlineSegment), AirlineSegment segment2 = default(AirlineSegment), AirlineSegment segment3 = default(AirlineSegment), AirlineSegment segment4 = default(AirlineSegment), string ticketIssueCity = default(string), DateTime ticketIssueDate = default(DateTime), string ticketIssueName = default(string), string ticketNo = default(string), string transactionType = default(string))
         {
             // to ensure "carrierName" is required (not null)
-            this.CarrierName = carrierName ?? throw new ArgumentNullException("carrierName is a required property for AirlineAdvice and cannot be null");
+            if (carrierName == null)
+            {
+                throw new ArgumentNullException("carrierName is a required property for AirlineAdvice and cannot be null");
+            }
+            this.CarrierName = carrierName;
             this.NumberInParty = numberInParty;
             // to ensure "segment1" is required (not null)
-            this.Segment1 = segment1 ?? throw new ArgumentNullException("segment1 is a required property for AirlineAdvice and cannot be null");
+            if (segment1 == null)
+            {
+                throw new ArgumentNullException("segment1 is a required property for AirlineAdvice and cannot be null");
+            }
+            this.Segment1 = segment1;
             // to ensure "ticketIssueCity" is required (not null)
-            this.TicketIssueCity = ticketIssueCity ?? throw new ArgumentNullException("ticketIssueCity is a required property for AirlineAdvice and cannot be null");
+            if (ticketIssueCity == null)
+            {
+                throw new ArgumentNullException("ticketIssueCity is a required property for AirlineAdvice and cannot be null");
+            }
+            this.TicketIssueCity = ticketIssueCity;
             this.TicketIssueDate = ticketIssueDate;
             // to ensure "ticketIssueName" is required (not null)
-            this.TicketIssueName = ticketIssueName ?? throw new ArgumentNullException("ticketIssueName is a required property for AirlineAdvice and cannot be null");
+            if (ticketIssueName == null)
+            {
+                throw new ArgumentNullException("ticketIssueName is a required property for AirlineAdvice and cannot be null");
+            }
+            this.TicketIssueName = ticketIssueName;
             // to ensure "ticketNo" is required (not null)
-            this.TicketNo = ticketNo ?? throw new ArgumentNullException("ticketNo is a required property for AirlineAdvice and cannot be null");
+            if (ticketNo == null)
+            {
+                throw new ArgumentNullException("ticketNo is a required property for AirlineAdvice and cannot be null");
+            }
+            this.TicketNo = ticketNo;
             // to ensure "transactionType" is required (not null)
-            this.TransactionType = transactionType ?? throw new ArgumentNullException("transactionType is a required property for AirlineAdvice and cannot be null");
+            if (transactionType == null)
+            {
+                throw new ArgumentNullException("transactionType is a required property for AirlineAdvice and cannot be null");
+            }
+            this.TransactionType = transactionType;
             this.ConjunctionTicketIndicator = conjunctionTicketIndicator;
             this.EticketIndicator = eticketIndicator;
             this.NoAirSegments = noAirSegments;
@@ -196,7 +220,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class AirlineAdvice {\n");
             sb.Append("  CarrierName: ").Append(CarrierName).Append("\n");
             sb.Append("  ConjunctionTicketIndicator: ").Append(ConjunctionTicketIndicator).Append("\n");
@@ -245,8 +269,9 @@ namespace CityPayAPI.Model
         public bool Equals(AirlineAdvice input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.CarrierName == input.CarrierName ||
@@ -336,33 +361,57 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.CarrierName != null)
-                    hashCode = hashCode * 59 + this.CarrierName.GetHashCode();
-                hashCode = hashCode * 59 + this.ConjunctionTicketIndicator.GetHashCode();
-                hashCode = hashCode * 59 + this.EticketIndicator.GetHashCode();
-                hashCode = hashCode * 59 + this.NoAirSegments.GetHashCode();
-                hashCode = hashCode * 59 + this.NumberInParty.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.CarrierName.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.ConjunctionTicketIndicator.GetHashCode();
+                hashCode = (hashCode * 59) + this.EticketIndicator.GetHashCode();
+                hashCode = (hashCode * 59) + this.NoAirSegments.GetHashCode();
+                hashCode = (hashCode * 59) + this.NumberInParty.GetHashCode();
                 if (this.OriginalTicketNo != null)
-                    hashCode = hashCode * 59 + this.OriginalTicketNo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.OriginalTicketNo.GetHashCode();
+                }
                 if (this.PassengerName != null)
-                    hashCode = hashCode * 59 + this.PassengerName.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PassengerName.GetHashCode();
+                }
                 if (this.Segment1 != null)
-                    hashCode = hashCode * 59 + this.Segment1.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Segment1.GetHashCode();
+                }
                 if (this.Segment2 != null)
-                    hashCode = hashCode * 59 + this.Segment2.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Segment2.GetHashCode();
+                }
                 if (this.Segment3 != null)
-                    hashCode = hashCode * 59 + this.Segment3.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Segment3.GetHashCode();
+                }
                 if (this.Segment4 != null)
-                    hashCode = hashCode * 59 + this.Segment4.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Segment4.GetHashCode();
+                }
                 if (this.TicketIssueCity != null)
-                    hashCode = hashCode * 59 + this.TicketIssueCity.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TicketIssueCity.GetHashCode();
+                }
                 if (this.TicketIssueDate != null)
-                    hashCode = hashCode * 59 + this.TicketIssueDate.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TicketIssueDate.GetHashCode();
+                }
                 if (this.TicketIssueName != null)
-                    hashCode = hashCode * 59 + this.TicketIssueName.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TicketIssueName.GetHashCode();
+                }
                 if (this.TicketNo != null)
-                    hashCode = hashCode * 59 + this.TicketNo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TicketNo.GetHashCode();
+                }
                 if (this.TransactionType != null)
-                    hashCode = hashCode * 59 + this.TransactionType.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TransactionType.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -372,70 +421,64 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // CarrierName (string) maxLength
-            if(this.CarrierName != null && this.CarrierName.Length > 25)
+            if (this.CarrierName != null && this.CarrierName.Length > 25)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CarrierName, length must be less than 25.", new [] { "CarrierName" });
             }
 
             // NoAirSegments (int) maximum
-            if(this.NoAirSegments > (int)4)
+            if (this.NoAirSegments > (int)4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NoAirSegments, must be a value less than or equal to 4.", new [] { "NoAirSegments" });
             }
 
             // NoAirSegments (int) minimum
-            if(this.NoAirSegments < (int)0)
+            if (this.NoAirSegments < (int)0)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NoAirSegments, must be a value greater than or equal to 0.", new [] { "NoAirSegments" });
             }
 
             // OriginalTicketNo (string) maxLength
-            if(this.OriginalTicketNo != null && this.OriginalTicketNo.Length > 14)
+            if (this.OriginalTicketNo != null && this.OriginalTicketNo.Length > 14)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for OriginalTicketNo, length must be less than 14.", new [] { "OriginalTicketNo" });
             }
 
             // PassengerName (string) maxLength
-            if(this.PassengerName != null && this.PassengerName.Length > 25)
+            if (this.PassengerName != null && this.PassengerName.Length > 25)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PassengerName, length must be less than 25.", new [] { "PassengerName" });
             }
 
             // TicketIssueCity (string) maxLength
-            if(this.TicketIssueCity != null && this.TicketIssueCity.Length > 18)
+            if (this.TicketIssueCity != null && this.TicketIssueCity.Length > 18)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueCity, length must be less than 18.", new [] { "TicketIssueCity" });
             }
 
-            // TicketIssueDate (DateTime) maxLength
-            if(this.TicketIssueDate != null && this.TicketIssueDate.ToShortDateString().Length > 10)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueDate, length must be less than 10.", new [] { "TicketIssueDate" });
-            }
-
             // TicketIssueName (string) maxLength
-            if(this.TicketIssueName != null && this.TicketIssueName.Length > 26)
+            if (this.TicketIssueName != null && this.TicketIssueName.Length > 26)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueName, length must be less than 26.", new [] { "TicketIssueName" });
             }
 
             // TicketNo (string) maxLength
-            if(this.TicketNo != null && this.TicketNo.Length > 14)
+            if (this.TicketNo != null && this.TicketNo.Length > 14)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketNo, length must be less than 14.", new [] { "TicketNo" });
             }
 
             // TransactionType (string) maxLength
-            if(this.TransactionType != null && this.TransactionType.Length > 3)
+            if (this.TransactionType != null && this.TransactionType.Length > 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionType, length must be less than 3.", new [] { "TransactionType" });
             }
 
             // TransactionType (string) minLength
-            if(this.TransactionType != null && this.TransactionType.Length < 3)
+            if (this.TransactionType != null && this.TransactionType.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionType, length must be greater than 3.", new [] { "TransactionType" });
             }

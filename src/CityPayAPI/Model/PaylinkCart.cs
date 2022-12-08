@@ -106,7 +106,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkCart {\n");
             sb.Append("  Contents: ").Append(Contents).Append("\n");
             sb.Append("  Coupon: ").Append(Coupon).Append("\n");
@@ -146,8 +146,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkCart input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Contents == input.Contents ||
@@ -194,16 +195,24 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Contents != null)
-                    hashCode = hashCode * 59 + this.Contents.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Contents.GetHashCode();
+                }
                 if (this.Coupon != null)
-                    hashCode = hashCode * 59 + this.Coupon.GetHashCode();
-                hashCode = hashCode * 59 + this.Mode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Coupon.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Mode.GetHashCode();
                 if (this.ProductDescription != null)
-                    hashCode = hashCode * 59 + this.ProductDescription.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ProductDescription.GetHashCode();
+                }
                 if (this.ProductInformation != null)
-                    hashCode = hashCode * 59 + this.ProductInformation.GetHashCode();
-                hashCode = hashCode * 59 + this.Shipping.GetHashCode();
-                hashCode = hashCode * 59 + this.Tax.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ProductInformation.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Shipping.GetHashCode();
+                hashCode = (hashCode * 59) + this.Tax.GetHashCode();
                 return hashCode;
             }
         }
@@ -213,7 +222,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

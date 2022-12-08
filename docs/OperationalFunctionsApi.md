@@ -348,7 +348,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new OperationalFunctionsApi(config);
-            var clientid = clientid_example;  // string | The client id to return merchants for, specifying \"default\" will use the value in your api key.
+            var clientid = "clientid_example";  // string | The client id to return merchants for, specifying \"default\" will use the value in your api key.
 
             try
             {

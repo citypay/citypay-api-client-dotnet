@@ -54,7 +54,11 @@ namespace CityPayAPI.Model
         {
             this.Amount = amount;
             // to ensure "identifier" is required (not null)
-            this.Identifier = identifier ?? throw new ArgumentNullException("identifier is a required property for PaylinkTokenRequestModel and cannot be null");
+            if (identifier == null)
+            {
+                throw new ArgumentNullException("identifier is a required property for PaylinkTokenRequestModel and cannot be null");
+            }
+            this.Identifier = identifier;
             this.Merchantid = merchantid;
             this.Accountno = accountno;
             this.Cardholder = cardholder;
@@ -146,7 +150,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkTokenRequestModel {\n");
             sb.Append("  Accountno: ").Append(Accountno).Append("\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
@@ -190,8 +194,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkTokenRequestModel input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Accountno == input.Accountno ||
@@ -258,25 +263,43 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Accountno != null)
-                    hashCode = hashCode * 59 + this.Accountno.GetHashCode();
-                hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Accountno.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Amount.GetHashCode();
                 if (this.Cardholder != null)
-                    hashCode = hashCode * 59 + this.Cardholder.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cardholder.GetHashCode();
+                }
                 if (this.Cart != null)
-                    hashCode = hashCode * 59 + this.Cart.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cart.GetHashCode();
+                }
                 if (this.ClientVersion != null)
-                    hashCode = hashCode * 59 + this.ClientVersion.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ClientVersion.GetHashCode();
+                }
                 if (this.Config != null)
-                    hashCode = hashCode * 59 + this.Config.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Config.GetHashCode();
+                }
                 if (this.Email != null)
-                    hashCode = hashCode * 59 + this.Email.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Email.GetHashCode();
+                }
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
                 if (this.SubscriptionId != null)
-                    hashCode = hashCode * 59 + this.SubscriptionId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.SubscriptionId.GetHashCode();
+                }
                 if (this.TxType != null)
-                    hashCode = hashCode * 59 + this.TxType.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TxType.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -286,22 +309,22 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Email (string) maxLength
-            if(this.Email != null && this.Email.Length > 254)
+            if (this.Email != null && this.Email.Length > 254)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Email, length must be less than 254.", new [] { "Email" });
             }
 
             // Identifier (string) maxLength
-            if(this.Identifier != null && this.Identifier.Length > 50)
+            if (this.Identifier != null && this.Identifier.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
-            if(this.Identifier != null && this.Identifier.Length < 4)
+            if (this.Identifier != null && this.Identifier.Length < 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }

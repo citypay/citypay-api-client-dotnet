@@ -46,7 +46,11 @@ namespace CityPayAPI.Model
         {
             this.BatchDate = batchDate;
             // to ensure "batchStatus" is required (not null)
-            this.BatchStatus = batchStatus ?? throw new ArgumentNullException("batchStatus is a required property for Batch and cannot be null");
+            if (batchStatus == null)
+            {
+                throw new ArgumentNullException("batchStatus is a required property for Batch and cannot be null");
+            }
+            this.BatchStatus = batchStatus;
             this.BatchId = batchId;
         }
 
@@ -78,7 +82,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class Batch {\n");
             sb.Append("  BatchDate: ").Append(BatchDate).Append("\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
@@ -114,8 +118,9 @@ namespace CityPayAPI.Model
         public bool Equals(Batch input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.BatchDate == input.BatchDate ||
@@ -143,10 +148,14 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.BatchDate != null)
-                    hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
-                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BatchDate.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.BatchId.GetHashCode();
                 if (this.BatchStatus != null)
-                    hashCode = hashCode * 59 + this.BatchStatus.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BatchStatus.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -156,10 +165,10 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // BatchId (int) minimum
-            if(this.BatchId < (int)1)
+            if (this.BatchId < (int)1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
             }

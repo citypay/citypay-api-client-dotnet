@@ -48,7 +48,11 @@ namespace CityPayAPI.Model
             this.BatchDate = batchDate;
             this.BatchId = batchId;
             // to ensure "transactions" is required (not null)
-            this.Transactions = transactions ?? throw new ArgumentNullException("transactions is a required property for ProcessBatchRequest and cannot be null");
+            if (transactions == null)
+            {
+                throw new ArgumentNullException("transactions is a required property for ProcessBatchRequest and cannot be null");
+            }
+            this.Transactions = transactions;
             this.ClientAccountId = clientAccountId;
         }
 
@@ -86,7 +90,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class ProcessBatchRequest {\n");
             sb.Append("  BatchDate: ").Append(BatchDate).Append("\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
@@ -123,8 +127,9 @@ namespace CityPayAPI.Model
         public bool Equals(ProcessBatchRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.BatchDate == input.BatchDate ||
@@ -158,12 +163,18 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.BatchDate != null)
-                    hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
-                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BatchDate.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.BatchId.GetHashCode();
                 if (this.ClientAccountId != null)
-                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ClientAccountId.GetHashCode();
+                }
                 if (this.Transactions != null)
-                    hashCode = hashCode * 59 + this.Transactions.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Transactions.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -173,22 +184,22 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // BatchId (int) minimum
-            if(this.BatchId < (int)1)
+            if (this.BatchId < (int)1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
             }
 
             // ClientAccountId (string) maxLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
             }
 
             // ClientAccountId (string) minLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
             }

@@ -34,8 +34,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ProcessBatchResponse</returns>
-        ProcessBatchResponse BatchProcessRequest(ProcessBatchRequest processBatchRequest);
+        ProcessBatchResponse BatchProcessRequest(ProcessBatchRequest processBatchRequest, int operationIndex = 0);
 
         /// <summary>
         /// Batch Process Request
@@ -45,8 +46,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of ProcessBatchResponse</returns>
-        ApiResponse<ProcessBatchResponse> BatchProcessRequestWithHttpInfo(ProcessBatchRequest processBatchRequest);
+        ApiResponse<ProcessBatchResponse> BatchProcessRequestWithHttpInfo(ProcessBatchRequest processBatchRequest, int operationIndex = 0);
         /// <summary>
         /// BatchReportRequest
         /// </summary>
@@ -55,8 +57,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>BatchReportResponseModel</returns>
-        BatchReportResponseModel BatchReportRequest(BatchReportRequest batchReportRequest);
+        BatchReportResponseModel BatchReportRequest(BatchReportRequest batchReportRequest, int operationIndex = 0);
 
         /// <summary>
         /// BatchReportRequest
@@ -66,8 +69,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of BatchReportResponseModel</returns>
-        ApiResponse<BatchReportResponseModel> BatchReportRequestWithHttpInfo(BatchReportRequest batchReportRequest);
+        ApiResponse<BatchReportResponseModel> BatchReportRequestWithHttpInfo(BatchReportRequest batchReportRequest, int operationIndex = 0);
         /// <summary>
         /// CheckBatchStatus
         /// </summary>
@@ -76,8 +80,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CheckBatchStatusResponse</returns>
-        CheckBatchStatusResponse CheckBatchStatusRequest(CheckBatchStatus checkBatchStatus);
+        CheckBatchStatusResponse CheckBatchStatusRequest(CheckBatchStatus checkBatchStatus, int operationIndex = 0);
 
         /// <summary>
         /// CheckBatchStatus
@@ -87,8 +92,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CheckBatchStatusResponse</returns>
-        ApiResponse<CheckBatchStatusResponse> CheckBatchStatusRequestWithHttpInfo(CheckBatchStatus checkBatchStatus);
+        ApiResponse<CheckBatchStatusResponse> CheckBatchStatusRequestWithHttpInfo(CheckBatchStatus checkBatchStatus, int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -106,9 +112,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ProcessBatchResponse</returns>
-        System.Threading.Tasks.Task<ProcessBatchResponse> BatchProcessRequestAsync(ProcessBatchRequest processBatchRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ProcessBatchResponse> BatchProcessRequestAsync(ProcessBatchRequest processBatchRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Batch Process Request
@@ -118,9 +125,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ProcessBatchResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ProcessBatchResponse>> BatchProcessRequestWithHttpInfoAsync(ProcessBatchRequest processBatchRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ProcessBatchResponse>> BatchProcessRequestWithHttpInfoAsync(ProcessBatchRequest processBatchRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// BatchReportRequest
         /// </summary>
@@ -129,9 +137,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of BatchReportResponseModel</returns>
-        System.Threading.Tasks.Task<BatchReportResponseModel> BatchReportRequestAsync(BatchReportRequest batchReportRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<BatchReportResponseModel> BatchReportRequestAsync(BatchReportRequest batchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// BatchReportRequest
@@ -141,9 +150,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (BatchReportResponseModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<BatchReportResponseModel>> BatchReportRequestWithHttpInfoAsync(BatchReportRequest batchReportRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<BatchReportResponseModel>> BatchReportRequestWithHttpInfoAsync(BatchReportRequest batchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// CheckBatchStatus
         /// </summary>
@@ -152,9 +162,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckBatchStatusResponse</returns>
-        System.Threading.Tasks.Task<CheckBatchStatusResponse> CheckBatchStatusRequestAsync(CheckBatchStatus checkBatchStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CheckBatchStatusResponse> CheckBatchStatusRequestAsync(CheckBatchStatus checkBatchStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// CheckBatchStatus
@@ -164,9 +175,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckBatchStatusResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckBatchStatusResponse>> CheckBatchStatusRequestWithHttpInfoAsync(CheckBatchStatus checkBatchStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CheckBatchStatusResponse>> CheckBatchStatusRequestWithHttpInfoAsync(CheckBatchStatus checkBatchStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -292,8 +304,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ProcessBatchResponse</returns>
-        public ProcessBatchResponse BatchProcessRequest(ProcessBatchRequest processBatchRequest)
+        public ProcessBatchResponse BatchProcessRequest(ProcessBatchRequest processBatchRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<ProcessBatchResponse> localVarResponse = BatchProcessRequestWithHttpInfo(processBatchRequest);
             return localVarResponse.Data;
@@ -304,12 +317,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of ProcessBatchResponse</returns>
-        public CityPayAPI.Client.ApiResponse<ProcessBatchResponse> BatchProcessRequestWithHttpInfo(ProcessBatchRequest processBatchRequest)
+        public CityPayAPI.Client.ApiResponse<ProcessBatchResponse> BatchProcessRequestWithHttpInfo(ProcessBatchRequest processBatchRequest, int operationIndex = 0)
         {
             // verify the required parameter 'processBatchRequest' is set
             if (processBatchRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'processBatchRequest' when calling BatchProcessingApi->BatchProcessRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -325,12 +341,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = processBatchRequest;
+
+            localVarRequestOptions.Operation = "BatchProcessingApi.BatchProcessRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -340,11 +365,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<ProcessBatchResponse>("/v6/batch/process", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("BatchProcessRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -355,11 +382,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ProcessBatchResponse</returns>
-        public async System.Threading.Tasks.Task<ProcessBatchResponse> BatchProcessRequestAsync(ProcessBatchRequest processBatchRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<ProcessBatchResponse> BatchProcessRequestAsync(ProcessBatchRequest processBatchRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<ProcessBatchResponse> localVarResponse = await BatchProcessRequestWithHttpInfoAsync(processBatchRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<ProcessBatchResponse> localVarResponse = await BatchProcessRequestWithHttpInfoAsync(processBatchRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -368,13 +396,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="processBatchRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ProcessBatchResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ProcessBatchResponse>> BatchProcessRequestWithHttpInfoAsync(ProcessBatchRequest processBatchRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ProcessBatchResponse>> BatchProcessRequestWithHttpInfoAsync(ProcessBatchRequest processBatchRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'processBatchRequest' is set
             if (processBatchRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'processBatchRequest' when calling BatchProcessingApi->BatchProcessRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -390,14 +421,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = processBatchRequest;
+
+            localVarRequestOptions.Operation = "BatchProcessingApi.BatchProcessRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -406,13 +445,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<ProcessBatchResponse>("/v6/batch/process", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("BatchProcessRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -423,8 +464,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>BatchReportResponseModel</returns>
-        public BatchReportResponseModel BatchReportRequest(BatchReportRequest batchReportRequest)
+        public BatchReportResponseModel BatchReportRequest(BatchReportRequest batchReportRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<BatchReportResponseModel> localVarResponse = BatchReportRequestWithHttpInfo(batchReportRequest);
             return localVarResponse.Data;
@@ -435,12 +477,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of BatchReportResponseModel</returns>
-        public CityPayAPI.Client.ApiResponse<BatchReportResponseModel> BatchReportRequestWithHttpInfo(BatchReportRequest batchReportRequest)
+        public CityPayAPI.Client.ApiResponse<BatchReportResponseModel> BatchReportRequestWithHttpInfo(BatchReportRequest batchReportRequest, int operationIndex = 0)
         {
             // verify the required parameter 'batchReportRequest' is set
             if (batchReportRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'batchReportRequest' when calling BatchProcessingApi->BatchReportRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -456,12 +501,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = batchReportRequest;
+
+            localVarRequestOptions.Operation = "BatchProcessingApi.BatchReportRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -471,11 +525,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<BatchReportResponseModel>("/v6/batch/retrieve", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("BatchReportRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -486,11 +542,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of BatchReportResponseModel</returns>
-        public async System.Threading.Tasks.Task<BatchReportResponseModel> BatchReportRequestAsync(BatchReportRequest batchReportRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<BatchReportResponseModel> BatchReportRequestAsync(BatchReportRequest batchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<BatchReportResponseModel> localVarResponse = await BatchReportRequestWithHttpInfoAsync(batchReportRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<BatchReportResponseModel> localVarResponse = await BatchReportRequestWithHttpInfoAsync(batchReportRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -499,13 +556,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="batchReportRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (BatchReportResponseModel)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<BatchReportResponseModel>> BatchReportRequestWithHttpInfoAsync(BatchReportRequest batchReportRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<BatchReportResponseModel>> BatchReportRequestWithHttpInfoAsync(BatchReportRequest batchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'batchReportRequest' is set
             if (batchReportRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'batchReportRequest' when calling BatchProcessingApi->BatchReportRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -521,14 +581,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = batchReportRequest;
+
+            localVarRequestOptions.Operation = "BatchProcessingApi.BatchReportRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -537,13 +605,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<BatchReportResponseModel>("/v6/batch/retrieve", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("BatchReportRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -554,8 +624,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CheckBatchStatusResponse</returns>
-        public CheckBatchStatusResponse CheckBatchStatusRequest(CheckBatchStatus checkBatchStatus)
+        public CheckBatchStatusResponse CheckBatchStatusRequest(CheckBatchStatus checkBatchStatus, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<CheckBatchStatusResponse> localVarResponse = CheckBatchStatusRequestWithHttpInfo(checkBatchStatus);
             return localVarResponse.Data;
@@ -566,12 +637,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CheckBatchStatusResponse</returns>
-        public CityPayAPI.Client.ApiResponse<CheckBatchStatusResponse> CheckBatchStatusRequestWithHttpInfo(CheckBatchStatus checkBatchStatus)
+        public CityPayAPI.Client.ApiResponse<CheckBatchStatusResponse> CheckBatchStatusRequestWithHttpInfo(CheckBatchStatus checkBatchStatus, int operationIndex = 0)
         {
             // verify the required parameter 'checkBatchStatus' is set
             if (checkBatchStatus == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'checkBatchStatus' when calling BatchProcessingApi->CheckBatchStatusRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -587,12 +661,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = checkBatchStatus;
+
+            localVarRequestOptions.Operation = "BatchProcessingApi.CheckBatchStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -602,11 +685,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<CheckBatchStatusResponse>("/v6/batch/status", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("CheckBatchStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -617,11 +702,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckBatchStatusResponse</returns>
-        public async System.Threading.Tasks.Task<CheckBatchStatusResponse> CheckBatchStatusRequestAsync(CheckBatchStatus checkBatchStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CheckBatchStatusResponse> CheckBatchStatusRequestAsync(CheckBatchStatus checkBatchStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<CheckBatchStatusResponse> localVarResponse = await CheckBatchStatusRequestWithHttpInfoAsync(checkBatchStatus, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<CheckBatchStatusResponse> localVarResponse = await CheckBatchStatusRequestWithHttpInfoAsync(checkBatchStatus, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -630,13 +716,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="checkBatchStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckBatchStatusResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CheckBatchStatusResponse>> CheckBatchStatusRequestWithHttpInfoAsync(CheckBatchStatus checkBatchStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CheckBatchStatusResponse>> CheckBatchStatusRequestWithHttpInfoAsync(CheckBatchStatus checkBatchStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'checkBatchStatus' is set
             if (checkBatchStatus == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'checkBatchStatus' when calling BatchProcessingApi->CheckBatchStatusRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -652,14 +741,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = checkBatchStatus;
+
+            localVarRequestOptions.Operation = "BatchProcessingApi.CheckBatchStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -668,13 +765,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<CheckBatchStatusResponse>("/v6/batch/status", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("CheckBatchStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;

@@ -71,7 +71,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class AuthenRequired {\n");
             sb.Append("  AcsUrl: ").Append(AcsUrl).Append("\n");
             sb.Append("  Md: ").Append(Md).Append("\n");
@@ -107,8 +107,9 @@ namespace CityPayAPI.Model
         public bool Equals(AuthenRequired input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AcsUrl == input.AcsUrl ||
@@ -137,11 +138,17 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AcsUrl != null)
-                    hashCode = hashCode * 59 + this.AcsUrl.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AcsUrl.GetHashCode();
+                }
                 if (this.Md != null)
-                    hashCode = hashCode * 59 + this.Md.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Md.GetHashCode();
+                }
                 if (this.Pareq != null)
-                    hashCode = hashCode * 59 + this.Pareq.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Pareq.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -151,7 +158,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

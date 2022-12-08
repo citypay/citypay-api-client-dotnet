@@ -47,7 +47,11 @@ namespace CityPayAPI.Model
         public RegisterCard(string cardnumber = default(string), bool _default = default(bool), int expmonth = default(int), int expyear = default(int), string nameOnCard = default(string))
         {
             // to ensure "cardnumber" is required (not null)
-            this.Cardnumber = cardnumber ?? throw new ArgumentNullException("cardnumber is a required property for RegisterCard and cannot be null");
+            if (cardnumber == null)
+            {
+                throw new ArgumentNullException("cardnumber is a required property for RegisterCard and cannot be null");
+            }
+            this.Cardnumber = cardnumber;
             this.Expmonth = expmonth;
             this.Expyear = expyear;
             this.Default = _default;
@@ -95,7 +99,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class RegisterCard {\n");
             sb.Append("  Cardnumber: ").Append(Cardnumber).Append("\n");
             sb.Append("  Default: ").Append(Default).Append("\n");
@@ -133,8 +137,9 @@ namespace CityPayAPI.Model
         public bool Equals(RegisterCard input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Cardnumber == input.Cardnumber ||
@@ -170,12 +175,16 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Cardnumber != null)
-                    hashCode = hashCode * 59 + this.Cardnumber.GetHashCode();
-                hashCode = hashCode * 59 + this.Default.GetHashCode();
-                hashCode = hashCode * 59 + this.Expmonth.GetHashCode();
-                hashCode = hashCode * 59 + this.Expyear.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cardnumber.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Default.GetHashCode();
+                hashCode = (hashCode * 59) + this.Expmonth.GetHashCode();
+                hashCode = (hashCode * 59) + this.Expyear.GetHashCode();
                 if (this.NameOnCard != null)
-                    hashCode = hashCode * 59 + this.NameOnCard.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.NameOnCard.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -185,52 +194,52 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Cardnumber (string) maxLength
-            if(this.Cardnumber != null && this.Cardnumber.Length > 22)
+            if (this.Cardnumber != null && this.Cardnumber.Length > 22)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Cardnumber, length must be less than 22.", new [] { "Cardnumber" });
             }
 
             // Cardnumber (string) minLength
-            if(this.Cardnumber != null && this.Cardnumber.Length < 12)
+            if (this.Cardnumber != null && this.Cardnumber.Length < 12)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Cardnumber, length must be greater than 12.", new [] { "Cardnumber" });
             }
 
             // Expmonth (int) maximum
-            if(this.Expmonth > (int)12)
+            if (this.Expmonth > (int)12)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expmonth, must be a value less than or equal to 12.", new [] { "Expmonth" });
             }
 
             // Expmonth (int) minimum
-            if(this.Expmonth < (int)1)
+            if (this.Expmonth < (int)1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expmonth, must be a value greater than or equal to 1.", new [] { "Expmonth" });
             }
 
             // Expyear (int) maximum
-            if(this.Expyear > (int)2100)
+            if (this.Expyear > (int)2100)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expyear, must be a value less than or equal to 2100.", new [] { "Expyear" });
             }
 
             // Expyear (int) minimum
-            if(this.Expyear < (int)2000)
+            if (this.Expyear < (int)2000)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expyear, must be a value greater than or equal to 2000.", new [] { "Expyear" });
             }
 
             // NameOnCard (string) maxLength
-            if(this.NameOnCard != null && this.NameOnCard.Length > 45)
+            if (this.NameOnCard != null && this.NameOnCard.Length > 45)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be less than 45.", new [] { "NameOnCard" });
             }
 
             // NameOnCard (string) minLength
-            if(this.NameOnCard != null && this.NameOnCard.Length < 2)
+            if (this.NameOnCard != null && this.NameOnCard.Length < 2)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be greater than 2.", new [] { "NameOnCard" });
             }

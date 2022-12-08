@@ -234,7 +234,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkConfig {\n");
             sb.Append("  AcsMode: ").Append(AcsMode).Append("\n");
             sb.Append("  CustomParams: ").Append(CustomParams).Append("\n");
@@ -289,8 +289,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkConfig input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AcsMode == input.AcsMode ||
@@ -418,47 +419,87 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AcsMode != null)
-                    hashCode = hashCode * 59 + this.AcsMode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AcsMode.GetHashCode();
+                }
                 if (this.CustomParams != null)
-                    hashCode = hashCode * 59 + this.CustomParams.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.CustomParams.GetHashCode();
+                }
                 if (this.Descriptor != null)
-                    hashCode = hashCode * 59 + this.Descriptor.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Descriptor.GetHashCode();
+                }
                 if (this.ExpireIn != null)
-                    hashCode = hashCode * 59 + this.ExpireIn.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ExpireIn.GetHashCode();
+                }
                 if (this.FieldGuard != null)
-                    hashCode = hashCode * 59 + this.FieldGuard.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.FieldGuard.GetHashCode();
+                }
                 if (this.LockParams != null)
-                    hashCode = hashCode * 59 + this.LockParams.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.LockParams.GetHashCode();
+                }
                 if (this.MerchLogo != null)
-                    hashCode = hashCode * 59 + this.MerchLogo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MerchLogo.GetHashCode();
+                }
                 if (this.MerchTerms != null)
-                    hashCode = hashCode * 59 + this.MerchTerms.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MerchTerms.GetHashCode();
+                }
                 if (this.Options != null)
-                    hashCode = hashCode * 59 + this.Options.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Options.GetHashCode();
+                }
                 if (this.PartPayments != null)
-                    hashCode = hashCode * 59 + this.PartPayments.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PartPayments.GetHashCode();
+                }
                 if (this.PassThroughData != null)
-                    hashCode = hashCode * 59 + this.PassThroughData.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PassThroughData.GetHashCode();
+                }
                 if (this.PassThroughHeaders != null)
-                    hashCode = hashCode * 59 + this.PassThroughHeaders.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PassThroughHeaders.GetHashCode();
+                }
                 if (this.Postback != null)
-                    hashCode = hashCode * 59 + this.Postback.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Postback.GetHashCode();
+                }
                 if (this.PostbackPassword != null)
-                    hashCode = hashCode * 59 + this.PostbackPassword.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PostbackPassword.GetHashCode();
+                }
                 if (this.PostbackPolicy != null)
-                    hashCode = hashCode * 59 + this.PostbackPolicy.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PostbackPolicy.GetHashCode();
+                }
                 if (this.PostbackUsername != null)
-                    hashCode = hashCode * 59 + this.PostbackUsername.GetHashCode();
-                hashCode = hashCode * 59 + this.RedirectDelay.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.PostbackUsername.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.RedirectDelay.GetHashCode();
                 if (this.RedirectFailure != null)
-                    hashCode = hashCode * 59 + this.RedirectFailure.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.RedirectFailure.GetHashCode();
+                }
                 if (this.RedirectSuccess != null)
-                    hashCode = hashCode * 59 + this.RedirectSuccess.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.RedirectSuccess.GetHashCode();
+                }
                 if (this.Renderer != null)
-                    hashCode = hashCode * 59 + this.Renderer.GetHashCode();
-                hashCode = hashCode * 59 + this.ReturnParams.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Renderer.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.ReturnParams.GetHashCode();
                 if (this.Ui != null)
-                    hashCode = hashCode * 59 + this.Ui.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Ui.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -468,7 +509,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

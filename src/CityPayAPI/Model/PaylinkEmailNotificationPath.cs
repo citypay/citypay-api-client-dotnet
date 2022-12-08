@@ -47,7 +47,11 @@ namespace CityPayAPI.Model
         public PaylinkEmailNotificationPath(List<string> bcc = default(List<string>), List<string> cc = default(List<string>), List<string> replyTo = default(List<string>), string template = default(string), List<string> to = default(List<string>))
         {
             // to ensure "to" is required (not null)
-            this.To = to ?? throw new ArgumentNullException("to is a required property for PaylinkEmailNotificationPath and cannot be null");
+            if (to == null)
+            {
+                throw new ArgumentNullException("to is a required property for PaylinkEmailNotificationPath and cannot be null");
+            }
+            this.To = to;
             this.Bcc = bcc;
             this.Cc = cc;
             this.ReplyTo = replyTo;
@@ -91,7 +95,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkEmailNotificationPath {\n");
             sb.Append("  Bcc: ").Append(Bcc).Append("\n");
             sb.Append("  Cc: ").Append(Cc).Append("\n");
@@ -129,8 +133,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkEmailNotificationPath input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Bcc == input.Bcc ||
@@ -173,15 +178,25 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Bcc != null)
-                    hashCode = hashCode * 59 + this.Bcc.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Bcc.GetHashCode();
+                }
                 if (this.Cc != null)
-                    hashCode = hashCode * 59 + this.Cc.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cc.GetHashCode();
+                }
                 if (this.ReplyTo != null)
-                    hashCode = hashCode * 59 + this.ReplyTo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ReplyTo.GetHashCode();
+                }
                 if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Template.GetHashCode();
+                }
                 if (this.To != null)
-                    hashCode = hashCode * 59 + this.To.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.To.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -191,7 +206,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

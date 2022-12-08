@@ -71,7 +71,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkStateEvent {\n");
             sb.Append("  Datetime: ").Append(Datetime).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
@@ -107,8 +107,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkStateEvent input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Datetime == input.Datetime ||
@@ -137,11 +138,17 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Datetime != null)
-                    hashCode = hashCode * 59 + this.Datetime.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Datetime.GetHashCode();
+                }
                 if (this.Message != null)
-                    hashCode = hashCode * 59 + this.Message.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Message.GetHashCode();
+                }
                 if (this.State != null)
-                    hashCode = hashCode * 59 + this.State.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.State.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -151,7 +158,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

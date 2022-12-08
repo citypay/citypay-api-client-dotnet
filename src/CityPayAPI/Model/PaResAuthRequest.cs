@@ -44,9 +44,17 @@ namespace CityPayAPI.Model
         public PaResAuthRequest(string md = default(string), string pares = default(string))
         {
             // to ensure "md" is required (not null)
-            this.Md = md ?? throw new ArgumentNullException("md is a required property for PaResAuthRequest and cannot be null");
+            if (md == null)
+            {
+                throw new ArgumentNullException("md is a required property for PaResAuthRequest and cannot be null");
+            }
+            this.Md = md;
             // to ensure "pares" is required (not null)
-            this.Pares = pares ?? throw new ArgumentNullException("pares is a required property for PaResAuthRequest and cannot be null");
+            if (pares == null)
+            {
+                throw new ArgumentNullException("pares is a required property for PaResAuthRequest and cannot be null");
+            }
+            this.Pares = pares;
         }
 
         /// <summary>
@@ -69,7 +77,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaResAuthRequest {\n");
             sb.Append("  Md: ").Append(Md).Append("\n");
             sb.Append("  Pares: ").Append(Pares).Append("\n");
@@ -104,8 +112,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaResAuthRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Md == input.Md ||
@@ -129,9 +138,13 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Md != null)
-                    hashCode = hashCode * 59 + this.Md.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Md.GetHashCode();
+                }
                 if (this.Pares != null)
-                    hashCode = hashCode * 59 + this.Pares.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Pares.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -141,7 +154,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

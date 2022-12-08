@@ -107,7 +107,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkAddress {\n");
             sb.Append("  Address1: ").Append(Address1).Append("\n");
             sb.Append("  Address2: ").Append(Address2).Append("\n");
@@ -147,8 +147,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkAddress input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Address1 == input.Address1 ||
@@ -197,19 +198,33 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Address1 != null)
-                    hashCode = hashCode * 59 + this.Address1.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Address1.GetHashCode();
+                }
                 if (this.Address2 != null)
-                    hashCode = hashCode * 59 + this.Address2.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Address2.GetHashCode();
+                }
                 if (this.Address3 != null)
-                    hashCode = hashCode * 59 + this.Address3.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Address3.GetHashCode();
+                }
                 if (this.Area != null)
-                    hashCode = hashCode * 59 + this.Area.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Area.GetHashCode();
+                }
                 if (this.Country != null)
-                    hashCode = hashCode * 59 + this.Country.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Country.GetHashCode();
+                }
                 if (this.Label != null)
-                    hashCode = hashCode * 59 + this.Label.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Label.GetHashCode();
+                }
                 if (this.Postcode != null)
-                    hashCode = hashCode * 59 + this.Postcode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Postcode.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -219,58 +234,58 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Address1 (string) maxLength
-            if(this.Address1 != null && this.Address1.Length > 50)
+            if (this.Address1 != null && this.Address1.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Address1, length must be less than 50.", new [] { "Address1" });
             }
 
             // Address2 (string) maxLength
-            if(this.Address2 != null && this.Address2.Length > 50)
+            if (this.Address2 != null && this.Address2.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Address2, length must be less than 50.", new [] { "Address2" });
             }
 
             // Address3 (string) maxLength
-            if(this.Address3 != null && this.Address3.Length > 50)
+            if (this.Address3 != null && this.Address3.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Address3, length must be less than 50.", new [] { "Address3" });
             }
 
             // Area (string) maxLength
-            if(this.Area != null && this.Area.Length > 50)
+            if (this.Area != null && this.Area.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Area, length must be less than 50.", new [] { "Area" });
             }
 
             // Country (string) maxLength
-            if(this.Country != null && this.Country.Length > 2)
+            if (this.Country != null && this.Country.Length > 2)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Country, length must be less than 2.", new [] { "Country" });
             }
 
             // Country (string) minLength
-            if(this.Country != null && this.Country.Length < 2)
+            if (this.Country != null && this.Country.Length < 2)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Country, length must be greater than 2.", new [] { "Country" });
             }
 
             // Label (string) maxLength
-            if(this.Label != null && this.Label.Length > 20)
+            if (this.Label != null && this.Label.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Label, length must be less than 20.", new [] { "Label" });
             }
 
             // Label (string) minLength
-            if(this.Label != null && this.Label.Length < 2)
+            if (this.Label != null && this.Label.Length < 2)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Label, length must be greater than 2.", new [] { "Label" });
             }
 
             // Postcode (string) maxLength
-            if(this.Postcode != null && this.Postcode.Length > 16)
+            if (this.Postcode != null && this.Postcode.Length > 16)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Postcode, length must be less than 16.", new [] { "Postcode" });
             }

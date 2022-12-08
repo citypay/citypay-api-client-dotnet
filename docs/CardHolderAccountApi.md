@@ -45,8 +45,8 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
-            var cardId = cardId_example;  // string | The id of the card that is presented by a call to retrieve a card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var cardId = "cardId_example";  // string | The id of the card that is presented by a call to retrieve a card holder account.
 
             try
             {
@@ -154,7 +154,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
             var registerCard = new RegisterCard(); // RegisterCard | 
 
             try
@@ -262,8 +262,8 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
-            var cardId = cardId_example;  // string | The id of the card that is presented by a call to retrieve a card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var cardId = "cardId_example";  // string | The id of the card that is presented by a call to retrieve a card holder account.
             var cardStatus = new CardStatus(); // CardStatus | 
 
             try
@@ -365,7 +365,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
             var contactDetails = new ContactDetails(); // ContactDetails | 
 
             try
@@ -567,7 +567,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
 
             try
             {
@@ -667,7 +667,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
 
             try
             {
@@ -772,7 +772,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
 
             try
             {
@@ -877,7 +877,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new CardHolderAccountApi(config);
-            var accountid = accountid_example;  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
+            var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
             var accountStatus = new AccountStatus(); // AccountStatus | 
 
             try

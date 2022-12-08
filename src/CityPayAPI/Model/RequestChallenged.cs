@@ -89,7 +89,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class RequestChallenged {\n");
             sb.Append("  AcsUrl: ").Append(AcsUrl).Append("\n");
             sb.Append("  Creq: ").Append(Creq).Append("\n");
@@ -127,8 +127,9 @@ namespace CityPayAPI.Model
         public bool Equals(RequestChallenged input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AcsUrl == input.AcsUrl ||
@@ -165,13 +166,19 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AcsUrl != null)
-                    hashCode = hashCode * 59 + this.AcsUrl.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AcsUrl.GetHashCode();
+                }
                 if (this.Creq != null)
-                    hashCode = hashCode * 59 + this.Creq.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Creq.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
                 if (this.ThreedserverTransId != null)
-                    hashCode = hashCode * 59 + this.ThreedserverTransId.GetHashCode();
-                hashCode = hashCode * 59 + this.Transno.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ThreedserverTransId.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Transno.GetHashCode();
                 return hashCode;
             }
         }
@@ -181,7 +188,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -58,7 +58,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class BinLookup {\n");
             sb.Append("  Bin: ").Append(Bin).Append("\n");
             sb.Append("}\n");
@@ -92,8 +92,9 @@ namespace CityPayAPI.Model
         public bool Equals(BinLookup input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Bin == input.Bin ||
@@ -110,7 +111,7 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.Bin.GetHashCode();
+                hashCode = (hashCode * 59) + this.Bin.GetHashCode();
                 return hashCode;
             }
         }
@@ -120,7 +121,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

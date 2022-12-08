@@ -133,7 +133,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkCardHolder {\n");
             sb.Append("  AcceptHeaders: ").Append(AcceptHeaders).Append("\n");
             sb.Append("  Address: ").Append(Address).Append("\n");
@@ -176,8 +176,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkCardHolder input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AcceptHeaders == input.AcceptHeaders ||
@@ -241,25 +242,45 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AcceptHeaders != null)
-                    hashCode = hashCode * 59 + this.AcceptHeaders.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AcceptHeaders.GetHashCode();
+                }
                 if (this.Address != null)
-                    hashCode = hashCode * 59 + this.Address.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Address.GetHashCode();
+                }
                 if (this.Company != null)
-                    hashCode = hashCode * 59 + this.Company.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Company.GetHashCode();
+                }
                 if (this.Email != null)
-                    hashCode = hashCode * 59 + this.Email.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Email.GetHashCode();
+                }
                 if (this.Firstname != null)
-                    hashCode = hashCode * 59 + this.Firstname.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Firstname.GetHashCode();
+                }
                 if (this.Lastname != null)
-                    hashCode = hashCode * 59 + this.Lastname.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Lastname.GetHashCode();
+                }
                 if (this.MobileNo != null)
-                    hashCode = hashCode * 59 + this.MobileNo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MobileNo.GetHashCode();
+                }
                 if (this.RemoteAddr != null)
-                    hashCode = hashCode * 59 + this.RemoteAddr.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.RemoteAddr.GetHashCode();
+                }
                 if (this.Title != null)
-                    hashCode = hashCode * 59 + this.Title.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Title.GetHashCode();
+                }
                 if (this.UserAgent != null)
-                    hashCode = hashCode * 59 + this.UserAgent.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.UserAgent.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -269,22 +290,22 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Company (string) maxLength
-            if(this.Company != null && this.Company.Length > 50)
+            if (this.Company != null && this.Company.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Company, length must be less than 50.", new [] { "Company" });
             }
 
             // Email (string) maxLength
-            if(this.Email != null && this.Email.Length > 254)
+            if (this.Email != null && this.Email.Length > 254)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Email, length must be less than 254.", new [] { "Email" });
             }
 
             // MobileNo (string) maxLength
-            if(this.MobileNo != null && this.MobileNo.Length > 20)
+            if (this.MobileNo != null && this.MobileNo.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MobileNo, length must be less than 20.", new [] { "MobileNo" });
             }

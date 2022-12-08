@@ -34,15 +34,30 @@ namespace CityPayAPI.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PaylinkFieldGuardModel" /> class.
         /// </summary>
+        /// <param name="fieldType">A type of HTML element that should be displayed such as text, password, url. Any HTML5 input type value may be supplied..</param>
         /// <param name="label">A label for the field guard to display on the authentication page..</param>
+        /// <param name="maxlen">A maximum length of any value supplied in the field guard form. Used for validating entry..</param>
+        /// <param name="minlen">A minimum length of any value supplied in the field guard form. Used for validating entry..</param>
         /// <param name="name">A field name which is used to refer to a field which is guarded..</param>
-        /// <param name="type">A type of HTML element that should be displayed such as text, password, url. Any HTML5 input type value may be supplied..</param>
-        public PaylinkFieldGuardModel(string label = default(string), string name = default(string), string type = default(string))
+        /// <param name="regex">A JavaScript regular expression value which can be used to validate the data provided in the field guard entry form. Used for validating entry..</param>
+        /// <param name="value">A value directly associated with the field guard. Any value provided at this level will be considered as sensitive and not logged..</param>
+        public PaylinkFieldGuardModel(string fieldType = default(string), string label = default(string), int maxlen = default(int), int minlen = default(int), string name = default(string), string regex = default(string), string value = default(string))
         {
+            this.FieldType = fieldType;
             this.Label = label;
+            this.Maxlen = maxlen;
+            this.Minlen = minlen;
             this.Name = name;
-            this.Type = type;
+            this.Regex = regex;
+            this.Value = value;
         }
+
+        /// <summary>
+        /// A type of HTML element that should be displayed such as text, password, url. Any HTML5 input type value may be supplied.
+        /// </summary>
+        /// <value>A type of HTML element that should be displayed such as text, password, url. Any HTML5 input type value may be supplied.</value>
+        [DataMember(Name = "field_type", EmitDefaultValue = false)]
+        public string FieldType { get; set; }
 
         /// <summary>
         /// A label for the field guard to display on the authentication page.
@@ -52,6 +67,20 @@ namespace CityPayAPI.Model
         public string Label { get; set; }
 
         /// <summary>
+        /// A maximum length of any value supplied in the field guard form. Used for validating entry.
+        /// </summary>
+        /// <value>A maximum length of any value supplied in the field guard form. Used for validating entry.</value>
+        [DataMember(Name = "maxlen", EmitDefaultValue = false)]
+        public int Maxlen { get; set; }
+
+        /// <summary>
+        /// A minimum length of any value supplied in the field guard form. Used for validating entry.
+        /// </summary>
+        /// <value>A minimum length of any value supplied in the field guard form. Used for validating entry.</value>
+        [DataMember(Name = "minlen", EmitDefaultValue = false)]
+        public int Minlen { get; set; }
+
+        /// <summary>
         /// A field name which is used to refer to a field which is guarded.
         /// </summary>
         /// <value>A field name which is used to refer to a field which is guarded.</value>
@@ -59,11 +88,18 @@ namespace CityPayAPI.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// A type of HTML element that should be displayed such as text, password, url. Any HTML5 input type value may be supplied.
+        /// A JavaScript regular expression value which can be used to validate the data provided in the field guard entry form. Used for validating entry.
         /// </summary>
-        /// <value>A type of HTML element that should be displayed such as text, password, url. Any HTML5 input type value may be supplied.</value>
-        [DataMember(Name = "type", EmitDefaultValue = false)]
-        public string Type { get; set; }
+        /// <value>A JavaScript regular expression value which can be used to validate the data provided in the field guard entry form. Used for validating entry.</value>
+        [DataMember(Name = "regex", EmitDefaultValue = false)]
+        public string Regex { get; set; }
+
+        /// <summary>
+        /// A value directly associated with the field guard. Any value provided at this level will be considered as sensitive and not logged.
+        /// </summary>
+        /// <value>A value directly associated with the field guard. Any value provided at this level will be considered as sensitive and not logged.</value>
+        [DataMember(Name = "value", EmitDefaultValue = false)]
+        public string Value { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -71,11 +107,15 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkFieldGuardModel {\n");
+            sb.Append("  FieldType: ").Append(FieldType).Append("\n");
             sb.Append("  Label: ").Append(Label).Append("\n");
+            sb.Append("  Maxlen: ").Append(Maxlen).Append("\n");
+            sb.Append("  Minlen: ").Append(Minlen).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  Regex: ").Append(Regex).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -107,13 +147,27 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkFieldGuardModel input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
+                (
+                    this.FieldType == input.FieldType ||
+                    (this.FieldType != null &&
+                    this.FieldType.Equals(input.FieldType))
+                ) && 
                 (
                     this.Label == input.Label ||
                     (this.Label != null &&
                     this.Label.Equals(input.Label))
+                ) && 
+                (
+                    this.Maxlen == input.Maxlen ||
+                    this.Maxlen.Equals(input.Maxlen)
+                ) && 
+                (
+                    this.Minlen == input.Minlen ||
+                    this.Minlen.Equals(input.Minlen)
                 ) && 
                 (
                     this.Name == input.Name ||
@@ -121,9 +175,14 @@ namespace CityPayAPI.Model
                     this.Name.Equals(input.Name))
                 ) && 
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Regex == input.Regex ||
+                    (this.Regex != null &&
+                    this.Regex.Equals(input.Regex))
+                ) && 
+                (
+                    this.Value == input.Value ||
+                    (this.Value != null &&
+                    this.Value.Equals(input.Value))
                 );
         }
 
@@ -136,12 +195,28 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
+                if (this.FieldType != null)
+                {
+                    hashCode = (hashCode * 59) + this.FieldType.GetHashCode();
+                }
                 if (this.Label != null)
-                    hashCode = hashCode * 59 + this.Label.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Label.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Maxlen.GetHashCode();
+                hashCode = (hashCode * 59) + this.Minlen.GetHashCode();
                 if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
+                }
+                if (this.Regex != null)
+                {
+                    hashCode = (hashCode * 59) + this.Regex.GetHashCode();
+                }
+                if (this.Value != null)
+                {
+                    hashCode = (hashCode * 59) + this.Value.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -151,7 +226,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

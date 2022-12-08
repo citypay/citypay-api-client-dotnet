@@ -56,10 +56,18 @@ namespace CityPayAPI.Model
         public PaylinkTokenCreated(PaylinkAttachmentResult attachments = default(PaylinkAttachmentResult), string bps = default(string), DateTime dateCreated = default(DateTime), List<PaylinkErrorCode> errors = default(List<PaylinkErrorCode>), string id = default(string), string identifier = default(string), string mode = default(string), string qrCode = default(string), int result = default(int), string serverVersion = default(string), string source = default(string), string token = default(string), string url = default(string), string usc = default(string))
         {
             // to ensure "id" is required (not null)
-            this.Id = id ?? throw new ArgumentNullException("id is a required property for PaylinkTokenCreated and cannot be null");
+            if (id == null)
+            {
+                throw new ArgumentNullException("id is a required property for PaylinkTokenCreated and cannot be null");
+            }
+            this.Id = id;
             this.Result = result;
             // to ensure "token" is required (not null)
-            this.Token = token ?? throw new ArgumentNullException("token is a required property for PaylinkTokenCreated and cannot be null");
+            if (token == null)
+            {
+                throw new ArgumentNullException("token is a required property for PaylinkTokenCreated and cannot be null");
+            }
+            this.Token = token;
             this.Attachments = attachments;
             this.Bps = bps;
             this.DateCreated = dateCreated;
@@ -175,7 +183,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkTokenCreated {\n");
             sb.Append("  Attachments: ").Append(Attachments).Append("\n");
             sb.Append("  Bps: ").Append(Bps).Append("\n");
@@ -222,8 +230,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkTokenCreated input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Attachments == input.Attachments ||
@@ -307,32 +316,58 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Attachments != null)
-                    hashCode = hashCode * 59 + this.Attachments.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Attachments.GetHashCode();
+                }
                 if (this.Bps != null)
-                    hashCode = hashCode * 59 + this.Bps.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Bps.GetHashCode();
+                }
                 if (this.DateCreated != null)
-                    hashCode = hashCode * 59 + this.DateCreated.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.DateCreated.GetHashCode();
+                }
                 if (this.Errors != null)
-                    hashCode = hashCode * 59 + this.Errors.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Errors.GetHashCode();
+                }
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Id.GetHashCode();
+                }
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
                 if (this.Mode != null)
-                    hashCode = hashCode * 59 + this.Mode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Mode.GetHashCode();
+                }
                 if (this.QrCode != null)
-                    hashCode = hashCode * 59 + this.QrCode.GetHashCode();
-                hashCode = hashCode * 59 + this.Result.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.QrCode.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Result.GetHashCode();
                 if (this.ServerVersion != null)
-                    hashCode = hashCode * 59 + this.ServerVersion.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ServerVersion.GetHashCode();
+                }
                 if (this.Source != null)
-                    hashCode = hashCode * 59 + this.Source.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Source.GetHashCode();
+                }
                 if (this.Token != null)
-                    hashCode = hashCode * 59 + this.Token.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Token.GetHashCode();
+                }
                 if (this.Url != null)
-                    hashCode = hashCode * 59 + this.Url.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Url.GetHashCode();
+                }
                 if (this.Usc != null)
-                    hashCode = hashCode * 59 + this.Usc.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Usc.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -342,7 +377,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

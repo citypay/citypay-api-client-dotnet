@@ -98,7 +98,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkPartPayments {\n");
             sb.Append("  Enabled: ").Append(Enabled).Append("\n");
             sb.Append("  Floor: ").Append(Floor).Append("\n");
@@ -137,8 +137,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkPartPayments input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Enabled == input.Enabled ||
@@ -182,17 +183,29 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Enabled != null)
-                    hashCode = hashCode * 59 + this.Enabled.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Enabled.GetHashCode();
+                }
                 if (this.Floor != null)
-                    hashCode = hashCode * 59 + this.Floor.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Floor.GetHashCode();
+                }
                 if (this.Max != null)
-                    hashCode = hashCode * 59 + this.Max.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Max.GetHashCode();
+                }
                 if (this.MaxRate != null)
-                    hashCode = hashCode * 59 + this.MaxRate.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MaxRate.GetHashCode();
+                }
                 if (this.Min != null)
-                    hashCode = hashCode * 59 + this.Min.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Min.GetHashCode();
+                }
                 if (this.MinRate != null)
-                    hashCode = hashCode * 59 + this.MinRate.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MinRate.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -202,7 +215,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

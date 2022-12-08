@@ -42,13 +42,25 @@ namespace CityPayAPI.Model
         /// <param name="data">base64 encoding of the file if less than 32kb in size..</param>
         /// <param name="filename">The name of the attachment normally taken from the filename. You should not include the filename path as appropriate. (required).</param>
         /// <param name="mimeType">The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported. (required).</param>
-        public PaylinkAttachmentRequest(string data = default(string), string filename = default(string), string mimeType = default(string))
+        /// <param name="name">A name for the file to identify it to the card holder when it is displayed in the payment form. For example Invoice, Statement..</param>
+        /// <param name="retention">The retention period in days of the attachment. Defaults to 180 days..</param>
+        public PaylinkAttachmentRequest(string data = default(string), string filename = default(string), string mimeType = default(string), string name = default(string), int retention = default(int))
         {
             // to ensure "filename" is required (not null)
-            this.Filename = filename ?? throw new ArgumentNullException("filename is a required property for PaylinkAttachmentRequest and cannot be null");
+            if (filename == null)
+            {
+                throw new ArgumentNullException("filename is a required property for PaylinkAttachmentRequest and cannot be null");
+            }
+            this.Filename = filename;
             // to ensure "mimeType" is required (not null)
-            this.MimeType = mimeType ?? throw new ArgumentNullException("mimeType is a required property for PaylinkAttachmentRequest and cannot be null");
+            if (mimeType == null)
+            {
+                throw new ArgumentNullException("mimeType is a required property for PaylinkAttachmentRequest and cannot be null");
+            }
+            this.MimeType = mimeType;
             this.Data = data;
+            this.Name = name;
+            this.Retention = retention;
         }
 
         /// <summary>
@@ -73,16 +85,32 @@ namespace CityPayAPI.Model
         public string MimeType { get; set; }
 
         /// <summary>
+        /// A name for the file to identify it to the card holder when it is displayed in the payment form. For example Invoice, Statement.
+        /// </summary>
+        /// <value>A name for the file to identify it to the card holder when it is displayed in the payment form. For example Invoice, Statement.</value>
+        [DataMember(Name = "name", EmitDefaultValue = false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The retention period in days of the attachment. Defaults to 180 days.
+        /// </summary>
+        /// <value>The retention period in days of the attachment. Defaults to 180 days.</value>
+        [DataMember(Name = "retention", EmitDefaultValue = false)]
+        public int Retention { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkAttachmentRequest {\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  Filename: ").Append(Filename).Append("\n");
             sb.Append("  MimeType: ").Append(MimeType).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Retention: ").Append(Retention).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -114,8 +142,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkAttachmentRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Data == input.Data ||
@@ -131,6 +160,15 @@ namespace CityPayAPI.Model
                     this.MimeType == input.MimeType ||
                     (this.MimeType != null &&
                     this.MimeType.Equals(input.MimeType))
+                ) && 
+                (
+                    this.Name == input.Name ||
+                    (this.Name != null &&
+                    this.Name.Equals(input.Name))
+                ) && 
+                (
+                    this.Retention == input.Retention ||
+                    this.Retention.Equals(input.Retention)
                 );
         }
 
@@ -144,11 +182,22 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Data != null)
-                    hashCode = hashCode * 59 + this.Data.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Data.GetHashCode();
+                }
                 if (this.Filename != null)
-                    hashCode = hashCode * 59 + this.Filename.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Filename.GetHashCode();
+                }
                 if (this.MimeType != null)
-                    hashCode = hashCode * 59 + this.MimeType.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MimeType.GetHashCode();
+                }
+                if (this.Name != null)
+                {
+                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Retention.GetHashCode();
                 return hashCode;
             }
         }
@@ -158,7 +207,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

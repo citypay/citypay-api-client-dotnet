@@ -35,8 +35,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement TokenAdjustmentRequest(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest);
+        Acknowledgement TokenAdjustmentRequest(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0);
 
         /// <summary>
         /// Paylink Token Adjustment
@@ -47,8 +48,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> TokenAdjustmentRequestWithHttpInfo(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest);
+        ApiResponse<Acknowledgement> TokenAdjustmentRequestWithHttpInfo(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0);
         /// <summary>
         /// Close Paylink Token
         /// </summary>
@@ -57,8 +59,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement TokenCloseRequest(string token);
+        Acknowledgement TokenCloseRequest(string token, int operationIndex = 0);
 
         /// <summary>
         /// Close Paylink Token
@@ -68,29 +71,32 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> TokenCloseRequestWithHttpInfo(string token);
+        ApiResponse<Acknowledgement> TokenCloseRequestWithHttpInfo(string token, int operationIndex = 0);
         /// <summary>
         /// Create Bill Payment Paylink Token
         /// </summary>
         /// <remarks>
-        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenCreated</returns>
-        PaylinkTokenCreated TokenCreateBillPaymentRequest(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest);
+        PaylinkTokenCreated TokenCreateBillPaymentRequest(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0);
 
         /// <summary>
         /// Create Bill Payment Paylink Token
         /// </summary>
         /// <remarks>
-        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenCreated</returns>
-        ApiResponse<PaylinkTokenCreated> TokenCreateBillPaymentRequestWithHttpInfo(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest);
+        ApiResponse<PaylinkTokenCreated> TokenCreateBillPaymentRequestWithHttpInfo(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0);
         /// <summary>
         /// Create Paylink Token
         /// </summary>
@@ -99,8 +105,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenCreated</returns>
-        PaylinkTokenCreated TokenCreateRequest(PaylinkTokenRequestModel paylinkTokenRequestModel);
+        PaylinkTokenCreated TokenCreateRequest(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0);
 
         /// <summary>
         /// Create Paylink Token
@@ -110,8 +117,32 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenCreated</returns>
-        ApiResponse<PaylinkTokenCreated> TokenCreateRequestWithHttpInfo(PaylinkTokenRequestModel paylinkTokenRequestModel);
+        ApiResponse<PaylinkTokenCreated> TokenCreateRequestWithHttpInfo(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0);
+        /// <summary>
+        /// Purges any attachments for a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Purges any attachments for a token for GDPR or DP reasons.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>Acknowledgement</returns>
+        Acknowledgement TokenPurgeAttachmentsRequest(string token, int operationIndex = 0);
+
+        /// <summary>
+        /// Purges any attachments for a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Purges any attachments for a token for GDPR or DP reasons.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Acknowledgement</returns>
+        ApiResponse<Acknowledgement> TokenPurgeAttachmentsRequestWithHttpInfo(string token, int operationIndex = 0);
         /// <summary>
         /// Reconcile Paylink Token
         /// </summary>
@@ -120,8 +151,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement TokenReconciledRequest(string token);
+        Acknowledgement TokenReconciledRequest(string token, int operationIndex = 0);
 
         /// <summary>
         /// Reconcile Paylink Token
@@ -131,8 +163,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> TokenReconciledRequestWithHttpInfo(string token);
+        ApiResponse<Acknowledgement> TokenReconciledRequestWithHttpInfo(string token, int operationIndex = 0);
         /// <summary>
         /// Reopen Paylink Token
         /// </summary>
@@ -141,8 +174,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement TokenReopenRequest(string token);
+        Acknowledgement TokenReopenRequest(string token, int operationIndex = 0);
 
         /// <summary>
         /// Reopen Paylink Token
@@ -152,8 +186,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> TokenReopenRequestWithHttpInfo(string token);
+        ApiResponse<Acknowledgement> TokenReopenRequestWithHttpInfo(string token, int operationIndex = 0);
         /// <summary>
         /// Paylink Token Audit
         /// </summary>
@@ -162,8 +197,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenStatusChangeResponse</returns>
-        PaylinkTokenStatusChangeResponse TokenStatusChangesRequest(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest);
+        PaylinkTokenStatusChangeResponse TokenStatusChangesRequest(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0);
 
         /// <summary>
         /// Paylink Token Audit
@@ -173,8 +209,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenStatusChangeResponse</returns>
-        ApiResponse<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestWithHttpInfo(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest);
+        ApiResponse<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestWithHttpInfo(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0);
         /// <summary>
         /// Paylink Token Status
         /// </summary>
@@ -183,8 +220,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenStatus</returns>
-        PaylinkTokenStatus TokenStatusRequest(string token);
+        PaylinkTokenStatus TokenStatusRequest(string token, int operationIndex = 0);
 
         /// <summary>
         /// Paylink Token Status
@@ -194,8 +232,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenStatus</returns>
-        ApiResponse<PaylinkTokenStatus> TokenStatusRequestWithHttpInfo(string token);
+        ApiResponse<PaylinkTokenStatus> TokenStatusRequestWithHttpInfo(string token, int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -214,9 +253,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Paylink Token Adjustment
@@ -227,9 +267,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Close Paylink Token
         /// </summary>
@@ -238,9 +279,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Close Paylink Token
@@ -250,32 +292,35 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Create Bill Payment Paylink Token
         /// </summary>
         /// <remarks>
-        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Create Bill Payment Paylink Token
         /// </summary>
         /// <remarks>
-        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Create Paylink Token
         /// </summary>
@@ -284,9 +329,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Create Paylink Token
@@ -296,9 +342,35 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Purges any attachments for a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Purges any attachments for a token for GDPR or DP reasons.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Acknowledgement</returns>
+        System.Threading.Tasks.Task<Acknowledgement> TokenPurgeAttachmentsRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Purges any attachments for a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Purges any attachments for a token for GDPR or DP reasons.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Acknowledgement)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenPurgeAttachmentsRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Reconcile Paylink Token
         /// </summary>
@@ -307,9 +379,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Reconcile Paylink Token
@@ -319,9 +392,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Reopen Paylink Token
         /// </summary>
@@ -330,9 +404,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Reopen Paylink Token
@@ -342,9 +417,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Paylink Token Audit
         /// </summary>
@@ -353,9 +429,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatusChangeResponse</returns>
-        System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Paylink Token Audit
@@ -365,9 +442,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatusChangeResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatusChangeResponse>> TokenStatusChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatusChangeResponse>> TokenStatusChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Paylink Token Status
         /// </summary>
@@ -376,9 +454,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatus</returns>
-        System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Paylink Token Status
@@ -388,9 +467,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatus)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -517,8 +597,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement TokenAdjustmentRequest(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest)
+        public Acknowledgement TokenAdjustmentRequest(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = TokenAdjustmentRequestWithHttpInfo(token, paylinkAdjustmentRequest);
             return localVarResponse.Data;
@@ -530,16 +611,21 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenAdjustmentRequestWithHttpInfo(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenAdjustmentRequestWithHttpInfo(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0)
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenAdjustmentRequest");
+            }
 
             // verify the required parameter 'paylinkAdjustmentRequest' is set
             if (paylinkAdjustmentRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkAdjustmentRequest' when calling PaylinkApi->TokenAdjustmentRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -555,13 +641,22 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
             localVarRequestOptions.Data = paylinkAdjustmentRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenAdjustmentRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -571,11 +666,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Acknowledgement>("/paylink/{token}/adjustment", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenAdjustmentRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -587,11 +684,12 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenAdjustmentRequestWithHttpInfoAsync(token, paylinkAdjustmentRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenAdjustmentRequestWithHttpInfoAsync(token, paylinkAdjustmentRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -601,17 +699,22 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
         /// <param name="paylinkAdjustmentRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenAdjustmentRequest");
+            }
 
             // verify the required parameter 'paylinkAdjustmentRequest' is set
             if (paylinkAdjustmentRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkAdjustmentRequest' when calling PaylinkApi->TokenAdjustmentRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -627,15 +730,23 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
             localVarRequestOptions.Data = paylinkAdjustmentRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenAdjustmentRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -644,13 +755,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/paylink/{token}/adjustment", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenAdjustmentRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -661,8 +774,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement TokenCloseRequest(string token)
+        public Acknowledgement TokenCloseRequest(string token, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = TokenCloseRequestWithHttpInfo(token);
             return localVarResponse.Data;
@@ -673,12 +787,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenCloseRequestWithHttpInfo(string token)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenCloseRequestWithHttpInfo(string token, int operationIndex = 0)
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenCloseRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -692,12 +809,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCloseRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -707,11 +833,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Put<Acknowledgement>("/paylink/{token}/close", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenCloseRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -722,11 +850,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenCloseRequestWithHttpInfoAsync(token, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenCloseRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -735,13 +864,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenCloseRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -755,14 +887,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCloseRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -771,41 +911,47 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PutAsync<Acknowledgement>("/paylink/{token}/close", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenCloseRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
         }
 
         /// <summary>
-        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenCreated</returns>
-        public PaylinkTokenCreated TokenCreateBillPaymentRequest(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest)
+        public PaylinkTokenCreated TokenCreateBillPaymentRequest(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = TokenCreateBillPaymentRequestWithHttpInfo(paylinkBillPaymentTokenRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenCreated</returns>
-        public CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> TokenCreateBillPaymentRequestWithHttpInfo(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest)
+        public CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> TokenCreateBillPaymentRequestWithHttpInfo(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0)
         {
             // verify the required parameter 'paylinkBillPaymentTokenRequest' is set
             if (paylinkBillPaymentTokenRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkBillPaymentTokenRequest' when calling PaylinkApi->TokenCreateBillPaymentRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -821,12 +967,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paylinkBillPaymentTokenRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCreateBillPaymentRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -836,41 +991,47 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<PaylinkTokenCreated>("/paylink/bill-payment", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenCreateBillPaymentRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
         }
 
         /// <summary>
-        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = await TokenCreateBillPaymentRequestWithHttpInfoAsync(paylinkBillPaymentTokenRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = await TokenCreateBillPaymentRequestWithHttpInfoAsync(paylinkBillPaymentTokenRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;notification-path\&quot;: [     {       \&quot;channel\&quot;: \&quot;sms\&quot;,       \&quot;to\&quot;: \&quot;+441534884000\&quot;     },     {       \&quot;channel\&quot;: \&quot;email\&quot;,       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]     }   ] }  &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
+        /// Create Bill Payment Paylink Token CityPay Paylink supports invoice and bill payment services by allowing merchants to raise an invoice in their systems and associate the invoice with a Paylink checkout token. CityPay will co-ordinate the checkout flow in relationship with your customer. Our bill payment solution may be used to streamline the payment flow with cardholders to allow your invoice to be paid promptly and via multiple payment channels such as Card Payment, Apple Pay or Google Pay.  The bill payment service allows  1. setting up notification paths to an end customer, such as SMS or Email 2. enabling attachments to be included with Paylink tokens 3. produce chaser notifications for unpaid invoices 4. provide callbacks for notification of the payment of an invoice 5. support part payments against an invoice 6. support of field guards to protect the payment screen 7. support of status reporting on tokens 8. URL short codes for SMS notifications  &lt;img src&#x3D;\&quot;../images/merchant-BPS-workflow.png\&quot; alt&#x3D;\&quot;Paylink BPSv2 Overview\&quot; width&#x3D;\&quot;50%\&quot;/&gt;    ### Notification Paths  Notification paths can be provided which identify the channels for communication of the invoice availability. Up to 3 notification paths may be provided per request.  Each notification uses a template to generate the body of the message. This allows for variable text to be sent out and customised for each call.  SMS messages use URL Short Codes (USC) as a payment link to the invoice payment page. This allows for a standard payment URL to be shortened for optimised usage in SMS. For instance a URL of &#x60;https://checkout.citypay.com/PL1234/s348yb8yna4a48n2f8nq2f3msgyng-psn348ynaw8ynaw/en&#x60; becomes &#x60;citypay.com/Za48na3x&#x60;. Each USC is unique however it is a requirement that each USC generated is protected with Field Guards to ensure that sensitive data (such as customer contact details and GDPR) is protected.  To send a notification path, append a &#x60;notification-path&#x60; property to the request.  &#x60;&#x60;&#x60;json  {   \&quot;sms_notification_path\&quot;: {       \&quot;to\&quot;: \&quot;+441534884000\&quot;   },   \&quot;email_notification_path\&quot;: {       \&quot;to\&quot;: [\&quot;help-desk@citypay.com\&quot;],       \&quot;cc\&quot;: [\&quot;third-party@citypay.com\&quot;],       \&quot;reply\&quot;: [\&quot;help@my-company.com\&quot;]   } } &#x60;&#x60;&#x60;  Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token  - &#x60;BillPaymentSmsNotificationQueued&#x60; - identifies when an SMS notification has been queued for delivery - &#x60;BillPaymentSmsNotificationSent&#x60; - identifies when an SMS notification has been sent to the upstream network - &#x60;BillPaymentSmsNotificationDelivered&#x60; - identifies when an SMS notification has been delivered as notified by the upstream network - &#x60;BillPaymentSmsNotificationUndelivered&#x60; - identifies when an SMS notification has undelivered notification is provided by the upstream network - &#x60;BillPaymentSmsNotificationFailure&#x60; - identifies when an SMS notification has failed - &#x60;BillPaymentEmailNotificationQueued&#x60; -  identifies when an email notification has been queued for delivery - &#x60;BillPaymentEmailNotificationSent&#x60; -  identifies when an email notification has been accepted by our SMS forwarder - &#x60;BillPaymentEmailNotificationFailure&#x60; - identifies when an email notification has failed delivery   #### SMS Notification Path  SMS originated from a CityPay pool of numbers and by default only sends to country codes where the service is registered. SMSs may contain a From field which is configured as part of you onboarding and have a name associated to identify the service origin. For example if your business is titled &#x60;Health Surgery Ltd&#x60; the SMS may be sent to originate from &#x60;Health Surgery&#x60;.   SMS is also configured for a \&quot;polite mode\&quot;. This mode ensures that SMSs aren&#39;t sent in the middle of the night when backend services ordinarily run. SMSs will be queued until the time range is deemed as polite. Normally this is between 8am and 9pm.  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string   | Reserved | The phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format to send the message to. |  #### Email Notification Paths  | Field    | Type     | Usage    | Description                                                                                     | |- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | template | string   | Reserved | An optional template name to use a template other than the default.                             | | to       | string[] | Required | An array of email addresses to be used for delivery. A maximum of 5 addresses can be added.     | | cc       | string[] | Required | An array of email addresses to be used for cc delivery. A maximum of 5 addresses can be added.  | | bcc      | string[] | Required | An array of email addresses to be used for bcc delivery. A maximum of 5 addresses can be added. | | reply_to | string[] | Required | An array of email addresses to be used for the Reply-To header of an email.     |   ### Field Guards  To ensure that invoices are paid by the intended recipient, Paylink supports the addition of Field Guards.  A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be requested.  &lt;img src&#x3D;\&quot;../images/paylink-field-guards.png\&quot; alt&#x3D;\&quot;Paylink Field Guards\&quot; width&#x3D;\&quot;50%\&quot;/&gt;  To determine the source value of the field, each field name is searched in the order of  - identifier - cardholder data such as name - custom parameters - pass through data  If no field values are found, the token request returns a D041 validation error.  #### Authentication and Validation  When values are entered by the user, resultant comparisons are performed by  1. Transliteration of both the source value and entered value. For example, names with accents (e.g. é will become e) 2. Only Alphanumeric values are retained any whitespace or special characters are ignored 3. Case is ignored  Should all values match, the user is authenticated and can continue to the payment form rendered by the Paylink server.  On successful login, an event will be added to include that the access guard validated access.  #### Access-Key  To ensure that a user does not need to re-enter these values multiple times, a cookie is pushed to the user’s browser with an access-key digest value. This value will be presented to the server on each refresh therefore allowing the guard to accept the call. Each value is uniquely stored per merchant account and cannot be shared cross merchant. The lifetime of the cookie is set to 24 hours.  #### Brute Force Prevention  To prevent multiple calls hitting the server, attempting a brute force attack, the login process  1. is fronted by a contemporary web application firewall 2. creates an event for each token when access was denied 3. should the number of failed events breach more than 5 in 30 minutes, the token is locked for an hour 4. should the number of events breach more than 20 the token is fully locked  ### Attachments  Attachments can be included in the request in 2 ways  1. Via a data element direct in the request 2. Via a URL upload to a provided pre-signed URL  The decision of which option is dependent on the size of the attachments. Should the attachment size be greater than 32kb a URL upload is required. Small attachments can be included in the JSON request. This is to prevent our web firewall from blocking your request and to also ensure efficiency of larger file uploads.  There is a maximum of 3 attachments that can be added to a request.  &#x60;&#x60;&#x60;json     [{       \&quot;filename\&quot;: \&quot;invoice1.pdf\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     },{       \&quot;filename\&quot;: \&quot;invoice2.pdf\&quot;,       \&quot;data\&quot;: \&quot;b4sE64Enc0dEd...&#x3D;\&quot;,       \&quot;mime-type\&quot;: \&quot;application/pdf\&quot;     }] &#x60;&#x60;&#x60;  | Field     | Type   | Usage    | Description                                                                                                                                          | |- -- -- -- -- --|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -| | filename  | string | Required | The name of the attachment normally taken from the filename. You should not include the filename path as appropriate                                 | | data      | string | Optional | base64 encoding of the file if less than 32kb in size                                                                                                | | mime-type | string | Required | The mime type of the attachment as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html). Currently only &#x60;application/pdf&#x60; is supported |   #### Attachment Result  A result of an attachment specifies whether the attachment was successfully added or whether a further upload is requried  | Field  | Type   | Usage    | Description                                                                                                                                       | |- -- -- -- -|- -- -- -- -|- -- -- -- -- -|- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --| | result | string | Required | &#x60;OK&#x60; should the file have uploaded or &#x60;UPLOAD&#x60; if the file is required to be uploaded.                                                            | | name   | string | Required | The filename that was specified in the upload process                                                                                             | | url    | string | Optional | Should an upload be required, this URL is available for an upload to be issued. The URL is only available for uploads for 24 hours from creation. | 
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkBillPaymentTokenRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'paylinkBillPaymentTokenRequest' is set
             if (paylinkBillPaymentTokenRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkBillPaymentTokenRequest' when calling PaylinkApi->TokenCreateBillPaymentRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -886,14 +1047,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paylinkBillPaymentTokenRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCreateBillPaymentRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -902,13 +1071,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<PaylinkTokenCreated>("/paylink/bill-payment", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenCreateBillPaymentRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -919,8 +1090,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenCreated</returns>
-        public PaylinkTokenCreated TokenCreateRequest(PaylinkTokenRequestModel paylinkTokenRequestModel)
+        public PaylinkTokenCreated TokenCreateRequest(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = TokenCreateRequestWithHttpInfo(paylinkTokenRequestModel);
             return localVarResponse.Data;
@@ -931,12 +1103,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenCreated</returns>
-        public CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> TokenCreateRequestWithHttpInfo(PaylinkTokenRequestModel paylinkTokenRequestModel)
+        public CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> TokenCreateRequestWithHttpInfo(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0)
         {
             // verify the required parameter 'paylinkTokenRequestModel' is set
             if (paylinkTokenRequestModel == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenRequestModel' when calling PaylinkApi->TokenCreateRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -952,12 +1127,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paylinkTokenRequestModel;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCreateRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -967,11 +1151,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<PaylinkTokenCreated>("/paylink/create", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenCreateRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -982,11 +1168,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = await TokenCreateRequestWithHttpInfoAsync(paylinkTokenRequestModel, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = await TokenCreateRequestWithHttpInfoAsync(paylinkTokenRequestModel, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -995,13 +1182,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenRequestModel"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'paylinkTokenRequestModel' is set
             if (paylinkTokenRequestModel == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenRequestModel' when calling PaylinkApi->TokenCreateRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1017,14 +1207,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paylinkTokenRequestModel;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCreateRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1033,13 +1231,171 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<PaylinkTokenCreated>("/paylink/create", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenCreateRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Purges any attachments for a Paylink Token Purges any attachments for a token for GDPR or DP reasons.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>Acknowledgement</returns>
+        public Acknowledgement TokenPurgeAttachmentsRequest(string token, int operationIndex = 0)
+        {
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = TokenPurgeAttachmentsRequestWithHttpInfo(token);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Purges any attachments for a Paylink Token Purges any attachments for a token for GDPR or DP reasons.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Acknowledgement</returns>
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenPurgeAttachmentsRequestWithHttpInfo(string token, int operationIndex = 0)
+        {
+            // verify the required parameter 'token' is set
+            if (token == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenPurgeAttachmentsRequest");
+            }
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenPurgeAttachmentsRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Put<Acknowledgement>("/paylink/{token}/purge-attachments", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("TokenPurgeAttachmentsRequest", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Purges any attachments for a Paylink Token Purges any attachments for a token for GDPR or DP reasons.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Acknowledgement</returns>
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenPurgeAttachmentsRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenPurgeAttachmentsRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Purges any attachments for a Paylink Token Purges any attachments for a token for GDPR or DP reasons.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Acknowledgement)</returns>
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenPurgeAttachmentsRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'token' is set
+            if (token == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenPurgeAttachmentsRequest");
+            }
+
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenPurgeAttachmentsRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.PutAsync<Acknowledgement>("/paylink/{token}/purge-attachments", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("TokenPurgeAttachmentsRequest", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1050,8 +1406,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement TokenReconciledRequest(string token)
+        public Acknowledgement TokenReconciledRequest(string token, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = TokenReconciledRequestWithHttpInfo(token);
             return localVarResponse.Data;
@@ -1062,12 +1419,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenReconciledRequestWithHttpInfo(string token)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenReconciledRequestWithHttpInfo(string token, int operationIndex = 0)
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenReconciledRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1081,12 +1441,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenReconciledRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1096,11 +1465,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Put<Acknowledgement>("/paylink/{token}/reconciled", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenReconciledRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1111,11 +1482,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenReconciledRequestWithHttpInfoAsync(token, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenReconciledRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1124,13 +1496,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenReconciledRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1144,14 +1519,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenReconciledRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1160,13 +1543,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PutAsync<Acknowledgement>("/paylink/{token}/reconciled", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenReconciledRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1177,8 +1562,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement TokenReopenRequest(string token)
+        public Acknowledgement TokenReopenRequest(string token, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = TokenReopenRequestWithHttpInfo(token);
             return localVarResponse.Data;
@@ -1189,12 +1575,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenReopenRequestWithHttpInfo(string token)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenReopenRequestWithHttpInfo(string token, int operationIndex = 0)
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenReopenRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1208,12 +1597,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenReopenRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1223,11 +1621,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Put<Acknowledgement>("/paylink/{token}/reopen", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenReopenRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1238,11 +1638,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenReopenRequestWithHttpInfoAsync(token, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenReopenRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1251,13 +1652,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenReopenRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1271,14 +1675,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenReopenRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1287,13 +1699,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PutAsync<Acknowledgement>("/paylink/{token}/reopen", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenReopenRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1304,8 +1718,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenStatusChangeResponse</returns>
-        public PaylinkTokenStatusChangeResponse TokenStatusChangesRequest(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest)
+        public PaylinkTokenStatusChangeResponse TokenStatusChangesRequest(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse> localVarResponse = TokenStatusChangesRequestWithHttpInfo(paylinkTokenStatusChangeRequest);
             return localVarResponse.Data;
@@ -1316,12 +1731,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenStatusChangeResponse</returns>
-        public CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestWithHttpInfo(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest)
+        public CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestWithHttpInfo(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0)
         {
             // verify the required parameter 'paylinkTokenStatusChangeRequest' is set
             if (paylinkTokenStatusChangeRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenStatusChangeRequest' when calling PaylinkApi->TokenStatusChangesRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1337,12 +1755,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paylinkTokenStatusChangeRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenStatusChangesRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1352,11 +1779,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<PaylinkTokenStatusChangeResponse>("/paylink/token/changes", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenStatusChangesRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1367,11 +1796,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatusChangeResponse</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenStatusChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse> localVarResponse = await TokenStatusChangesRequestWithHttpInfoAsync(paylinkTokenStatusChangeRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse> localVarResponse = await TokenStatusChangesRequestWithHttpInfoAsync(paylinkTokenStatusChangeRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1380,13 +1810,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paylinkTokenStatusChangeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatusChangeResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse>> TokenStatusChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse>> TokenStatusChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'paylinkTokenStatusChangeRequest' is set
             if (paylinkTokenStatusChangeRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkTokenStatusChangeRequest' when calling PaylinkApi->TokenStatusChangesRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1402,14 +1835,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = paylinkTokenStatusChangeRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenStatusChangesRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1418,13 +1859,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<PaylinkTokenStatusChangeResponse>("/paylink/token/changes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenStatusChangesRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1435,8 +1878,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PaylinkTokenStatus</returns>
-        public PaylinkTokenStatus TokenStatusRequest(string token)
+        public PaylinkTokenStatus TokenStatusRequest(string token, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenStatus> localVarResponse = TokenStatusRequestWithHttpInfo(token);
             return localVarResponse.Data;
@@ -1447,12 +1891,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PaylinkTokenStatus</returns>
-        public CityPayAPI.Client.ApiResponse<PaylinkTokenStatus> TokenStatusRequestWithHttpInfo(string token)
+        public CityPayAPI.Client.ApiResponse<PaylinkTokenStatus> TokenStatusRequestWithHttpInfo(string token, int operationIndex = 0)
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenStatusRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1466,12 +1913,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1481,11 +1937,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<PaylinkTokenStatus>("/paylink/{token}/status", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1496,11 +1954,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatus</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<PaylinkTokenStatus> localVarResponse = await TokenStatusRequestWithHttpInfoAsync(token, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<PaylinkTokenStatus> localVarResponse = await TokenStatusRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1509,13 +1968,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatus)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenStatusRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1529,14 +1991,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1545,13 +2015,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.GetAsync<PaylinkTokenStatus>("/paylink/{token}/status", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;

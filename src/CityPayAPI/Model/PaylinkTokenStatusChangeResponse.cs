@@ -44,7 +44,11 @@ namespace CityPayAPI.Model
         public PaylinkTokenStatusChangeResponse(string nextToken = default(string), List<PaylinkTokenStatus> tokens = default(List<PaylinkTokenStatus>))
         {
             // to ensure "tokens" is required (not null)
-            this.Tokens = tokens ?? throw new ArgumentNullException("tokens is a required property for PaylinkTokenStatusChangeResponse and cannot be null");
+            if (tokens == null)
+            {
+                throw new ArgumentNullException("tokens is a required property for PaylinkTokenStatusChangeResponse and cannot be null");
+            }
+            this.Tokens = tokens;
             this.NextToken = nextToken;
         }
 
@@ -67,7 +71,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkTokenStatusChangeResponse {\n");
             sb.Append("  NextToken: ").Append(NextToken).Append("\n");
             sb.Append("  Tokens: ").Append(Tokens).Append("\n");
@@ -102,8 +106,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkTokenStatusChangeResponse input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.NextToken == input.NextToken ||
@@ -128,9 +133,13 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.NextToken != null)
-                    hashCode = hashCode * 59 + this.NextToken.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.NextToken.GetHashCode();
+                }
                 if (this.Tokens != null)
-                    hashCode = hashCode * 59 + this.Tokens.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Tokens.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -140,7 +149,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

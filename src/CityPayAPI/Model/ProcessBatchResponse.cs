@@ -67,7 +67,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class ProcessBatchResponse {\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  Valid: ").Append(Valid).Append("\n");
@@ -102,8 +102,9 @@ namespace CityPayAPI.Model
         public bool Equals(ProcessBatchResponse input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Message == input.Message ||
@@ -126,8 +127,10 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Message != null)
-                    hashCode = hashCode * 59 + this.Message.GetHashCode();
-                hashCode = hashCode * 59 + this.Valid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Message.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Valid.GetHashCode();
                 return hashCode;
             }
         }
@@ -137,7 +140,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

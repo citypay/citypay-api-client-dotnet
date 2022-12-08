@@ -116,7 +116,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkCartItemModel {\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  Brand: ").Append(Brand).Append("\n");
@@ -157,8 +157,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkCartItemModel input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Amount == input.Amount ||
@@ -208,19 +209,29 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                hashCode = (hashCode * 59) + this.Amount.GetHashCode();
                 if (this.Brand != null)
-                    hashCode = hashCode * 59 + this.Brand.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Brand.GetHashCode();
+                }
                 if (this.Category != null)
-                    hashCode = hashCode * 59 + this.Category.GetHashCode();
-                hashCode = hashCode * 59 + this.Count.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Category.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Count.GetHashCode();
                 if (this.Label != null)
-                    hashCode = hashCode * 59 + this.Label.GetHashCode();
-                hashCode = hashCode * 59 + this.Max.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Label.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Max.GetHashCode();
                 if (this.Sku != null)
-                    hashCode = hashCode * 59 + this.Sku.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Sku.GetHashCode();
+                }
                 if (this.Variant != null)
-                    hashCode = hashCode * 59 + this.Variant.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Variant.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -230,7 +241,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

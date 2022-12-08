@@ -44,7 +44,11 @@ namespace CityPayAPI.Model
         public AccountCreate(string accountId = default(string), ContactDetails contact = default(ContactDetails))
         {
             // to ensure "accountId" is required (not null)
-            this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for AccountCreate and cannot be null");
+            if (accountId == null)
+            {
+                throw new ArgumentNullException("accountId is a required property for AccountCreate and cannot be null");
+            }
+            this.AccountId = accountId;
             this.Contact = contact;
         }
 
@@ -67,7 +71,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class AccountCreate {\n");
             sb.Append("  AccountId: ").Append(AccountId).Append("\n");
             sb.Append("  Contact: ").Append(Contact).Append("\n");
@@ -102,8 +106,9 @@ namespace CityPayAPI.Model
         public bool Equals(AccountCreate input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AccountId == input.AccountId ||
@@ -127,9 +132,13 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AccountId != null)
-                    hashCode = hashCode * 59 + this.AccountId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AccountId.GetHashCode();
+                }
                 if (this.Contact != null)
-                    hashCode = hashCode * 59 + this.Contact.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Contact.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -139,16 +148,16 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // AccountId (string) maxLength
-            if(this.AccountId != null && this.AccountId.Length > 50)
+            if (this.AccountId != null && this.AccountId.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be less than 50.", new [] { "AccountId" });
             }
 
             // AccountId (string) minLength
-            if(this.AccountId != null && this.AccountId.Length < 5)
+            if (this.AccountId != null && this.AccountId.Length < 5)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be greater than 5.", new [] { "AccountId" });
             }

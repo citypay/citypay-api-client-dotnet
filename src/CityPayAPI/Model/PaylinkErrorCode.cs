@@ -44,9 +44,17 @@ namespace CityPayAPI.Model
         public PaylinkErrorCode(string code = default(string), string msg = default(string))
         {
             // to ensure "code" is required (not null)
-            this.Code = code ?? throw new ArgumentNullException("code is a required property for PaylinkErrorCode and cannot be null");
+            if (code == null)
+            {
+                throw new ArgumentNullException("code is a required property for PaylinkErrorCode and cannot be null");
+            }
+            this.Code = code;
             // to ensure "msg" is required (not null)
-            this.Msg = msg ?? throw new ArgumentNullException("msg is a required property for PaylinkErrorCode and cannot be null");
+            if (msg == null)
+            {
+                throw new ArgumentNullException("msg is a required property for PaylinkErrorCode and cannot be null");
+            }
+            this.Msg = msg;
         }
 
         /// <summary>
@@ -69,7 +77,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkErrorCode {\n");
             sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Msg: ").Append(Msg).Append("\n");
@@ -104,8 +112,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkErrorCode input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Code == input.Code ||
@@ -129,9 +138,13 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Code != null)
-                    hashCode = hashCode * 59 + this.Code.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Code.GetHashCode();
+                }
                 if (this.Msg != null)
-                    hashCode = hashCode * 59 + this.Msg.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Msg.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -141,7 +154,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -53,7 +53,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class Ping {\n");
             sb.Append("  Identifier: ").Append(Identifier).Append("\n");
             sb.Append("}\n");
@@ -87,8 +87,9 @@ namespace CityPayAPI.Model
         public bool Equals(Ping input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Identifier == input.Identifier ||
@@ -107,7 +108,9 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -117,16 +120,16 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Identifier (string) maxLength
-            if(this.Identifier != null && this.Identifier.Length > 50)
+            if (this.Identifier != null && this.Identifier.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
-            if(this.Identifier != null && this.Identifier.Length < 4)
+            if (this.Identifier != null && this.Identifier.Length < 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }

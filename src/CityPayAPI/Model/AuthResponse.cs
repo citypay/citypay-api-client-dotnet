@@ -71,9 +71,17 @@ namespace CityPayAPI.Model
             this.Merchantid = merchantid;
             this.Result = result;
             // to ensure "resultCode" is required (not null)
-            this.ResultCode = resultCode ?? throw new ArgumentNullException("resultCode is a required property for AuthResponse and cannot be null");
+            if (resultCode == null)
+            {
+                throw new ArgumentNullException("resultCode is a required property for AuthResponse and cannot be null");
+            }
+            this.ResultCode = resultCode;
             // to ensure "resultMessage" is required (not null)
-            this.ResultMessage = resultMessage ?? throw new ArgumentNullException("resultMessage is a required property for AuthResponse and cannot be null");
+            if (resultMessage == null)
+            {
+                throw new ArgumentNullException("resultMessage is a required property for AuthResponse and cannot be null");
+            }
+            this.ResultMessage = resultMessage;
             this.Amount = amount;
             this.Atrn = atrn;
             this.Atsd = atsd;
@@ -294,7 +302,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class AuthResponse {\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  Atrn: ").Append(Atrn).Append("\n");
@@ -354,8 +362,9 @@ namespace CityPayAPI.Model
         public bool Equals(AuthResponse input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Amount == input.Amount ||
@@ -495,52 +504,90 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                hashCode = (hashCode * 59) + this.Amount.GetHashCode();
                 if (this.Atrn != null)
-                    hashCode = hashCode * 59 + this.Atrn.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Atrn.GetHashCode();
+                }
                 if (this.Atsd != null)
-                    hashCode = hashCode * 59 + this.Atsd.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Atsd.GetHashCode();
+                }
                 if (this.Authcode != null)
-                    hashCode = hashCode * 59 + this.Authcode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Authcode.GetHashCode();
+                }
                 if (this.AuthenResult != null)
-                    hashCode = hashCode * 59 + this.AuthenResult.GetHashCode();
-                hashCode = hashCode * 59 + this.Authorised.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AuthenResult.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Authorised.GetHashCode();
                 if (this.AvsResult != null)
-                    hashCode = hashCode * 59 + this.AvsResult.GetHashCode();
-                hashCode = hashCode * 59 + this.BinCommercial.GetHashCode();
-                hashCode = hashCode * 59 + this.BinDebit.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AvsResult.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.BinCommercial.GetHashCode();
+                hashCode = (hashCode * 59) + this.BinDebit.GetHashCode();
                 if (this.BinDescription != null)
-                    hashCode = hashCode * 59 + this.BinDescription.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BinDescription.GetHashCode();
+                }
                 if (this.Cavv != null)
-                    hashCode = hashCode * 59 + this.Cavv.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cavv.GetHashCode();
+                }
                 if (this.Context != null)
-                    hashCode = hashCode * 59 + this.Context.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Context.GetHashCode();
+                }
                 if (this.CscResult != null)
-                    hashCode = hashCode * 59 + this.CscResult.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.CscResult.GetHashCode();
+                }
                 if (this.Currency != null)
-                    hashCode = hashCode * 59 + this.Currency.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Currency.GetHashCode();
+                }
                 if (this.Datetime != null)
-                    hashCode = hashCode * 59 + this.Datetime.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Datetime.GetHashCode();
+                }
                 if (this.Eci != null)
-                    hashCode = hashCode * 59 + this.Eci.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Eci.GetHashCode();
+                }
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
-                hashCode = hashCode * 59 + this.Live.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Live.GetHashCode();
                 if (this.Maskedpan != null)
-                    hashCode = hashCode * 59 + this.Maskedpan.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
-                hashCode = hashCode * 59 + this.Result.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Maskedpan.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
+                hashCode = (hashCode * 59) + this.Result.GetHashCode();
                 if (this.ResultCode != null)
-                    hashCode = hashCode * 59 + this.ResultCode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ResultCode.GetHashCode();
+                }
                 if (this.ResultMessage != null)
-                    hashCode = hashCode * 59 + this.ResultMessage.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ResultMessage.GetHashCode();
+                }
                 if (this.Scheme != null)
-                    hashCode = hashCode * 59 + this.Scheme.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Scheme.GetHashCode();
+                }
                 if (this.Sha256 != null)
-                    hashCode = hashCode * 59 + this.Sha256.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Sha256.GetHashCode();
+                }
                 if (this.TransStatus != null)
-                    hashCode = hashCode * 59 + this.TransStatus.GetHashCode();
-                hashCode = hashCode * 59 + this.Transno.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TransStatus.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Transno.GetHashCode();
                 return hashCode;
             }
         }
@@ -550,7 +597,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

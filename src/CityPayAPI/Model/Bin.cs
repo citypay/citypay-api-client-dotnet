@@ -125,7 +125,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class Bin {\n");
             sb.Append("  BinCommercial: ").Append(BinCommercial).Append("\n");
             sb.Append("  BinCorporate: ").Append(BinCorporate).Append("\n");
@@ -167,8 +167,9 @@ namespace CityPayAPI.Model
         public bool Equals(Bin input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.BinCommercial == input.BinCommercial ||
@@ -221,19 +222,27 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.BinCommercial.GetHashCode();
-                hashCode = hashCode * 59 + this.BinCorporate.GetHashCode();
+                hashCode = (hashCode * 59) + this.BinCommercial.GetHashCode();
+                hashCode = (hashCode * 59) + this.BinCorporate.GetHashCode();
                 if (this.BinCountryIssued != null)
-                    hashCode = hashCode * 59 + this.BinCountryIssued.GetHashCode();
-                hashCode = hashCode * 59 + this.BinCredit.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BinCountryIssued.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.BinCredit.GetHashCode();
                 if (this.BinCurrency != null)
-                    hashCode = hashCode * 59 + this.BinCurrency.GetHashCode();
-                hashCode = hashCode * 59 + this.BinDebit.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BinCurrency.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.BinDebit.GetHashCode();
                 if (this.BinDescription != null)
-                    hashCode = hashCode * 59 + this.BinDescription.GetHashCode();
-                hashCode = hashCode * 59 + this.BinEu.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BinDescription.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.BinEu.GetHashCode();
                 if (this.Scheme != null)
-                    hashCode = hashCode * 59 + this.Scheme.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Scheme.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -243,7 +252,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

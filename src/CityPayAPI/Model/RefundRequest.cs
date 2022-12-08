@@ -48,7 +48,11 @@ namespace CityPayAPI.Model
         {
             this.Amount = amount;
             // to ensure "identifier" is required (not null)
-            this.Identifier = identifier ?? throw new ArgumentNullException("identifier is a required property for RefundRequest and cannot be null");
+            if (identifier == null)
+            {
+                throw new ArgumentNullException("identifier is a required property for RefundRequest and cannot be null");
+            }
+            this.Identifier = identifier;
             this.Merchantid = merchantid;
             this.RefundRef = refundRef;
             this.TransInfo = transInfo;
@@ -95,7 +99,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class RefundRequest {\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  Identifier: ").Append(Identifier).Append("\n");
@@ -133,8 +137,9 @@ namespace CityPayAPI.Model
         public bool Equals(RefundRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Amount == input.Amount ||
@@ -169,13 +174,17 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                hashCode = (hashCode * 59) + this.Amount.GetHashCode();
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
-                hashCode = hashCode * 59 + this.RefundRef.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
+                hashCode = (hashCode * 59) + this.RefundRef.GetHashCode();
                 if (this.TransInfo != null)
-                    hashCode = hashCode * 59 + this.TransInfo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TransInfo.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -185,22 +194,22 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Identifier (string) maxLength
-            if(this.Identifier != null && this.Identifier.Length > 50)
+            if (this.Identifier != null && this.Identifier.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
-            if(this.Identifier != null && this.Identifier.Length < 4)
+            if (this.Identifier != null && this.Identifier.Length < 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }
 
             // TransInfo (string) maxLength
-            if(this.TransInfo != null && this.TransInfo.Length > 50)
+            if (this.TransInfo != null && this.TransInfo.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransInfo, length must be less than 50.", new [] { "TransInfo" });
             }

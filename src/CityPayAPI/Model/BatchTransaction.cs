@@ -46,7 +46,11 @@ namespace CityPayAPI.Model
         public BatchTransaction(string accountId = default(string), int amount = default(int), string identifier = default(string), int merchantid = default(int))
         {
             // to ensure "accountId" is required (not null)
-            this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for BatchTransaction and cannot be null");
+            if (accountId == null)
+            {
+                throw new ArgumentNullException("accountId is a required property for BatchTransaction and cannot be null");
+            }
+            this.AccountId = accountId;
             this.Amount = amount;
             this.Identifier = identifier;
             this.Merchantid = merchantid;
@@ -86,7 +90,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class BatchTransaction {\n");
             sb.Append("  AccountId: ").Append(AccountId).Append("\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
@@ -123,8 +127,9 @@ namespace CityPayAPI.Model
         public bool Equals(BatchTransaction input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AccountId == input.AccountId ||
@@ -156,11 +161,15 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AccountId != null)
-                    hashCode = hashCode * 59 + this.AccountId.GetHashCode();
-                hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AccountId.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Amount.GetHashCode();
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
                 return hashCode;
             }
         }
@@ -170,28 +179,28 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // AccountId (string) maxLength
-            if(this.AccountId != null && this.AccountId.Length > 50)
+            if (this.AccountId != null && this.AccountId.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be less than 50.", new [] { "AccountId" });
             }
 
             // AccountId (string) minLength
-            if(this.AccountId != null && this.AccountId.Length < 5)
+            if (this.AccountId != null && this.AccountId.Length < 5)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be greater than 5.", new [] { "AccountId" });
             }
 
             // Identifier (string) maxLength
-            if(this.Identifier != null && this.Identifier.Length > 50)
+            if (this.Identifier != null && this.Identifier.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
-            if(this.Identifier != null && this.Identifier.Length < 4)
+            if (this.Identifier != null && this.Identifier.Length < 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }

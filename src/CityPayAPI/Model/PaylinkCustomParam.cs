@@ -52,7 +52,11 @@ namespace CityPayAPI.Model
         public PaylinkCustomParam(string fieldType = default(string), string group = default(string), string label = default(string), bool locked = default(bool), string name = default(string), int order = default(int), string pattern = default(string), string placeholder = default(string), bool required = default(bool), string value = default(string))
         {
             // to ensure "name" is required (not null)
-            this.Name = name ?? throw new ArgumentNullException("name is a required property for PaylinkCustomParam and cannot be null");
+            if (name == null)
+            {
+                throw new ArgumentNullException("name is a required property for PaylinkCustomParam and cannot be null");
+            }
+            this.Name = name;
             this.FieldType = fieldType;
             this.Group = group;
             this.Label = label;
@@ -140,7 +144,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkCustomParam {\n");
             sb.Append("  FieldType: ").Append(FieldType).Append("\n");
             sb.Append("  Group: ").Append(Group).Append("\n");
@@ -183,8 +187,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkCustomParam input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.FieldType == input.FieldType ||
@@ -245,22 +250,36 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.FieldType != null)
-                    hashCode = hashCode * 59 + this.FieldType.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.FieldType.GetHashCode();
+                }
                 if (this.Group != null)
-                    hashCode = hashCode * 59 + this.Group.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Group.GetHashCode();
+                }
                 if (this.Label != null)
-                    hashCode = hashCode * 59 + this.Label.GetHashCode();
-                hashCode = hashCode * 59 + this.Locked.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Label.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Locked.GetHashCode();
                 if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                hashCode = hashCode * 59 + this.Order.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Order.GetHashCode();
                 if (this.Pattern != null)
-                    hashCode = hashCode * 59 + this.Pattern.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Pattern.GetHashCode();
+                }
                 if (this.Placeholder != null)
-                    hashCode = hashCode * 59 + this.Placeholder.GetHashCode();
-                hashCode = hashCode * 59 + this.Required.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Placeholder.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Required.GetHashCode();
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Value.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -270,7 +289,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

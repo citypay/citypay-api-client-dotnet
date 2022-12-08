@@ -45,7 +45,11 @@ namespace CityPayAPI.Model
         public DomainKeyRequest(List<string> domain = default(List<string>), bool live = default(bool), int merchantid = default(int))
         {
             // to ensure "domain" is required (not null)
-            this.Domain = domain ?? throw new ArgumentNullException("domain is a required property for DomainKeyRequest and cannot be null");
+            if (domain == null)
+            {
+                throw new ArgumentNullException("domain is a required property for DomainKeyRequest and cannot be null");
+            }
+            this.Domain = domain;
             this.Merchantid = merchantid;
             this.Live = live;
         }
@@ -76,7 +80,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class DomainKeyRequest {\n");
             sb.Append("  Domain: ").Append(Domain).Append("\n");
             sb.Append("  Live: ").Append(Live).Append("\n");
@@ -112,8 +116,9 @@ namespace CityPayAPI.Model
         public bool Equals(DomainKeyRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Domain == input.Domain ||
@@ -141,9 +146,11 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Domain != null)
-                    hashCode = hashCode * 59 + this.Domain.GetHashCode();
-                hashCode = hashCode * 59 + this.Live.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Domain.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Live.GetHashCode();
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
                 return hashCode;
             }
         }
@@ -153,7 +160,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

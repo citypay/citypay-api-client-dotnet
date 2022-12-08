@@ -67,7 +67,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class BatchReportRequest {\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
             sb.Append("  ClientAccountId: ").Append(ClientAccountId).Append("\n");
@@ -102,8 +102,9 @@ namespace CityPayAPI.Model
         public bool Equals(BatchReportRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.BatchId == input.BatchId ||
@@ -125,9 +126,11 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                hashCode = (hashCode * 59) + this.BatchId.GetHashCode();
                 if (this.ClientAccountId != null)
-                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ClientAccountId.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -137,22 +140,22 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // BatchId (int) minimum
-            if(this.BatchId < (int)1)
+            if (this.BatchId < (int)1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
             }
 
             // ClientAccountId (string) maxLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
             }
 
             // ClientAccountId (string) minLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
             }

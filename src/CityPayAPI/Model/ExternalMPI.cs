@@ -89,7 +89,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class ExternalMPI {\n");
             sb.Append("  AuthenResult: ").Append(AuthenResult).Append("\n");
             sb.Append("  Cavv: ").Append(Cavv).Append("\n");
@@ -127,8 +127,9 @@ namespace CityPayAPI.Model
         public bool Equals(ExternalMPI input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AuthenResult == input.AuthenResult ||
@@ -166,14 +167,22 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AuthenResult != null)
-                    hashCode = hashCode * 59 + this.AuthenResult.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AuthenResult.GetHashCode();
+                }
                 if (this.Cavv != null)
-                    hashCode = hashCode * 59 + this.Cavv.GetHashCode();
-                hashCode = hashCode * 59 + this.Eci.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cavv.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Eci.GetHashCode();
                 if (this.Enrolled != null)
-                    hashCode = hashCode * 59 + this.Enrolled.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Enrolled.GetHashCode();
+                }
                 if (this.Xid != null)
-                    hashCode = hashCode * 59 + this.Xid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Xid.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -183,28 +192,28 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // AuthenResult (string) maxLength
-            if(this.AuthenResult != null && this.AuthenResult.Length > 1)
+            if (this.AuthenResult != null && this.AuthenResult.Length > 1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AuthenResult, length must be less than 1.", new [] { "AuthenResult" });
             }
 
             // Cavv (string) maxLength
-            if(this.Cavv != null && this.Cavv.Length > 20)
+            if (this.Cavv != null && this.Cavv.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Cavv, length must be less than 20.", new [] { "Cavv" });
             }
 
             // Enrolled (string) maxLength
-            if(this.Enrolled != null && this.Enrolled.Length > 1)
+            if (this.Enrolled != null && this.Enrolled.Length > 1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Enrolled, length must be less than 1.", new [] { "Enrolled" });
             }
 
             // Xid (string) maxLength
-            if(this.Xid != null && this.Xid.Length > 20)
+            if (this.Xid != null && this.Xid.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Xid, length must be less than 20.", new [] { "Xid" });
             }

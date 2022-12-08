@@ -60,7 +60,7 @@ namespace CityPayAPI.Test
         public void AuthoriseTest()
         {
             var id = NewGuid().ToString();
-            var api = new PaymentProcessingApi(_configuration);
+            var api = new AuthorisationAndPaymentApi(_configuration);
             var decision = api.AuthorisationRequest(new AuthRequest(
                 amount: 1395,
                 cardnumber: "4000 0000 0000 0002",
@@ -175,7 +175,7 @@ namespace CityPayAPI.Test
         public void Authorise3DSv2Test()
         {
             var id = NewGuid().ToString();
-            var api = new PaymentProcessingApi(_configuration);
+            var api = new AuthorisationAndPaymentApi(_configuration);
             var decision = api.AuthorisationRequest(new AuthRequest(
                 amount: 1595,
                 cardnumber: "4000 0000 0000 0002",

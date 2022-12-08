@@ -44,7 +44,11 @@ namespace CityPayAPI.Model
         public CheckBatchStatus(List<int> batchId = default(List<int>), string clientAccountId = default(string))
         {
             // to ensure "batchId" is required (not null)
-            this.BatchId = batchId ?? throw new ArgumentNullException("batchId is a required property for CheckBatchStatus and cannot be null");
+            if (batchId == null)
+            {
+                throw new ArgumentNullException("batchId is a required property for CheckBatchStatus and cannot be null");
+            }
+            this.BatchId = batchId;
             this.ClientAccountId = clientAccountId;
         }
 
@@ -67,7 +71,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class CheckBatchStatus {\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
             sb.Append("  ClientAccountId: ").Append(ClientAccountId).Append("\n");
@@ -102,8 +106,9 @@ namespace CityPayAPI.Model
         public bool Equals(CheckBatchStatus input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.BatchId == input.BatchId ||
@@ -128,9 +133,13 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.BatchId != null)
-                    hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BatchId.GetHashCode();
+                }
                 if (this.ClientAccountId != null)
-                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ClientAccountId.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -140,16 +149,16 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // ClientAccountId (string) maxLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
             }
 
             // ClientAccountId (string) minLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
             }

@@ -76,7 +76,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class Exists {\n");
             sb.Append("  Active: ").Append(Active).Append("\n");
             sb.Append("  _Exists: ").Append(_Exists).Append("\n");
@@ -112,8 +112,9 @@ namespace CityPayAPI.Model
         public bool Equals(Exists input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Active == input.Active ||
@@ -139,10 +140,12 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.Active.GetHashCode();
-                hashCode = hashCode * 59 + this._Exists.GetHashCode();
+                hashCode = (hashCode * 59) + this.Active.GetHashCode();
+                hashCode = (hashCode * 59) + this._Exists.GetHashCode();
                 if (this.LastModified != null)
-                    hashCode = hashCode * 59 + this.LastModified.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.LastModified.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -152,7 +155,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

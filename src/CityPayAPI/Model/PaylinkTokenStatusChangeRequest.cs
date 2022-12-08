@@ -93,7 +93,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkTokenStatusChangeRequest {\n");
             sb.Append("  After: ").Append(After).Append("\n");
             sb.Append("  MaxResults: ").Append(MaxResults).Append("\n");
@@ -131,8 +131,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkTokenStatusChangeRequest input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.After == input.After ||
@@ -170,13 +171,19 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.After != null)
-                    hashCode = hashCode * 59 + this.After.GetHashCode();
-                hashCode = hashCode * 59 + this.MaxResults.GetHashCode();
-                hashCode = hashCode * 59 + this.Merchantid.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.After.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.MaxResults.GetHashCode();
+                hashCode = (hashCode * 59) + this.Merchantid.GetHashCode();
                 if (this.NextToken != null)
-                    hashCode = hashCode * 59 + this.NextToken.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.NextToken.GetHashCode();
+                }
                 if (this.OrderBy != null)
-                    hashCode = hashCode * 59 + this.OrderBy.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.OrderBy.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -186,7 +193,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -295,7 +295,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaylinkTokenStatus {\n");
             sb.Append("  AmountPaid: ").Append(AmountPaid).Append("\n");
             sb.Append("  AuthCode: ").Append(AuthCode).Append("\n");
@@ -356,8 +356,9 @@ namespace CityPayAPI.Model
         public bool Equals(PaylinkTokenStatus input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AmountPaid == input.AmountPaid ||
@@ -493,44 +494,64 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.AmountPaid.GetHashCode();
+                hashCode = (hashCode * 59) + this.AmountPaid.GetHashCode();
                 if (this.AuthCode != null)
-                    hashCode = hashCode * 59 + this.AuthCode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AuthCode.GetHashCode();
+                }
                 if (this.Card != null)
-                    hashCode = hashCode * 59 + this.Card.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Card.GetHashCode();
+                }
                 if (this.Created != null)
-                    hashCode = hashCode * 59 + this.Created.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Created.GetHashCode();
+                }
                 if (this.Datetime != null)
-                    hashCode = hashCode * 59 + this.Datetime.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Datetime.GetHashCode();
+                }
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
-                hashCode = hashCode * 59 + this.IsAttachment.GetHashCode();
-                hashCode = hashCode * 59 + this.IsCancelled.GetHashCode();
-                hashCode = hashCode * 59 + this.IsClosed.GetHashCode();
-                hashCode = hashCode * 59 + this.IsCustomerReceiptEmailSent.GetHashCode();
-                hashCode = hashCode * 59 + this.IsEmailSent.GetHashCode();
-                hashCode = hashCode * 59 + this.IsExpired.GetHashCode();
-                hashCode = hashCode * 59 + this.IsFormViewed.GetHashCode();
-                hashCode = hashCode * 59 + this.IsMerchantNotificationEmailSent.GetHashCode();
-                hashCode = hashCode * 59 + this.IsOpenForPayment.GetHashCode();
-                hashCode = hashCode * 59 + this.IsPaid.GetHashCode();
-                hashCode = hashCode * 59 + this.IsPaymentAttempted.GetHashCode();
-                hashCode = hashCode * 59 + this.IsPostbackOk.GetHashCode();
-                hashCode = hashCode * 59 + this.IsRequestChallenged.GetHashCode();
-                hashCode = hashCode * 59 + this.IsSmsSent.GetHashCode();
-                hashCode = hashCode * 59 + this.IsValidated.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.IsAttachment.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsCancelled.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsClosed.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsCustomerReceiptEmailSent.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsEmailSent.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsExpired.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsFormViewed.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsMerchantNotificationEmailSent.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsOpenForPayment.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsPaid.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsPaymentAttempted.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsPostbackOk.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsRequestChallenged.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsSmsSent.GetHashCode();
+                hashCode = (hashCode * 59) + this.IsValidated.GetHashCode();
                 if (this.LastEventDateTime != null)
-                    hashCode = hashCode * 59 + this.LastEventDateTime.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.LastEventDateTime.GetHashCode();
+                }
                 if (this.LastPaymentResult != null)
-                    hashCode = hashCode * 59 + this.LastPaymentResult.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.LastPaymentResult.GetHashCode();
+                }
                 if (this.Mid != null)
-                    hashCode = hashCode * 59 + this.Mid.GetHashCode();
-                hashCode = hashCode * 59 + this.PaymentAttemptsCount.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Mid.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.PaymentAttemptsCount.GetHashCode();
                 if (this.StateHistory != null)
-                    hashCode = hashCode * 59 + this.StateHistory.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.StateHistory.GetHashCode();
+                }
                 if (this.Token != null)
-                    hashCode = hashCode * 59 + this.Token.GetHashCode();
-                hashCode = hashCode * 59 + this.TransNo.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Token.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.TransNo.GetHashCode();
                 return hashCode;
             }
         }
@@ -540,7 +561,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

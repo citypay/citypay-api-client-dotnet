@@ -35,8 +35,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement AccountCardDeleteRequest(string accountid, string cardId);
+        Acknowledgement AccountCardDeleteRequest(string accountid, string cardId, int operationIndex = 0);
 
         /// <summary>
         /// Card Deletion
@@ -47,8 +48,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> AccountCardDeleteRequestWithHttpInfo(string accountid, string cardId);
+        ApiResponse<Acknowledgement> AccountCardDeleteRequestWithHttpInfo(string accountid, string cardId, int operationIndex = 0);
         /// <summary>
         /// Card Registration
         /// </summary>
@@ -58,8 +60,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        CardHolderAccount AccountCardRegisterRequest(string accountid, RegisterCard registerCard);
+        CardHolderAccount AccountCardRegisterRequest(string accountid, RegisterCard registerCard, int operationIndex = 0);
 
         /// <summary>
         /// Card Registration
@@ -70,8 +73,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        ApiResponse<CardHolderAccount> AccountCardRegisterRequestWithHttpInfo(string accountid, RegisterCard registerCard);
+        ApiResponse<CardHolderAccount> AccountCardRegisterRequestWithHttpInfo(string accountid, RegisterCard registerCard, int operationIndex = 0);
         /// <summary>
         /// Card Status
         /// </summary>
@@ -82,8 +86,9 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement AccountCardStatusRequest(string accountid, string cardId, CardStatus cardStatus);
+        Acknowledgement AccountCardStatusRequest(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0);
 
         /// <summary>
         /// Card Status
@@ -95,8 +100,9 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> AccountCardStatusRequestWithHttpInfo(string accountid, string cardId, CardStatus cardStatus);
+        ApiResponse<Acknowledgement> AccountCardStatusRequestWithHttpInfo(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0);
         /// <summary>
         /// Contact Details Update
         /// </summary>
@@ -106,8 +112,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        CardHolderAccount AccountChangeContactRequest(string accountid, ContactDetails contactDetails);
+        CardHolderAccount AccountChangeContactRequest(string accountid, ContactDetails contactDetails, int operationIndex = 0);
 
         /// <summary>
         /// Contact Details Update
@@ -118,8 +125,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        ApiResponse<CardHolderAccount> AccountChangeContactRequestWithHttpInfo(string accountid, ContactDetails contactDetails);
+        ApiResponse<CardHolderAccount> AccountChangeContactRequestWithHttpInfo(string accountid, ContactDetails contactDetails, int operationIndex = 0);
         /// <summary>
         /// Account Create
         /// </summary>
@@ -128,8 +136,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        CardHolderAccount AccountCreate(AccountCreate accountCreate);
+        CardHolderAccount AccountCreate(AccountCreate accountCreate, int operationIndex = 0);
 
         /// <summary>
         /// Account Create
@@ -139,8 +148,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        ApiResponse<CardHolderAccount> AccountCreateWithHttpInfo(AccountCreate accountCreate);
+        ApiResponse<CardHolderAccount> AccountCreateWithHttpInfo(AccountCreate accountCreate, int operationIndex = 0);
         /// <summary>
         /// Account Deletion
         /// </summary>
@@ -149,8 +159,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement AccountDeleteRequest(string accountid);
+        Acknowledgement AccountDeleteRequest(string accountid, int operationIndex = 0);
 
         /// <summary>
         /// Account Deletion
@@ -160,8 +171,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> AccountDeleteRequestWithHttpInfo(string accountid);
+        ApiResponse<Acknowledgement> AccountDeleteRequestWithHttpInfo(string accountid, int operationIndex = 0);
         /// <summary>
         /// Account Exists
         /// </summary>
@@ -170,8 +182,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Exists</returns>
-        Exists AccountExistsRequest(string accountid);
+        Exists AccountExistsRequest(string accountid, int operationIndex = 0);
 
         /// <summary>
         /// Account Exists
@@ -181,8 +194,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Exists</returns>
-        ApiResponse<Exists> AccountExistsRequestWithHttpInfo(string accountid);
+        ApiResponse<Exists> AccountExistsRequestWithHttpInfo(string accountid, int operationIndex = 0);
         /// <summary>
         /// Account Retrieval
         /// </summary>
@@ -191,8 +205,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        CardHolderAccount AccountRetrieveRequest(string accountid);
+        CardHolderAccount AccountRetrieveRequest(string accountid, int operationIndex = 0);
 
         /// <summary>
         /// Account Retrieval
@@ -202,8 +217,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        ApiResponse<CardHolderAccount> AccountRetrieveRequestWithHttpInfo(string accountid);
+        ApiResponse<CardHolderAccount> AccountRetrieveRequestWithHttpInfo(string accountid, int operationIndex = 0);
         /// <summary>
         /// Account Status
         /// </summary>
@@ -213,8 +229,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        Acknowledgement AccountStatusRequest(string accountid, AccountStatus accountStatus);
+        Acknowledgement AccountStatusRequest(string accountid, AccountStatus accountStatus, int operationIndex = 0);
 
         /// <summary>
         /// Account Status
@@ -225,8 +242,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        ApiResponse<Acknowledgement> AccountStatusRequestWithHttpInfo(string accountid, AccountStatus accountStatus);
+        ApiResponse<Acknowledgement> AccountStatusRequestWithHttpInfo(string accountid, AccountStatus accountStatus, int operationIndex = 0);
         /// <summary>
         /// Charge
         /// </summary>
@@ -235,8 +253,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Decision</returns>
-        Decision ChargeRequest(ChargeRequest chargeRequest);
+        Decision ChargeRequest(ChargeRequest chargeRequest, int operationIndex = 0);
 
         /// <summary>
         /// Charge
@@ -246,8 +265,9 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Decision</returns>
-        ApiResponse<Decision> ChargeRequestWithHttpInfo(ChargeRequest chargeRequest);
+        ApiResponse<Decision> ChargeRequestWithHttpInfo(ChargeRequest chargeRequest, int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -266,9 +286,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Card Deletion
@@ -279,9 +300,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Card Registration
         /// </summary>
@@ -291,9 +313,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Card Registration
@@ -304,9 +327,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Card Status
         /// </summary>
@@ -317,9 +341,10 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Card Status
@@ -331,9 +356,10 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Contact Details Update
         /// </summary>
@@ -343,9 +369,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Contact Details Update
@@ -356,9 +383,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Account Create
         /// </summary>
@@ -367,9 +395,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Create
@@ -379,9 +408,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Account Deletion
         /// </summary>
@@ -390,9 +420,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Deletion
@@ -402,9 +433,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Account Exists
         /// </summary>
@@ -413,9 +445,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Exists</returns>
-        System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Exists
@@ -425,9 +458,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Exists)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Account Retrieval
         /// </summary>
@@ -436,9 +470,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Retrieval
@@ -448,9 +483,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Account Status
         /// </summary>
@@ -460,9 +496,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Status
@@ -473,9 +510,10 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Charge
         /// </summary>
@@ -484,9 +522,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Charge
@@ -496,9 +535,10 @@ namespace CityPayAPI.Api
         /// </remarks>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -625,8 +665,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement AccountCardDeleteRequest(string accountid, string cardId)
+        public Acknowledgement AccountCardDeleteRequest(string accountid, string cardId, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = AccountCardDeleteRequestWithHttpInfo(accountid, cardId);
             return localVarResponse.Data;
@@ -638,16 +679,21 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountCardDeleteRequestWithHttpInfo(string accountid, string cardId)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountCardDeleteRequestWithHttpInfo(string accountid, string cardId, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardDeleteRequest");
+            }
 
             // verify the required parameter 'cardId' is set
             if (cardId == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cardId' when calling CardHolderAccountApi->AccountCardDeleteRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -661,13 +707,22 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.PathParameters.Add("cardId", CityPayAPI.Client.ClientUtils.ParameterToString(cardId)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCardDeleteRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -677,11 +732,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Delete<Acknowledgement>("/v6/account/{accountid}/card/{cardId}", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCardDeleteRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -693,11 +750,12 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountCardDeleteRequestWithHttpInfoAsync(accountid, cardId, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountCardDeleteRequestWithHttpInfoAsync(accountid, cardId, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -707,17 +765,22 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardDeleteRequest");
+            }
 
             // verify the required parameter 'cardId' is set
             if (cardId == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cardId' when calling CardHolderAccountApi->AccountCardDeleteRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -731,15 +794,23 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.PathParameters.Add("cardId", CityPayAPI.Client.ClientUtils.ParameterToString(cardId)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCardDeleteRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -748,13 +819,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.DeleteAsync<Acknowledgement>("/v6/account/{accountid}/card/{cardId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCardDeleteRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -766,8 +839,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        public CardHolderAccount AccountCardRegisterRequest(string accountid, RegisterCard registerCard)
+        public CardHolderAccount AccountCardRegisterRequest(string accountid, RegisterCard registerCard, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountCardRegisterRequestWithHttpInfo(accountid, registerCard);
             return localVarResponse.Data;
@@ -779,16 +853,21 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountCardRegisterRequestWithHttpInfo(string accountid, RegisterCard registerCard)
+        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountCardRegisterRequestWithHttpInfo(string accountid, RegisterCard registerCard, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardRegisterRequest");
+            }
 
             // verify the required parameter 'registerCard' is set
             if (registerCard == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'registerCard' when calling CardHolderAccountApi->AccountCardRegisterRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -804,13 +883,22 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.Data = registerCard;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCardRegisterRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -820,11 +908,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<CardHolderAccount>("/v6/account/{accountid}/register", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCardRegisterRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -836,11 +926,12 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCardRegisterRequestWithHttpInfoAsync(accountid, registerCard, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCardRegisterRequestWithHttpInfoAsync(accountid, registerCard, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -850,17 +941,22 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="registerCard"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardRegisterRequest");
+            }
 
             // verify the required parameter 'registerCard' is set
             if (registerCard == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'registerCard' when calling CardHolderAccountApi->AccountCardRegisterRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -876,15 +972,23 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.Data = registerCard;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCardRegisterRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -893,13 +997,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<CardHolderAccount>("/v6/account/{accountid}/register", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCardRegisterRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -912,8 +1018,9 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement AccountCardStatusRequest(string accountid, string cardId, CardStatus cardStatus)
+        public Acknowledgement AccountCardStatusRequest(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = AccountCardStatusRequestWithHttpInfo(accountid, cardId, cardStatus);
             return localVarResponse.Data;
@@ -926,20 +1033,27 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountCardStatusRequestWithHttpInfo(string accountid, string cardId, CardStatus cardStatus)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountCardStatusRequestWithHttpInfo(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardStatusRequest");
+            }
 
             // verify the required parameter 'cardId' is set
             if (cardId == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cardId' when calling CardHolderAccountApi->AccountCardStatusRequest");
+            }
 
             // verify the required parameter 'cardStatus' is set
             if (cardStatus == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cardStatus' when calling CardHolderAccountApi->AccountCardStatusRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -955,14 +1069,23 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.PathParameters.Add("cardId", CityPayAPI.Client.ClientUtils.ParameterToString(cardId)); // path parameter
             localVarRequestOptions.Data = cardStatus;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCardStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -972,11 +1095,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Acknowledgement>("/v6/account/{accountid}/card/{cardId}/status", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCardStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -989,11 +1114,12 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountCardStatusRequestWithHttpInfoAsync(accountid, cardId, cardStatus, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountCardStatusRequestWithHttpInfoAsync(accountid, cardId, cardStatus, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1004,21 +1130,28 @@ namespace CityPayAPI.Api
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="cardId">The id of the card that is presented by a call to retrieve a card holder account.</param>
         /// <param name="cardStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountCardStatusRequest");
+            }
 
             // verify the required parameter 'cardId' is set
             if (cardId == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cardId' when calling CardHolderAccountApi->AccountCardStatusRequest");
+            }
 
             // verify the required parameter 'cardStatus' is set
             if (cardStatus == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'cardStatus' when calling CardHolderAccountApi->AccountCardStatusRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1034,16 +1167,24 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.PathParameters.Add("cardId", CityPayAPI.Client.ClientUtils.ParameterToString(cardId)); // path parameter
             localVarRequestOptions.Data = cardStatus;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCardStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1052,13 +1193,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/v6/account/{accountid}/card/{cardId}/status", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCardStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1070,8 +1213,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        public CardHolderAccount AccountChangeContactRequest(string accountid, ContactDetails contactDetails)
+        public CardHolderAccount AccountChangeContactRequest(string accountid, ContactDetails contactDetails, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountChangeContactRequestWithHttpInfo(accountid, contactDetails);
             return localVarResponse.Data;
@@ -1083,16 +1227,21 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountChangeContactRequestWithHttpInfo(string accountid, ContactDetails contactDetails)
+        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountChangeContactRequestWithHttpInfo(string accountid, ContactDetails contactDetails, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountChangeContactRequest");
+            }
 
             // verify the required parameter 'contactDetails' is set
             if (contactDetails == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'contactDetails' when calling CardHolderAccountApi->AccountChangeContactRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1108,13 +1257,22 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.Data = contactDetails;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountChangeContactRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1124,11 +1282,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<CardHolderAccount>("/v6/account/{accountid}/contact", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountChangeContactRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1140,11 +1300,12 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountChangeContactRequestWithHttpInfoAsync(accountid, contactDetails, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountChangeContactRequestWithHttpInfoAsync(accountid, contactDetails, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1154,17 +1315,22 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="contactDetails"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountChangeContactRequest");
+            }
 
             // verify the required parameter 'contactDetails' is set
             if (contactDetails == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'contactDetails' when calling CardHolderAccountApi->AccountChangeContactRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1180,15 +1346,23 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.Data = contactDetails;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountChangeContactRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1197,13 +1371,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<CardHolderAccount>("/v6/account/{accountid}/contact", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountChangeContactRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1214,8 +1390,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        public CardHolderAccount AccountCreate(AccountCreate accountCreate)
+        public CardHolderAccount AccountCreate(AccountCreate accountCreate, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountCreateWithHttpInfo(accountCreate);
             return localVarResponse.Data;
@@ -1226,12 +1403,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountCreateWithHttpInfo(AccountCreate accountCreate)
+        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountCreateWithHttpInfo(AccountCreate accountCreate, int operationIndex = 0)
         {
             // verify the required parameter 'accountCreate' is set
             if (accountCreate == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountCreate' when calling CardHolderAccountApi->AccountCreate");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1247,12 +1427,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = accountCreate;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCreate";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1262,11 +1451,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<CardHolderAccount>("/v6/account/create", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCreate", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1277,11 +1468,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCreateWithHttpInfoAsync(accountCreate, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCreateWithHttpInfoAsync(accountCreate, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1290,13 +1482,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountCreate"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountCreate' is set
             if (accountCreate == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountCreate' when calling CardHolderAccountApi->AccountCreate");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1312,14 +1507,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = accountCreate;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountCreate";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1328,13 +1531,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<CardHolderAccount>("/v6/account/create", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountCreate", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1345,8 +1550,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement AccountDeleteRequest(string accountid)
+        public Acknowledgement AccountDeleteRequest(string accountid, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = AccountDeleteRequestWithHttpInfo(accountid);
             return localVarResponse.Data;
@@ -1357,12 +1563,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountDeleteRequestWithHttpInfo(string accountid)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountDeleteRequestWithHttpInfo(string accountid, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountDeleteRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1376,12 +1585,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountDeleteRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1391,11 +1609,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Delete<Acknowledgement>("/v6/account/{accountid}", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountDeleteRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1406,11 +1626,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountDeleteRequestWithHttpInfoAsync(accountid, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountDeleteRequestWithHttpInfoAsync(accountid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1419,13 +1640,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountDeleteRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1439,14 +1663,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountDeleteRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1455,13 +1687,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.DeleteAsync<Acknowledgement>("/v6/account/{accountid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountDeleteRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1472,8 +1706,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Exists</returns>
-        public Exists AccountExistsRequest(string accountid)
+        public Exists AccountExistsRequest(string accountid, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Exists> localVarResponse = AccountExistsRequestWithHttpInfo(accountid);
             return localVarResponse.Data;
@@ -1484,12 +1719,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Exists</returns>
-        public CityPayAPI.Client.ApiResponse<Exists> AccountExistsRequestWithHttpInfo(string accountid)
+        public CityPayAPI.Client.ApiResponse<Exists> AccountExistsRequestWithHttpInfo(string accountid, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountExistsRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1503,12 +1741,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountExistsRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1518,11 +1765,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<Exists>("/v6/account-exists/{accountid}", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountExistsRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1533,11 +1782,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Exists</returns>
-        public async System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Exists> localVarResponse = await AccountExistsRequestWithHttpInfoAsync(accountid, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Exists> localVarResponse = await AccountExistsRequestWithHttpInfoAsync(accountid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1546,13 +1796,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Exists)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountExistsRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1566,14 +1819,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountExistsRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1582,13 +1843,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.GetAsync<Exists>("/v6/account-exists/{accountid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountExistsRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1599,8 +1862,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>CardHolderAccount</returns>
-        public CardHolderAccount AccountRetrieveRequest(string accountid)
+        public CardHolderAccount AccountRetrieveRequest(string accountid, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = AccountRetrieveRequestWithHttpInfo(accountid);
             return localVarResponse.Data;
@@ -1611,12 +1875,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of CardHolderAccount</returns>
-        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountRetrieveRequestWithHttpInfo(string accountid)
+        public CityPayAPI.Client.ApiResponse<CardHolderAccount> AccountRetrieveRequestWithHttpInfo(string accountid, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountRetrieveRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1630,12 +1897,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountRetrieveRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1645,11 +1921,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<CardHolderAccount>("/v6/account/{accountid}", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountRetrieveRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1660,11 +1938,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountRetrieveRequestWithHttpInfoAsync(accountid, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountRetrieveRequestWithHttpInfoAsync(accountid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1673,13 +1952,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountRetrieveRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1693,14 +1975,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountRetrieveRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1709,13 +1999,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.GetAsync<CardHolderAccount>("/v6/account/{accountid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountRetrieveRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1727,8 +2019,9 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Acknowledgement</returns>
-        public Acknowledgement AccountStatusRequest(string accountid, AccountStatus accountStatus)
+        public Acknowledgement AccountStatusRequest(string accountid, AccountStatus accountStatus, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = AccountStatusRequestWithHttpInfo(accountid, accountStatus);
             return localVarResponse.Data;
@@ -1740,16 +2033,21 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
-        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountStatusRequestWithHttpInfo(string accountid, AccountStatus accountStatus)
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> AccountStatusRequestWithHttpInfo(string accountid, AccountStatus accountStatus, int operationIndex = 0)
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountStatusRequest");
+            }
 
             // verify the required parameter 'accountStatus' is set
             if (accountStatus == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountStatus' when calling CardHolderAccountApi->AccountStatusRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1765,13 +2063,22 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.Data = accountStatus;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1781,11 +2088,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Acknowledgement>("/v6/account/{accountid}/status", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1797,11 +2106,12 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountStatusRequestWithHttpInfoAsync(accountid, accountStatus, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountStatusRequestWithHttpInfoAsync(accountid, accountStatus, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1811,17 +2121,22 @@ namespace CityPayAPI.Api
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="accountid">The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account.</param>
         /// <param name="accountStatus"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountid' when calling CardHolderAccountApi->AccountStatusRequest");
+            }
 
             // verify the required parameter 'accountStatus' is set
             if (accountStatus == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'accountStatus' when calling CardHolderAccountApi->AccountStatusRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1837,15 +2152,23 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.PathParameters.Add("accountid", CityPayAPI.Client.ClientUtils.ParameterToString(accountid)); // path parameter
             localVarRequestOptions.Data = accountStatus;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.AccountStatusRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1854,13 +2177,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/v6/account/{accountid}/status", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AccountStatusRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1871,8 +2196,9 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>Decision</returns>
-        public Decision ChargeRequest(ChargeRequest chargeRequest)
+        public Decision ChargeRequest(ChargeRequest chargeRequest, int operationIndex = 0)
         {
             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = ChargeRequestWithHttpInfo(chargeRequest);
             return localVarResponse.Data;
@@ -1883,12 +2209,15 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Decision</returns>
-        public CityPayAPI.Client.ApiResponse<Decision> ChargeRequestWithHttpInfo(ChargeRequest chargeRequest)
+        public CityPayAPI.Client.ApiResponse<Decision> ChargeRequestWithHttpInfo(ChargeRequest chargeRequest, int operationIndex = 0)
         {
             // verify the required parameter 'chargeRequest' is set
             if (chargeRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'chargeRequest' when calling CardHolderAccountApi->ChargeRequest");
+            }
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
 
@@ -1904,12 +2233,21 @@ namespace CityPayAPI.Api
             };
 
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = chargeRequest;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.ChargeRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1919,11 +2257,13 @@ namespace CityPayAPI.Api
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Decision>("/v6/charge", localVarRequestOptions, this.Configuration);
-
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ChargeRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -1934,11 +2274,12 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        public async System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await ChargeRequestWithHttpInfoAsync(chargeRequest, cancellationToken).ConfigureAwait(false);
+            CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await ChargeRequestWithHttpInfoAsync(chargeRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1947,13 +2288,16 @@ namespace CityPayAPI.Api
         /// </summary>
         /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="chargeRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'chargeRequest' is set
             if (chargeRequest == null)
+            {
                 throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'chargeRequest' when calling CardHolderAccountApi->ChargeRequest");
+            }
 
 
             CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
@@ -1969,14 +2313,22 @@ namespace CityPayAPI.Api
                 "text/xml"
             };
 
-
             var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
             var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = chargeRequest;
+
+            localVarRequestOptions.Operation = "CardHolderAccountApi.ChargeRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (cp-api-key) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
@@ -1985,13 +2337,15 @@ namespace CityPayAPI.Api
             }
 
             // make the HTTP request
-
             var localVarResponse = await this.AsynchronousClient.PostAsync<Decision>("/v6/charge", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ChargeRequest", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;

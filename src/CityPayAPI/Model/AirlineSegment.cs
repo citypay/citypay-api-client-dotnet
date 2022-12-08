@@ -50,14 +50,30 @@ namespace CityPayAPI.Model
         public AirlineSegment(string arrivalLocationCode = default(string), string carrierCode = default(string), string classServiceCode = default(string), DateTime departureDate = default(DateTime), string departureLocationCode = default(string), string flightNumber = default(string), int segmentFare = default(int), string stopOverIndicator = default(string))
         {
             // to ensure "arrivalLocationCode" is required (not null)
-            this.ArrivalLocationCode = arrivalLocationCode ?? throw new ArgumentNullException("arrivalLocationCode is a required property for AirlineSegment and cannot be null");
+            if (arrivalLocationCode == null)
+            {
+                throw new ArgumentNullException("arrivalLocationCode is a required property for AirlineSegment and cannot be null");
+            }
+            this.ArrivalLocationCode = arrivalLocationCode;
             // to ensure "carrierCode" is required (not null)
-            this.CarrierCode = carrierCode ?? throw new ArgumentNullException("carrierCode is a required property for AirlineSegment and cannot be null");
+            if (carrierCode == null)
+            {
+                throw new ArgumentNullException("carrierCode is a required property for AirlineSegment and cannot be null");
+            }
+            this.CarrierCode = carrierCode;
             // to ensure "classServiceCode" is required (not null)
-            this.ClassServiceCode = classServiceCode ?? throw new ArgumentNullException("classServiceCode is a required property for AirlineSegment and cannot be null");
+            if (classServiceCode == null)
+            {
+                throw new ArgumentNullException("classServiceCode is a required property for AirlineSegment and cannot be null");
+            }
+            this.ClassServiceCode = classServiceCode;
             this.DepartureDate = departureDate;
             // to ensure "flightNumber" is required (not null)
-            this.FlightNumber = flightNumber ?? throw new ArgumentNullException("flightNumber is a required property for AirlineSegment and cannot be null");
+            if (flightNumber == null)
+            {
+                throw new ArgumentNullException("flightNumber is a required property for AirlineSegment and cannot be null");
+            }
+            this.FlightNumber = flightNumber;
             this.DepartureLocationCode = departureLocationCode;
             this.SegmentFare = segmentFare;
             this.StopOverIndicator = stopOverIndicator;
@@ -126,7 +142,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class AirlineSegment {\n");
             sb.Append("  ArrivalLocationCode: ").Append(ArrivalLocationCode).Append("\n");
             sb.Append("  CarrierCode: ").Append(CarrierCode).Append("\n");
@@ -167,8 +183,9 @@ namespace CityPayAPI.Model
         public bool Equals(AirlineSegment input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.ArrivalLocationCode == input.ArrivalLocationCode ||
@@ -221,20 +238,34 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.ArrivalLocationCode != null)
-                    hashCode = hashCode * 59 + this.ArrivalLocationCode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ArrivalLocationCode.GetHashCode();
+                }
                 if (this.CarrierCode != null)
-                    hashCode = hashCode * 59 + this.CarrierCode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.CarrierCode.GetHashCode();
+                }
                 if (this.ClassServiceCode != null)
-                    hashCode = hashCode * 59 + this.ClassServiceCode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ClassServiceCode.GetHashCode();
+                }
                 if (this.DepartureDate != null)
-                    hashCode = hashCode * 59 + this.DepartureDate.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.DepartureDate.GetHashCode();
+                }
                 if (this.DepartureLocationCode != null)
-                    hashCode = hashCode * 59 + this.DepartureLocationCode.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.DepartureLocationCode.GetHashCode();
+                }
                 if (this.FlightNumber != null)
-                    hashCode = hashCode * 59 + this.FlightNumber.GetHashCode();
-                hashCode = hashCode * 59 + this.SegmentFare.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.FlightNumber.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.SegmentFare.GetHashCode();
                 if (this.StopOverIndicator != null)
-                    hashCode = hashCode * 59 + this.StopOverIndicator.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.StopOverIndicator.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -244,40 +275,40 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // ArrivalLocationCode (string) maxLength
-            if(this.ArrivalLocationCode != null && this.ArrivalLocationCode.Length > 3)
+            if (this.ArrivalLocationCode != null && this.ArrivalLocationCode.Length > 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ArrivalLocationCode, length must be less than 3.", new [] { "ArrivalLocationCode" });
             }
 
             // CarrierCode (string) maxLength
-            if(this.CarrierCode != null && this.CarrierCode.Length > 2)
+            if (this.CarrierCode != null && this.CarrierCode.Length > 2)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CarrierCode, length must be less than 2.", new [] { "CarrierCode" });
             }
 
             // ClassServiceCode (string) maxLength
-            if(this.ClassServiceCode != null && this.ClassServiceCode.Length > 2)
+            if (this.ClassServiceCode != null && this.ClassServiceCode.Length > 2)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClassServiceCode, length must be less than 2.", new [] { "ClassServiceCode" });
             }
 
             // DepartureLocationCode (string) maxLength
-            if(this.DepartureLocationCode != null && this.DepartureLocationCode.Length > 3)
+            if (this.DepartureLocationCode != null && this.DepartureLocationCode.Length > 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DepartureLocationCode, length must be less than 3.", new [] { "DepartureLocationCode" });
             }
 
             // FlightNumber (string) maxLength
-            if(this.FlightNumber != null && this.FlightNumber.Length > 4)
+            if (this.FlightNumber != null && this.FlightNumber.Length > 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FlightNumber, length must be less than 4.", new [] { "FlightNumber" });
             }
 
             // StopOverIndicator (string) maxLength
-            if(this.StopOverIndicator != null && this.StopOverIndicator.Length > 1)
+            if (this.StopOverIndicator != null && this.StopOverIndicator.Length > 1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for StopOverIndicator, length must be less than 1.", new [] { "StopOverIndicator" });
             }

@@ -80,7 +80,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class Acknowledgement {\n");
             sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  Context: ").Append(Context).Append("\n");
@@ -117,8 +117,9 @@ namespace CityPayAPI.Model
         public bool Equals(Acknowledgement input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Code == input.Code ||
@@ -152,13 +153,21 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.Code != null)
-                    hashCode = hashCode * 59 + this.Code.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Code.GetHashCode();
+                }
                 if (this.Context != null)
-                    hashCode = hashCode * 59 + this.Context.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Context.GetHashCode();
+                }
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Identifier.GetHashCode();
+                }
                 if (this.Message != null)
-                    hashCode = hashCode * 59 + this.Message.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Message.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -168,28 +177,28 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // Code (string) maxLength
-            if(this.Code != null && this.Code.Length > 4)
+            if (this.Code != null && this.Code.Length > 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, length must be less than 4.", new [] { "Code" });
             }
 
             // Code (string) minLength
-            if(this.Code != null && this.Code.Length < 3)
+            if (this.Code != null && this.Code.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, length must be greater than 3.", new [] { "Code" });
             }
 
             // Identifier (string) maxLength
-            if(this.Identifier != null && this.Identifier.Length > 50)
+            if (this.Identifier != null && this.Identifier.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
-            if(this.Identifier != null && this.Identifier.Length < 4)
+            if (this.Identifier != null && this.Identifier.Length < 4)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }

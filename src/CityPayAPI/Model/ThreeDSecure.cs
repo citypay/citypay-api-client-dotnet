@@ -161,7 +161,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class ThreeDSecure {\n");
             sb.Append("  AcceptHeaders: ").Append(AcceptHeaders).Append("\n");
             sb.Append("  BrowserColorDepth: ").Append(BrowserColorDepth).Append("\n");
@@ -207,8 +207,9 @@ namespace CityPayAPI.Model
         public bool Equals(ThreeDSecure input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AcceptHeaders == input.AcceptHeaders ||
@@ -286,30 +287,54 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AcceptHeaders != null)
-                    hashCode = hashCode * 59 + this.AcceptHeaders.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AcceptHeaders.GetHashCode();
+                }
                 if (this.BrowserColorDepth != null)
-                    hashCode = hashCode * 59 + this.BrowserColorDepth.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BrowserColorDepth.GetHashCode();
+                }
                 if (this.BrowserIP != null)
-                    hashCode = hashCode * 59 + this.BrowserIP.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BrowserIP.GetHashCode();
+                }
                 if (this.BrowserJavaEnabled != null)
-                    hashCode = hashCode * 59 + this.BrowserJavaEnabled.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BrowserJavaEnabled.GetHashCode();
+                }
                 if (this.BrowserLanguage != null)
-                    hashCode = hashCode * 59 + this.BrowserLanguage.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BrowserLanguage.GetHashCode();
+                }
                 if (this.BrowserScreenHeight != null)
-                    hashCode = hashCode * 59 + this.BrowserScreenHeight.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BrowserScreenHeight.GetHashCode();
+                }
                 if (this.BrowserScreenWidth != null)
-                    hashCode = hashCode * 59 + this.BrowserScreenWidth.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BrowserScreenWidth.GetHashCode();
+                }
                 if (this.BrowserTZ != null)
-                    hashCode = hashCode * 59 + this.BrowserTZ.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BrowserTZ.GetHashCode();
+                }
                 if (this.CpBx != null)
-                    hashCode = hashCode * 59 + this.CpBx.GetHashCode();
-                hashCode = hashCode * 59 + this.Downgrade1.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.CpBx.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.Downgrade1.GetHashCode();
                 if (this.MerchantTermurl != null)
-                    hashCode = hashCode * 59 + this.MerchantTermurl.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.MerchantTermurl.GetHashCode();
+                }
                 if (this.TdsPolicy != null)
-                    hashCode = hashCode * 59 + this.TdsPolicy.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.TdsPolicy.GetHashCode();
+                }
                 if (this.UserAgent != null)
-                    hashCode = hashCode * 59 + this.UserAgent.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.UserAgent.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -319,7 +344,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

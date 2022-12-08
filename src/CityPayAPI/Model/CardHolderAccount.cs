@@ -51,9 +51,17 @@ namespace CityPayAPI.Model
         public CardHolderAccount(string accountId = default(string), List<Card> cards = default(List<Card>), ContactDetails contact = default(ContactDetails), DateTime dateCreated = default(DateTime), string defaultCardId = default(string), int defaultCardIndex = default(int), DateTime lastModified = default(DateTime), string status = default(string), string uniqueId = default(string))
         {
             // to ensure "accountId" is required (not null)
-            this.AccountId = accountId ?? throw new ArgumentNullException("accountId is a required property for CardHolderAccount and cannot be null");
+            if (accountId == null)
+            {
+                throw new ArgumentNullException("accountId is a required property for CardHolderAccount and cannot be null");
+            }
+            this.AccountId = accountId;
             // to ensure "contact" is required (not null)
-            this.Contact = contact ?? throw new ArgumentNullException("contact is a required property for CardHolderAccount and cannot be null");
+            if (contact == null)
+            {
+                throw new ArgumentNullException("contact is a required property for CardHolderAccount and cannot be null");
+            }
+            this.Contact = contact;
             this.Cards = cards;
             this.DateCreated = dateCreated;
             this.DefaultCardId = defaultCardId;
@@ -130,7 +138,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class CardHolderAccount {\n");
             sb.Append("  AccountId: ").Append(AccountId).Append("\n");
             sb.Append("  Cards: ").Append(Cards).Append("\n");
@@ -172,8 +180,9 @@ namespace CityPayAPI.Model
         public bool Equals(CardHolderAccount input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.AccountId == input.AccountId ||
@@ -232,22 +241,38 @@ namespace CityPayAPI.Model
             {
                 int hashCode = 41;
                 if (this.AccountId != null)
-                    hashCode = hashCode * 59 + this.AccountId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.AccountId.GetHashCode();
+                }
                 if (this.Cards != null)
-                    hashCode = hashCode * 59 + this.Cards.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Cards.GetHashCode();
+                }
                 if (this.Contact != null)
-                    hashCode = hashCode * 59 + this.Contact.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Contact.GetHashCode();
+                }
                 if (this.DateCreated != null)
-                    hashCode = hashCode * 59 + this.DateCreated.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.DateCreated.GetHashCode();
+                }
                 if (this.DefaultCardId != null)
-                    hashCode = hashCode * 59 + this.DefaultCardId.GetHashCode();
-                hashCode = hashCode * 59 + this.DefaultCardIndex.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.DefaultCardId.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.DefaultCardIndex.GetHashCode();
                 if (this.LastModified != null)
-                    hashCode = hashCode * 59 + this.LastModified.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.LastModified.GetHashCode();
+                }
                 if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Status.GetHashCode();
+                }
                 if (this.UniqueId != null)
-                    hashCode = hashCode * 59 + this.UniqueId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.UniqueId.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -257,16 +282,16 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // AccountId (string) maxLength
-            if(this.AccountId != null && this.AccountId.Length > 50)
+            if (this.AccountId != null && this.AccountId.Length > 50)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be less than 50.", new [] { "AccountId" });
             }
 
             // AccountId (string) minLength
-            if(this.AccountId != null && this.AccountId.Length < 5)
+            if (this.AccountId != null && this.AccountId.Length < 5)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountId, length must be greater than 5.", new [] { "AccountId" });
             }

@@ -51,11 +51,23 @@ namespace CityPayAPI.Model
             this.BatchDate = batchDate;
             this.BatchId = batchId;
             // to ensure "batchStatus" is required (not null)
-            this.BatchStatus = batchStatus ?? throw new ArgumentNullException("batchStatus is a required property for BatchReportResponseModel and cannot be null");
+            if (batchStatus == null)
+            {
+                throw new ArgumentNullException("batchStatus is a required property for BatchReportResponseModel and cannot be null");
+            }
+            this.BatchStatus = batchStatus;
             // to ensure "clientAccountId" is required (not null)
-            this.ClientAccountId = clientAccountId ?? throw new ArgumentNullException("clientAccountId is a required property for BatchReportResponseModel and cannot be null");
+            if (clientAccountId == null)
+            {
+                throw new ArgumentNullException("clientAccountId is a required property for BatchReportResponseModel and cannot be null");
+            }
+            this.ClientAccountId = clientAccountId;
             // to ensure "transactions" is required (not null)
-            this.Transactions = transactions ?? throw new ArgumentNullException("transactions is a required property for BatchReportResponseModel and cannot be null");
+            if (transactions == null)
+            {
+                throw new ArgumentNullException("transactions is a required property for BatchReportResponseModel and cannot be null");
+            }
+            this.Transactions = transactions;
         }
 
         /// <summary>
@@ -106,7 +118,7 @@ namespace CityPayAPI.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class BatchReportResponseModel {\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("  BatchDate: ").Append(BatchDate).Append("\n");
@@ -145,8 +157,9 @@ namespace CityPayAPI.Model
         public bool Equals(BatchReportResponseModel input)
         {
             if (input == null)
+            {
                 return false;
-
+            }
             return 
                 (
                     this.Amount == input.Amount ||
@@ -188,16 +201,24 @@ namespace CityPayAPI.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = hashCode * 59 + this.Amount.GetHashCode();
+                hashCode = (hashCode * 59) + this.Amount.GetHashCode();
                 if (this.BatchDate != null)
-                    hashCode = hashCode * 59 + this.BatchDate.GetHashCode();
-                hashCode = hashCode * 59 + this.BatchId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BatchDate.GetHashCode();
+                }
+                hashCode = (hashCode * 59) + this.BatchId.GetHashCode();
                 if (this.BatchStatus != null)
-                    hashCode = hashCode * 59 + this.BatchStatus.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.BatchStatus.GetHashCode();
+                }
                 if (this.ClientAccountId != null)
-                    hashCode = hashCode * 59 + this.ClientAccountId.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.ClientAccountId.GetHashCode();
+                }
                 if (this.Transactions != null)
-                    hashCode = hashCode * 59 + this.Transactions.GetHashCode();
+                {
+                    hashCode = (hashCode * 59) + this.Transactions.GetHashCode();
+                }
                 return hashCode;
             }
         }
@@ -207,22 +228,22 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
             // BatchId (int) minimum
-            if(this.BatchId < (int)1)
+            if (this.BatchId < (int)1)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
             }
 
             // ClientAccountId (string) maxLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length > 20)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length > 20)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be less than 20.", new [] { "ClientAccountId" });
             }
 
             // ClientAccountId (string) minLength
-            if(this.ClientAccountId != null && this.ClientAccountId.Length < 3)
+            if (this.ClientAccountId != null && this.ClientAccountId.Length < 3)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClientAccountId, length must be greater than 3.", new [] { "ClientAccountId" });
             }

@@ -8,6 +8,7 @@ All URIs are relative to *https://api.citypay.com*
 | [**TokenCloseRequest**](PaylinkApi.md#tokencloserequest) | **PUT** /paylink/{token}/close | Close Paylink Token |
 | [**TokenCreateBillPaymentRequest**](PaylinkApi.md#tokencreatebillpaymentrequest) | **POST** /paylink/bill-payment | Create Bill Payment Paylink Token |
 | [**TokenCreateRequest**](PaylinkApi.md#tokencreaterequest) | **POST** /paylink/create | Create Paylink Token |
+| [**TokenPurgeAttachmentsRequest**](PaylinkApi.md#tokenpurgeattachmentsrequest) | **PUT** /paylink/{token}/purge-attachments | Purges any attachments for a Paylink Token |
 | [**TokenReconciledRequest**](PaylinkApi.md#tokenreconciledrequest) | **PUT** /paylink/{token}/reconciled | Reconcile Paylink Token |
 | [**TokenReopenRequest**](PaylinkApi.md#tokenreopenrequest) | **PUT** /paylink/{token}/reopen | Reopen Paylink Token |
 | [**TokenStatusChangesRequest**](PaylinkApi.md#tokenstatuschangesrequest) | **POST** /paylink/token/changes | Paylink Token Audit |
@@ -45,7 +46,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkApi(config);
-            var token = token_example;  // string | The token returned by the create token process.
+            var token = "token_example";  // string | The token returned by the create token process.
             var paylinkAdjustmentRequest = new PaylinkAdjustmentRequest(); // PaylinkAdjustmentRequest | 
 
             try
@@ -148,7 +149,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkApi(config);
-            var token = token_example;  // string | The token returned by the create token process.
+            var token = "token_example";  // string | The token returned by the create token process.
 
             try
             {
@@ -261,20 +262,15 @@ To send a notification path, append a `notification-path` property to the reques
 
 ```json
  {
-  "notification-path": [
-    {
-      "channel": "sms",
+  "sms_notification_path": {
       "to": "+441534884000"
-    },
-    {
-      "channel": "email",
+  },
+  "email_notification_path": {
       "to": ["help-desk@citypay.com"],
       "cc": ["third-party@citypay.com"],
       "reply": ["help@my-company.com"]
-    }
-  ]
+  }
 }
-
 ```
 
 Notification paths trigger a number of events which are stored as part of the timeline of events of a Paylink token
@@ -592,6 +588,105 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="tokenpurgeattachmentsrequest"></a>
+# **TokenPurgeAttachmentsRequest**
+> Acknowledgement TokenPurgeAttachmentsRequest (string token)
+
+Purges any attachments for a Paylink Token
+
+Purges any attachments for a token for GDPR or DP reasons.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using CityPayAPI.Api;
+using CityPayAPI.Client;
+using CityPayAPI.Model;
+
+namespace Example
+{
+    public class TokenPurgeAttachmentsRequestExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.citypay.com";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
+
+            var apiInstance = new PaylinkApi(config);
+            var token = "token_example";  // string | The token returned by the create token process.
+
+            try
+            {
+                // Purges any attachments for a Paylink Token
+                Acknowledgement result = apiInstance.TokenPurgeAttachmentsRequest(token);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling PaylinkApi.TokenPurgeAttachmentsRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the TokenPurgeAttachmentsRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Purges any attachments for a Paylink Token
+    ApiResponse<Acknowledgement> response = apiInstance.TokenPurgeAttachmentsRequestWithHttpInfo(token);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling PaylinkApi.TokenPurgeAttachmentsRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **token** | **string** | The token returned by the create token process. |  |
+
+### Return type
+
+[**Acknowledgement**](Acknowledgement.md)
+
+### Authorization
+
+[cp-api-key](../README.md#cp-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Confirms that the attachments eiither did not exist or were purged. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="tokenreconciledrequest"></a>
 # **TokenReconciledRequest**
 > Acknowledgement TokenReconciledRequest (string token)
@@ -620,7 +715,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkApi(config);
-            var token = token_example;  // string | The token returned by the create token process.
+            var token = "token_example";  // string | The token returned by the create token process.
 
             try
             {
@@ -719,7 +814,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkApi(config);
-            var token = token_example;  // string | The token returned by the create token process.
+            var token = "token_example";  // string | The token returned by the create token process.
 
             try
             {
@@ -922,7 +1017,7 @@ namespace Example
             config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new PaylinkApi(config);
-            var token = token_example;  // string | The token returned by the create token process.
+            var token = "token_example";  // string | The token returned by the create token process.
 
             try
             {

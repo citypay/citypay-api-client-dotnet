@@ -5,10 +5,10 @@ All URIs are relative to *https://api.citypay.com*
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**BatchProcessRequest**](BatchProcessingApi.md#batchprocessrequest) | **POST** /v6/batch/process | Batch Process Request |
-| [**BatchReportRequest**](BatchProcessingApi.md#batchreportrequest) | **POST** /v6/batch/retrieve | BatchReportRequest |
+| [**BatchRetrieveRequest**](BatchProcessingApi.md#batchretrieverequest) | **POST** /v6/batch/retrieve | BatchReportRequest |
 | [**CheckBatchStatusRequest**](BatchProcessingApi.md#checkbatchstatusrequest) | **POST** /v6/batch/status | CheckBatchStatus |
 
-<a name="batchprocessrequest"></a>
+<a id="batchprocessrequest"></a>
 # **BatchProcessRequest**
 > ProcessBatchResponse BatchProcessRequest (ProcessBatchRequest processBatchRequest)
 
@@ -111,13 +111,13 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="batchreportrequest"></a>
-# **BatchReportRequest**
-> BatchReportResponseModel BatchReportRequest (BatchReportRequest batchReportRequest)
+<a id="batchretrieverequest"></a>
+# **BatchRetrieveRequest**
+> BatchReportResponseModel BatchRetrieveRequest (BatchReportRequest batchReportRequest)
 
 BatchReportRequest
 
-The operation is used to retrieve a report of the result of a batch process.
+The report for a given batch.
 
 ### Example
 ```csharp
@@ -129,7 +129,7 @@ using CityPayAPI.Model;
 
 namespace Example
 {
-    public class BatchReportRequestExample
+    public class BatchRetrieveRequestExample
     {
         public static void Main()
         {
@@ -144,12 +144,12 @@ namespace Example
             try
             {
                 // BatchReportRequest
-                BatchReportResponseModel result = apiInstance.BatchReportRequest(batchReportRequest);
+                BatchReportResponseModel result = apiInstance.BatchRetrieveRequest(batchReportRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling BatchProcessingApi.BatchReportRequest: " + e.Message);
+                Debug.Print("Exception when calling BatchProcessingApi.BatchRetrieveRequest: " + e.Message);
                 Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -158,21 +158,21 @@ namespace Example
 }
 ```
 
-#### Using the BatchReportRequestWithHttpInfo variant
+#### Using the BatchRetrieveRequestWithHttpInfo variant
 This returns an ApiResponse object which contains the response data, status code and headers.
 
 ```csharp
 try
 {
     // BatchReportRequest
-    ApiResponse<BatchReportResponseModel> response = apiInstance.BatchReportRequestWithHttpInfo(batchReportRequest);
+    ApiResponse<BatchReportResponseModel> response = apiInstance.BatchRetrieveRequestWithHttpInfo(batchReportRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
-    Debug.Print("Exception when calling BatchProcessingApi.BatchReportRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Exception when calling BatchProcessingApi.BatchRetrieveRequestWithHttpInfo: " + e.Message);
     Debug.Print("Status Code: " + e.ErrorCode);
     Debug.Print(e.StackTrace);
 }
@@ -210,7 +210,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="checkbatchstatusrequest"></a>
+<a id="checkbatchstatusrequest"></a>
 # **CheckBatchStatusRequest**
 > CheckBatchStatusResponse CheckBatchStatusRequest (CheckBatchStatus checkBatchStatus)
 

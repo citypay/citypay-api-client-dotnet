@@ -152,25 +152,12 @@ namespace CityPayAPI.Test
             Assert.Equal("001", ack.Code);
         }
         
-        public class Cres
+        class Cres
         {
-            public string AcsTransID { get; set; }
-            public string MessageType { get; set; }
-            public string MessageVersion { get; set; }
-            public string ThreeDSServerTransID { get; set; }
-            public string TransStatus { get; set; }
-            
-            public Cres(string acsTransID, string messageType, string messageVersion, string threeDSServerTransID, string transStatus)
-            {
-                AcsTransID = acsTransID;
-                MessageType = messageType;
-                MessageVersion = messageVersion;
-                ThreeDSServerTransID = threeDSServerTransID;
-                TransStatus = transStatus;
-            }
-            // Other properties, methods, events...
+            public string cres { get; set; }
+            public string threeDSSessionData { get; set; }
         }
-
+        
         [Fact]
         public void Authorise3DSv2Test()
         {
@@ -229,18 +216,11 @@ namespace CityPayAPI.Test
             if (res.IsSuccessStatusCode)
             {
                 var cResString = res.Content.ReadAsStringAsync().Result;
+                Cres cres = JsonConvert.DeserializeObject<Cres>(cResString);
                 
-                var cRes = JsonConvert.DeserializeObject<Cres>(cResString);
-                
-                Assert.NotEmpty(cRes.AcsTransID);
-                Assert.NotEmpty(cRes.MessageType);
-                Assert.NotEmpty(cRes.MessageVersion);
-                Assert.NotEmpty(cRes.ThreeDSServerTransID);
-                Assert.NotEmpty(cRes.TransStatus);
-
                 var cResAuthRequest =
-                    new CResAuthRequest(Convert.ToBase64String(Encoding.UTF8.GetBytes(cResString)));
-
+                    new CResAuthRequest(cres.cres);
+            
                 var cResRequestResponse = api.CResRequest(cResAuthRequest);
                 Assert.Equal(1595, cResRequestResponse.Amount);
                 Assert.Equal("A12345",cResRequestResponse.Authcode);

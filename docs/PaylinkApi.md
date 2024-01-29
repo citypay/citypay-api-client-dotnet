@@ -5,16 +5,16 @@ All URIs are relative to *https://api.citypay.com*
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**TokenAdjustmentRequest**](PaylinkApi.md#tokenadjustmentrequest) | **POST** /paylink/{token}/adjustment | Paylink Token Adjustment |
+| [**TokenChangesRequest**](PaylinkApi.md#tokenchangesrequest) | **POST** /paylink/token/changes | Paylink Token Audit |
 | [**TokenCloseRequest**](PaylinkApi.md#tokencloserequest) | **PUT** /paylink/{token}/close | Close Paylink Token |
 | [**TokenCreateBillPaymentRequest**](PaylinkApi.md#tokencreatebillpaymentrequest) | **POST** /paylink/bill-payment | Create Bill Payment Paylink Token |
 | [**TokenCreateRequest**](PaylinkApi.md#tokencreaterequest) | **POST** /paylink/create | Create Paylink Token |
 | [**TokenPurgeAttachmentsRequest**](PaylinkApi.md#tokenpurgeattachmentsrequest) | **PUT** /paylink/{token}/purge-attachments | Purges any attachments for a Paylink Token |
 | [**TokenReconciledRequest**](PaylinkApi.md#tokenreconciledrequest) | **PUT** /paylink/{token}/reconciled | Reconcile Paylink Token |
 | [**TokenReopenRequest**](PaylinkApi.md#tokenreopenrequest) | **PUT** /paylink/{token}/reopen | Reopen Paylink Token |
-| [**TokenStatusChangesRequest**](PaylinkApi.md#tokenstatuschangesrequest) | **POST** /paylink/token/changes | Paylink Token Audit |
 | [**TokenStatusRequest**](PaylinkApi.md#tokenstatusrequest) | **GET** /paylink/{token}/status | Paylink Token Status |
 
-<a name="tokenadjustmentrequest"></a>
+<a id="tokenadjustmentrequest"></a>
 # **TokenAdjustmentRequest**
 > Acknowledgement TokenAdjustmentRequest (string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest)
 
@@ -119,7 +119,106 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokencloserequest"></a>
+<a id="tokenchangesrequest"></a>
+# **TokenChangesRequest**
+> PaylinkTokenStatusChangeResponse TokenChangesRequest (PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest)
+
+Paylink Token Audit
+
+Allows for the changes to a pre-existing token.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using CityPayAPI.Api;
+using CityPayAPI.Client;
+using CityPayAPI.Model;
+
+namespace Example
+{
+    public class TokenChangesRequestExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.citypay.com";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
+
+            var apiInstance = new PaylinkApi(config);
+            var paylinkTokenStatusChangeRequest = new PaylinkTokenStatusChangeRequest(); // PaylinkTokenStatusChangeRequest | 
+
+            try
+            {
+                // Paylink Token Audit
+                PaylinkTokenStatusChangeResponse result = apiInstance.TokenChangesRequest(paylinkTokenStatusChangeRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling PaylinkApi.TokenChangesRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the TokenChangesRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Paylink Token Audit
+    ApiResponse<PaylinkTokenStatusChangeResponse> response = apiInstance.TokenChangesRequestWithHttpInfo(paylinkTokenStatusChangeRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling PaylinkApi.TokenChangesRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **paylinkTokenStatusChangeRequest** | [**PaylinkTokenStatusChangeRequest**](PaylinkTokenStatusChangeRequest.md) |  |  |
+
+### Return type
+
+[**PaylinkTokenStatusChangeResponse**](PaylinkTokenStatusChangeResponse.md)
+
+### Authorization
+
+[cp-api-key](../README.md#cp-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/xml
+ - **Accept**: application/json, text/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Changes from tokens actioned after the pivotal date provided in the request. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="tokencloserequest"></a>
 # **TokenCloseRequest**
 > Acknowledgement TokenCloseRequest (string token)
 
@@ -220,7 +319,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokencreatebillpaymentrequest"></a>
+<a id="tokencreatebillpaymentrequest"></a>
 # **TokenCreateBillPaymentRequest**
 > PaylinkTokenCreated TokenCreateBillPaymentRequest (PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest)
 
@@ -242,7 +341,7 @@ The bill payment service allows
 7. support of status reporting on tokens
 8. URL short codes for SMS notifications
 
-<img src="../images/merchant-BPS-workflow.png" alt="Paylink BPSv2 Overview" width="50%"/> 
+<img src="images/merchant-BPS-workflow.png" alt="Paylink BPSv2 Overview" width="50%"/> 
 
 
 ### Notification Paths
@@ -317,7 +416,7 @@ To ensure that invoices are paid by the intended recipient, Paylink supports the
 A Field Guard is an intended field which is to be used as a form of guarded authentication. More than 1 field can be
 requested.
 
-<img src="../images/paylink-field-guards.png" alt="Paylink Field Guards" width="50%"/>
+<img src="images/paylink-field-guards.png" alt="Paylink Field Guards" width="50%"/>
 
 To determine the source value of the field, each field name is searched in the order of
 
@@ -489,7 +588,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokencreaterequest"></a>
+<a id="tokencreaterequest"></a>
 # **TokenCreateRequest**
 > PaylinkTokenCreated TokenCreateRequest (PaylinkTokenRequestModel paylinkTokenRequestModel)
 
@@ -588,7 +687,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokenpurgeattachmentsrequest"></a>
+<a id="tokenpurgeattachmentsrequest"></a>
 # **TokenPurgeAttachmentsRequest**
 > Acknowledgement TokenPurgeAttachmentsRequest (string token)
 
@@ -687,13 +786,13 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokenreconciledrequest"></a>
+<a id="tokenreconciledrequest"></a>
 # **TokenReconciledRequest**
 > Acknowledgement TokenReconciledRequest (string token)
 
 Reconcile Paylink Token
 
-Marks a Paylink Token as reconciled when reconcilation is performed on the merchant's side.
+Marks a Paylink Token as reconciled when reconciliation is performed on the merchant's side.
 
 ### Example
 ```csharp
@@ -786,7 +885,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokenreopenrequest"></a>
+<a id="tokenreopenrequest"></a>
 # **TokenReopenRequest**
 > Acknowledgement TokenReopenRequest (string token)
 
@@ -885,111 +984,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokenstatuschangesrequest"></a>
-# **TokenStatusChangesRequest**
-> PaylinkTokenStatusChangeResponse TokenStatusChangesRequest (PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest)
-
-Paylink Token Audit
-
-Obtains any changes on Paylink Tokens since a given date and time. This allows for a merchant to regularly check on 
-activity over a collection of Paylink Tokens and to check on any events that may have occurred. If a Token is `Closed` 
-it is not considered.
-
-Only statuses that have been appended since the given date and time is returned.
-
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using CityPayAPI.Api;
-using CityPayAPI.Client;
-using CityPayAPI.Model;
-
-namespace Example
-{
-    public class TokenStatusChangesRequestExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "https://api.citypay.com";
-            // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
-
-            var apiInstance = new PaylinkApi(config);
-            var paylinkTokenStatusChangeRequest = new PaylinkTokenStatusChangeRequest(); // PaylinkTokenStatusChangeRequest | 
-
-            try
-            {
-                // Paylink Token Audit
-                PaylinkTokenStatusChangeResponse result = apiInstance.TokenStatusChangesRequest(paylinkTokenStatusChangeRequest);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling PaylinkApi.TokenStatusChangesRequest: " + e.Message);
-                Debug.Print("Status Code: " + e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-#### Using the TokenStatusChangesRequestWithHttpInfo variant
-This returns an ApiResponse object which contains the response data, status code and headers.
-
-```csharp
-try
-{
-    // Paylink Token Audit
-    ApiResponse<PaylinkTokenStatusChangeResponse> response = apiInstance.TokenStatusChangesRequestWithHttpInfo(paylinkTokenStatusChangeRequest);
-    Debug.Write("Status Code: " + response.StatusCode);
-    Debug.Write("Response Headers: " + response.Headers);
-    Debug.Write("Response Body: " + response.Data);
-}
-catch (ApiException e)
-{
-    Debug.Print("Exception when calling PaylinkApi.TokenStatusChangesRequestWithHttpInfo: " + e.Message);
-    Debug.Print("Status Code: " + e.ErrorCode);
-    Debug.Print(e.StackTrace);
-}
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **paylinkTokenStatusChangeRequest** | [**PaylinkTokenStatusChangeRequest**](PaylinkTokenStatusChangeRequest.md) |  |  |
-
-### Return type
-
-[**PaylinkTokenStatusChangeResponse**](PaylinkTokenStatusChangeResponse.md)
-
-### Authorization
-
-[cp-api-key](../README.md#cp-api-key)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/xml
- - **Accept**: application/json, text/xml
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Changes from tokens actioned after the pivotal date provided in the request. |  -  |
-| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
-| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
-| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
-| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
-| **500** | Server Error. The server was unable to complete the request. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="tokenstatusrequest"></a>
+<a id="tokenstatusrequest"></a>
 # **TokenStatusRequest**
 > PaylinkTokenStatus TokenStatusRequest (string token)
 

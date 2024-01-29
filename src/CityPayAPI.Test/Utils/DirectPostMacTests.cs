@@ -40,7 +40,7 @@ namespace CityPayAPI.Test.Utils
         [Fact]
         public void ValidateTest()
         {
-            Assert.Equal(true, DirectPostMac.Validate(
+            Assert.True(DirectPostMac.Validate(
                 "LK123456789", 
                 HexToByteArray.Encode("0123456789ABCDEF"), 
                 27595, 

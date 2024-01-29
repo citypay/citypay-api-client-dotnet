@@ -18,7 +18,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 3.1.34 net461 net472
+        use-multiple-toolkits: true
     - name: Build
       run: dotnet build -c Release
     - name: Test

@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     timeout-minutes: 5
     steps:
     - name: Checkout
@@ -19,10 +19,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         use-multiple-toolkits: true
-    - name: Install ibicu67_67.1-1_amd64.deb
-      run: wget http://ftp.us.debian.org/debian/pool/main/i/icu/libicu57_57.1-6+deb9u4_amd64.deb
-    - name: Install libicu57_57.1-6+deb9u4_amd64.deb
-      run: sudo dpkg -i libicu57_57.1-6+deb9u4_amd64.deb
     - name: Install .NET Core 3.1
       run: sudo apt-get install dotnet-sdk-3.1
     - name: Build

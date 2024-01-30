@@ -22,7 +22,7 @@ jobs:
     - name: Install .NET Core 3.1
       run: sudo apt-get install dotnet-sdk-3.1
     - name: Fix broken packages
-      run: sudo apt install --fix-broken-install
+      run: sudo apt --fix-broken install
       if: failure()
     - name: Clean APT cache
       run: sudo apt clean

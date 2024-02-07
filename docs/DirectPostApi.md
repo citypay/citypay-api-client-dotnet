@@ -10,9 +10,9 @@ All URIs are relative to *https://api.citypay.com*
 | [**DirectPostTokeniseRequest**](DirectPostApi.md#directposttokeniserequest) | **POST** /direct/tokenise | Direct Post Tokenise Request |
 | [**TokenRequest**](DirectPostApi.md#tokenrequest) | **POST** /direct/token | Direct Post Token Request |
 
-<a name="directcresauthrequest"></a>
+<a id="directcresauthrequest"></a>
 # **DirectCResAuthRequest**
-> AuthResponse DirectCResAuthRequest (string uuid, string cres = null, string threeDSSessionData = null)
+> AuthResponse DirectCResAuthRequest (string uuid, string? cres = null, string? threeDSSessionData = null)
 
 Handles a CRes response from ACS, returning back the result of authorisation
 
@@ -39,8 +39,8 @@ namespace Example
             config.BasePath = "https://api.citypay.com";
             var apiInstance = new DirectPostApi(config);
             var uuid = "uuid_example";  // string | An identifier used to track the CReq/CRes cycle.
-            var cres = "cres_example";  // string | The CRES from the ACS. (optional) 
-            var threeDSSessionData = "threeDSSessionData_example";  // string | The session data from the ACS. (optional) 
+            var cres = "cres_example";  // string? | The CRES from the ACS. (optional) 
+            var threeDSSessionData = "threeDSSessionData_example";  // string? | The session data from the ACS. (optional) 
 
             try
             {
@@ -84,8 +84,8 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **uuid** | **string** | An identifier used to track the CReq/CRes cycle. |  |
-| **cres** | **string** | The CRES from the ACS. | [optional]  |
-| **threeDSSessionData** | **string** | The session data from the ACS. | [optional]  |
+| **cres** | **string?** | The CRES from the ACS. | [optional]  |
+| **threeDSSessionData** | **string?** | The session data from the ACS. | [optional]  |
 
 ### Return type
 
@@ -115,9 +115,9 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="directcrestokeniserequest"></a>
+<a id="directcrestokeniserequest"></a>
 # **DirectCResTokeniseRequest**
-> TokenisationResponseModel DirectCResTokeniseRequest (string uuid, string cres = null, string threeDSSessionData = null)
+> TokenisationResponseModel DirectCResTokeniseRequest (string uuid, string? cres = null, string? threeDSSessionData = null)
 
 Handles a CRes response from ACS, returning back a token for future authorisation
 
@@ -144,8 +144,8 @@ namespace Example
             config.BasePath = "https://api.citypay.com";
             var apiInstance = new DirectPostApi(config);
             var uuid = "uuid_example";  // string | An identifier used to track the CReq/CRes cycle.
-            var cres = "cres_example";  // string | The CRES from the ACS. (optional) 
-            var threeDSSessionData = "threeDSSessionData_example";  // string | The session data from the ACS. (optional) 
+            var cres = "cres_example";  // string? | The CRES from the ACS. (optional) 
+            var threeDSSessionData = "threeDSSessionData_example";  // string? | The session data from the ACS. (optional) 
 
             try
             {
@@ -189,8 +189,8 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **uuid** | **string** | An identifier used to track the CReq/CRes cycle. |  |
-| **cres** | **string** | The CRES from the ACS. | [optional]  |
-| **threeDSSessionData** | **string** | The session data from the ACS. | [optional]  |
+| **cres** | **string?** | The CRES from the ACS. | [optional]  |
+| **threeDSSessionData** | **string?** | The session data from the ACS. | [optional]  |
 
 ### Return type
 
@@ -220,7 +220,7 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="directpostauthrequest"></a>
+<a id="directpostauthrequest"></a>
 # **DirectPostAuthRequest**
 > AuthResponse DirectPostAuthRequest (DirectPostRequest directPostRequest)
 
@@ -252,11 +252,11 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com";
-            // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
             // Configure API key authorization: cp-domain-key
             config.AddApiKey("cp-domain-key", "YOUR_API_KEY");
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new DirectPostApi(config);
             var directPostRequest = new DirectPostRequest(); // DirectPostRequest | 
@@ -310,7 +310,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[cp-api-key](../README.md#cp-api-key), [cp-domain-key](../README.md#cp-domain-key)
+[cp-domain-key](../README.md#cp-domain-key), [cp-api-key](../README.md#cp-api-key)
 
 ### HTTP request headers
 
@@ -332,7 +332,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="directposttokeniserequest"></a>
+<a id="directposttokeniserequest"></a>
 # **DirectPostTokeniseRequest**
 > AuthResponse DirectPostTokeniseRequest (DirectPostRequest directPostRequest)
 
@@ -364,11 +364,11 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com";
-            // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
             // Configure API key authorization: cp-domain-key
             config.AddApiKey("cp-domain-key", "YOUR_API_KEY");
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new DirectPostApi(config);
             var directPostRequest = new DirectPostRequest(); // DirectPostRequest | 
@@ -422,7 +422,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[cp-api-key](../README.md#cp-api-key), [cp-domain-key](../README.md#cp-domain-key)
+[cp-domain-key](../README.md#cp-domain-key), [cp-api-key](../README.md#cp-api-key)
 
 ### HTTP request headers
 
@@ -444,7 +444,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="tokenrequest"></a>
+<a id="tokenrequest"></a>
 # **TokenRequest**
 > AuthResponse TokenRequest (DirectTokenAuthRequest directTokenAuthRequest)
 
@@ -470,11 +470,11 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com";
-            // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
             // Configure API key authorization: cp-domain-key
             config.AddApiKey("cp-domain-key", "YOUR_API_KEY");
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new DirectPostApi(config);
             var directTokenAuthRequest = new DirectTokenAuthRequest(); // DirectTokenAuthRequest | 
@@ -528,7 +528,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[cp-api-key](../README.md#cp-api-key), [cp-domain-key](../README.md#cp-domain-key)
+[cp-domain-key](../README.md#cp-domain-key), [cp-api-key](../README.md#cp-api-key)
 
 ### HTTP request headers
 

@@ -110,7 +110,7 @@ namespace CityPayAPI.Test
             Assert.False(instance.Cards[0].BinEu);
             Assert.Equal( "2U1XV3PJSeUXFNzXidACn2TyCzAK", instance.Cards[0].CardId);
             Assert.Equal( "ACTIVE", instance.Cards[0].CardStatus);
-            Assert.True( instance.Cards[0].Default);
+            Assert.True( instance.Cards[0].VarDefault);
             Assert.Equal( 7, instance.Cards[0].Expmonth);
             Assert.Equal( 2022, instance.Cards[0].Expyear);
             Assert.Equal( "TestVisa/0002", instance.Cards[0].Label);

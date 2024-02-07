@@ -13,7 +13,7 @@ All URIs are relative to *https://api.citypay.com*
 | [**RetrievalRequest**](AuthorisationAndPaymentApi.md#retrievalrequest) | **POST** /v6/retrieve | Retrieval |
 | [**VoidRequest**](AuthorisationAndPaymentApi.md#voidrequest) | **POST** /v6/void | Void |
 
-<a name="authorisationrequest"></a>
+<a id="authorisationrequest"></a>
 # **AuthorisationRequest**
 > Decision AuthorisationRequest (AuthRequest authRequest)
 
@@ -32,7 +32,18 @@ the appropriate coding and this will perform transparently by the gateway.
 Data properties that are required, may depend on the environment you are conducting payment for. Our API aims to be
  flexible enough to cater for these structures. Our integration team will aid you in providing the necessary data to 
  transact. 
- 
+
+```json
+{ 
+  "RequestChallenged": {
+    "acsurl": "https://bank.com/3DS/ACS",
+    "creq": "SXQgd2FzIHRoZSBiZXN0IG9mIHRpbWVzLCBpdCB3YXMgdGhlIHdvcnN00...",
+    "merchantid": 12345,
+    "transno": 1,
+    "threedserver_trans_id": "d652d8d2-d74a-4264-a051-a7862b10d5d6"
+  }               
+}
+```
  
 ## E-commerce workflows
  
@@ -43,7 +54,7 @@ into a simple structure for authentication, preventing integrators from performi
 Visa and MasterCard.
 
 3D-secure has been around for a number of years and aims to shift the liability of a transaction away from a merchant back
-to the card holder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively
+to the cardholder. A *liability shift* determines whether a card holder can charge back a transaction as unknown. Effectively
 the process asks for a card holder to authenticate the transaction prior to authorisation producing a Cardholder 
 verification value (CAVV) and ecommerce indicator (ECI) as evidence of authorisation.
 
@@ -81,7 +92,7 @@ CityPay support 3DS version 2.1 for Verified by Visa, MasterCard Identity Check 
 
 #### 3-D Secure - None
 
-![3DSv2 Frctionless Flow](/images/3dsv2-no3d.png)
+![3DSv2 Frctionless Flow](images/3dsv2-no3d.png)
 
 A basic flow may involve no 3-D secure processing. This could happen if there is no ability to perform authentication.
 An enrollment check may apply an "attempted" resolution to processing. In this instance a transaction may not meet any
@@ -90,7 +101,7 @@ presented for authorisation if this occurs.
 
 #### 3-D Secure - Frictionless
 
-![3DSv2 Frctionless Flow](/images/3dsv2-frictionless.png)
+![3DSv2 Frctionless Flow](images/3dsv2-frictionless.png)
 
 E-commerce transactions supporting 3DSv2 can benefit from seamlessly authenticated transactions which may perform a 
 "frictionless" flow. This method will authenticate low risk transactions with minimal impact to a 
@@ -101,7 +112,7 @@ authorisation has occurred.
 
 #### 3-D Secure - Challenge
 
-![3DSv2 Frctionless Flow](/images/3dsv2-challenge.png)
+![3DSv2 Frctionless Flow](images/3dsv2-challenge.png)
 
 A transaction that is deemed as higher risk my be "challenged". In this instance, the API will return a
 [request challenge](#requestchallenged) which will require your integration to forward the cardholder's browser to the 
@@ -133,9 +144,9 @@ To forward the user to the ACS, we recommend a simple auto submit HTML form.
 
 ```html
 <html lang="en">
-<head>
+	<head>
         <title>Forward to ACS</title>
-<script type="text/javascript">
+		<script type="text/javascript">
         function onLoadEvent() { 
             document.acs.submit(); 
         }
@@ -213,9 +224,9 @@ To forward the user to the ACS, we recommend a simple auto submit HTML form.
 
 ```html
 <html lang="en">
-<head>
+	<head>
         <title>Forward to ACS</title>
-<script type="text/javascript">
+		<script type="text/javascript">
         function onLoadEvent() { 
             document.acs.submit(); 
         }
@@ -329,7 +340,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="binrangelookuprequest"></a>
+<a id="binrangelookuprequest"></a>
 # **BinRangeLookupRequest**
 > Bin BinRangeLookupRequest (BinLookup binLookup)
 
@@ -439,7 +450,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="cresrequest"></a>
+<a id="cresrequest"></a>
 # **CResRequest**
 > AuthResponse CResRequest (CResAuthRequest cResAuthRequest)
 
@@ -545,7 +556,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="capturerequest"></a>
+<a id="capturerequest"></a>
 # **CaptureRequest**
 > Acknowledgement CaptureRequest (CaptureRequest captureRequest)
 
@@ -661,7 +672,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="paresrequest"></a>
+<a id="paresrequest"></a>
 # **PaResRequest**
 > AuthResponse PaResRequest (PaResAuthRequest paResAuthRequest)
 
@@ -767,7 +778,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="refundrequest"></a>
+<a id="refundrequest"></a>
 # **RefundRequest**
 > AuthResponse RefundRequest (RefundRequest refundRequest)
 
@@ -869,7 +880,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="retrievalrequest"></a>
+<a id="retrievalrequest"></a>
 # **RetrievalRequest**
 > AuthReferences RetrievalRequest (RetrieveRequest retrieveRequest)
 
@@ -978,7 +989,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="voidrequest"></a>
+<a id="voidrequest"></a>
 # **VoidRequest**
 > Acknowledgement VoidRequest (VoidRequest voidRequest)
 

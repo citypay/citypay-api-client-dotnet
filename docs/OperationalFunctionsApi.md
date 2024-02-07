@@ -10,7 +10,7 @@ All URIs are relative to *https://api.citypay.com*
 | [**ListMerchantsRequest**](OperationalFunctionsApi.md#listmerchantsrequest) | **GET** /v6/merchants/{clientid} | List Merchants Request |
 | [**PingRequest**](OperationalFunctionsApi.md#pingrequest) | **POST** /v6/ping | Ping Request |
 
-<a name="aclcheckrequest"></a>
+<a id="aclcheckrequest"></a>
 # **AclCheckRequest**
 > AclCheckResponseModel AclCheckRequest (AclCheckRequest aclCheckRequest)
 
@@ -111,7 +111,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="domainkeycheckrequest"></a>
+<a id="domainkeycheckrequest"></a>
 # **DomainKeyCheckRequest**
 > DomainKeyResponse DomainKeyCheckRequest (DomainKeyCheckRequest domainKeyCheckRequest)
 
@@ -212,7 +212,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="domainkeygenrequest"></a>
+<a id="domainkeygenrequest"></a>
 # **DomainKeyGenRequest**
 > DomainKeyResponse DomainKeyGenRequest (DomainKeyRequest domainKeyRequest)
 
@@ -313,7 +313,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listmerchantsrequest"></a>
+<a id="listmerchantsrequest"></a>
 # **ListMerchantsRequest**
 > ListMerchantsResponse ListMerchantsRequest (string clientid)
 
@@ -419,7 +419,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="pingrequest"></a>
+<a id="pingrequest"></a>
 # **PingRequest**
 > Acknowledgement PingRequest (Ping ping)
 
@@ -450,11 +450,11 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.citypay.com";
-            // Create a temporal ApiKey using your client id and licence key
-            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
             // Configure API key authorization: cp-domain-key
             config.AddApiKey("cp-domain-key", "YOUR_API_KEY");
             // config.AddApiKeyPrefix("cp-domain-key", "Bearer");
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
 
             var apiInstance = new OperationalFunctionsApi(config);
             var ping = new Ping(); // Ping | 
@@ -508,7 +508,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[cp-api-key](../README.md#cp-api-key), [cp-domain-key](../README.md#cp-domain-key)
+[cp-domain-key](../README.md#cp-domain-key), [cp-api-key](../README.md#cp-api-key)
 
 ### HTTP request headers
 

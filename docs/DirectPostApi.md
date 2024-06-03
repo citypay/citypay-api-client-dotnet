@@ -228,13 +228,6 @@ Direct Post Auth Request
 
 Used to initiate a direct post request transaction flow.
 
-<pre class="inline-code language-bash">
-<code>
-curl https://api.citypay.com/direct/auth?cp-domain-key=n834ytqp84y... \
- -d "amount=7500&identifier=example_trans&cardnumber=4000000000000002&expmonth=9&expyear=2028&bill_to_postcode=L1+7ZW
-</code>
-</pre>.
-
 
 ### Example
 ```csharp
@@ -339,13 +332,6 @@ catch (ApiException e)
 Direct Post Tokenise Request
 
 Used to initiate a direct post request transaction flow.
-
-<pre class="inline-code language-bash">
-<code>
-curl https://api.citypay.com/v6/direct?cp-domain-key=n834ytqp84y... \
- -d "amount=7500&identifier=example_trans&cardnumber=4000000000000002&expmonth=9&expyear=2028&bill_to_postcode=L1+7ZW
-</code>
-</pre>.
 
 
 ### Example

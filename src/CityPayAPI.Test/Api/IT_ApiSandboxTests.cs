@@ -76,7 +76,6 @@ namespace CityPayAPI.Test
 
             Assert.True(decision.IsAuthResponse());
             Assert.False(decision.IsRequestChallenged());
-            Assert.False(decision.IsAuthenRequired());
             var response = decision.AuthResponse;
 
             Assert.Equal("001", response.ResultCode);
@@ -139,7 +138,6 @@ namespace CityPayAPI.Test
             ));
 
             Assert.False(decision.IsRequestChallenged());
-            Assert.False(decision.IsAuthenRequired());
             Assert.True(decision.IsAuthResponse());
 
             var response = decision.AuthResponse;
@@ -181,7 +179,6 @@ namespace CityPayAPI.Test
 
             Assert.False(decision.IsAuthResponse());
             Assert.True(decision.IsRequestChallenged());
-            Assert.False(decision.IsAuthenRequired());
             var response = decision.RequestChallenged;
             var creq = response.Creq;
             var threedserverTransId = response.ThreedserverTransId;

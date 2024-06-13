@@ -21,3 +21,7 @@ jobs:
         dotnet-version: '8.x'
     - name: Test
       run: dotnet test
+      env:
+        CP_CLIENT_ID: ${{secrets.CP_CLIENT_ID}}
+        CP_MERCHANT_ID: ${{secrets.CP_MERCHANT_ID}}
+        CP_LICENCE_KEY: ${{secrets.CP_LICENCE_KEY}}

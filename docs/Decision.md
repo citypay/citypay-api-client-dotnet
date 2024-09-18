@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AuthenRequired** | [**AuthenRequired**](AuthenRequired.md) |  | [optional] 
 **AuthResponse** | [**AuthResponse**](AuthResponse.md) |  | [optional] 
 **RequestChallenged** | [**RequestChallenged**](RequestChallenged.md) |  | [optional] 
 

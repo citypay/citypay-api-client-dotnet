@@ -1,7 +1,7 @@
 /*
  * CityPay Payment API
  *
- *  This CityPay API is an HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokenized payments using cardholder Accounts.  ## Compliance and Security Your application will need to adhere to PCI-DSS standards to operate safely and to meet requirements set out by  Visa and MasterCard and the PCI Security Standards Council. These include  * Data must be collected using TLS version 1.2 using [strong cryptography](https://citypay.github.io/api-docs/payment-api/#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive cardholder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
+ *  Welcome to the CityPay API, a robust HTTP API payment solution designed for seamless server-to-server  transactional processing. Our API facilitates a wide array of payment operations, catering to diverse business needs.  Whether you're integrating Internet payments, handling Mail Order/Telephone Order (MOTO) transactions, managing  Subscriptions with Recurring and Continuous Authority payments, or navigating the complexities of 3-D Secure  authentication, our API is equipped to support your requirements. Additionally, we offer functionalities for  Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids, and Completion processing, alongside the capability  for tokenised payments.  ## Compliance and Security Overview <aside class=\"notice\">   Ensuring the security of payment transactions and compliance with industry standards is paramount. Our API is    designed with stringent security measures and compliance protocols to safeguard sensitive information and meet    the rigorous requirements of Visa, MasterCard, and the PCI Security Standards Council. </aside>  ### Key Compliance and Security Measures  * **TLS Encryption**: All data transmissions must utilise TLS version 1.2 or higher, employing [strong cryptography](#enabled-tls-ciphers). Our infrastructure strictly enforces this requirement to maintain the integrity and confidentiality of data in transit. We conduct regular scans and assessments of our TLS endpoints to identify and mitigate vulnerabilities. * **Data Storage Prohibitions**: Storing sensitive cardholder data (CHD), such as the card security code (CSC) or primary account number (PAN), is strictly prohibited. Our API is designed to minimize your exposure to sensitive data, thereby reducing your compliance burden. * **Data Masking**: For consumer protection and compliance, full card numbers must not be displayed on receipts or any customer-facing materials. Our API automatically masks PANs, displaying only the last four digits to facilitate safe receipt generation. * **Network Scans**: If your application is web-based, regular scans of your hosting environment are mandatory to identify and rectify potential vulnerabilities. This proactive measure is crucial for maintaining a secure and compliant online presence. * **PCI Compliance**: Adherence to PCI DSS standards is not optional; it's a requirement for operating securely and legally in the payments ecosystem. For detailed information on compliance requirements and resources, please visit the PCI Security Standards Council website [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/). * **Request Validation**: Our API includes mechanisms to verify the legitimacy of each request, ensuring it pertains to a valid account and originates from a trusted source. We leverage remote IP address verification alongside sophisticated application firewall technologies to thwart a wide array of common security threats.  ## Getting Started Before integrating with the CityPay API, ensure your application and development practices align with the outlined compliance and security measures. This preparatory step is crucial for a smooth integration process and the long-term success of your payment processing operations.  For further details on API endpoints, request/response formats, and code examples, proceed to the subsequent sections of our documentation. Our aim is to provide you with all the necessary tools and information to integrate our payment processing capabilities seamlessly into your application.  Thank you for choosing CityPay API. We look forward to supporting your payment processing needs with our secure, compliant, and versatile API solution. 
  *
  * Contact: support@citypay.com
  * Generated by: https://github.com/openapitools/openapi-generator.git
@@ -51,6 +51,29 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Acknowledgement</returns>
         ApiResponse<Acknowledgement> TokenAdjustmentRequestWithHttpInfo(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0);
+        /// <summary>
+        /// Cancel a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>Acknowledgement</returns>
+        Acknowledgement TokenCancelRequest(string token, int operationIndex = 0);
+
+        /// <summary>
+        /// Cancel a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Acknowledgement</returns>
+        ApiResponse<Acknowledgement> TokenCancelRequestWithHttpInfo(string token, int operationIndex = 0);
         /// <summary>
         /// Paylink Token Audit
         /// </summary>
@@ -213,6 +236,31 @@ namespace CityPayAPI.Api
         /// <returns>ApiResponse of Acknowledgement</returns>
         ApiResponse<Acknowledgement> TokenReopenRequestWithHttpInfo(string token, int operationIndex = 0);
         /// <summary>
+        /// Resend a notification for Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Resend a notification for Paylink Token.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>Acknowledgement</returns>
+        Acknowledgement TokenResendNotificationRequest(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0);
+
+        /// <summary>
+        /// Resend a notification for Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Resend a notification for Paylink Token.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Acknowledgement</returns>
+        ApiResponse<Acknowledgement> TokenResendNotificationRequestWithHttpInfo(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0);
+        /// <summary>
         /// Paylink Token Status
         /// </summary>
         /// <remarks>
@@ -256,7 +304,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Paylink Token Adjustment
@@ -270,7 +318,32 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <summary>
+        /// Cancel a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Acknowledgement</returns>
+        System.Threading.Tasks.Task<Acknowledgement> TokenCancelRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Cancel a Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Acknowledgement)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenCancelRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Paylink Token Audit
         /// </summary>
@@ -282,7 +355,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatusChangeResponse</returns>
-        System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Paylink Token Audit
@@ -295,7 +368,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatusChangeResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatusChangeResponse>> TokenChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatusChangeResponse>> TokenChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Close Paylink Token
         /// </summary>
@@ -307,7 +380,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Close Paylink Token
@@ -320,7 +393,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Create Bill Payment Paylink Token
         /// </summary>
@@ -332,7 +405,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Create Bill Payment Paylink Token
@@ -345,7 +418,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Create Paylink Token
         /// </summary>
@@ -357,7 +430,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Create Paylink Token
@@ -370,7 +443,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Purges any attachments for a Paylink Token
         /// </summary>
@@ -382,7 +455,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenPurgeAttachmentsRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenPurgeAttachmentsRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Purges any attachments for a Paylink Token
@@ -395,7 +468,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenPurgeAttachmentsRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenPurgeAttachmentsRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Reconcile Paylink Token
         /// </summary>
@@ -407,7 +480,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Reconcile Paylink Token
@@ -420,7 +493,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Reopen Paylink Token
         /// </summary>
@@ -432,7 +505,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Reopen Paylink Token
@@ -445,7 +518,34 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <summary>
+        /// Resend a notification for Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Resend a notification for Paylink Token.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Acknowledgement</returns>
+        System.Threading.Tasks.Task<Acknowledgement> TokenResendNotificationRequestAsync(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Resend a notification for Paylink Token
+        /// </summary>
+        /// <remarks>
+        /// Resend a notification for Paylink Token.
+        /// </remarks>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Acknowledgement)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> TokenResendNotificationRequestWithHttpInfoAsync(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Paylink Token Status
         /// </summary>
@@ -457,7 +557,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatus</returns>
-        System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Paylink Token Status
@@ -470,7 +570,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatus)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -687,7 +787,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenAdjustmentRequestAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenAdjustmentRequestWithHttpInfoAsync(token, paylinkAdjustmentRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -702,7 +802,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenAdjustmentRequestWithHttpInfoAsync(string token, PaylinkAdjustmentRequest paylinkAdjustmentRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
@@ -760,6 +860,162 @@ namespace CityPayAPI.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenAdjustmentRequest", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Cancel a Paylink Token Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>Acknowledgement</returns>
+        public Acknowledgement TokenCancelRequest(string token, int operationIndex = 0)
+        {
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = TokenCancelRequestWithHttpInfo(token);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Cancel a Paylink Token Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Acknowledgement</returns>
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenCancelRequestWithHttpInfo(string token, int operationIndex = 0)
+        {
+            // verify the required parameter 'token' is set
+            if (token == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenCancelRequest");
+            }
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCancelRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Put<Acknowledgement>("/paylink/{token}/cancel", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("TokenCancelRequest", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Cancel a Paylink Token Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Acknowledgement</returns>
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenCancelRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenCancelRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Cancel a Paylink Token Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Acknowledgement)</returns>
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenCancelRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'token' is set
+            if (token == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenCancelRequest");
+            }
+
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenCancelRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.PutAsync<Acknowledgement>("/paylink/{token}/cancel", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("TokenCancelRequest", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -855,7 +1111,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatusChangeResponse</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenStatusChangeResponse> TokenChangesRequestAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse> localVarResponse = await TokenChangesRequestWithHttpInfoAsync(paylinkTokenStatusChangeRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -869,7 +1125,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatusChangeResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse>> TokenChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatusChangeResponse>> TokenChangesRequestWithHttpInfoAsync(PaylinkTokenStatusChangeRequest paylinkTokenStatusChangeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'paylinkTokenStatusChangeRequest' is set
             if (paylinkTokenStatusChangeRequest == null)
@@ -1013,7 +1269,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenCloseRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenCloseRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1027,7 +1283,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenCloseRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
@@ -1171,7 +1427,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateBillPaymentRequestAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = await TokenCreateBillPaymentRequestWithHttpInfoAsync(paylinkBillPaymentTokenRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1185,7 +1441,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateBillPaymentRequestWithHttpInfoAsync(PaylinkBillPaymentTokenRequest paylinkBillPaymentTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'paylinkBillPaymentTokenRequest' is set
             if (paylinkBillPaymentTokenRequest == null)
@@ -1331,7 +1587,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenCreated</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenCreated> TokenCreateRequestAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenCreated> localVarResponse = await TokenCreateRequestWithHttpInfoAsync(paylinkTokenRequestModel, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1345,7 +1601,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenCreated)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenCreated>> TokenCreateRequestWithHttpInfoAsync(PaylinkTokenRequestModel paylinkTokenRequestModel, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'paylinkTokenRequestModel' is set
             if (paylinkTokenRequestModel == null)
@@ -1489,7 +1745,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenPurgeAttachmentsRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenPurgeAttachmentsRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenPurgeAttachmentsRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1503,7 +1759,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenPurgeAttachmentsRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenPurgeAttachmentsRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
@@ -1645,7 +1901,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenReconciledRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenReconciledRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1659,7 +1915,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReconciledRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
@@ -1801,7 +2057,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenReopenRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenReopenRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1815,7 +2071,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenReopenRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)
@@ -1864,6 +2120,184 @@ namespace CityPayAPI.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("TokenReopenRequest", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Resend a notification for Paylink Token Resend a notification for Paylink Token.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>Acknowledgement</returns>
+        public Acknowledgement TokenResendNotificationRequest(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0)
+        {
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = TokenResendNotificationRequestWithHttpInfo(token, paylinkResendNotificationRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Resend a notification for Paylink Token Resend a notification for Paylink Token.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Acknowledgement</returns>
+        public CityPayAPI.Client.ApiResponse<Acknowledgement> TokenResendNotificationRequestWithHttpInfo(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0)
+        {
+            // verify the required parameter 'token' is set
+            if (token == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenResendNotificationRequest");
+            }
+
+            // verify the required parameter 'paylinkResendNotificationRequest' is set
+            if (paylinkResendNotificationRequest == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkResendNotificationRequest' when calling PaylinkApi->TokenResendNotificationRequest");
+            }
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+            localVarRequestOptions.Data = paylinkResendNotificationRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenResendNotificationRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<Acknowledgement>("/paylink/{token}/resend-notification", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("TokenResendNotificationRequest", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Resend a notification for Paylink Token Resend a notification for Paylink Token.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Acknowledgement</returns>
+        public async System.Threading.Tasks.Task<Acknowledgement> TokenResendNotificationRequestAsync(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await TokenResendNotificationRequestWithHttpInfoAsync(token, paylinkResendNotificationRequest, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Resend a notification for Paylink Token Resend a notification for Paylink Token.
+        /// </summary>
+        /// <exception cref="CityPayAPI.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="token">The token returned by the create token process.</param>
+        /// <param name="paylinkResendNotificationRequest"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Acknowledgement)</returns>
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> TokenResendNotificationRequestWithHttpInfoAsync(string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'token' is set
+            if (token == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'token' when calling PaylinkApi->TokenResendNotificationRequest");
+            }
+
+            // verify the required parameter 'paylinkResendNotificationRequest' is set
+            if (paylinkResendNotificationRequest == null)
+            {
+                throw new CityPayAPI.Client.ApiException(400, "Missing required parameter 'paylinkResendNotificationRequest' when calling PaylinkApi->TokenResendNotificationRequest");
+            }
+
+
+            CityPayAPI.Client.RequestOptions localVarRequestOptions = new CityPayAPI.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json", 
+                "text/xml"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "text/xml"
+            };
+
+            var localVarContentType = CityPayAPI.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = CityPayAPI.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("token", CityPayAPI.Client.ClientUtils.ParameterToString(token)); // path parameter
+            localVarRequestOptions.Data = paylinkResendNotificationRequest;
+
+            localVarRequestOptions.Operation = "PaylinkApi.TokenResendNotificationRequest";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (cp-api-key) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("cp-api-key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("cp-api-key", this.Configuration.GetApiKeyWithPrefix("cp-api-key"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Acknowledgement>("/paylink/{token}/resend-notification", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("TokenResendNotificationRequest", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -1957,7 +2391,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaylinkTokenStatus</returns>
-        public async System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaylinkTokenStatus> TokenStatusRequestAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<PaylinkTokenStatus> localVarResponse = await TokenStatusRequestWithHttpInfoAsync(token, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1971,7 +2405,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaylinkTokenStatus)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<PaylinkTokenStatus>> TokenStatusRequestWithHttpInfoAsync(string token, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'token' is set
             if (token == null)

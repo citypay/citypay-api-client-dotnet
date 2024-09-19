@@ -16,9 +16,7 @@ All URIs are relative to *https://api.citypay.com*
 
 ACL Check Request
 
-Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and
-services such as AWS or Azure to check that those addresses are listed in the ACLs.
-
+Allows the checking of IP addresses against configured ACLs. Requests can perform a lookup of addresses in subnets and services such as AWS or Azure to check that those addresses are listed in the ACLs. 
 
 ### Example
 ```csharp
@@ -117,9 +115,7 @@ catch (ApiException e)
 
 Domain Key Check Request
 
-Checks the contents of a `domain key`. Can be used for operational processes to ensure that the properties of a 
-domain key meet their expectations.
-
+Checks the contents of a `domain key`. Can be used for operational processes to ensure that the properties of a  domain key meet their expectations. 
 
 ### Example
 ```csharp
@@ -218,9 +214,7 @@ catch (ApiException e)
 
 Domain Key Generation Request
 
-Generates a domain key based on the permissions of the calling `api-key`. Domain keys can be used in _Direct Post_ and
-`XHR` calls to the API services.
-
+Generates a domain key based on the permissions of the calling `api-key`. Domain keys can be used in _Direct Post_ and `XHR` calls to the API services. 
 
 ### Example
 ```csharp
@@ -319,14 +313,7 @@ catch (ApiException e)
 
 List Merchants Request
 
-An operational request to list current merchants for a client.
-
-### Sorting
-
-Sorting can be performed by include a query parameter i.e. `/merchants/?sort=merchantid`
-
-Fields that can be sorted are `merchantid` or `name`.
-
+An operational request to list current merchants for a client.  ### Sorting  Sorting can be performed by include a query parameter i.e. `/merchants/?sort=merchantid`  Fields that can be sorted are `merchantid` or `name`. 
 
 ### Example
 ```csharp
@@ -425,14 +412,7 @@ catch (ApiException e)
 
 Ping Request
 
-A ping request which performs a connection and authentication test to the CityPay API server. The request
-will return a standard Acknowledgement with a response code `044` to signify a successful
-ping.
-
-The ping call is useful to confirm that you will be able to access 
-the API from behind any firewalls and that the permission
-model is granting access from your source.
-
+A ping request which performs a connection and authentication test to the CityPay API server. The request will return a standard Acknowledgement with a response code `044` to signify a successful ping.  The ping call is useful to confirm that you will be able to access  the API from behind any firewalls and that the permission model is granting access from your source. 
 
 ### Example
 ```csharp

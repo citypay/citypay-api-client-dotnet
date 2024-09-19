@@ -1,7 +1,7 @@
 /*
  * CityPay Payment API
  *
- *  This CityPay API is an HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokenized payments using cardholder Accounts.  ## Compliance and Security Your application will need to adhere to PCI-DSS standards to operate safely and to meet requirements set out by  Visa and MasterCard and the PCI Security Standards Council. These include  * Data must be collected using TLS version 1.2 using [strong cryptography](https://citypay.github.io/api-docs/payment-api/#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive cardholder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
+ *  Welcome to the CityPay API, a robust HTTP API payment solution designed for seamless server-to-server  transactional processing. Our API facilitates a wide array of payment operations, catering to diverse business needs.  Whether you're integrating Internet payments, handling Mail Order/Telephone Order (MOTO) transactions, managing  Subscriptions with Recurring and Continuous Authority payments, or navigating the complexities of 3-D Secure  authentication, our API is equipped to support your requirements. Additionally, we offer functionalities for  Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids, and Completion processing, alongside the capability  for tokenised payments.  ## Compliance and Security Overview <aside class=\"notice\">   Ensuring the security of payment transactions and compliance with industry standards is paramount. Our API is    designed with stringent security measures and compliance protocols to safeguard sensitive information and meet    the rigorous requirements of Visa, MasterCard, and the PCI Security Standards Council. </aside>  ### Key Compliance and Security Measures  * **TLS Encryption**: All data transmissions must utilise TLS version 1.2 or higher, employing [strong cryptography](#enabled-tls-ciphers). Our infrastructure strictly enforces this requirement to maintain the integrity and confidentiality of data in transit. We conduct regular scans and assessments of our TLS endpoints to identify and mitigate vulnerabilities. * **Data Storage Prohibitions**: Storing sensitive cardholder data (CHD), such as the card security code (CSC) or primary account number (PAN), is strictly prohibited. Our API is designed to minimize your exposure to sensitive data, thereby reducing your compliance burden. * **Data Masking**: For consumer protection and compliance, full card numbers must not be displayed on receipts or any customer-facing materials. Our API automatically masks PANs, displaying only the last four digits to facilitate safe receipt generation. * **Network Scans**: If your application is web-based, regular scans of your hosting environment are mandatory to identify and rectify potential vulnerabilities. This proactive measure is crucial for maintaining a secure and compliant online presence. * **PCI Compliance**: Adherence to PCI DSS standards is not optional; it's a requirement for operating securely and legally in the payments ecosystem. For detailed information on compliance requirements and resources, please visit the PCI Security Standards Council website [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/). * **Request Validation**: Our API includes mechanisms to verify the legitimacy of each request, ensuring it pertains to a valid account and originates from a trusted source. We leverage remote IP address verification alongside sophisticated application firewall technologies to thwart a wide array of common security threats.  ## Getting Started Before integrating with the CityPay API, ensure your application and development practices align with the outlined compliance and security measures. This preparatory step is crucial for a smooth integration process and the long-term success of your payment processing operations.  For further details on API endpoints, request/response formats, and code examples, proceed to the subsequent sections of our documentation. Our aim is to provide you with all the necessary tools and information to integrate our payment processing capabilities seamlessly into your application.  Thank you for choosing CityPay API. We look forward to supporting your payment processing needs with our secure, compliant, and versatile API solution. 
  *
  * Contact: support@citypay.com
  * Generated by: https://github.com/openapitools/openapi-generator.git
@@ -55,7 +55,7 @@ namespace CityPayAPI.Model
         /// <param name="ticketIssueName">The name of the agency generating the ticket. (required).</param>
         /// <param name="ticketNo">This must be a valid ticket number, i.e. numeric (the first 3 digits must represent the valid IATA plate carrier code). The final check digit should be validated prior to submission. On credit charges, this field should contain the number of the original ticket, and not of a replacement.  (required).</param>
         /// <param name="transactionType">This field contains the Transaction Type code assigned to this transaction. Valid codes include:   - &#x60;TKT&#x60; &#x3D; Ticket Purchase   - &#x60;REF&#x60; &#x3D; Refund   - &#x60;EXC&#x60; &#x3D; Exchange Ticket   - &#x60;MSC&#x60; &#x3D; Miscellaneous (non-Ticket Purchase- and non-Exchange Ticket-related transactions only).  (required).</param>
-        public AirlineAdvice(string carrierName = default(string), bool conjunctionTicketIndicator = default(bool), bool eticketIndicator = default(bool), int noAirSegments = default(int), int numberInParty = default(int), string originalTicketNo = default(string), string passengerName = default(string), AirlineSegment segment1 = default(AirlineSegment), AirlineSegment segment2 = default(AirlineSegment), AirlineSegment segment3 = default(AirlineSegment), AirlineSegment segment4 = default(AirlineSegment), string ticketIssueCity = default(string), DateTime ticketIssueDate = default(DateTime), string ticketIssueName = default(string), string ticketNo = default(string), string transactionType = default(string))
+        public AirlineAdvice(string carrierName = default(string), bool conjunctionTicketIndicator = default(bool), bool eticketIndicator = default(bool), int noAirSegments = default(int), int numberInParty = default(int), string originalTicketNo = default(string), string passengerName = default(string), AirlineSegment segment1 = default(AirlineSegment), AirlineSegment segment2 = default(AirlineSegment), AirlineSegment segment3 = default(AirlineSegment), AirlineSegment segment4 = default(AirlineSegment), string ticketIssueCity = default(string), DateOnly ticketIssueDate = default(DateOnly), string ticketIssueName = default(string), string ticketNo = default(string), string transactionType = default(string))
         {
             // to ensure "carrierName" is required (not null)
             if (carrierName == null)
@@ -75,6 +75,11 @@ namespace CityPayAPI.Model
                 throw new ArgumentNullException("ticketIssueCity is a required property for AirlineAdvice and cannot be null");
             }
             this.TicketIssueCity = ticketIssueCity;
+            // to ensure "ticketIssueDate" is required (not null)
+            if (ticketIssueDate == null)
+            {
+                throw new ArgumentNullException("ticketIssueDate is a required property for AirlineAdvice and cannot be null");
+            }
             this.TicketIssueDate = ticketIssueDate;
             // to ensure "ticketIssueName" is required (not null)
             if (ticketIssueName == null)
@@ -198,8 +203,7 @@ namespace CityPayAPI.Model
         /// <value>The date the ticket was issued in ISO Date format (yyyy-MM-dd).</value>
         /// <example>Sat Aug 01 00:00:00 UTC 2020</example>
         [DataMember(Name = "ticket_issue_date", IsRequired = true, EmitDefaultValue = true)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
-        public DateTime TicketIssueDate { get; set; }
+        public DateOnly TicketIssueDate { get; set; }
 
         /// <summary>
         /// The name of the agency generating the ticket.
@@ -267,66 +271,66 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // CarrierName (string) maxLength
             if (this.CarrierName != null && this.CarrierName.Length > 25)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CarrierName, length must be less than 25.", new [] { "CarrierName" });
+                yield return new ValidationResult("Invalid value for CarrierName, length must be less than 25.", new [] { "CarrierName" });
             }
 
             // NoAirSegments (int) maximum
             if (this.NoAirSegments > (int)4)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NoAirSegments, must be a value less than or equal to 4.", new [] { "NoAirSegments" });
+                yield return new ValidationResult("Invalid value for NoAirSegments, must be a value less than or equal to 4.", new [] { "NoAirSegments" });
             }
 
             // NoAirSegments (int) minimum
             if (this.NoAirSegments < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NoAirSegments, must be a value greater than or equal to 0.", new [] { "NoAirSegments" });
+                yield return new ValidationResult("Invalid value for NoAirSegments, must be a value greater than or equal to 0.", new [] { "NoAirSegments" });
             }
 
             // OriginalTicketNo (string) maxLength
             if (this.OriginalTicketNo != null && this.OriginalTicketNo.Length > 14)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for OriginalTicketNo, length must be less than 14.", new [] { "OriginalTicketNo" });
+                yield return new ValidationResult("Invalid value for OriginalTicketNo, length must be less than 14.", new [] { "OriginalTicketNo" });
             }
 
             // PassengerName (string) maxLength
             if (this.PassengerName != null && this.PassengerName.Length > 25)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PassengerName, length must be less than 25.", new [] { "PassengerName" });
+                yield return new ValidationResult("Invalid value for PassengerName, length must be less than 25.", new [] { "PassengerName" });
             }
 
             // TicketIssueCity (string) maxLength
             if (this.TicketIssueCity != null && this.TicketIssueCity.Length > 18)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueCity, length must be less than 18.", new [] { "TicketIssueCity" });
+                yield return new ValidationResult("Invalid value for TicketIssueCity, length must be less than 18.", new [] { "TicketIssueCity" });
             }
 
             // TicketIssueName (string) maxLength
             if (this.TicketIssueName != null && this.TicketIssueName.Length > 26)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueName, length must be less than 26.", new [] { "TicketIssueName" });
+                yield return new ValidationResult("Invalid value for TicketIssueName, length must be less than 26.", new [] { "TicketIssueName" });
             }
 
             // TicketNo (string) maxLength
             if (this.TicketNo != null && this.TicketNo.Length > 14)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketNo, length must be less than 14.", new [] { "TicketNo" });
+                yield return new ValidationResult("Invalid value for TicketNo, length must be less than 14.", new [] { "TicketNo" });
             }
 
             // TransactionType (string) maxLength
             if (this.TransactionType != null && this.TransactionType.Length > 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionType, length must be less than 3.", new [] { "TransactionType" });
+                yield return new ValidationResult("Invalid value for TransactionType, length must be less than 3.", new [] { "TransactionType" });
             }
 
             // TransactionType (string) minLength
             if (this.TransactionType != null && this.TransactionType.Length < 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionType, length must be greater than 3.", new [] { "TransactionType" });
+                yield return new ValidationResult("Invalid value for TransactionType, length must be greater than 3.", new [] { "TransactionType" });
             }
 
             yield break;

@@ -5,8 +5,8 @@ All URIs are relative to *https://api.citypay.com*
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**BatchProcessRequest**](BatchProcessingApi.md#batchprocessrequest) | **POST** /v6/batch/process | Batch Process Request |
-| [**BatchRetrieveRequest**](BatchProcessingApi.md#batchretrieverequest) | **POST** /v6/batch/retrieve | BatchReportRequest |
-| [**CheckBatchStatusRequest**](BatchProcessingApi.md#checkbatchstatusrequest) | **POST** /v6/batch/status | CheckBatchStatus |
+| [**BatchRetrieveRequest**](BatchProcessingApi.md#batchretrieverequest) | **POST** /v6/batch/retrieve | Batch Retrieve Request |
+| [**CheckBatchStatusRequest**](BatchProcessingApi.md#checkbatchstatusrequest) | **POST** /v6/batch/status | Check Batch Status |
 
 <a id="batchprocessrequest"></a>
 # **BatchProcessRequest**
@@ -14,11 +14,7 @@ All URIs are relative to *https://api.citypay.com*
 
 Batch Process Request
 
-A batch process request is used to start the batch process workflow by uploading batch
-data and initialising a new batch for processing. Once validated the batch will be queued
-for processing and further updates can be received by a subsequent call to retrieve the batch
-status.
-
+A batch process request is used to start the batch process workflow by uploading batch data and initialising a new batch for processing. Once validated the batch will be queued for processing and further updates can be received by a subsequent call to retrieve the batch status. 
 
 ### Example
 ```csharp
@@ -115,9 +111,9 @@ catch (ApiException e)
 # **BatchRetrieveRequest**
 > BatchReportResponseModel BatchRetrieveRequest (BatchReportRequest batchReportRequest)
 
-BatchReportRequest
+Batch Retrieve Request
 
-The report for a given batch.
+Obtains a batch and installment (BIS) report for a given batch id.
 
 ### Example
 ```csharp
@@ -143,7 +139,7 @@ namespace Example
 
             try
             {
-                // BatchReportRequest
+                // Batch Retrieve Request
                 BatchReportResponseModel result = apiInstance.BatchRetrieveRequest(batchReportRequest);
                 Debug.WriteLine(result);
             }
@@ -164,7 +160,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // BatchReportRequest
+    // Batch Retrieve Request
     ApiResponse<BatchReportResponseModel> response = apiInstance.BatchRetrieveRequestWithHttpInfo(batchReportRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -214,7 +210,7 @@ catch (ApiException e)
 # **CheckBatchStatusRequest**
 > CheckBatchStatusResponse CheckBatchStatusRequest (CheckBatchStatus checkBatchStatus)
 
-CheckBatchStatus
+Check Batch Status
 
 The operation is used to retrieve the status of a batch process.
 
@@ -242,7 +238,7 @@ namespace Example
 
             try
             {
-                // CheckBatchStatus
+                // Check Batch Status
                 CheckBatchStatusResponse result = apiInstance.CheckBatchStatusRequest(checkBatchStatus);
                 Debug.WriteLine(result);
             }
@@ -263,7 +259,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // CheckBatchStatus
+    // Check Batch Status
     ApiResponse<CheckBatchStatusResponse> response = apiInstance.CheckBatchStatusRequestWithHttpInfo(checkBatchStatus);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);

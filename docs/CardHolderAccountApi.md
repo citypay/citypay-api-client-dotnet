@@ -17,7 +17,7 @@ All URIs are relative to *https://api.citypay.com*
 
 <a id="accountcarddeleterequest"></a>
 # **AccountCardDeleteRequest**
-> Acknowledgement AccountCardDeleteRequest (string accountid, string cardId)
+> Acknowledgement AccountCardDeleteRequest (string accountid, string cardId, bool? force = null)
 
 Card Deletion
 
@@ -47,11 +47,12 @@ namespace Example
             var apiInstance = new CardHolderAccountApi(config);
             var accountid = "accountid_example";  // string | The account id that refers to the customer's account no. This value will have been provided when setting up the card holder account.
             var cardId = "cardId_example";  // string | The id of the card that is presented by a call to retrieve a card holder account.
+            var force = true;  // bool? | Requests that the item is forced immediately. (optional) 
 
             try
             {
                 // Card Deletion
-                Acknowledgement result = apiInstance.AccountCardDeleteRequest(accountid, cardId);
+                Acknowledgement result = apiInstance.AccountCardDeleteRequest(accountid, cardId, force);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -72,7 +73,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Card Deletion
-    ApiResponse<Acknowledgement> response = apiInstance.AccountCardDeleteRequestWithHttpInfo(accountid, cardId);
+    ApiResponse<Acknowledgement> response = apiInstance.AccountCardDeleteRequestWithHttpInfo(accountid, cardId, force);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -91,6 +92,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **accountid** | **string** | The account id that refers to the customer&#39;s account no. This value will have been provided when setting up the card holder account. |  |
 | **cardId** | **string** | The id of the card that is presented by a call to retrieve a card holder account. |  |
+| **force** | **bool?** | Requests that the item is forced immediately. | [optional]  |
 
 ### Return type
 

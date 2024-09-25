@@ -5,6 +5,7 @@ All URIs are relative to *https://api.citypay.com*
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**TokenAdjustmentRequest**](PaylinkApi.md#tokenadjustmentrequest) | **POST** /paylink/{token}/adjustment | Paylink Token Adjustment |
+| [**TokenCancelRequest**](PaylinkApi.md#tokencancelrequest) | **PUT** /paylink/{token}/cancel | Cancel a Paylink Token |
 | [**TokenChangesRequest**](PaylinkApi.md#tokenchangesrequest) | **POST** /paylink/token/changes | Paylink Token Audit |
 | [**TokenCloseRequest**](PaylinkApi.md#tokencloserequest) | **PUT** /paylink/{token}/close | Close Paylink Token |
 | [**TokenCreateBillPaymentRequest**](PaylinkApi.md#tokencreatebillpaymentrequest) | **POST** /paylink/bill-payment | Create Bill Payment Paylink Token |
@@ -12,6 +13,7 @@ All URIs are relative to *https://api.citypay.com*
 | [**TokenPurgeAttachmentsRequest**](PaylinkApi.md#tokenpurgeattachmentsrequest) | **PUT** /paylink/{token}/purge-attachments | Purges any attachments for a Paylink Token |
 | [**TokenReconciledRequest**](PaylinkApi.md#tokenreconciledrequest) | **PUT** /paylink/{token}/reconciled | Reconcile Paylink Token |
 | [**TokenReopenRequest**](PaylinkApi.md#tokenreopenrequest) | **PUT** /paylink/{token}/reopen | Reopen Paylink Token |
+| [**TokenResendNotificationRequest**](PaylinkApi.md#tokenresendnotificationrequest) | **POST** /paylink/{token}/resend-notification | Resend a notification for Paylink Token |
 | [**TokenStatusRequest**](PaylinkApi.md#tokenstatusrequest) | **GET** /paylink/{token}/status | Paylink Token Status |
 
 <a id="tokenadjustmentrequest"></a>
@@ -111,6 +113,105 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Response defining the result of the token request. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="tokencancelrequest"></a>
+# **TokenCancelRequest**
+> Acknowledgement TokenCancelRequest (string token)
+
+Cancel a Paylink Token
+
+Marks a Paylink Token as cancelled. This cancels the Token for any future request for processing.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using CityPayAPI.Api;
+using CityPayAPI.Client;
+using CityPayAPI.Model;
+
+namespace Example
+{
+    public class TokenCancelRequestExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.citypay.com";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
+
+            var apiInstance = new PaylinkApi(config);
+            var token = "token_example";  // string | The token returned by the create token process.
+
+            try
+            {
+                // Cancel a Paylink Token
+                Acknowledgement result = apiInstance.TokenCancelRequest(token);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling PaylinkApi.TokenCancelRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the TokenCancelRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Cancel a Paylink Token
+    ApiResponse<Acknowledgement> response = apiInstance.TokenCancelRequestWithHttpInfo(token);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling PaylinkApi.TokenCancelRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **token** | **string** | The token returned by the create token process. |  |
+
+### Return type
+
+[**Acknowledgement**](Acknowledgement.md)
+
+### Authorization
+
+[cp-api-key](../README.md#cp-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Confirms that the token was marked as cancelled. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
@@ -777,7 +878,7 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Confirms that the attachments eiither did not exist or were purged. |  -  |
+| **200** | Confirms that the attachments either did not exist or were purged. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
@@ -976,6 +1077,107 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Confirms that the token was reopened. |  -  |
+| **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
+| **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
+| **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |
+| **422** | Unprocessable Entity. Should a failure occur that prevents processing of the API call. |  -  |
+| **500** | Server Error. The server was unable to complete the request. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="tokenresendnotificationrequest"></a>
+# **TokenResendNotificationRequest**
+> Acknowledgement TokenResendNotificationRequest (string token, PaylinkResendNotificationRequest paylinkResendNotificationRequest)
+
+Resend a notification for Paylink Token
+
+Resend a notification for Paylink Token.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using CityPayAPI.Api;
+using CityPayAPI.Client;
+using CityPayAPI.Model;
+
+namespace Example
+{
+    public class TokenResendNotificationRequestExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.citypay.com";
+            // Create a temporal ApiKey using your client id and licence key
+            config.AddApiKey("cp-api-key", new ApiKey("CLIENT_ID", "LICENCE_KEY").GenerateKey());
+
+            var apiInstance = new PaylinkApi(config);
+            var token = "token_example";  // string | The token returned by the create token process.
+            var paylinkResendNotificationRequest = new PaylinkResendNotificationRequest(); // PaylinkResendNotificationRequest | 
+
+            try
+            {
+                // Resend a notification for Paylink Token
+                Acknowledgement result = apiInstance.TokenResendNotificationRequest(token, paylinkResendNotificationRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling PaylinkApi.TokenResendNotificationRequest: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the TokenResendNotificationRequestWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Resend a notification for Paylink Token
+    ApiResponse<Acknowledgement> response = apiInstance.TokenResendNotificationRequestWithHttpInfo(token, paylinkResendNotificationRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling PaylinkApi.TokenResendNotificationRequestWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **token** | **string** | The token returned by the create token process. |  |
+| **paylinkResendNotificationRequest** | [**PaylinkResendNotificationRequest**](PaylinkResendNotificationRequest.md) |  |  |
+
+### Return type
+
+[**Acknowledgement**](Acknowledgement.md)
+
+### Authorization
+
+[cp-api-key](../README.md#cp-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/xml
+ - **Accept**: application/json, text/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Confirms that the notification was sent. |  -  |
 | **400** | Bad Request. Should the incoming data not be validly determined. |  -  |
 | **401** | Unauthorized. No api key has been provided and is required for this operation. |  -  |
 | **403** | Forbidden. The api key was provided and understood but is either incorrect or does not have permission to access the account provided on the request. |  -  |

@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **Segment3** | [**AirlineSegment**](AirlineSegment.md) |  | [optional] 
 **Segment4** | [**AirlineSegment**](AirlineSegment.md) |  | [optional] 
 **TicketIssueCity** | **string** | The name of the city town or village where the transaction took place. | 
-**TicketIssueDate** | **DateTime** | The date the ticket was issued in ISO Date format (yyyy-MM-dd). | 
+**TicketIssueDate** | **DateOnly** | The date the ticket was issued in ISO Date format (yyyy-MM-dd). | 
 **TicketIssueName** | **string** | The name of the agency generating the ticket. | 
 **TicketNo** | **string** | This must be a valid ticket number, i.e. numeric (the first 3 digits must represent the valid IATA plate carrier code). The final check digit should be validated prior to submission. On credit charges, this field should contain the number of the original ticket, and not of a replacement.  | 
 **TransactionType** | **string** | This field contains the Transaction Type code assigned to this transaction. Valid codes include:   - &#x60;TKT&#x60; &#x3D; Ticket Purchase   - &#x60;REF&#x60; &#x3D; Refund   - &#x60;EXC&#x60; &#x3D; Exchange Ticket   - &#x60;MSC&#x60; &#x3D; Miscellaneous (non-Ticket Purchase- and non-Exchange Ticket-related transactions only).  | 

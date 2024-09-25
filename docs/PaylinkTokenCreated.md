@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **Id** | **string** | A unique id of the request. | 
 **Identifier** | **string** | The identifier as presented in the TokenRequest. | [optional] 
 **Mode** | **string** | Determines whether the token is &#x60;live&#x60; or &#x60;test&#x60;. | [optional] 
-**QrCode** | **string** | A URL of a qrcode which can be used to refer to the token URL. | [optional] 
+**Qrcode** | **string** | A URL of a qrcode which can be used to refer to the token URL. | [optional] 
 **Result** | **int** | The result field contains the result for the Paylink Token Request. 0 - indicates that an error was encountered while creating the token. 1 - which indicates that a Token was successfully created. | 
 **ServerVersion** | **string** | the version of the server performing the call. | [optional] 
 **Source** | **string** | The incoming IP address of the call. | [optional] 

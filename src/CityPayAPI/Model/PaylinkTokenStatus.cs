@@ -1,7 +1,7 @@
 /*
  * CityPay Payment API
  *
- *  This CityPay API is an HTTP RESTful payment API used for direct server to server transactional processing. It provides a number of payment mechanisms including: Internet, MOTO, Continuous Authority transaction processing, 3-D Secure decision handling using RFA Secure, Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids and Completion processing. The API is also capable of tokenized payments using cardholder Accounts.  ## Compliance and Security Your application will need to adhere to PCI-DSS standards to operate safely and to meet requirements set out by  Visa and MasterCard and the PCI Security Standards Council. These include  * Data must be collected using TLS version 1.2 using [strong cryptography](https://citypay.github.io/api-docs/payment-api/#enabled-tls-ciphers). We will not accept calls to our API at   lower grade encryption levels. We regularly scan our TLS endpoints for vulnerabilities and perform TLS assessments   as part of our compliance program. * The application must not store sensitive cardholder data (CHD) such as the card security code (CSC) or   primary access number (PAN) * The application must not display the full card number on receipts, it is recommended to mask the PAN   and show the last 4 digits. The API will return this for you for ease of receipt creation * If you are developing a website, you will be required to perform regular scans on the network where you host the   application to meet your compliance obligations * You will be required to be PCI Compliant and the application must adhere to the security standard. Further information   is available from [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/) * The API verifies that the request is for a valid account and originates from a trusted source using the remote IP   address. Our application firewalls analyse data that may be an attempt to break a large number of security common   security vulnerabilities. 
+ *  Welcome to the CityPay API, a robust HTTP API payment solution designed for seamless server-to-server  transactional processing. Our API facilitates a wide array of payment operations, catering to diverse business needs.  Whether you're integrating Internet payments, handling Mail Order/Telephone Order (MOTO) transactions, managing  Subscriptions with Recurring and Continuous Authority payments, or navigating the complexities of 3-D Secure  authentication, our API is equipped to support your requirements. Additionally, we offer functionalities for  Authorisation, Refunding, Pre-Authorisation, Cancellation/Voids, and Completion processing, alongside the capability  for tokenised payments.  ## Compliance and Security Overview <aside class=\"notice\">   Ensuring the security of payment transactions and compliance with industry standards is paramount. Our API is    designed with stringent security measures and compliance protocols to safeguard sensitive information and meet    the rigorous requirements of Visa, MasterCard, and the PCI Security Standards Council. </aside>  ### Key Compliance and Security Measures  * **TLS Encryption**: All data transmissions must utilise TLS version 1.2 or higher, employing [strong cryptography](#enabled-tls-ciphers). Our infrastructure strictly enforces this requirement to maintain the integrity and confidentiality of data in transit. We conduct regular scans and assessments of our TLS endpoints to identify and mitigate vulnerabilities. * **Data Storage Prohibitions**: Storing sensitive cardholder data (CHD), such as the card security code (CSC) or primary account number (PAN), is strictly prohibited. Our API is designed to minimize your exposure to sensitive data, thereby reducing your compliance burden. * **Data Masking**: For consumer protection and compliance, full card numbers must not be displayed on receipts or any customer-facing materials. Our API automatically masks PANs, displaying only the last four digits to facilitate safe receipt generation. * **Network Scans**: If your application is web-based, regular scans of your hosting environment are mandatory to identify and rectify potential vulnerabilities. This proactive measure is crucial for maintaining a secure and compliant online presence. * **PCI Compliance**: Adherence to PCI DSS standards is not optional; it's a requirement for operating securely and legally in the payments ecosystem. For detailed information on compliance requirements and resources, please visit the PCI Security Standards Council website [https://www.pcisecuritystandards.org/](https://www.pcisecuritystandards.org/). * **Request Validation**: Our API includes mechanisms to verify the legitimacy of each request, ensuring it pertains to a valid account and originates from a trusted source. We leverage remote IP address verification alongside sophisticated application firewall technologies to thwart a wide array of common security threats.  ## Getting Started Before integrating with the CityPay API, ensure your application and development practices align with the outlined compliance and security measures. This preparatory step is crucial for a smooth integration process and the long-term success of your payment processing operations.  For further details on API endpoints, request/response formats, and code examples, proceed to the subsequent sections of our documentation. Our aim is to provide you with all the necessary tools and information to integrate our payment processing capabilities seamlessly into your application.  Thank you for choosing CityPay API. We look forward to supporting your payment processing needs with our secure, compliant, and versatile API solution. 
  *
  * Contact: support@citypay.com
  * Generated by: https://github.com/openapitools/openapi-generator.git
@@ -62,7 +62,7 @@ namespace CityPayAPI.Model
         /// <param name="stateHistory">stateHistory.</param>
         /// <param name="token">the token value which uniquely identifies the session..</param>
         /// <param name="transNo">a transaction number if the transacstion was processed and isPaid is true..</param>
-        public PaylinkTokenStatus(int amountPaid = default(int), string authCode = default(string), string card = default(string), DateTime created = default(DateTime), DateTime datetime = default(DateTime), string identifier = default(string), bool isAttachment = default(bool), bool isCancelled = default(bool), bool isClosed = default(bool), bool isCustomerReceiptEmailSent = default(bool), bool isEmailSent = default(bool), bool isExpired = default(bool), bool isFormViewed = default(bool), bool isMerchantNotificationEmailSent = default(bool), bool isOpenForPayment = default(bool), bool isPaid = default(bool), bool isPaymentAttempted = default(bool), bool isPostbackOk = default(bool), bool isRequestChallenged = default(bool), bool isSmsSent = default(bool), bool isValidated = default(bool), DateTime lastEventDateTime = default(DateTime), string lastPaymentResult = default(string), string mid = default(string), int paymentAttemptsCount = default(int), List<PaylinkStateEvent> stateHistory = default(List<PaylinkStateEvent>), string token = default(string), int transNo = default(int))
+        public PaylinkTokenStatus(int amountPaid = default(int), string authCode = default(string), string card = default(string), DateTime created = default(DateTime), DateTime datetime = default(DateTime), string identifier = default(string), bool isAttachment = default(bool), bool isCancelled = default(bool), bool isClosed = default(bool), bool isCustomerReceiptEmailSent = default(bool), bool isEmailSent = default(bool), bool isExpired = default(bool), bool isFormViewed = default(bool), bool isMerchantNotificationEmailSent = default(bool), bool isOpenForPayment = default(bool), bool isPaid = default(bool), bool isPaymentAttempted = default(bool), bool isPostbackOk = default(bool), bool isRequestChallenged = default(bool), bool isSmsSent = default(bool), bool isValidated = default(bool), DateTime lastEventDateTime = default(DateTime), string lastPaymentResult = default(string), int mid = default(int), int paymentAttemptsCount = default(int), List<PaylinkStateEvent> stateHistory = default(List<PaylinkStateEvent>), string token = default(string), int transNo = default(int))
         {
             this.AmountPaid = amountPaid;
             this.AuthCode = authCode;
@@ -112,6 +112,7 @@ namespace CityPayAPI.Model
         /// a description of the card that was used for payment if paid.
         /// </summary>
         /// <value>a description of the card that was used for payment if paid.</value>
+        /// <example>Visa/0002</example>
         [DataMember(Name = "card", EmitDefaultValue = false)]
         public string Card { get; set; }
 
@@ -119,6 +120,7 @@ namespace CityPayAPI.Model
         /// the date and time that the session was created.
         /// </summary>
         /// <value>the date and time that the session was created.</value>
+        /// <example>2024-04-22T13:29:14Z</example>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         public DateTime Created { get; set; }
 
@@ -126,6 +128,7 @@ namespace CityPayAPI.Model
         /// the date and time of the current status.
         /// </summary>
         /// <value>the date and time of the current status.</value>
+        /// <example>2024-04-22T13:29:14Z</example>
         [DataMember(Name = "datetime", EmitDefaultValue = false)]
         public DateTime Datetime { get; set; }
 
@@ -133,6 +136,7 @@ namespace CityPayAPI.Model
         /// the merchant identifier, to help identifying the token.
         /// </summary>
         /// <value>the merchant identifier, to help identifying the token.</value>
+        /// <example>95b857a1-5955-4b86-963c-5a6dbfc4fb95</example>
         [DataMember(Name = "identifier", EmitDefaultValue = false)]
         public string Identifier { get; set; }
 
@@ -245,6 +249,7 @@ namespace CityPayAPI.Model
         /// the date and time that the session last had an event actioned against it.
         /// </summary>
         /// <value>the date and time that the session last had an event actioned against it.</value>
+        /// <example>2024-04-22T13:29:14Z</example>
         [DataMember(Name = "last_event_date_time", EmitDefaultValue = false)]
         public DateTime LastEventDateTime { get; set; }
 
@@ -259,8 +264,9 @@ namespace CityPayAPI.Model
         /// identifies the merchant account.
         /// </summary>
         /// <value>identifies the merchant account.</value>
+        /// <example>11223344</example>
         [DataMember(Name = "mid", EmitDefaultValue = false)]
-        public string Mid { get; set; }
+        public int Mid { get; set; }
 
         /// <summary>
         /// the number of attempts made to pay.
@@ -345,6 +351,18 @@ namespace CityPayAPI.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // Identifier (string) maxLength
+            if (this.Identifier != null && this.Identifier.Length > 50)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
+            }
+
+            // Identifier (string) minLength
+            if (this.Identifier != null && this.Identifier.Length < 4)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
+            }
+
             yield break;
         }
     }

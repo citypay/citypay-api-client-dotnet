@@ -292,7 +292,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Card Deletion
@@ -307,7 +307,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Card Registration
         /// </summary>
@@ -320,7 +320,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Card Registration
@@ -334,7 +334,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Card Status
         /// </summary>
@@ -348,7 +348,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Card Status
@@ -363,7 +363,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Contact Details Update
         /// </summary>
@@ -376,7 +376,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Contact Details Update
@@ -390,7 +390,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Account Create
         /// </summary>
@@ -402,7 +402,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Create
@@ -415,7 +415,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Account Deletion
         /// </summary>
@@ -427,7 +427,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Deletion
@@ -440,7 +440,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Account Exists
         /// </summary>
@@ -452,7 +452,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Exists</returns>
-        System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Exists
@@ -465,7 +465,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Exists)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Account Retrieval
         /// </summary>
@@ -477,7 +477,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Retrieval
@@ -490,7 +490,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Account Status
         /// </summary>
@@ -503,7 +503,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Account Status
@@ -517,7 +517,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Charge
         /// </summary>
@@ -529,7 +529,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Charge
@@ -542,7 +542,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -764,7 +764,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardDeleteRequestAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountCardDeleteRequestWithHttpInfoAsync(accountid, cardId, force, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -780,7 +780,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardDeleteRequestWithHttpInfoAsync(string accountid, string cardId, bool? force = default(bool?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -945,7 +945,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCardRegisterRequestAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCardRegisterRequestWithHttpInfoAsync(accountid, registerCard, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -960,7 +960,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCardRegisterRequestWithHttpInfoAsync(string accountid, RegisterCard registerCard, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -1133,7 +1133,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountCardStatusRequestAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountCardStatusRequestWithHttpInfoAsync(accountid, cardId, cardStatus, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1149,7 +1149,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountCardStatusRequestWithHttpInfoAsync(string accountid, string cardId, CardStatus cardStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -1319,7 +1319,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountChangeContactRequestAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountChangeContactRequestWithHttpInfoAsync(accountid, contactDetails, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1334,7 +1334,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountChangeContactRequestWithHttpInfoAsync(string accountid, ContactDetails contactDetails, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -1487,7 +1487,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountCreateAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountCreateWithHttpInfoAsync(accountCreate, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1501,7 +1501,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountCreateWithHttpInfoAsync(AccountCreate accountCreate, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountCreate' is set
             if (accountCreate == null)
@@ -1645,7 +1645,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountDeleteRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountDeleteRequestWithHttpInfoAsync(accountid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1659,7 +1659,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountDeleteRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -1801,7 +1801,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Exists</returns>
-        public async System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Exists> AccountExistsRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Exists> localVarResponse = await AccountExistsRequestWithHttpInfoAsync(accountid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1815,7 +1815,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Exists)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Exists>> AccountExistsRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -1957,7 +1957,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CardHolderAccount</returns>
-        public async System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CardHolderAccount> AccountRetrieveRequestAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<CardHolderAccount> localVarResponse = await AccountRetrieveRequestWithHttpInfoAsync(accountid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1971,7 +1971,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CardHolderAccount)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<CardHolderAccount>> AccountRetrieveRequestWithHttpInfoAsync(string accountid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -2125,7 +2125,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> AccountStatusRequestAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await AccountStatusRequestWithHttpInfoAsync(accountid, accountStatus, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -2140,7 +2140,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> AccountStatusRequestWithHttpInfoAsync(string accountid, AccountStatus accountStatus, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountid' is set
             if (accountid == null)
@@ -2293,7 +2293,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Decision</returns>
-        public async System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Decision> ChargeRequestAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Decision> localVarResponse = await ChargeRequestWithHttpInfoAsync(chargeRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -2307,7 +2307,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Decision)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Decision>> ChargeRequestWithHttpInfoAsync(ChargeRequest chargeRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'chargeRequest' is set
             if (chargeRequest == null)

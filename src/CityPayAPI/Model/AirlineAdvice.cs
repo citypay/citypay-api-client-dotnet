@@ -203,7 +203,6 @@ namespace CityPayAPI.Model
         /// <value>The date the ticket was issued in ISO Date format (yyyy-MM-dd).</value>
         /// <example>Sat Aug 01 00:00:00 UTC 2020</example>
         [DataMember(Name = "ticket_issue_date", IsRequired = true, EmitDefaultValue = true)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly TicketIssueDate { get; set; }
 
         /// <summary>
@@ -272,66 +271,66 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // CarrierName (string) maxLength
             if (this.CarrierName != null && this.CarrierName.Length > 25)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CarrierName, length must be less than 25.", new [] { "CarrierName" });
+                yield return new ValidationResult("Invalid value for CarrierName, length must be less than 25.", new [] { "CarrierName" });
             }
 
             // NoAirSegments (int) maximum
             if (this.NoAirSegments > (int)4)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NoAirSegments, must be a value less than or equal to 4.", new [] { "NoAirSegments" });
+                yield return new ValidationResult("Invalid value for NoAirSegments, must be a value less than or equal to 4.", new [] { "NoAirSegments" });
             }
 
             // NoAirSegments (int) minimum
             if (this.NoAirSegments < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NoAirSegments, must be a value greater than or equal to 0.", new [] { "NoAirSegments" });
+                yield return new ValidationResult("Invalid value for NoAirSegments, must be a value greater than or equal to 0.", new [] { "NoAirSegments" });
             }
 
             // OriginalTicketNo (string) maxLength
             if (this.OriginalTicketNo != null && this.OriginalTicketNo.Length > 14)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for OriginalTicketNo, length must be less than 14.", new [] { "OriginalTicketNo" });
+                yield return new ValidationResult("Invalid value for OriginalTicketNo, length must be less than 14.", new [] { "OriginalTicketNo" });
             }
 
             // PassengerName (string) maxLength
             if (this.PassengerName != null && this.PassengerName.Length > 25)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PassengerName, length must be less than 25.", new [] { "PassengerName" });
+                yield return new ValidationResult("Invalid value for PassengerName, length must be less than 25.", new [] { "PassengerName" });
             }
 
             // TicketIssueCity (string) maxLength
             if (this.TicketIssueCity != null && this.TicketIssueCity.Length > 18)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueCity, length must be less than 18.", new [] { "TicketIssueCity" });
+                yield return new ValidationResult("Invalid value for TicketIssueCity, length must be less than 18.", new [] { "TicketIssueCity" });
             }
 
             // TicketIssueName (string) maxLength
             if (this.TicketIssueName != null && this.TicketIssueName.Length > 26)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketIssueName, length must be less than 26.", new [] { "TicketIssueName" });
+                yield return new ValidationResult("Invalid value for TicketIssueName, length must be less than 26.", new [] { "TicketIssueName" });
             }
 
             // TicketNo (string) maxLength
             if (this.TicketNo != null && this.TicketNo.Length > 14)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TicketNo, length must be less than 14.", new [] { "TicketNo" });
+                yield return new ValidationResult("Invalid value for TicketNo, length must be less than 14.", new [] { "TicketNo" });
             }
 
             // TransactionType (string) maxLength
             if (this.TransactionType != null && this.TransactionType.Length > 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionType, length must be less than 3.", new [] { "TransactionType" });
+                yield return new ValidationResult("Invalid value for TransactionType, length must be less than 3.", new [] { "TransactionType" });
             }
 
             // TransactionType (string) minLength
             if (this.TransactionType != null && this.TransactionType.Length < 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionType, length must be greater than 3.", new [] { "TransactionType" });
+                yield return new ValidationResult("Invalid value for TransactionType, length must be greater than 3.", new [] { "TransactionType" });
             }
 
             yield break;

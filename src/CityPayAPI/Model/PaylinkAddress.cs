@@ -140,60 +140,60 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Address1 (string) maxLength
             if (this.Address1 != null && this.Address1.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Address1, length must be less than 50.", new [] { "Address1" });
+                yield return new ValidationResult("Invalid value for Address1, length must be less than 50.", new [] { "Address1" });
             }
 
             // Address2 (string) maxLength
             if (this.Address2 != null && this.Address2.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Address2, length must be less than 50.", new [] { "Address2" });
+                yield return new ValidationResult("Invalid value for Address2, length must be less than 50.", new [] { "Address2" });
             }
 
             // Address3 (string) maxLength
             if (this.Address3 != null && this.Address3.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Address3, length must be less than 50.", new [] { "Address3" });
+                yield return new ValidationResult("Invalid value for Address3, length must be less than 50.", new [] { "Address3" });
             }
 
             // Area (string) maxLength
             if (this.Area != null && this.Area.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Area, length must be less than 50.", new [] { "Area" });
+                yield return new ValidationResult("Invalid value for Area, length must be less than 50.", new [] { "Area" });
             }
 
             // Country (string) maxLength
             if (this.Country != null && this.Country.Length > 2)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Country, length must be less than 2.", new [] { "Country" });
+                yield return new ValidationResult("Invalid value for Country, length must be less than 2.", new [] { "Country" });
             }
 
             // Country (string) minLength
             if (this.Country != null && this.Country.Length < 2)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Country, length must be greater than 2.", new [] { "Country" });
+                yield return new ValidationResult("Invalid value for Country, length must be greater than 2.", new [] { "Country" });
             }
 
             // Label (string) maxLength
             if (this.Label != null && this.Label.Length > 20)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Label, length must be less than 20.", new [] { "Label" });
+                yield return new ValidationResult("Invalid value for Label, length must be less than 20.", new [] { "Label" });
             }
 
             // Label (string) minLength
             if (this.Label != null && this.Label.Length < 2)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Label, length must be greater than 2.", new [] { "Label" });
+                yield return new ValidationResult("Invalid value for Label, length must be greater than 2.", new [] { "Label" });
             }
 
             // Postcode (string) maxLength
             if (this.Postcode != null && this.Postcode.Length > 16)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Postcode, length must be less than 16.", new [] { "Postcode" });
+                yield return new ValidationResult("Invalid value for Postcode, length must be less than 16.", new [] { "Postcode" });
             }
 
             yield break;

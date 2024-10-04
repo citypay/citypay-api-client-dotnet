@@ -33,7 +33,7 @@ namespace CityPayAPI.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "1.3.3";
+        public const string Version = "1.3.4";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -113,11 +113,11 @@ namespace CityPayAPI.Client
         /// <summary>
         /// Initializes a new instance of the <see cref="Configuration" /> class
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
         public Configuration()
         {
             Proxy = null;
-            UserAgent = "CityPay-CSharp-SDK/1.3.3";
+            UserAgent = "CityPay-CSharp-SDK/1.3.4";
             BasePath = "https://api.citypay.com";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
@@ -148,7 +148,7 @@ namespace CityPayAPI.Client
         /// <summary>
         /// Initializes a new instance of the <see cref="Configuration" /> class
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
         public Configuration(
             IDictionary<string, string> defaultHeaders,
             IDictionary<string, string> apiKey,
@@ -546,7 +546,7 @@ namespace CityPayAPI.Client
             report += "    OS: " + System.Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
             report += "    Version of the API: 6.6.40\n";
-            report += "    SDK Package Version: 1.3.3\n";
+            report += "    SDK Package Version: 1.3.4\n";
 
             return report;
         }
@@ -601,7 +601,7 @@ namespace CityPayAPI.Client
                 BasePath = second.BasePath ?? first.BasePath,
                 Timeout = second.Timeout,
                 Proxy = second.Proxy ?? first.Proxy,
-                UserAgent = "CityPay-CSharp-SDK/1.3.3",
+                UserAgent = "CityPay-CSharp-SDK/1.3.4",
                 Username = second.Username ?? first.Username,
                 Password = second.Password ?? first.Password,
                 AccessToken = second.AccessToken ?? first.AccessToken,

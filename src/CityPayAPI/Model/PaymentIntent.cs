@@ -205,54 +205,54 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Csc (string) maxLength
             if (this.Csc != null && this.Csc.Length > 4)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Csc, length must be less than 4.", new [] { "Csc" });
+                yield return new ValidationResult("Invalid value for Csc, length must be less than 4.", new [] { "Csc" });
             }
 
             // Csc (string) minLength
             if (this.Csc != null && this.Csc.Length < 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Csc, length must be greater than 3.", new [] { "Csc" });
+                yield return new ValidationResult("Invalid value for Csc, length must be greater than 3.", new [] { "Csc" });
             }
 
             // Currency (string) maxLength
             if (this.Currency != null && this.Currency.Length > 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Currency, length must be less than 3.", new [] { "Currency" });
+                yield return new ValidationResult("Invalid value for Currency, length must be less than 3.", new [] { "Currency" });
             }
 
             // Currency (string) minLength
             if (this.Currency != null && this.Currency.Length < 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Currency, length must be greater than 3.", new [] { "Currency" });
+                yield return new ValidationResult("Invalid value for Currency, length must be greater than 3.", new [] { "Currency" });
             }
 
             // Identifier (string) maxLength
             if (this.Identifier != null && this.Identifier.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
+                yield return new ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
             if (this.Identifier != null && this.Identifier.Length < 4)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
+                yield return new ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }
 
             // TransInfo (string) maxLength
             if (this.TransInfo != null && this.TransInfo.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransInfo, length must be less than 50.", new [] { "TransInfo" });
+                yield return new ValidationResult("Invalid value for TransInfo, length must be less than 50.", new [] { "TransInfo" });
             }
 
             // TransType (string) maxLength
             if (this.TransType != null && this.TransType.Length > 1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransType, length must be less than 1.", new [] { "TransType" });
+                yield return new ValidationResult("Invalid value for TransType, length must be less than 1.", new [] { "TransType" });
             }
 
             yield break;

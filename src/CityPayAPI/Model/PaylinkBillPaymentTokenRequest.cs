@@ -90,7 +90,6 @@ namespace CityPayAPI.Model
         /// <value>A date that the invoice is due. This can be displayed on the payment page.</value>
         /// <example>Mon Apr 22 00:00:00 UTC 2024</example>
         [DataMember(Name = "due", EmitDefaultValue = false)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly Due { get; set; }
 
         /// <summary>
@@ -152,7 +151,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

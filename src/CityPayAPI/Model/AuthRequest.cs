@@ -310,102 +310,102 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Cardnumber (string) maxLength
             if (this.Cardnumber != null && this.Cardnumber.Length > 22)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Cardnumber, length must be less than 22.", new [] { "Cardnumber" });
+                yield return new ValidationResult("Invalid value for Cardnumber, length must be less than 22.", new [] { "Cardnumber" });
             }
 
             // Cardnumber (string) minLength
             if (this.Cardnumber != null && this.Cardnumber.Length < 12)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Cardnumber, length must be greater than 12.", new [] { "Cardnumber" });
+                yield return new ValidationResult("Invalid value for Cardnumber, length must be greater than 12.", new [] { "Cardnumber" });
             }
 
             // Csc (string) maxLength
             if (this.Csc != null && this.Csc.Length > 4)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Csc, length must be less than 4.", new [] { "Csc" });
+                yield return new ValidationResult("Invalid value for Csc, length must be less than 4.", new [] { "Csc" });
             }
 
             // Csc (string) minLength
             if (this.Csc != null && this.Csc.Length < 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Csc, length must be greater than 3.", new [] { "Csc" });
+                yield return new ValidationResult("Invalid value for Csc, length must be greater than 3.", new [] { "Csc" });
             }
 
             // Currency (string) maxLength
             if (this.Currency != null && this.Currency.Length > 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Currency, length must be less than 3.", new [] { "Currency" });
+                yield return new ValidationResult("Invalid value for Currency, length must be less than 3.", new [] { "Currency" });
             }
 
             // Currency (string) minLength
             if (this.Currency != null && this.Currency.Length < 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Currency, length must be greater than 3.", new [] { "Currency" });
+                yield return new ValidationResult("Invalid value for Currency, length must be greater than 3.", new [] { "Currency" });
             }
 
             // Expmonth (int) maximum
             if (this.Expmonth > (int)12)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expmonth, must be a value less than or equal to 12.", new [] { "Expmonth" });
+                yield return new ValidationResult("Invalid value for Expmonth, must be a value less than or equal to 12.", new [] { "Expmonth" });
             }
 
             // Expmonth (int) minimum
             if (this.Expmonth < (int)1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expmonth, must be a value greater than or equal to 1.", new [] { "Expmonth" });
+                yield return new ValidationResult("Invalid value for Expmonth, must be a value greater than or equal to 1.", new [] { "Expmonth" });
             }
 
             // Expyear (int) maximum
             if (this.Expyear > (int)2100)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expyear, must be a value less than or equal to 2100.", new [] { "Expyear" });
+                yield return new ValidationResult("Invalid value for Expyear, must be a value less than or equal to 2100.", new [] { "Expyear" });
             }
 
             // Expyear (int) minimum
             if (this.Expyear < (int)2000)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Expyear, must be a value greater than or equal to 2000.", new [] { "Expyear" });
+                yield return new ValidationResult("Invalid value for Expyear, must be a value greater than or equal to 2000.", new [] { "Expyear" });
             }
 
             // Identifier (string) maxLength
             if (this.Identifier != null && this.Identifier.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
+                yield return new ValidationResult("Invalid value for Identifier, length must be less than 50.", new [] { "Identifier" });
             }
 
             // Identifier (string) minLength
             if (this.Identifier != null && this.Identifier.Length < 4)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
+                yield return new ValidationResult("Invalid value for Identifier, length must be greater than 4.", new [] { "Identifier" });
             }
 
             // NameOnCard (string) maxLength
             if (this.NameOnCard != null && this.NameOnCard.Length > 45)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be less than 45.", new [] { "NameOnCard" });
+                yield return new ValidationResult("Invalid value for NameOnCard, length must be less than 45.", new [] { "NameOnCard" });
             }
 
             // NameOnCard (string) minLength
             if (this.NameOnCard != null && this.NameOnCard.Length < 2)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NameOnCard, length must be greater than 2.", new [] { "NameOnCard" });
+                yield return new ValidationResult("Invalid value for NameOnCard, length must be greater than 2.", new [] { "NameOnCard" });
             }
 
             // TransInfo (string) maxLength
             if (this.TransInfo != null && this.TransInfo.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransInfo, length must be less than 50.", new [] { "TransInfo" });
+                yield return new ValidationResult("Invalid value for TransInfo, length must be less than 50.", new [] { "TransInfo" });
             }
 
             // TransType (string) maxLength
             if (this.TransType != null && this.TransType.Length > 1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransType, length must be less than 1.", new [] { "TransType" });
+                yield return new ValidationResult("Invalid value for TransType, length must be less than 1.", new [] { "TransType" });
             }
 
             yield break;

@@ -169,24 +169,24 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Company (string) maxLength
             if (this.Company != null && this.Company.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Company, length must be less than 50.", new [] { "Company" });
+                yield return new ValidationResult("Invalid value for Company, length must be less than 50.", new [] { "Company" });
             }
 
             // Email (string) maxLength
             if (this.Email != null && this.Email.Length > 254)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Email, length must be less than 254.", new [] { "Email" });
+                yield return new ValidationResult("Invalid value for Email, length must be less than 254.", new [] { "Email" });
             }
 
             // MobileNo (string) maxLength
             if (this.MobileNo != null && this.MobileNo.Length > 20)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MobileNo, length must be less than 20.", new [] { "MobileNo" });
+                yield return new ValidationResult("Invalid value for MobileNo, length must be less than 20.", new [] { "MobileNo" });
             }
 
             yield break;

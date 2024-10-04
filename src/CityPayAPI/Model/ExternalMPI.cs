@@ -114,30 +114,30 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // AuthenResult (string) maxLength
             if (this.AuthenResult != null && this.AuthenResult.Length > 1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AuthenResult, length must be less than 1.", new [] { "AuthenResult" });
+                yield return new ValidationResult("Invalid value for AuthenResult, length must be less than 1.", new [] { "AuthenResult" });
             }
 
             // Cavv (string) maxLength
             if (this.Cavv != null && this.Cavv.Length > 20)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Cavv, length must be less than 20.", new [] { "Cavv" });
+                yield return new ValidationResult("Invalid value for Cavv, length must be less than 20.", new [] { "Cavv" });
             }
 
             // Enrolled (string) maxLength
             if (this.Enrolled != null && this.Enrolled.Length > 1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Enrolled, length must be less than 1.", new [] { "Enrolled" });
+                yield return new ValidationResult("Invalid value for Enrolled, length must be less than 1.", new [] { "Enrolled" });
             }
 
             // Xid (string) maxLength
             if (this.Xid != null && this.Xid.Length > 20)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Xid, length must be less than 20.", new [] { "Xid" });
+                yield return new ValidationResult("Invalid value for Xid, length must be less than 20.", new [] { "Xid" });
             }
 
             yield break;

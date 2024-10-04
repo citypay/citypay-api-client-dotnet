@@ -114,7 +114,6 @@ namespace CityPayAPI.Model
         /// <value>The Departure Date for the travel segment in ISO Date Format (yyyy-MM-dd).</value>
         /// <example>Sat Aug 01 00:00:00 UTC 2020</example>
         [DataMember(Name = "departure_date", IsRequired = true, EmitDefaultValue = true)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly DepartureDate { get; set; }
 
         /// <summary>
@@ -183,42 +182,42 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // ArrivalLocationCode (string) maxLength
             if (this.ArrivalLocationCode != null && this.ArrivalLocationCode.Length > 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ArrivalLocationCode, length must be less than 3.", new [] { "ArrivalLocationCode" });
+                yield return new ValidationResult("Invalid value for ArrivalLocationCode, length must be less than 3.", new [] { "ArrivalLocationCode" });
             }
 
             // CarrierCode (string) maxLength
             if (this.CarrierCode != null && this.CarrierCode.Length > 2)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CarrierCode, length must be less than 2.", new [] { "CarrierCode" });
+                yield return new ValidationResult("Invalid value for CarrierCode, length must be less than 2.", new [] { "CarrierCode" });
             }
 
             // ClassServiceCode (string) maxLength
             if (this.ClassServiceCode != null && this.ClassServiceCode.Length > 2)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ClassServiceCode, length must be less than 2.", new [] { "ClassServiceCode" });
+                yield return new ValidationResult("Invalid value for ClassServiceCode, length must be less than 2.", new [] { "ClassServiceCode" });
             }
 
             // DepartureLocationCode (string) maxLength
             if (this.DepartureLocationCode != null && this.DepartureLocationCode.Length > 3)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DepartureLocationCode, length must be less than 3.", new [] { "DepartureLocationCode" });
+                yield return new ValidationResult("Invalid value for DepartureLocationCode, length must be less than 3.", new [] { "DepartureLocationCode" });
             }
 
             // FlightNumber (string) maxLength
             if (this.FlightNumber != null && this.FlightNumber.Length > 4)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FlightNumber, length must be less than 4.", new [] { "FlightNumber" });
+                yield return new ValidationResult("Invalid value for FlightNumber, length must be less than 4.", new [] { "FlightNumber" });
             }
 
             // StopOverIndicator (string) maxLength
             if (this.StopOverIndicator != null && this.StopOverIndicator.Length > 1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for StopOverIndicator, length must be less than 1.", new [] { "StopOverIndicator" });
+                yield return new ValidationResult("Invalid value for StopOverIndicator, length must be less than 1.", new [] { "StopOverIndicator" });
             }
 
             yield break;

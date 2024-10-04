@@ -171,7 +171,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Handles a CRes response from ACS, returning back the result of authorisation
@@ -186,7 +186,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Handles a CRes response from ACS, returning back a token for future authorisation
         /// </summary>
@@ -200,7 +200,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TokenisationResponseModel</returns>
-        System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Handles a CRes response from ACS, returning back a token for future authorisation
@@ -215,7 +215,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TokenisationResponseModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Direct Post Auth Request
         /// </summary>
@@ -227,7 +227,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Direct Post Auth Request
@@ -240,7 +240,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Direct Post Tokenise Request
         /// </summary>
@@ -252,7 +252,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Direct Post Tokenise Request
@@ -265,7 +265,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Direct Post Token Request
         /// </summary>
@@ -277,7 +277,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Direct Post Token Request
@@ -290,7 +290,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -506,7 +506,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> DirectCResAuthRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectCResAuthRequestWithHttpInfoAsync(uuid, cres, threeDSSessionData, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -522,7 +522,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectCResAuthRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'uuid' is set
             if (uuid == null)
@@ -680,7 +680,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TokenisationResponseModel</returns>
-        public async System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<TokenisationResponseModel> DirectCResTokeniseRequestAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<TokenisationResponseModel> localVarResponse = await DirectCResTokeniseRequestWithHttpInfoAsync(uuid, cres, threeDSSessionData, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -696,7 +696,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TokenisationResponseModel)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<TokenisationResponseModel>> DirectCResTokeniseRequestWithHttpInfoAsync(string uuid, string? cres = default(string?), string? threeDSSessionData = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'uuid' is set
             if (uuid == null)
@@ -853,7 +853,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> DirectPostAuthRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectPostAuthRequestWithHttpInfoAsync(directPostRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -867,7 +867,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostAuthRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'directPostRequest' is set
             if (directPostRequest == null)
@@ -1029,7 +1029,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> DirectPostTokeniseRequestAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await DirectPostTokeniseRequestWithHttpInfoAsync(directPostRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1043,7 +1043,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> DirectPostTokeniseRequestWithHttpInfoAsync(DirectPostRequest directPostRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'directPostRequest' is set
             if (directPostRequest == null)
@@ -1205,7 +1205,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthResponse</returns>
-        public async System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AuthResponse> TokenRequestAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<AuthResponse> localVarResponse = await TokenRequestWithHttpInfoAsync(directTokenAuthRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1219,7 +1219,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AuthResponse>> TokenRequestWithHttpInfoAsync(DirectTokenAuthRequest directTokenAuthRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'directTokenAuthRequest' is set
             if (directTokenAuthRequest == null)

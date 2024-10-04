@@ -54,7 +54,6 @@ namespace CityPayAPI.Model
         /// <value>The date when the event ends in ISO format (yyyy-MM-dd).</value>
         /// <example>Mon Apr 22 00:00:00 UTC 2024</example>
         [DataMember(Name = "event_end_date", EmitDefaultValue = false)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly EventEndDate { get; set; }
 
         /// <summary>
@@ -77,7 +76,6 @@ namespace CityPayAPI.Model
         /// <value>The date when the event starts in ISO format (yyyy-MM-dd).</value>
         /// <example>Mon Apr 22 00:00:00 UTC 2024</example>
         [DataMember(Name = "event_start_date", EmitDefaultValue = false)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly EventStartDate { get; set; }
 
         /// <summary>
@@ -118,7 +116,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

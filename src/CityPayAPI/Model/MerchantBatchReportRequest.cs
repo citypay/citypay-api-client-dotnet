@@ -56,7 +56,6 @@ namespace CityPayAPI.Model
         /// <value>Start date (YYYY-MM-DD) for batch retrieval range, inclusive. Maximum value is 3 years ago.</value>
         /// <example>Wed Jan 24 00:00:00 UTC 2024</example>
         [DataMember(Name = "date_from", EmitDefaultValue = false)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly DateFrom { get; set; }
 
         /// <summary>
@@ -65,7 +64,6 @@ namespace CityPayAPI.Model
         /// <value>End date (YYYY-MM-DD) for batch retrieval range, inclusive.</value>
         /// <example>Wed Jan 31 00:00:00 UTC 2024</example>
         [DataMember(Name = "date_until", EmitDefaultValue = false)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly DateUntil { get; set; }
 
         /// <summary>
@@ -130,7 +128,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

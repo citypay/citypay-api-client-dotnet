@@ -173,7 +173,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of BatchTransactionReportResponse</returns>
-        System.Threading.Tasks.Task<BatchTransactionReportResponse> BatchedTransactionReportRequestAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<BatchTransactionReportResponse> BatchedTransactionReportRequestAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Batch Transaction Report Request
@@ -188,7 +188,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (BatchTransactionReportResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<BatchTransactionReportResponse>> BatchedTransactionReportRequestWithHttpInfoAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<BatchTransactionReportResponse>> BatchedTransactionReportRequestWithHttpInfoAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Merchant Batch Report Request
         /// </summary>
@@ -200,7 +200,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MerchantBatchReportResponse</returns>
-        System.Threading.Tasks.Task<MerchantBatchReportResponse> MerchantBatchReportRequestAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<MerchantBatchReportResponse> MerchantBatchReportRequestAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Merchant Batch Report Request
@@ -213,7 +213,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MerchantBatchReportResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MerchantBatchReportResponse>> MerchantBatchReportRequestWithHttpInfoAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<MerchantBatchReportResponse>> MerchantBatchReportRequestWithHttpInfoAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Merchant Batch Request
         /// </summary>
@@ -226,7 +226,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MerchantBatchResponse</returns>
-        System.Threading.Tasks.Task<MerchantBatchResponse> MerchantBatchRequestAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<MerchantBatchResponse> MerchantBatchRequestAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Merchant Batch Request
@@ -240,7 +240,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MerchantBatchResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MerchantBatchResponse>> MerchantBatchRequestWithHttpInfoAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<MerchantBatchResponse>> MerchantBatchRequestWithHttpInfoAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Remittance Report Request
         /// </summary>
@@ -253,7 +253,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RemittanceReportResponse</returns>
-        System.Threading.Tasks.Task<RemittanceReportResponse> RemittanceRangeReportAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<RemittanceReportResponse> RemittanceRangeReportAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Remittance Report Request
@@ -267,7 +267,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RemittanceReportResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RemittanceReportResponse>> RemittanceRangeReportWithHttpInfoAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RemittanceReportResponse>> RemittanceRangeReportWithHttpInfoAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Remittance Date Report Request
         /// </summary>
@@ -280,7 +280,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RemittedClientData</returns>
-        System.Threading.Tasks.Task<RemittedClientData> RemittanceReportRequestAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<RemittedClientData> RemittanceReportRequestAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Remittance Date Report Request
@@ -294,7 +294,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RemittedClientData)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RemittedClientData>> RemittanceReportRequestWithHttpInfoAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RemittedClientData>> RemittanceReportRequestWithHttpInfoAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -515,7 +515,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of BatchTransactionReportResponse</returns>
-        public async System.Threading.Tasks.Task<BatchTransactionReportResponse> BatchedTransactionReportRequestAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<BatchTransactionReportResponse> BatchedTransactionReportRequestAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<BatchTransactionReportResponse> localVarResponse = await BatchedTransactionReportRequestWithHttpInfoAsync(merchantid, batchNo, batchTransactionReportRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -531,7 +531,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (BatchTransactionReportResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<BatchTransactionReportResponse>> BatchedTransactionReportRequestWithHttpInfoAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<BatchTransactionReportResponse>> BatchedTransactionReportRequestWithHttpInfoAsync(int merchantid, string batchNo, BatchTransactionReportRequest batchTransactionReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'batchNo' is set
             if (batchNo == null)
@@ -685,7 +685,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MerchantBatchReportResponse</returns>
-        public async System.Threading.Tasks.Task<MerchantBatchReportResponse> MerchantBatchReportRequestAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<MerchantBatchReportResponse> MerchantBatchReportRequestAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<MerchantBatchReportResponse> localVarResponse = await MerchantBatchReportRequestWithHttpInfoAsync(merchantBatchReportRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -699,7 +699,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MerchantBatchReportResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<MerchantBatchReportResponse>> MerchantBatchReportRequestWithHttpInfoAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<MerchantBatchReportResponse>> MerchantBatchReportRequestWithHttpInfoAsync(MerchantBatchReportRequest merchantBatchReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'merchantBatchReportRequest' is set
             if (merchantBatchReportRequest == null)
@@ -847,7 +847,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MerchantBatchResponse</returns>
-        public async System.Threading.Tasks.Task<MerchantBatchResponse> MerchantBatchRequestAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<MerchantBatchResponse> MerchantBatchRequestAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<MerchantBatchResponse> localVarResponse = await MerchantBatchRequestWithHttpInfoAsync(merchantid, batchNo, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -862,7 +862,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MerchantBatchResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<MerchantBatchResponse>> MerchantBatchRequestWithHttpInfoAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<MerchantBatchResponse>> MerchantBatchRequestWithHttpInfoAsync(int merchantid, string batchNo, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'batchNo' is set
             if (batchNo == null)
@@ -1017,7 +1017,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RemittanceReportResponse</returns>
-        public async System.Threading.Tasks.Task<RemittanceReportResponse> RemittanceRangeReportAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<RemittanceReportResponse> RemittanceRangeReportAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<RemittanceReportResponse> localVarResponse = await RemittanceRangeReportWithHttpInfoAsync(clientid, remittanceReportRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1032,7 +1032,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RemittanceReportResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<RemittanceReportResponse>> RemittanceRangeReportWithHttpInfoAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<RemittanceReportResponse>> RemittanceRangeReportWithHttpInfoAsync(string clientid, RemittanceReportRequest remittanceReportRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'clientid' is set
             if (clientid == null)
@@ -1193,7 +1193,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RemittedClientData</returns>
-        public async System.Threading.Tasks.Task<RemittedClientData> RemittanceReportRequestAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<RemittedClientData> RemittanceReportRequestAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<RemittedClientData> localVarResponse = await RemittanceReportRequestWithHttpInfoAsync(clientid, date, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1208,7 +1208,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RemittedClientData)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<RemittedClientData>> RemittanceReportRequestWithHttpInfoAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<RemittedClientData>> RemittanceReportRequestWithHttpInfoAsync(string clientid, string date, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'clientid' is set
             if (clientid == null)

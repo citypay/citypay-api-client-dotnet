@@ -85,18 +85,18 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // DomainKey (string) maxLength
             if (this.DomainKey != null && this.DomainKey.Length > 512)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DomainKey, length must be less than 512.", new [] { "DomainKey" });
+                yield return new ValidationResult("Invalid value for DomainKey, length must be less than 512.", new [] { "DomainKey" });
             }
 
             // DomainKey (string) minLength
             if (this.DomainKey != null && this.DomainKey.Length < 64)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DomainKey, length must be greater than 64.", new [] { "DomainKey" });
+                yield return new ValidationResult("Invalid value for DomainKey, length must be greater than 64.", new [] { "DomainKey" });
             }
 
             yield break;

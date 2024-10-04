@@ -161,7 +161,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AclCheckResponseModel</returns>
-        System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// ACL Check Request
@@ -174,7 +174,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AclCheckResponseModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Domain Key Check Request
         /// </summary>
@@ -186,7 +186,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Domain Key Check Request
@@ -199,7 +199,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Domain Key Generation Request
         /// </summary>
@@ -211,7 +211,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Domain Key Generation Request
@@ -224,7 +224,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// List Merchants Request
         /// </summary>
@@ -236,7 +236,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListMerchantsResponse</returns>
-        System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// List Merchants Request
@@ -249,7 +249,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListMerchantsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Ping Request
         /// </summary>
@@ -261,7 +261,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Ping Request
@@ -274,7 +274,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -481,7 +481,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AclCheckResponseModel</returns>
-        public async System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AclCheckResponseModel> AclCheckRequestAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<AclCheckResponseModel> localVarResponse = await AclCheckRequestWithHttpInfoAsync(aclCheckRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -495,7 +495,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AclCheckResponseModel)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<AclCheckResponseModel>> AclCheckRequestWithHttpInfoAsync(AclCheckRequest aclCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'aclCheckRequest' is set
             if (aclCheckRequest == null)
@@ -641,7 +641,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyCheckRequestAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = await DomainKeyCheckRequestWithHttpInfoAsync(domainKeyCheckRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -655,7 +655,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyCheckRequestWithHttpInfoAsync(DomainKeyCheckRequest domainKeyCheckRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'domainKeyCheckRequest' is set
             if (domainKeyCheckRequest == null)
@@ -801,7 +801,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DomainKeyResponse</returns>
-        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<DomainKeyResponse> DomainKeyGenRequestAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<DomainKeyResponse> localVarResponse = await DomainKeyGenRequestWithHttpInfoAsync(domainKeyRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -815,7 +815,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DomainKeyResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<DomainKeyResponse>> DomainKeyGenRequestWithHttpInfoAsync(DomainKeyRequest domainKeyRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'domainKeyRequest' is set
             if (domainKeyRequest == null)
@@ -959,7 +959,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListMerchantsResponse</returns>
-        public async System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<ListMerchantsResponse> ListMerchantsRequestAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<ListMerchantsResponse> localVarResponse = await ListMerchantsRequestWithHttpInfoAsync(clientid, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -973,7 +973,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListMerchantsResponse)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<ListMerchantsResponse>> ListMerchantsRequestWithHttpInfoAsync(string clientid, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'clientid' is set
             if (clientid == null)
@@ -1124,7 +1124,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Acknowledgement</returns>
-        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Acknowledgement> PingRequestAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             CityPayAPI.Client.ApiResponse<Acknowledgement> localVarResponse = await PingRequestWithHttpInfoAsync(ping, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
@@ -1138,7 +1138,7 @@ namespace CityPayAPI.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Acknowledgement)</returns>
-        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CityPayAPI.Client.ApiResponse<Acknowledgement>> PingRequestWithHttpInfoAsync(Ping ping, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'ping' is set
             if (ping == null)

@@ -71,7 +71,16 @@ namespace CityPayAPI.Model
         {
             return this.AuthResponse != null;
         }
-        
+
+        /// <summary>
+        /// Determines if the decision required authentication with 3DSv1
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAuthenRequired()
+        {
+            return this.AuthenRequired != null;
+        }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -100,7 +109,7 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

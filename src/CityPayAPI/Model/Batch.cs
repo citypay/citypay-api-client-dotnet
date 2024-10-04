@@ -65,7 +65,6 @@ namespace CityPayAPI.Model
         /// <value>The date that the file was created in ISO-8601 format.</value>
         /// <example>Thu Jan 02 00:00:00 UTC 2020</example>
         [DataMember(Name = "batch_date", IsRequired = true, EmitDefaultValue = true)]
-        [JsonConverter(typeof(OpenAPIDateConverter))]
         public DateOnly BatchDate { get; set; }
 
         /// <summary>
@@ -113,12 +112,12 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // BatchId (int) minimum
             if (this.BatchId < (int)1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
+                yield return new ValidationResult("Invalid value for BatchId, must be a value greater than or equal to 1.", new [] { "BatchId" });
             }
 
             yield break;

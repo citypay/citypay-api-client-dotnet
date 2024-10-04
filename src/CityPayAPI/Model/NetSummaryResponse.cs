@@ -152,78 +152,78 @@ namespace CityPayAPI.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // CreditItemsCount (int) maximum
             if (this.CreditItemsCount > (int)999999)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CreditItemsCount, must be a value less than or equal to 999999.", new [] { "CreditItemsCount" });
+                yield return new ValidationResult("Invalid value for CreditItemsCount, must be a value less than or equal to 999999.", new [] { "CreditItemsCount" });
             }
 
             // CreditItemsCount (int) minimum
             if (this.CreditItemsCount < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CreditItemsCount, must be a value greater than or equal to 0.", new [] { "CreditItemsCount" });
+                yield return new ValidationResult("Invalid value for CreditItemsCount, must be a value greater than or equal to 0.", new [] { "CreditItemsCount" });
             }
 
             // CreditItemsValue (int) maximum
             if (this.CreditItemsValue > (int)999999999)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CreditItemsValue, must be a value less than or equal to 999999999.", new [] { "CreditItemsValue" });
+                yield return new ValidationResult("Invalid value for CreditItemsValue, must be a value less than or equal to 999999999.", new [] { "CreditItemsValue" });
             }
 
             // CreditItemsValue (int) minimum
             if (this.CreditItemsValue < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CreditItemsValue, must be a value greater than or equal to 0.", new [] { "CreditItemsValue" });
+                yield return new ValidationResult("Invalid value for CreditItemsValue, must be a value greater than or equal to 0.", new [] { "CreditItemsValue" });
             }
 
             // DebitItemsCount (int) maximum
             if (this.DebitItemsCount > (int)999999)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DebitItemsCount, must be a value less than or equal to 999999.", new [] { "DebitItemsCount" });
+                yield return new ValidationResult("Invalid value for DebitItemsCount, must be a value less than or equal to 999999.", new [] { "DebitItemsCount" });
             }
 
             // DebitItemsCount (int) minimum
             if (this.DebitItemsCount < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DebitItemsCount, must be a value greater than or equal to 0.", new [] { "DebitItemsCount" });
+                yield return new ValidationResult("Invalid value for DebitItemsCount, must be a value greater than or equal to 0.", new [] { "DebitItemsCount" });
             }
 
             // DebitItemsValue (int) maximum
             if (this.DebitItemsValue > (int)999999999)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DebitItemsValue, must be a value less than or equal to 999999999.", new [] { "DebitItemsValue" });
+                yield return new ValidationResult("Invalid value for DebitItemsValue, must be a value less than or equal to 999999999.", new [] { "DebitItemsValue" });
             }
 
             // DebitItemsValue (int) minimum
             if (this.DebitItemsValue < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DebitItemsValue, must be a value greater than or equal to 0.", new [] { "DebitItemsValue" });
+                yield return new ValidationResult("Invalid value for DebitItemsValue, must be a value greater than or equal to 0.", new [] { "DebitItemsValue" });
             }
 
             // NetAmount (int) maximum
             if (this.NetAmount > (int)999999999)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NetAmount, must be a value less than or equal to 999999999.", new [] { "NetAmount" });
+                yield return new ValidationResult("Invalid value for NetAmount, must be a value less than or equal to 999999999.", new [] { "NetAmount" });
             }
 
             // NetAmount (int) minimum
             if (this.NetAmount < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for NetAmount, must be a value greater than or equal to 0.", new [] { "NetAmount" });
+                yield return new ValidationResult("Invalid value for NetAmount, must be a value greater than or equal to 0.", new [] { "NetAmount" });
             }
 
             // TotalCount (int) maximum
             if (this.TotalCount > (int)999999)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TotalCount, must be a value less than or equal to 999999.", new [] { "TotalCount" });
+                yield return new ValidationResult("Invalid value for TotalCount, must be a value less than or equal to 999999.", new [] { "TotalCount" });
             }
 
             // TotalCount (int) minimum
             if (this.TotalCount < (int)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TotalCount, must be a value greater than or equal to 0.", new [] { "TotalCount" });
+                yield return new ValidationResult("Invalid value for TotalCount, must be a value greater than or equal to 0.", new [] { "TotalCount" });
             }
 
             yield break;

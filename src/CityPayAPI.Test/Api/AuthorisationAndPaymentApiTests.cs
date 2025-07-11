@@ -18,6 +18,12 @@ using Xunit;
 
 using CityPayAPI.Client;
 using CityPayAPI.Api;
+using CityPayAPI.Model;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using CityPayAPI.Utils;
+using static System.Guid;
 // uncomment below to import models
 //using CityPayAPI.Model;
 
@@ -32,10 +38,27 @@ namespace CityPayAPI.Test.Api
     /// </remarks>
     public class AuthorisationAndPaymentApiTests : IDisposable
     {
+        private string _cpClientId = Environment.GetEnvironmentVariable("CP_CLIENT_ID");
+        private string _cpLicenceKey = Environment.GetEnvironmentVariable("CP_LICENCE_KEY");
+        private int _cpMerchantId = int.Parse(Environment.GetEnvironmentVariable("CP_MERCHANT_ID"));
+
+        private Configuration _configuration;
+        
         private AuthorisationAndPaymentApi instance;
 
         public AuthorisationAndPaymentApiTests()
         {
+            if (_cpClientId == null)
+                throw new ArgumentException("No CP_CLIENT_ID value set");
+            if (_cpLicenceKey == null)
+                throw new ArgumentException("No CP_LICENCE_KEY value set");
+            // if (_cpMerchantId == null)
+            //     throw new ArgumentException("No CP_MERCHANT_ID value set");
+
+            _configuration = new Configuration();
+            _configuration.BasePath = "https://sandbox.citypay.com";
+            _configuration.AddApiKey("cp-api-key", new ApiKey(_cpClientId, _cpLicenceKey).GenerateKey());
+            
             instance = new AuthorisationAndPaymentApi();
         }
 
@@ -60,10 +83,33 @@ namespace CityPayAPI.Test.Api
         [Fact]
         public void AuthorisationRequestTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
-            //AuthRequest authRequest = null;
-            //var response = instance.AuthorisationRequest(authRequest);
-            //Assert.IsType<Decision>(response);
+            var id = NewGuid().ToString();
+            var api = new AuthorisationAndPaymentApi(_configuration);
+            var decision = api.AuthorisationRequest(new AuthRequest(
+                amount: 1395,
+                cardnumber: "4000 0000 0000 0002",
+                expmonth: 12,
+                expyear: 2030,
+                csc: "012",
+                identifier: id,
+                merchantid: _cpMerchantId,
+                threedsecure: new ThreeDSecure(
+                    tdsPolicy: "2"
+                )
+            ));
+
+            Assert.True(decision.IsAuthResponse());
+            Assert.False(decision.IsRequestChallenged());
+            var response = decision.AuthResponse;
+
+            Assert.Equal("001", response.ResultCode);
+            Assert.Equal(id, response.Identifier);
+            Assert.Equal("A12345", response.Authcode);
+            Assert.Equal(1395, response.Amount);
+            
+            Boolean isValidDigest = Digest.validateDigest(response, _cpLicenceKey);
+            
+            Assert.True(isValidDigest);
         }
 
         /// <summary>
@@ -81,13 +127,83 @@ namespace CityPayAPI.Test.Api
         /// <summary>
         /// Test CResRequest
         /// </summary>
+        ///
+        class Cres
+        {
+            public string cres { get; set; }
+            public string threeDSSessionData { get; set; }
+        }
+        
         [Fact]
         public void CResRequestTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
-            //CResAuthRequest cResAuthRequest = null;
-            //var response = instance.CResRequest(cResAuthRequest);
-            //Assert.IsType<AuthResponse>(response);
+            var id = NewGuid().ToString();
+            var api = new AuthorisationAndPaymentApi(_configuration);
+            var decision = api.AuthorisationRequest(new AuthRequest(
+                amount: 1595,
+                cardnumber: "4000 0000 0000 0002",
+                expmonth: 12,
+                expyear: 2030,
+                csc: "123",
+                identifier: id,
+                merchantid: _cpMerchantId,
+                transType: "A", //Enforcing Ecom Transaction
+                threedsecure: new ThreeDSecure(
+                    cpBx:
+                    "eyJhIjoiRkFwSCIsImMiOjI0LCJpIjoid3dIOTExTlBKSkdBRVhVZCIsImoiOmZhbHNlLCJsIjoiZW4tVVMiLCJoIjoxNDQwLCJ3IjoyNTYwLCJ0IjowLCJ1IjoiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTFfMl8zKSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvODkuMC40Mzg5LjgyIFNhZmFyaS81MzcuMzYiLCJ2IjoiMS4wLjAifQ==",
+                    merchantTermurl: "https://citypay.com/acs/return"
+                )
+            ));
+
+            Assert.False(decision.IsAuthResponse());
+            Assert.True(decision.IsRequestChallenged());
+            var response = decision.RequestChallenged;
+            var creq = response.Creq;
+            var threedserverTransId = response.ThreedserverTransId;
+
+            Assert.NotEmpty(response.AcsUrl);
+            Assert.NotEmpty(creq);
+            Assert.NotEmpty(threedserverTransId);
+            
+            if (creq == string.Empty) return;
+            
+            // Sending Creq 
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://sandbox.citypay.com/3dsv2/gen-rreq");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders
+                .Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+            
+            var formData = new Dictionary<string, string>
+            {
+                { "transStatus", "Y" },
+                { "reason", "01" },
+                { "threeDSSessionData", response.ThreedserverTransId },
+                { "creq", response.Creq }
+            };
+
+            var stringContent = new FormUrlEncodedContent(formData);
+
+                
+            var res = client.PostAsync(client.BaseAddress, stringContent).Result;
+
+            Assert.True(res.IsSuccessStatusCode);
+            
+            if (res.IsSuccessStatusCode)
+            {
+                var cResString = res.Content.ReadAsStringAsync().Result;
+                Cres cres = JsonConvert.DeserializeObject<Cres>(cResString);
+                
+                var cResAuthRequest =
+                    new CResAuthRequest(cres.cres);
+            
+                var cResRequestResponse = api.CResRequest(cResAuthRequest);
+                Assert.Equal(1595, cResRequestResponse.Amount);
+                Assert.Equal("A12345",cResRequestResponse.Authcode);
+                Assert.Equal("Y", cResRequestResponse.AuthenResult);
+                Assert.True(cResRequestResponse.Authorised);
+            }
         }
 
         /// <summary>

@@ -18,6 +18,8 @@ using Xunit;
 
 using CityPayAPI.Client;
 using CityPayAPI.Api;
+using CityPayAPI.Model;
+
 // uncomment below to import models
 //using CityPayAPI.Model;
 
@@ -32,10 +34,27 @@ namespace CityPayAPI.Test.Api
     /// </remarks>
     public class OperationalFunctionsApiTests : IDisposable
     {
+        private string _cpClientId = Environment.GetEnvironmentVariable("CP_CLIENT_ID");
+        private string _cpLicenceKey = Environment.GetEnvironmentVariable("CP_LICENCE_KEY");
+        private int _cpMerchantId = int.Parse(Environment.GetEnvironmentVariable("CP_MERCHANT_ID"));
+
+        private Configuration _configuration;
+        
         private OperationalFunctionsApi instance;
 
         public OperationalFunctionsApiTests()
         {
+            if (_cpClientId == null)
+                throw new ArgumentException("No CP_CLIENT_ID value set");
+            if (_cpLicenceKey == null)
+                throw new ArgumentException("No CP_LICENCE_KEY value set");
+            // if (_cpMerchantId == null)
+            //     throw new ArgumentException("No CP_MERCHANT_ID value set");
+
+            _configuration = new Configuration();
+            _configuration.BasePath = "https://sandbox.citypay.com";
+            _configuration.AddApiKey("cp-api-key", new ApiKey(_cpClientId, _cpLicenceKey).GenerateKey());
+            
             instance = new OperationalFunctionsApi();
         }
 
@@ -96,10 +115,9 @@ namespace CityPayAPI.Test.Api
         [Fact]
         public void ListMerchantsRequestTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string clientid = null;
-            //var response = instance.ListMerchantsRequest(clientid);
-            //Assert.IsType<ListMerchantsResponse>(response);
+            var api = new OperationalFunctionsApi(_configuration);
+            var merchants = api.ListMerchantsRequest(_cpClientId);
+            Assert.Equal(_cpClientId, merchants.Clientid);
         }
 
         /// <summary>
@@ -108,10 +126,11 @@ namespace CityPayAPI.Test.Api
         [Fact]
         public void PingRequestTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
-            //Ping ping = null;
-            //var response = instance.PingRequest(ping);
-            //Assert.IsType<Acknowledgement>(response);
+            var api = new OperationalFunctionsApi(_configuration);
+            var ack = api.PingRequest(new Ping("it_test_cs"));
+            Assert.Equal("044", ack.Code);
+            Assert.Equal("it_test_cs", ack.Identifier);
+            Assert.Equal("Ping OK", ack.Message);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CityPayAPI.Api;
 using CityPayAPI.Model;
 using CityPayAPI.Client;
@@ -39,7 +40,7 @@ namespace CityPayAPI.Test
         }
 
         [Fact]
-        public void PingTest()
+        public void PingTest() //moved
         {
             var api = new OperationalFunctionsApi(_configuration);
             var ack = api.PingRequest(new Ping("it_test_cs"));
@@ -49,7 +50,7 @@ namespace CityPayAPI.Test
         }
 
         [Fact]
-        public void ListMerchantsTest()
+        public void ListMerchantsTest() //moved
         {
             var api = new OperationalFunctionsApi(_configuration);
             var merchants = api.ListMerchantsRequest(_cpClientId);
@@ -57,7 +58,7 @@ namespace CityPayAPI.Test
         }
 
         [Fact]
-        public void AuthoriseTest()
+        public void AuthoriseTest() //moved
         {
             var id = NewGuid().ToString();
             var api = new AuthorisationAndPaymentApi(_configuration);
@@ -89,7 +90,7 @@ namespace CityPayAPI.Test
         }
 
         [Fact]
-        public void CardholderAccountTests()
+        public void CardholderAccountTests() //already there
         {
             var guid = NewGuid().ToString();
             var api = new CardHolderAccountApi(_configuration);
@@ -157,7 +158,7 @@ namespace CityPayAPI.Test
         }
         
         [Fact]
-        public void Authorise3DSv2Test()
+        public void Authorise3DSv2Test() //moved
         {
             var id = NewGuid().ToString();
             var api = new AuthorisationAndPaymentApi(_configuration);
@@ -191,22 +192,33 @@ namespace CityPayAPI.Test
             
             // Sending Creq 
             var client = new HttpClient();
-            client.BaseAddress = new Uri("https://sandbox.citypay.com/3dsv2/");
+            client.BaseAddress = new Uri("https://sandbox.citypay.com/3dsv2/gen-rreq");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders
                 .Accept
-                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                .Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
 
-            var content = new
+            /*var content = new
             {
                 threeDSSessionData = response.ThreedserverTransId,
                 creq = response.Creq
+            };*/
+
+            //var jsonContent = JsonConvert.SerializeObject(content);
+            //var stringContent = new StringContent(jsonContent.ToString(), Encoding.UTF8,"application/json");
+            
+            var formData = new Dictionary<string, string>
+            {
+                { "transStatus", "Y" },
+                { "reason", "01" },
+                { "threeDSSessionData", response.ThreedserverTransId },
+                { "creq", response.Creq }
             };
 
-            var jsonContent = JsonConvert.SerializeObject(content);
-            var stringContent = new StringContent(jsonContent.ToString(), Encoding.UTF8,
-                "application/json");
-            var res = client.PostAsync("acs", stringContent).Result;
+            var stringContent = new FormUrlEncodedContent(formData);
+
+                
+            var res = client.PostAsync(client.BaseAddress, stringContent).Result;
 
             Assert.True(res.IsSuccessStatusCode);
             

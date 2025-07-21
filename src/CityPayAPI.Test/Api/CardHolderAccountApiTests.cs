@@ -21,6 +21,19 @@ using CityPayAPI.Api;
 using CityPayAPI.Model;
 using Xunit.Abstractions;
 
+using System;
+using System.Collections.Generic;
+using CityPayAPI.Api;
+using CityPayAPI.Model;
+using CityPayAPI.Client;
+using Newtonsoft.Json;
+using Xunit;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using CityPayAPI.Utils;
+using static System.Guid;
+
 namespace CityPayAPI.Test
 {
     /// <summary>
